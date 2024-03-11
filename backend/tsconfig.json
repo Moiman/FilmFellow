@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "Node16",
+    "target": "ES2022",
+    "outDir": "./dist/",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types",
+    ]
+  },
+}

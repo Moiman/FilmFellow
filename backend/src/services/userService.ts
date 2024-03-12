@@ -14,7 +14,7 @@ const createUser = async (email: string, username: string, passwordhash: string,
     data: {
       username,
       email,
-      passwordhash,
+      password: passwordhash,
       birthdate,
       role: Role.user,
     },

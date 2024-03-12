@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser } from "../services/userService";
+import { createUser } from "../services/userService.js";
 import argon2 from "argon2";
 
 const usersRouter = Router();

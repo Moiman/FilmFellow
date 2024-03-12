@@ -9,13 +9,13 @@ generator client {
 }
 
 model Users {
-  id        Int      @id @default(autoincrement())
-  username  String
-  email     String
-  password  String
-  role      Role
-  birthdate DateTime
-  friends   Json[]
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  role       Role
+  updated_at DateTime @default(now())
+  created_at DateTime @default(now())
 }
 
 enum Role {

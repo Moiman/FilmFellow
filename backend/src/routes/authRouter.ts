@@ -22,7 +22,6 @@ const registerUserSchema = yup.object({
     .matches(/^(?=.*[A-Z])/, "Password requires atleast 1 capital character")
     .matches(/^(?=.*[0-9])/, "Password requires atleast 1 number")
     .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
-  birthDate: yup.string().required("Birthdate is required"),
 });
 type RegisterUserSchemaType = yup.InferType<typeof registerUserSchema>;
 
@@ -31,12 +30,10 @@ authRouter.post(
   validate(registerUserSchema),
   async (req: RequestBody<RegisterUserSchemaType>, res, next) => {
     try {
-      const { email, username, password, birthDate } = req.body;
-
-      const birthDateAsDate = new Date(birthDate);
+      const { email, username, password } = req.body;
 
       const hashedPassword = await argon2.hash(password);
-      const newUser = await createUser(email, username, hashedPassword, birthDateAsDate);
+      const newUser = await createUser(email, username, hashedPassword);
       return res.status(200).json(newUser);
     } catch (err) {
       next(err);

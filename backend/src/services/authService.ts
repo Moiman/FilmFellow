@@ -9,13 +9,12 @@ const selectUserFields = {
   username: true,
 };
 
-const createUser = async (email: string, username: string, passwordhash: string, birthdate: Date) => {
+const createUser = async (email: string, username: string, password: string) => {
   const newUser = await prisma.users.create({
     data: {
       username,
       email,
-      password: passwordhash,
-      birthdate,
+      password,
       role: Role.user,
     },
     select: selectUserFields,

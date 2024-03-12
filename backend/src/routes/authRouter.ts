@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { createUser } from "../services/userService.js";
+import { createUser } from "../services/authService.js";
 import argon2 from "argon2";
 import * as yup from "yup";
 import validate from "../middlewares/validate.js";
 import { RequestBody } from "../types/types.js";
-const usersRouter = Router();
+const authRouter = Router();
 
 const registerUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),
@@ -26,8 +26,8 @@ const registerUserSchema = yup.object({
 });
 type RegisterUserSchemaType = yup.InferType<typeof registerUserSchema>;
 
-usersRouter.post(
-  "/createuser",
+authRouter.post(
+  "/register",
   validate(registerUserSchema),
   async (req: RequestBody<RegisterUserSchemaType>, res, next) => {
     try {
@@ -44,4 +44,4 @@ usersRouter.post(
   },
 );
 
-export default usersRouter;
+export default authRouter;

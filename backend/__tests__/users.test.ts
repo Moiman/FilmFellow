@@ -2,12 +2,11 @@ import { expect, describe, it } from "vitest";
 import request from "supertest";
 import app from "../src/server.js";
 
-describe("user route", () => {
-  it("/users/createuser without values", async () => {
+describe("auth route", () => {
+  it("/auth/register without values", async () => {
 
   const response = await request(app)
-    .post("/users/createuser")
-    .set("Accept", "application/json")
+    .post("/auth/register")
     .send({});
   expect(response.statusCode).toBe(400);
   });

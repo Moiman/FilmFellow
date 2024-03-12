@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import usersRouter from "./routes/userRouter.js";
+
 const app = express();
 
 app.use(cors({ credentials: true, origin: true }));

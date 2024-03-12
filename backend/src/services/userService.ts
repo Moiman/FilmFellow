@@ -16,7 +16,7 @@ const createUser = async (email: string, username: string, passwordhash: string,
       email,
       passwordhash,
       birthdate,
-      role: Role.user
+      role: Role.user,
     },
     select: selectUserFields,
   });
@@ -24,6 +24,4 @@ const createUser = async (email: string, username: string, passwordhash: string,
   return newUser;
 };
 
-export {
-    createUser
-};
+export { createUser };

@@ -4,7 +4,7 @@ input,
 textarea {
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
-  line-height: abstracts.$p-font-size * abstracts.$line-height-multiplier;
+  line-height: abstracts.$p-font-size * abstracts.$line-height;
   font-weight: 400;
   letter-spacing: abstracts.$text-letter-spacing;
 

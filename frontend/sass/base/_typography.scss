@@ -1,9 +1,14 @@
 @use "sass:map";
 
-@use '../abstracts/' as abstracts;
+@use "../abstracts/" as abstracts;
 
 // Titles
-h1, h2, h3, h4, h5, a {
+h1,
+h2,
+h3,
+h4,
+h5,
+a {
   font-family: abstracts.$default-title-font;
   letter-spacing: abstracts.$title-letter-spacing;
 }
@@ -50,7 +55,8 @@ a:hover {
 }
 
 // Body text
-p, .description {
+p,
+.description {
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
   line-height: abstracts.$default-line-height;

@@ -1,0 +1,25 @@
+@use './colors' as colors;
+
+// Borders and shadows
+$default-border: 1px solid colors.$primary-darkgrey;
+$default-border-radius: 4px;
+
+$default-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+
+// Titles and texts
+$default-title-font: 'Poppins';
+$default-body-text-font: 'Roboto';
+
+$h1-font-size: 64px;
+$h2-font-size: 36px;
+$h3-font-size: 28px;
+$h4-font-size: 24px;
+$h5-font-size: 20px;
+
+$p-font-size: 14px;
+$a-font-size: 16px;
+
+$line-height-multiplier: 1.6;
+
+$title-letter-spacing: -0.05em;
+$body-text-letter-spacing: .02em;

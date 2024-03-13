@@ -1,0 +1,24 @@
+@use '../abstracts' as abstracts;
+
+input,
+textarea {
+  font-family: abstracts.$default-body-text-font;
+  font-size: abstracts.$p-font-size;
+  line-height: abstracts.$p-font-size * abstracts.$line-height-multiplier;
+  font-weight: 400;
+  letter-spacing: abstracts.$body-text-letter-spacing;
+
+  border-radius: abstracts.$default-border-radius;
+  border: abstracts.$default-border;
+  background-color: abstracts.$primary-light;
+
+  width: 100%;
+}
+
+input {
+  padding: 10px 15px;
+}
+
+textarea {
+  padding: 15px;
+}

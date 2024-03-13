@@ -3,7 +3,7 @@
 @use '../abstracts' as abstracts;
 
 button {
-  font-family: abstracts.$default-body-text-font;
+  font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
   line-height: abstracts.$p-font-size * abstracts.$line-height-multiplier;
   font-weight: 400;

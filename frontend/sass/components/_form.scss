@@ -2,11 +2,11 @@
 
 input,
 textarea {
-  font-family: abstracts.$default-body-text-font;
+  font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
   line-height: abstracts.$p-font-size * abstracts.$line-height-multiplier;
   font-weight: 400;
-  letter-spacing: abstracts.$body-text-letter-spacing;
+  letter-spacing: abstracts.$text-letter-spacing;
 
   border-radius: abstracts.$default-border-radius;
   border: abstracts.$default-border;

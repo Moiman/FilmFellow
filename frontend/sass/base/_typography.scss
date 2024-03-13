@@ -6,7 +6,7 @@
 h1 {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$h1-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 400;
   letter-spacing: abstracts.$title-letter-spacing;
 }
@@ -14,7 +14,7 @@ h1 {
 h2 {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$h2-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 500;
   letter-spacing: abstracts.$title-letter-spacing;
 }
@@ -22,7 +22,7 @@ h2 {
 h3 {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$h3-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 400;
   letter-spacing: abstracts.$title-letter-spacing;
 }
@@ -30,7 +30,7 @@ h3 {
 h4 {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$h4-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 400;
   letter-spacing: abstracts.$title-letter-spacing;
 }
@@ -38,7 +38,7 @@ h4 {
 h5 {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$h5-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 500;
   letter-spacing: abstracts.$title-letter-spacing;
 }
@@ -47,7 +47,7 @@ h5 {
 p {
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 400;
   letter-spacing: abstracts.$text-letter-spacing;
 }
@@ -55,7 +55,7 @@ p {
 .description {
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 300;
   font-style: italic;
   letter-spacing: abstracts.$text-letter-spacing;
@@ -65,7 +65,7 @@ p {
 a {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$a-font-size;
-  line-height: abstracts.$line-height;
+  line-height: abstracts.$default-line-height;
   font-weight: 400;
   color: abstracts.$primary-light;
 }

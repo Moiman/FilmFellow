@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createUser } from "../services/authService.js";
 import argon2 from "argon2";
 import * as yup from "yup";
+import { createUser } from "../services/authService.js";
 import validate from "../middlewares/validate.js";
-import { RequestBody } from "../types/types.js";
+import type { RequestBody } from "../types/types.js";
+
 const authRouter = Router();
 
 const registerUserSchema = yup.object({

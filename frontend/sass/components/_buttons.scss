@@ -1,6 +1,6 @@
-@use 'sass:map';
+@use "sass:map";
 
-@use '../abstracts' as abstracts;
+@use "../abstracts" as abstracts;
 
 button {
   font-family: abstracts.$default-text-font;

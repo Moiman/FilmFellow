@@ -1,0 +1,75 @@
+@use "sass:map";
+
+@use "../abstracts/" as abstracts;
+
+// Titles
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: abstracts.$default-title-font;
+  letter-spacing: abstracts.$title-letter-spacing;
+}
+
+h1 {
+  font-size: abstracts.$h1-font-size;
+  line-height: abstracts.$default-line-height;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: abstracts.$h2-font-size;
+  line-height: abstracts.$default-line-height;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+h3 {
+  font-size: abstracts.$h3-font-size;
+  line-height: abstracts.$default-line-height;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: abstracts.$h4-font-size;
+  line-height: abstracts.$default-line-height;
+  font-weight: 400;
+}
+
+h5 {
+  font-size: abstracts.$h5-font-size;
+  line-height: abstracts.$default-line-height;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+// Links
+a {
+  font-family: abstracts.$default-title-font;
+  font-size: abstracts.$a-font-size;
+  font-weight: 400;
+  color: abstracts.$primary-light;
+}
+
+a:hover {
+  color: map.get(abstracts.$highlight-colors, "yellow");
+}
+
+// Body text
+p,
+.description {
+  font-family: abstracts.$default-text-font;
+  font-size: abstracts.$p-font-size;
+  line-height: abstracts.$default-line-height;
+  letter-spacing: abstracts.$text-letter-spacing;
+}
+
+p {
+  font-weight: 400;
+}
+
+.description {
+  font-weight: 300;
+  font-style: italic;
+}

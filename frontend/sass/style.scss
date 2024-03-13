@@ -1,0 +1,17 @@
+@use "./abstracts/" as abstracts;
+@use "./base/" as base;
+@use "./components/" as components;
+
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+
+  background: rgb(56, 61, 65, 20);
+  background: linear-gradient(145deg, rgba(111, 230, 227, 1) 0%, rgba(122, 97, 227, 1) 51%, rgba(215, 94, 181, 1) 100%),
+    radial-gradient(circle, rgba(56, 61, 65, 1) 0%, rgba(9, 12, 17, 1) 100%);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-blend-mode: soft-light;
+
+  color: abstracts.$primary-light;
+}

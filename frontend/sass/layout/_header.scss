@@ -1,0 +1,11 @@
+@use "../abstracts/" as abstracts;
+
+.header {
+  background-color: abstracts.$primary-dark;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+}

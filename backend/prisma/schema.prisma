@@ -9,13 +9,228 @@ generator client {
 }
 
 model Users {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
-  email      String   @unique
+  id         Int       @id @default(autoincrement())
+  username   String    @unique
+  email      String    @unique
   password   String
   role       Role
-  updated_at DateTime @default(now())
+  updated_at DateTime  @default(now())
+  created_at DateTime  @default(now())
+  reviews    Reviews[]
+}
+
+model Movies {
+  adult               Boolean
+  backdrop_path       String
+  budget              Int
+  homepage            String
+  id                  Int                   @id @default(autoincrement())
+  imdb_id             String
+  original_language   String
+  original_title      String
+  overview            String
+  popularity          Float
+  poster_path         String
+  release_date        String
+  revenue             BigInt
+  runtime             Int
+  status              String
+  tagline             String
+  title               String
+  vote_average        Float
+  vote_count          Int
+  importedReviews     ImportedReviews[]
+  reviews             Reviews[]
+  genres              MovieGenres[]
+  productionCompanies ProductionCompanies[]
+  productionCountries ProductionCountries[]
+  spokenLanguages     SpokenLanguages[]
+  cast                MovieCast[]
+  crew                MovieCrew[]
+  release_dates       ReleaseDates[]
+  // watchProviders      WatchProviders[]
+  // similar             Movies[]
+  similarId           Int?
+  similarParent       Movies?               @relation("SimilarMovies", fields: [similarId], references: [id])
+  similar             Movies[]              @relation("SimilarMovies")
+  translations        Translations[]
+  images              Images[]
+}
+
+model ImportedReviews {
+  movie      Movies   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  movieId    Int
+  id         String   @unique
+  content    String
+  created_at DateTime
+  updated_at DateTime
+  author     String
+}
+
+model Reviews {
+  movie      Movies   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  movieId    Int
+  id         String   @unique
+  content    String
   created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  userId     Int
+  user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Genres {
+  id     Int           @id @default(autoincrement()) @db.SmallInt
+  name   String
+  movies MovieGenres[]
+}
+
+model MovieGenres {
+  movieId Int
+  genreId Int
+  genre   Genres @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  movie   Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([movieId, genreId])
+}
+
+model ProductionCompanies {
+  companyId Int
+  movieId   Int
+  companies Companies @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([companyId, movieId])
+}
+
+model ProductionCountries {
+  iso_3166_1 String
+  movieId    Int
+  countries  Countries @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+  movie      Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([iso_3166_1, movieId])
+}
+
+model Countries {
+  iso_3166_1          String                @id
+  name                String                @unique
+  productionCountries ProductionCountries[]
+}
+
+model Companies {
+  productionCompanies ProductionCompanies[]
+  id                  Int                   @id @default(autoincrement()) @db.SmallInt
+  logo_path           String
+  name                String
+  origin_country      String
+}
+
+model SpokenLanguages {
+  movieId   Int
+  iso_639_1 String
+  language  Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
+  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([movieId, iso_639_1])
+}
+
+model Languages {
+  english_name    String
+  iso_639_1       String            @id
+  name            String
+  spokenLanguages SpokenLanguages[]
+  translation     Translations[]
+}
+
+model MovieCast {
+  movieId              Int
+  adult                Boolean
+  gender               Int
+  personId             Int
+  known_for_department String
+  name                 String
+  original_name        String
+  character            String
+  credit_id            String  @id
+  order                Int
+  person               Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
+  movie                Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+}
+
+model MovieCrew {
+  movieId    Int
+  personId   Int
+  credit_id  String  @id
+  department String
+  job        String
+  person     Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
+  movie      Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+}
+
+model Persons {
+  id                   Int         @id
+  adult                Boolean
+  biography            String
+  birthday             String
+  deathday             String
+  gender               Int
+  homepage             String
+  imdb_id              String
+  known_for_department String
+  name                 String
+  place_of_birth       String
+  popularity           Float
+  profile_path         String
+  movieCast            MovieCast[]
+  movieCrew            MovieCrew[]
+}
+
+model ReleaseDates {
+  iso_3166_1    String
+  movieId       Int
+  certification String
+  movie         Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([movieId, iso_3166_1])
+}
+
+// model WatchProviders {
+//   movieId Int
+//   movie   Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+// }
+
+// model WatchProviderCountries {
+
+// }
+
+// model Similar {
+//   movieId Int
+//   movie   Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+//   similarId Int
+//   similar   Movies @relation("SimilarMovies",fields: [similarId], references: [id], onDelete: Cascade)
+
+//   @@id([movieId, similarId])
+// }
+
+model Translations {
+  movieId   Int
+  iso_639_1 String
+  language  Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
+  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  overview  String
+  title     String
+
+  @@id([movieId, iso_639_1])
+}
+
+model Images {
+  movieId      Int
+  iso_639_1    String
+  vote_average Float
+  height       Int
+  Width        Int
+  file_path    String @id
+  movie        Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

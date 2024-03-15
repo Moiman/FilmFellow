@@ -8,13 +8,13 @@ const movieArray = [];
 const today = new Date();
 today.setDate(today.getDate() - 1);
 
-const formattedDate = today.toISOString().split("T")[0].replaceAll("-", "_").split("_");
-const rearrangedDate = `${formattedDate[1]}_${formattedDate[2]}_${formattedDate[0]}`;
-console.log(rearrangedDate);
+const date =
+  ("0" + (today.getMonth() + 1)).slice(-2) + "_" + ("0" + today.getDate()).slice(-2) + "_" + today.getFullYear();
+console.log(date);
 
 const fetchAndExtractGZ = async () => {
   try {
-    const response = await fetch(`http://files.tmdb.org/p/exports/movie_ids_${rearrangedDate}.json.gz`);
+    const response = await fetch(`http://files.tmdb.org/p/exports/movie_ids_${date}.json.gz`);
     console.log(response.body);
     if (!response.ok) {
       throw response.status;
@@ -33,7 +33,6 @@ const fetchAndExtractGZ = async () => {
       // let movieIds = movieData.map(movie => movie.id);
       // console.log(movieIds.length);
     });
-
   } catch (error) {
     console.error("Error fetching file:", error);
     throw error;

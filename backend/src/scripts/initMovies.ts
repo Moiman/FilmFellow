@@ -1,6 +1,5 @@
 const apiKey = process.env.API_KEY;
 const delay = 20;
-const totalMovies = 20;
 
 interface Genres {
   id: number;
@@ -35,19 +34,14 @@ interface Author {
 interface Review {
   id: string;
   content: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   author: string;
   author_details: Author;
 }
 
 interface Reviews {
   results: Review[];
-}
-
-interface Credits {
-  cast: Cast[];
-  crew: Crew[];
 }
 
 interface ReleaseDates {
@@ -141,6 +135,11 @@ interface Images {
   posters: Image[];
 }
 
+interface Credits {
+  cast: Cast[];
+  crew: Crew[];
+}
+
 interface Cast {
   adult: boolean;
   gender: number;
@@ -194,7 +193,7 @@ interface ResponseData {
   title: string;
   vote_average: number;
   vote_count: number;
-  credits: Credits[];
+  credits: Credits;
   reviews: Reviews;
   release_dates: ReleaseDates;
   "watch/providers": WatchProviders;
@@ -203,11 +202,10 @@ interface ResponseData {
   images: Images;
 }
 
-interface MovieReviewData {
+interface ReviewData {
   id: string;
-  movieid: number | undefined;
+  movieid: number;
   author: string;
-  rating: number | null;
   content: string;
 }
 
@@ -233,15 +231,153 @@ interface MovieData {
   vote_count: number;
 }
 
-export const fetchMovie = async (movieId: number) => {
+const parseMovieResponseData = (movieData: ResponseData) => {
+  const movie = {
+    id: movieData.id,
+    adult: movieData.adult,
+    backdrop_path: movieData.backdrop_path,
+    budget: movieData.budget,
+    homepage: movieData.homepage,
+    imdb_id: movieData.imdb_id,
+    original_language: movieData.original_language,
+    original_title: movieData.original_title,
+    overview: movieData.overview,
+    popularity: movieData.popularity,
+    poster_path: movieData.poster_path,
+    release_date: movieData.release_date,
+    revenue: movieData.revenue,
+    runtime: movieData.runtime,
+    status: movieData.status,
+    tagline: movieData.tagline,
+    title: movieData.title,
+    vote_average: movieData.vote_average,
+    vote_count: movieData.vote_count,
+  };
+
+  const movieGenres = movieData.genres.map(genre => {
+    return {
+      movieId: movieData.id,
+      genreId: genre.id,
+    };
+  });
+
+  const reviews = movieData.reviews.results.map(review => {
+    return {
+      id: review.id,
+      movieid: movieData.id,
+      author: review.author,
+      content: review.content,
+      created_at: review.created_at,
+      updated_at: review.created_at,
+    };
+  });
+
+  const productionCompanies = movieData.production_companies.map(company => {
+    return {
+      movieId: movieData.id,
+      companyId: company.id,
+    };
+  });
+
+  const companies = movieData.production_companies.map(company => {
+    return {
+      id: company.id,
+      origin_country: company.origin_country,
+      logo_path: company.logo_path,
+      name: company.name,
+    };
+  });
+
+  const productionCountries = movieData.production_countries.map(country => {
+    return {
+      iso_3166_1: country.iso_3166_1,
+      movieId: movieData.id,
+    };
+  });
+
+  const spokenLanguages = movieData.spoken_languages.map(language => {
+    return {
+      movieid: movieData.id,
+      iso_3166_1: language.iso_639_1,
+    };
+  });
+
+  const cast = movieData.credits.cast.map(actor => {
+    return {
+      movieid: movieData.id,
+      personId: actor.id,
+      credit_id: actor.credit_id,
+      character: actor.character,
+      order: actor.order,
+    };
+  });
+
+  const crew = movieData.credits.crew.map(member => {
+    return {
+      movieid: movieData.id,
+      personId: member.id,
+      credit_id: member.credit_id,
+      department: member.department,
+      job: member.job,
+    };
+  });
+
+  const releaseDates = movieData.release_dates.results.map(release => {
+    return {
+      iso_3166_1: release.iso_3166_1,
+      movieId: movieData.id,
+      certification: release.release_dates[0].certification, // Get better result
+    };
+  });
+
+  const similar = movieData.similar.results.map(movie => {
+    return {
+      movieId: movieData.id,
+      similarId: movie.id,
+    };
+  });
+
+  const findTranslation = movieData.translations.translations.find(translation => translation.iso_639_1 === "fi");
+  const translation = findTranslation
+    ? {
+        movieId: movieData.id,
+        iso_639_1: findTranslation.iso_639_1,
+        overview: findTranslation.data.overview,
+        title: findTranslation.data.title,
+      }
+    : null;
+
+  // const providers = ...
+
+  // const images = movieData.images.
+
+  return {
+    movie,
+    movieGenres,
+    companies,
+    productionCompanies,
+    productionCountries,
+    spokenLanguages,
+    reviews,
+    cast,
+    crew,
+    releaseDates,
+    similar,
+    translation,
+  };
+};
+
+const fetchMovie = async (movieId: number) => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,similar,translations,images&language=en-US,fi-FI&include_image_language=en,fi`,
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,similar,translations,images&language=en-US,fi-FI&include_image_language=en,fi,null`,
     );
 
     if (!response.ok) {
       throw response.status;
     }
+
+    response.body;
 
     const data = (await response.json()) as ResponseData;
 
@@ -256,58 +392,30 @@ export const fetchMovie = async (movieId: number) => {
   }
 };
 
-const fetchMovieData = async () => {
-  const moviesReviewsData: MovieReviewData[] = [];
+export const fetchMoviesData = (movieIds: number[]) => {
+  const moviesReviewsData: ReviewData[] = [];
   const moviesData: MovieData[] = [];
-  for (let movieId = 1; movieId <= totalMovies; movieId += 1) {
+  movieIds.forEach(async movieId => {
     await new Promise(resolve => setTimeout(resolve, delay));
 
     fetchMovie(movieId)
       .then(res => {
-        moviesData.push({
-          adult: res.adult,
-          backdrop_path: res.backdrop_path,
-          budget: res.budget,
-          homepage: res.homepage,
-          id: res.id,
-          imdb_id: res.imdb_id,
-          original_language: res.original_language,
-          original_title: res.original_title,
-          overview: res.overview,
-          popularity: res.popularity,
-          poster_path: res.poster_path,
-          release_date: res.release_date,
-          revenue: res.revenue,
-          runtime: res.runtime,
-          status: res.status,
-          tagline: res.tagline,
-          title: res.title,
-          vote_average: res.vote_average,
-          vote_count: res.vote_count,
-        });
-        const reviews: Review[] = res.reviews.results;
-        // console.log(reviews);
-        reviews.forEach(review => {
-          const movieId = res?.id;
-
-          moviesReviewsData.push({
-            id: review.id,
-            movieid: movieId,
-            author: review.author,
-            rating: review.author_details.rating,
-            content: review.content,
-          });
-        });
+        const movieData = parseMovieResponseData(res);
+        console.log(movieData);
+        moviesData.push(movieData.movie);
+        moviesReviewsData.push(...movieData.reviews);
       })
       .catch(err => console.error("failed to fetch", movieId, err));
 
     if (movieId % 100 === 0) {
       console.log(`Movies processed: ${movieId - 99}-${movieId}`);
     }
-  }
+  });
+
   // console.log(moviesReviewsData);
   // console.log(moviesData.length);
   // set prisma init services here
   console.log("database filled with movies and reviews");
 };
-void fetchMovieData();
+
+fetchMoviesData([2, 3]);

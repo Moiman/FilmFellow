@@ -20,11 +20,11 @@ model Users {
 }
 
 model Movies {
+  id                  Int                   @id
   adult               Boolean
   backdrop_path       String
   budget              Int
   homepage            String
-  id                  Int                   @id @default(autoincrement())
   imdb_id             String
   original_language   String
   original_title      String
@@ -58,9 +58,9 @@ model Movies {
 }
 
 model ImportedReviews {
+  id         String   @id
   movie      Movies   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   movieId    Int
-  id         String   @unique
   content    String
   created_at DateTime
   updated_at DateTime
@@ -68,9 +68,9 @@ model ImportedReviews {
 }
 
 model Reviews {
+  id         Int      @id @default(autoincrement())
   movie      Movies   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   movieId    Int
-  id         String   @unique
   content    String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
@@ -79,7 +79,7 @@ model Reviews {
 }
 
 model Genres {
-  id     Int           @id @default(autoincrement()) @db.SmallInt
+  id     Int           @id @db.SmallInt
   name   String
   movies MovieGenres[]
 }
@@ -119,7 +119,7 @@ model Countries {
 
 model Companies {
   productionCompanies ProductionCompanies[]
-  id                  Int                   @id @default(autoincrement()) @db.SmallInt
+  id                  Int                   @id @db.SmallInt
   logo_path           String
   name                String
   origin_country      String
@@ -143,18 +143,13 @@ model Languages {
 }
 
 model MovieCast {
-  movieId              Int
-  adult                Boolean
-  gender               Int
-  personId             Int
-  known_for_department String
-  name                 String
-  original_name        String
-  character            String
-  credit_id            String  @id
-  order                Int
-  person               Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
-  movie                Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId   Int
+  personId  Int
+  credit_id String  @id
+  character String
+  order     Int
+  person    Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
+  movie     Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
 }
 
 model MovieCrew {

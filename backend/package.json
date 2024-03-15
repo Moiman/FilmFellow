@@ -15,7 +15,8 @@
     "init-admin": "tsx -r dotenv/config ./src/scripts/initAdmin.ts",
     "init-movies": "tsx -r dotenv/config ./src/scripts/initMovies.ts",
     "fetch-test-data": "tsx -r dotenv/config ./src/scripts/fetchTestData.ts",
-    "init-persons": "tsx -r dotenv/config ./src/scripts/initPersons.ts"
+    "init-persons": "tsx -r dotenv/config ./src/scripts/initPersons.ts",
+    "fetch-movieids": "tsx -r dotenv/config ./src/scripts/fetchMovieIds.ts"
   },
   "keywords": [],
   "author": "",

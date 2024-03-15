@@ -14,6 +14,7 @@
     "prisma:migration": "prisma migrate dev",
     "init-admin": "tsx -r dotenv/config ./src/scripts/initAdmin.ts",
     "init-movies": "tsx -r dotenv/config ./src/scripts/initMovies.ts",
+    "fetch-test-data": "tsx -r dotenv/config ./src/scripts/fetchTestData.ts",
     "init-persons": "tsx -r dotenv/config ./src/scripts/initPersons.ts"
   },
   "keywords": [],
@@ -22,7 +23,6 @@
   "dependencies": {
     "@prisma/client": "^5.10.2",
     "argon2": "^0.40.1",
-    "axios": "^1.6.7",
     "cors": "^2.8.5",
     "express": "^4.18.3",
     "yup": "^1.4.0"

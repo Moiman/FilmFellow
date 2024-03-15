@@ -1,8 +1,6 @@
-import axios, { AxiosError } from "axios";
-
 const apiKey = process.env.API_KEY;
 const delay = 20;
-const totalMovies = 1000;
+const totalMovies = 20;
 
 interface Genres {
   id: number;
@@ -237,16 +235,21 @@ interface MovieData {
 
 export const fetchMovie = async (movieId: number) => {
   try {
-    const response = await axios.get<ResponseData>(
+    const response = await fetch(
       `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,similar,translations,images&language=en-US,fi-FI&include_image_language=en,fi`,
     );
-    // console.log(response.data);
-    return response.data;
-  } catch (error: unknown) {
-    // console.error(`Error fetching data for movie ID ${movieId}:`, error.message);
-    if (error instanceof AxiosError && error.response && error.response.status === 429) {
+
+    if (!response.ok) {
+      throw response.status;
+    }
+
+    const data = (await response.json()) as ResponseData;
+
+    return data;
+  } catch (error) {
+    if (error === 429) {
       console.log("429");
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // await new Promise(resolve => setTimeout(resolve, 1000));
       // return fetchMovie(movieId);
     }
     throw error;
@@ -257,6 +260,8 @@ const fetchMovieData = async () => {
   const moviesReviewsData: MovieReviewData[] = [];
   const moviesData: MovieData[] = [];
   for (let movieId = 1; movieId <= totalMovies; movieId += 1) {
+    await new Promise(resolve => setTimeout(resolve, delay));
+
     fetchMovie(movieId)
       .then(res => {
         moviesData.push({
@@ -294,8 +299,7 @@ const fetchMovieData = async () => {
           });
         });
       })
-      .catch(err => console.error("failed to fetch" + err));
-    await new Promise(resolve => setTimeout(resolve, delay));
+      .catch(err => console.error("failed to fetch", movieId, err));
 
     if (movieId % 100 === 0) {
       console.log(`Movies processed: ${movieId - 99}-${movieId}`);

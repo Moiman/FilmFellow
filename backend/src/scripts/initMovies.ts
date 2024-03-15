@@ -2,8 +2,7 @@ import axios, { AxiosError } from "axios";
 
 const apiKey = process.env.API_KEY;
 const delay = 20;
-const batchSize = 10;
-const totalMovies = 100;
+const totalMovies = 1000;
 
 interface Genres {
   id: number;
@@ -236,67 +235,55 @@ interface MovieData {
   vote_count: number;
 }
 
+export const fetchMovie = async (movieId: number) => {
+  try {
+    const response = await axios.get<ResponseData>(
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,similar,translations,images&language=en-US,fi-FI&include_image_language=en,fi`,
+    );
+    // console.log(response.data);
+    return response.data;
+  } catch (error: unknown) {
+    // console.error(`Error fetching data for movie ID ${movieId}:`, error.message);
+    if (error instanceof AxiosError && error.response && error.response.status === 429) {
+      console.log("429");
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // return fetchMovie(movieId);
+    }
+    throw error;
+  }
+};
+
 const fetchMovieData = async () => {
-  const fetchMovie = async (movieId: number) => {
-    try {
-      const response = await axios.get<ResponseData>(
-        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,similar,translations,images&language=en-US,fi-FI&include_image_language=en,fi`,
-      );
-      // console.log(response.data);
-      return response.data;
-    } catch (error: unknown) {
-      // console.error(`Error fetching data for movie ID ${movieId}:`, error.message);
-      if (error instanceof AxiosError && error.response && error.response.status === 429) {
-        console.log("429");
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        // return fetchMovie(movieId);
-        return null;
-      }
-      return null;
-    }
-  };
-
-  for (let batchStartId = 1; batchStartId <= totalMovies; batchStartId += batchSize) {
-    const batchEndId = Math.min(batchStartId + batchSize - 1, totalMovies);
-    const promises = [];
-    const moviesReviewsData: MovieReviewData[] = [];
-    const moviesData: MovieData[] = [];
-
-    for (let movieId = batchStartId; movieId <= batchEndId; movieId++) {
-      promises.push(fetchMovie(movieId));
-      await new Promise(resolve => setTimeout(resolve, delay));
-    }
-    const results = await Promise.allSettled(promises);
-
-    const filterFulfilled = results.filter(result => result.status === "fulfilled" && result.value !== null);
-    // console.log(filterFulfilled);
-    filterFulfilled.forEach(movie => {
-      if (movie.status === "fulfilled" && movie.value) {
+  const moviesReviewsData: MovieReviewData[] = [];
+  const moviesData: MovieData[] = [];
+  for (let movieId = 1; movieId <= totalMovies; movieId += 1) {
+    fetchMovie(movieId)
+      .then(res => {
         moviesData.push({
-          adult: movie.value.adult,
-          backdrop_path: movie.value.backdrop_path,
-          budget: movie.value.budget,
-          homepage: movie.value.homepage,
-          id: movie.value.id,
-          imdb_id: movie.value.imdb_id,
-          original_language: movie.value.original_language,
-          original_title: movie.value.original_title,
-          overview: movie.value.overview,
-          popularity: movie.value.popularity,
-          poster_path: movie.value.poster_path,
-          release_date: movie.value.release_date,
-          revenue: movie.value.revenue,
-          runtime: movie.value.runtime,
-          status: movie.value.status,
-          tagline: movie.value.tagline,
-          title: movie.value.title,
-          vote_average: movie.value.vote_average,
-          vote_count: movie.value.vote_count,
+          adult: res.adult,
+          backdrop_path: res.backdrop_path,
+          budget: res.budget,
+          homepage: res.homepage,
+          id: res.id,
+          imdb_id: res.imdb_id,
+          original_language: res.original_language,
+          original_title: res.original_title,
+          overview: res.overview,
+          popularity: res.popularity,
+          poster_path: res.poster_path,
+          release_date: res.release_date,
+          revenue: res.revenue,
+          runtime: res.runtime,
+          status: res.status,
+          tagline: res.tagline,
+          title: res.title,
+          vote_average: res.vote_average,
+          vote_count: res.vote_count,
         });
-        const reviews: Review[] = movie.value.reviews.results;
+        const reviews: Review[] = res.reviews.results;
         // console.log(reviews);
         reviews.forEach(review => {
-          const movieId = movie.value?.id;
+          const movieId = res?.id;
 
           moviesReviewsData.push({
             id: review.id,
@@ -306,14 +293,17 @@ const fetchMovieData = async () => {
             content: review.content,
           });
         });
-      }
-    });
+      })
+      .catch(err => console.error("failed to fetch" + err));
+    await new Promise(resolve => setTimeout(resolve, delay));
 
-    console.log(`Movies processed: ${batchStartId}-${batchEndId}`);
-    // console.log(moviesReviewsData);
-    // console.log(moviesData.length);
-    // set prisma init services here
+    if (movieId % 100 === 0) {
+      console.log(`Movies processed: ${movieId - 99}-${movieId}`);
+    }
   }
+  // console.log(moviesReviewsData);
+  // console.log(moviesData.length);
+  // set prisma init services here
   console.log("database filled with movies and reviews");
 };
 void fetchMovieData();

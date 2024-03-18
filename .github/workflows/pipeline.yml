@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-      - run: cd backend && npm ci && npm run lint
+      - run: cd backend && npm ci && npm run lint && npm run prettier-check
   lint-frontend:
     runs-on: ubuntu-latest
     steps:
@@ -29,3 +29,14 @@ jobs:
         with:
           node-version: "20.x"
       - run: cd frontend && npm ci && npm run test
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - run: cp .env.example .env
+    - run: docker compose up postgres -d
+    - run: cd backend && cp .env.example .env && npm ci && npx prisma migrate deploy
+    - run: cd backend && npm run test

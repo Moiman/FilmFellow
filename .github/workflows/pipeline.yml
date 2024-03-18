@@ -1,7 +1,7 @@
 name: Pipeline
 on:
   push:
-    branches: ["main", "github-pipeline"]
+    branches: ["main"]
   pull_request:
     branches: ["main"]
 jobs:

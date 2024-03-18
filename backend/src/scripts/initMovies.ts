@@ -367,31 +367,23 @@ const fetchMovie = async (movieId: number) => {
   }
 };
 
-export const fetchMoviesData = (movieIds: number[]) => {
-  const moviesReviewsData: ReviewData[] = [];
-  const moviesData: MovieData[] = [];
-  movieIds.forEach(async movieId => {
+export const fetchMoviesData = async (movieIds: number[], storeFunction = initMoviesDB) => {
+  for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
 
     fetchMovie(movieId)
       .then(async res => {
-         const movieData = parseMovieResponseData(res);
-        // console.log(movieData);
-        await initMoviesDB(movieData);
-        moviesData.push(movieData.movie);
-        moviesReviewsData.push(...movieData.reviews);
+        const movieData = parseMovieResponseData(res);
+        await storeFunction(movieData);
       })
       .catch(err => console.error("failed to fetch", movieId, err));
 
     if (movieId % 100 === 0) {
       console.log(`Movies processed: ${movieId - 99}-${movieId}`);
     }
-  });
+  }
 
-  // console.log(moviesReviewsData);
-  // console.log(moviesData.length);
-  // set prisma init services here
   console.log("database filled with movies and reviews");
 };
 
-fetchMoviesData([2, 3]);
+await fetchMoviesData([2, 3]);

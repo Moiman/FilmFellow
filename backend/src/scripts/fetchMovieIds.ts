@@ -1,40 +1,38 @@
-import fs from "fs";
-import zlib from "zlib";
-import { pipeline } from "node:stream";
-import { promisify } from "node:util";
-const streamPipeline = promisify(pipeline);
+interface MovieIdsType {
+  adult: boolean;
+  id: number;
+  original_title: string;
+}
 
-// const result = await streamToString(stream);
-// const data = fs.readFileSync("movie_ids_03_14_2024.json", "utf8");
-const movieArray = [];
-const today = new Date();
-today.setDate(today.getDate() - 1);
-
-const date =
-  ("0" + (today.getMonth() + 1)).slice(-2) + "_" + ("0" + today.getDate()).slice(-2) + "_" + today.getFullYear();
-console.log(date);
-
-const fetchAndExtractGZ = async () => {
+export const fetchMovieIds = async () => {
   try {
-    const response = await fetch(`http://files.tmdb.org/p/exports/movie_ids_${date}.json.gz`);
-    console.log(response.body);
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
+    const yesterdayDate =
+      ("0" + (yesterday.getMonth() + 1)).slice(-2) +
+      "_" +
+      ("0" + yesterday.getDate()).slice(-2) +
+      "_" +
+      yesterday.getFullYear();
+
+    const response = await fetch(`http://files.tmdb.org/p/exports/movie_ids_${yesterdayDate}.json.gz`);
     if (!response.ok) {
       throw response.status;
     }
 
     const blob = await response.blob();
-    const ds = new DecompressionStream("gzip");
-    const decompressedStream = blob.stream().pipeThrough(ds);
+    const decompressedStream = blob.stream().pipeThrough(new DecompressionStream("gzip"));
     const decompressedBlob = await new Response(decompressedStream).blob();
-    const text = await decompressedBlob.text();
+    const responseText = await decompressedBlob.text();
 
-    const validJSON = "[" + text.replace(/\n+(?=\{)/g, ",\n") + "]";
-    console.log(validJSON);
-    const movieDatal = JSON.parse(validJSON);
-    console.log(validJSON.length);
+    const validMovieJSON = "[" + responseText.replace(/\n+(?=\{)/g, ",\n") + "]";
+
+    const movieData = JSON.parse(validMovieJSON) as MovieIdsType[];
+    const movieIds = movieData.map(movie => movie.id);
+
+    return movieIds;
   } catch (error) {
     console.error("Error fetching file:", error);
     throw error;
   }
 };
-await fetchAndExtractGZ();

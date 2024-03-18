@@ -81,26 +81,6 @@ interface WatchProviderData {
   display_priority: number;
 }
 
-interface Similar {
-  results: SimilarData[];
-}
-
-interface SimilarData {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: [];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  vote_average: number;
-  vote_count: number;
-}
-
 interface Translations {
   translations: Translation[];
 }
@@ -171,7 +151,7 @@ interface Crew {
   job: string;
 }
 
-export interface ResponseData {
+interface ResponseData {
   adult: boolean;
   backdrop_path: string;
   budget: number;
@@ -199,7 +179,6 @@ export interface ResponseData {
   reviews: Reviews;
   release_dates: ReleaseDates;
   "watch/providers": WatchProviders;
-  similar: Similar;
   translations: Translations;
   images: Images;
 }
@@ -211,7 +190,7 @@ interface ReviewData {
   content: string;
 }
 
-export interface MovieData {
+interface MovieData {
   adult: boolean;
   backdrop_path: string;
   budget: number;
@@ -332,13 +311,6 @@ const parseMovieResponseData = (movieData: ResponseData) => {
     };
   });
 
-  const similar = movieData.similar.results.map(movie => {
-    return {
-      movieId: movieData.id,
-      similarId: movie.id,
-    };
-  });
-
   const findTranslation = movieData.translations.translations.find(translation => translation.iso_639_1 === "fi");
   const translation = findTranslation
     ? {
@@ -364,7 +336,6 @@ const parseMovieResponseData = (movieData: ResponseData) => {
     cast,
     crew,
     releaseDates,
-    similar,
     translation,
   };
 };
@@ -404,7 +375,7 @@ export const fetchMoviesData = (movieIds: number[]) => {
 
     fetchMovie(movieId)
       .then(async res => {
-        const movieData = parseMovieResponseData(res);
+         const movieData = parseMovieResponseData(res);
         // console.log(movieData);
         await initMoviesDB(movieData);
         moviesData.push(movieData.movie);

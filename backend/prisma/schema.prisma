@@ -49,10 +49,6 @@ model Movies {
   crew                MovieCrew[]
   release_dates       ReleaseDates[]
   // watchProviders      WatchProviders[]
-  // similar             Movies[]
-  // similarId           Int?
-  similarParent       Movies[]               @relation("SimilarMovies")
-  similar             Movies[]              @relation("SimilarMovies")
   translations        Translations[]
   images              Images[]
 }
@@ -196,15 +192,6 @@ model ReleaseDates {
 
 // model WatchProviderCountries {
 
-// }
-
-// model Similar {
-//   movieId Int
-//   movie   Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
-//   similarId Int
-//   similar   Movies @relation("SimilarMovies",fields: [similarId], references: [id], onDelete: Cascade)
-
-//   @@id([movieId, similarId])
 // }
 
 model Translations {

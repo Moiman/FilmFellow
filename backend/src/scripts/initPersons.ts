@@ -1,6 +1,5 @@
 const apiKey = process.env.API_KEY;
 const delay = 20;
-const totalPersons = 100;
 
 interface ResponseData {
   adult: boolean;
@@ -41,9 +40,9 @@ const fetchPerson = async (personId: number) => {
   }
 };
 
-const fetchPersonsData = async () => {
+const fetchPersonsData =  (personIds: number[]) => {
   const personsData: ResponseData[] = [];
-  for (let personId = 1; personId <= totalPersons; personId++) {
+  personIds.forEach(async personId => {
     await new Promise(resolve => setTimeout(resolve, delay));
 
     fetchPerson(personId)
@@ -71,8 +70,8 @@ const fetchPersonsData = async () => {
       console.log(`Persons processed: ${personId - 99}-${personId}`);
     }
     // set prisma init services here
-  }
+  });
   console.log(personsData.length);
   console.log("database filled with persons");
 };
-void fetchPersonsData();
+fetchPersonsData([5, 7, 8]);

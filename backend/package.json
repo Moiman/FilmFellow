@@ -11,6 +11,7 @@
     "dev": "tsx watch -r dotenv/config ./src/index.ts",
     "build": "tsc -p tsconfig-build.json",
     "lint": "eslint . --ext ts",
+    "prettier-check": "prettier --check .",
     "prisma:migration": "prisma migrate dev"
   },
   "keywords": [],

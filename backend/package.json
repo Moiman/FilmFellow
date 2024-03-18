@@ -12,7 +12,7 @@
     "build": "tsc -p tsconfig-build.json",
     "lint": "eslint . --ext ts",
     "prisma:migration": "prisma migrate dev",
-    "init-admin": "tsx -r dotenv/config ./src/scripts/initAdmin.ts",
+    "create-admin": "tsx -r dotenv/config ./src/scripts/createAdmin.ts",
     "init-movies": "tsx -r dotenv/config ./src/scripts/initMovies.ts",
     "fetch-test-data": "tsx -r dotenv/config ./src/scripts/fetchTestData.ts",
     "init-persons": "tsx -r dotenv/config ./src/scripts/initPersons.ts",

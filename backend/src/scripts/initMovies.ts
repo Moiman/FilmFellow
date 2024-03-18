@@ -367,6 +367,8 @@ const parseMovieResponseData = (movieData: ResponseData) => {
   };
 };
 
+export type MovieDataType = ReturnType<typeof parseMovieResponseData>;
+
 const fetchMovie = async (movieId: number) => {
   try {
     const response = await fetch(

@@ -21,21 +21,17 @@ const fetchAndExtractGZ = async () => {
     if (!response.ok) {
       throw response.status;
     }
-    const gunzip = zlib.createGunzip();
-    streamPipeline(response.body, gunzip);
 
-    const data = await gunzip.toArray();
-    // console.log(data[0].toString());
-    const b = "".concat(data);
-    // b.concat(data);
-    // console.log(b);
-    // const stringData = (await data).toString();
-     // console.log(stringData);
-    // console.log(stringi);
-       const validJSON = "[" + b.replace(/\n+(?=\{)/g, ",\n") + "]";
-     // console.log(validJSON);
-      const movieDatal = JSON.parse(validJSON);
-       console.log(validJSON.length);
+    const blob = await response.blob();
+    const ds = new DecompressionStream("gzip");
+    const decompressedStream = blob.stream().pipeThrough(ds);
+    const decompressedBlob = await new Response(decompressedStream).blob();
+    const text = await decompressedBlob.text();
+
+    const validJSON = "[" + text.replace(/\n+(?=\{)/g, ",\n") + "]";
+    console.log(validJSON);
+    const movieDatal = JSON.parse(validJSON);
+    console.log(validJSON.length);
   } catch (error) {
     console.error("Error fetching file:", error);
     throw error;

@@ -38,4 +38,4 @@ export const fetchPersonIds = async () => {
   }
 };
 
-console.log((await fetchPersonIds())[0]);
+console.log((await fetchPersonIds()).length);

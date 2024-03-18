@@ -1,3 +1,5 @@
+import { initMoviesDB } from "../services/movieService.js";
+
 const apiKey = process.env.API_KEY;
 const delay = 20;
 
@@ -169,7 +171,7 @@ interface Crew {
   job: string;
 }
 
-interface ResponseData {
+export interface ResponseData {
   adult: boolean;
   backdrop_path: string;
   budget: number;
@@ -209,7 +211,7 @@ interface ReviewData {
   content: string;
 }
 
-interface MovieData {
+export interface MovieData {
   adult: boolean;
   backdrop_path: string;
   budget: number;
@@ -401,9 +403,10 @@ export const fetchMoviesData = (movieIds: number[]) => {
     await new Promise(resolve => setTimeout(resolve, delay));
 
     fetchMovie(movieId)
-      .then(res => {
+      .then(async res => {
         const movieData = parseMovieResponseData(res);
-        console.log(movieData);
+        // console.log(movieData);
+        await initMoviesDB(movieData);
         moviesData.push(movieData.movie);
         moviesReviewsData.push(...movieData.reviews);
       })

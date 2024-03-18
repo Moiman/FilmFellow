@@ -50,8 +50,8 @@ model Movies {
   release_dates       ReleaseDates[]
   // watchProviders      WatchProviders[]
   // similar             Movies[]
-  similarId           Int?
-  similarParent       Movies?               @relation("SimilarMovies", fields: [similarId], references: [id])
+  // similarId           Int?
+  similarParent       Movies[]               @relation("SimilarMovies")
   similar             Movies[]              @relation("SimilarMovies")
   translations        Translations[]
   images              Images[]

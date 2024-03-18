@@ -3,6 +3,8 @@ import zlib from "zlib";
 import { pipeline } from "node:stream";
 import { promisify } from "node:util";
 const streamPipeline = promisify(pipeline);
+
+// const result = await streamToString(stream);
 // const data = fs.readFileSync("movie_ids_03_14_2024.json", "utf8");
 const movieArray = [];
 const today = new Date();
@@ -21,18 +23,19 @@ const fetchAndExtractGZ = async () => {
     }
     const gunzip = zlib.createGunzip();
     streamPipeline(response.body, gunzip);
-    const output = fs.createWriteStream("./movieids.json");
 
-    const writeStream = gunzip.pipe(output);
-    writeStream.on("close", () => {
-      const writtenFile = fs.readFileSync("./movieids.json");
-      console.log(writtenFile.length);
-      // const validJSON: string = "[" + data.replace(/\n+(?=\{)/g, ",\n") + "]";
-      // const movieData = JSON.parse(validJSON);
-      // console.log(movieData);
-      // let movieIds = movieData.map(movie => movie.id);
-      // console.log(movieIds.length);
-    });
+    const data = await gunzip.toArray();
+    // console.log(data[0].toString());
+    const b = "".concat(data);
+    // b.concat(data);
+    // console.log(b);
+    // const stringData = (await data).toString();
+     // console.log(stringData);
+    // console.log(stringi);
+       const validJSON = "[" + b.replace(/\n+(?=\{)/g, ",\n") + "]";
+     // console.log(validJSON);
+      const movieDatal = JSON.parse(validJSON);
+       console.log(validJSON.length);
   } catch (error) {
     console.error("Error fetching file:", error);
     throw error;

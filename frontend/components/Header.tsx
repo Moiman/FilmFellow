@@ -38,10 +38,12 @@ export const Header = () => {
           className="searchbar-input"
           placeholder="Search..."
         />
-        <Search
-          className="searchbar-icon"
-          size={20}
-        />
+        <button className="button-transparent">
+          <Search
+            className="searchbar-icon"
+            size={20}
+          />
+        </button>
       </div>
 
       {/* Replace with dropdown component when done */}

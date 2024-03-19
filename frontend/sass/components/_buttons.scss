@@ -41,3 +41,14 @@ button:hover {
 button:focus {
   outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
 }
+
+.button-transparent,
+.button-transparent:hover {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: abstracts.$default-border-radius;
+}

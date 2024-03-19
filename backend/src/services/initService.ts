@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { MovieDataType } from "../scripts/initMovies.js";
+import { PersonData } from "../scripts/initPersons.js";
 
 const prisma = new PrismaClient();
 
@@ -56,4 +57,15 @@ const initMoviesDB = async (movie: MovieDataType) => {
   */
 };
 
-export { initMoviesDB };
+const initPersonDB = async (person: PersonData) => {
+  const existingPerson = await prisma.persons.findUnique({
+    where: { id: person.id },
+  });
+  if (!existingPerson) {
+    await prisma.persons.create({
+      data: person,
+    });
+  }
+};
+
+export { initMoviesDB, initPersonDB };

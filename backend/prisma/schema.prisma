@@ -163,9 +163,9 @@ model Persons {
   adult                Boolean
   biography            String
   birthday             String
-  deathday             String
+  deathday             String?
   gender               Int
-  homepage             String
+  homepage             String?
   imdb_id              String
   known_for_department String
   name                 String

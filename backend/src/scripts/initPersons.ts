@@ -1,7 +1,9 @@
+import { initPersonDB } from "../services/initService.js";
+
 const apiKey = process.env.API_KEY;
 const delay = 20;
 
-interface ResponseData {
+export interface PersonData {
   adult: boolean;
   also_known_as: string[];
   biography: string;
@@ -26,7 +28,7 @@ const fetchPerson = async (personId: number) => {
       throw response.status;
     }
 
-    const data = (await response.json()) as ResponseData;
+    const data = (await response.json()) as PersonData;
 
     return data;
   } catch (error) {
@@ -41,12 +43,13 @@ const fetchPerson = async (personId: number) => {
 };
 
 const fetchPersonsData =  (personIds: number[]) => {
-  const personsData: ResponseData[] = [];
+  const personsData: PersonData[] = [];
   personIds.forEach(async personId => {
     await new Promise(resolve => setTimeout(resolve, delay));
 
     fetchPerson(personId)
-      .then(personData => {
+      .then(async personData => {
+        await initPersonDB(personData)
         personsData.push({
           adult: personData.adult,
           also_known_as: personData.also_known_as,

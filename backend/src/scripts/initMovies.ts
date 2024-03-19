@@ -1,4 +1,4 @@
-import { initMoviesDB } from "../services/movieService.js";
+import { initMoviesDB } from "../services/initService.js";
 
 const apiKey = process.env.API_KEY;
 const delay = 20;

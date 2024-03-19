@@ -11,7 +11,7 @@ button {
 }
 
 button {
-  background-color: map.get(abstracts.$highlight-colors, "yellow");
+  background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   border: 0;
   border-radius: 25px;
   padding: 5px 15px;
@@ -20,21 +20,21 @@ button {
 }
 
 button:hover {
-  background-color: map.get(abstracts.$highlight-hover-colors, "yellow");
+  background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
 }
 
 .button-pink {
-  background-color: map.get(abstracts.$highlight-colors, "pink");
+  background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "defailt");
 }
 
 .button-pink:hover {
-  background-color: map.get(abstracts.$highlight-hover-colors, "pink");
+  background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
 }
 
 .button-cyan {
-  background-color: map.get(abstracts.$highlight-colors, "cyan");
+  background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
 }
 
 .button-cyan:hover {
-  background-color: map.get(abstracts.$highlight-hover-colors, "cyan");
+  background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
 }

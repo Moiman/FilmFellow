@@ -1,10 +1,15 @@
 @use "./colors" as colors;
 
+// Screen width for responsivity
+$small-width: 480px;
+$medium-width: 768px;
+$large-width: 1024px;
+
 // Borders and shadows
 $default-border: 1px solid colors.$primary-darkgrey;
 $default-border-radius: 4px;
 
-$default-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+$default-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
 
 // Titles and texts
 $default-title-font: var(--font-poppins);
@@ -21,5 +26,5 @@ $h3-font-size: 1.75em;
 $h4-font-size: 1.5em;
 $h5-font-size: 1.25em;
 
-$p-font-size: 1em;
-$a-font-size: 1em;
+$p-font-size: 0.875em;
+$a-font-size: 0.875em;

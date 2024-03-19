@@ -21,26 +21,26 @@ h1 {
 h2 {
   font-size: abstracts.$h2-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
 h3 {
   font-size: abstracts.$h3-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 h4 {
   font-size: abstracts.$h4-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 h5 {
   font-size: abstracts.$h5-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
@@ -48,12 +48,27 @@ h5 {
 a {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$a-font-size;
-  font-weight: 400;
+  font-weight: 300;
   color: abstracts.$primary-light;
 }
 
 a:hover {
-  color: map.get(abstracts.$highlight-colors, "yellow");
+  color: rgba(abstracts.$primary-light, 0.75);
+}
+
+// .colorful-nav: colorful hover for when there is more than 1 link
+$total-colors: length(abstracts.$highlight-colors);
+
+@for $i from 1 through $total-colors {
+  $color: nth(map-keys(abstracts.$highlight-colors), $i);
+  $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
+
+  .colorful-nav > a:nth-child(#{$total-colors}n + #{$i}),
+  .sub-nav > a:nth-child(#{$total-colors}n + #{$i}) {
+    &:hover {
+      color: $default-color;
+    }
+  }
 }
 
 // Body text

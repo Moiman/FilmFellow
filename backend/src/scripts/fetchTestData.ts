@@ -1,5 +1,6 @@
 import fs from "fs";
 import { type MovieDataType, fetchMoviesData } from "./initMovies.js";
+import { fetchPersonsData, type PersonData } from "./initPersons.js";
 
 interface MovieListResponse {
   page: number;
@@ -10,9 +11,16 @@ interface MovieListResponse {
 
 const movies: MovieDataType[] = [];
 
+const persons: PersonData[] = [];
+
 // eslint-disable-next-line @typescript-eslint/require-await
-export const storeJSON = async (movie: MovieDataType) => {
+const storeMovie = async (movie: MovieDataType) => {
   movies.push(movie);
+};
+
+// eslint-disable-next-line @typescript-eslint/require-await
+const storePerson = async (person: PersonData) => {
+  persons.push(person);
 };
 
 const apiKey = process.env.API_KEY;
@@ -35,7 +43,7 @@ for (let page = 1; page < 6; page++) {
 
 console.log(topRatedMovieIdArray.length);
 
-await fetchMoviesData(topRatedMovieIdArray, storeJSON);
+await fetchMoviesData(topRatedMovieIdArray, storeMovie);
 
 // Wait for all requests to finnish
 while (topRatedMovieIdArray.length !== movies.length) {
@@ -43,7 +51,7 @@ while (topRatedMovieIdArray.length !== movies.length) {
 }
 
 console.log(movies.length);
-const personIds = new Set();
+const personIds = new Set<number>();
 
 movies.forEach(movie => {
   movie.cast.forEach(person => personIds.add(person.personId));
@@ -52,6 +60,11 @@ movies.forEach(movie => {
 
 console.log(personIds.size);
 
+await fetchPersonsData([...personIds.values()], storePerson);
+while (personIds.size !== persons.length) {
+  await new Promise(resolve => setTimeout(resolve, 10));
+}
+
 const companiesMap = new Map<number, MovieDataType["companies"][0]>();
 
 movies.forEach(movie => movie.companies.forEach(company => companiesMap.set(company.id, company)));
@@ -59,6 +72,7 @@ movies.forEach(movie => movie.companies.forEach(company => companiesMap.set(comp
 console.log(companiesMap.size);
 
 const moviesJSONdata = {
+  persons,
   movies: movies.map(movie => movie.movie),
   movieGenres: movies.map(movie => movie.movieGenres),
   companies: [...companiesMap.values()],

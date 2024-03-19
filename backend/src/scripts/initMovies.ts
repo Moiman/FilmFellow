@@ -278,7 +278,10 @@ const parseMovieResponseData = (movieData: ResponseData) => {
     return {
       iso_3166_1: release.iso_3166_1,
       movieId: movieData.id,
-      certification: release.release_dates[0].certification, // Get better result
+      certification: release.release_dates.reduce(
+        (certification, release) => (release.certification !== "" ? release.certification : certification),
+        "",
+      ),
     };
   });
 
@@ -338,6 +341,7 @@ const fetchMovie = async (movieId: number) => {
   }
 };
 
+let processedMovies = 1;
 export const fetchMoviesData = async (movieIds: number[], storeFunction = initMoviesDB) => {
   for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -349,12 +353,13 @@ export const fetchMoviesData = async (movieIds: number[], storeFunction = initMo
       })
       .catch(err => console.error("failed to fetch", movieId, err));
 
-    if (movieId % 100 === 0) {
-      console.log(`Movies processed: ${movieId - 99}-${movieId}`);
+    if (processedMovies % 1000 === 0) {
+      console.log(`Movies processed: ${processedMovies}`);
     }
+    processedMovies++;
   }
 
   console.log("database filled with movies and reviews");
 };
 
-await fetchMoviesData([2, 3]);
+// await fetchMoviesData([2, 3]);

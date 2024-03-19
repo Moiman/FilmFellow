@@ -45,40 +45,24 @@ const fetchPerson = async (personId: number) => {
   }
 };
 
-const fetchPersonsData = (personIds: number[]) => {
-  const personsData: PersonData[] = [];
-  personIds.forEach(async personId => {
+let processedPersons = 1;
+export const fetchPersonsData = async (personIds: number[], storeFunction = initPersonDB) => {
+  for (const personId of personIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
 
     fetchPerson(personId)
       .then(async personData => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { also_known_as, ...person } = personData;
-        await initPersonDB(person);
-        personsData.push({
-          adult: personData.adult,
-          biography: personData.biography,
-          birthday: personData.birthday,
-          deathday: personData.deathday,
-          gender: personData.gender,
-          homepage: personData.homepage,
-          id: personData.id,
-          imdb_id: personData.imdb_id,
-          known_for_department: personData.known_for_department,
-          name: personData.name,
-          place_of_birth: personData.place_of_birth,
-          popularity: personData.popularity,
-          profile_path: personData.profile_path,
-        });
+        await storeFunction(person);
       })
       .catch(err => console.error(err));
 
-    if (personId % 100 === 0) {
-      console.log(`Persons processed: ${personId - 99}-${personId}`);
+    if (processedPersons % 1000 === 0) {
+      console.log(`Persons processed: ${processedPersons}`);
     }
-    // set prisma init services here
-  });
-  console.log(personsData.length);
+    processedPersons++;
+  }
   console.log("database filled with persons");
 };
-fetchPersonsData([5, 7, 8]);
+// await fetchPersonsData([5, 7, 8]);

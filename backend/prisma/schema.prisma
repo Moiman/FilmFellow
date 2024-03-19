@@ -162,16 +162,16 @@ model Persons {
   id                   Int         @id
   adult                Boolean
   biography            String
-  birthday             String
+  birthday             String?
   deathday             String?
   gender               Int
   homepage             String?
-  imdb_id              String
+  imdb_id              String?
   known_for_department String
   name                 String
-  place_of_birth       String
+  place_of_birth       String?
   popularity           Float
-  profile_path         String
+  profile_path         String?
   movieCast            MovieCast[]
   movieCrew            MovieCrew[]
 }

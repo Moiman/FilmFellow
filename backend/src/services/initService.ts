@@ -14,16 +14,12 @@ const initMoviesDB = async (movie: MovieDataType) => {
       data: movie.movie,
     });
   }
-  const existingReviews = await prisma.importedReviews.findMany({
-    where: { movieId: movie.movie.id },
+
+  await prisma.importedReviews.createMany({
+    data: movie.reviews,
+    skipDuplicates: true,
   });
-  if (!existingReviews) {
-    for (const reviewData of movie.reviews) {
-      await prisma.importedReviews.create({
-        data: reviewData,
-      });
-    }
-  }
+
   await prisma.companies.createMany({
     data: movie.companies,
     skipDuplicates: true,
@@ -52,6 +48,10 @@ const initMoviesDB = async (movie: MovieDataType) => {
       skipDuplicates: true,
     });
   }
+  await prisma.movieGenres.createMany({
+    data: movie.movieGenres,
+    skipDuplicates: true,
+  });
 
   /*
   for (const castData of movie.cast) {

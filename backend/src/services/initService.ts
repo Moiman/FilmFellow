@@ -25,8 +25,33 @@ const initMoviesDB = async (movie: MovieDataType) => {
     }
   }
   await prisma.companies.createMany({
-    data: movie.companies, skipDuplicates:true
-  })
+    data: movie.companies,
+    skipDuplicates: true,
+  });
+
+  await prisma.spokenLanguages.createMany({
+    data: movie.spokenLanguages,
+    skipDuplicates: true,
+  });
+
+  await prisma.productionCompanies.createMany({
+    data: movie.productionCompanies,
+    skipDuplicates: true,
+  });
+  await prisma.productionCountries.createMany({
+    data: movie.productionCountries,
+    skipDuplicates: true,
+  });
+  await prisma.releaseDates.createMany({
+    data: movie.releaseDates,
+    skipDuplicates: true,
+  });
+  if (movie.translation) {
+    await prisma.translations.createMany({
+      data: movie.translation,
+      skipDuplicates: true,
+    });
+  }
 
   /*
   for (const castData of movie.cast) {

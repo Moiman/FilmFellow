@@ -250,7 +250,7 @@ const parseMovieResponseData = (movieData: ResponseData) => {
   const spokenLanguages = movieData.spoken_languages.map(language => {
     return {
       movieId: movieData.id,
-      iso_3166_1: language.iso_639_1,
+      iso_639_1: language.iso_639_1,
     };
   });
 

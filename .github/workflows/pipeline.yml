@@ -47,4 +47,4 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: '20.x'
-    - run: cd frontend && npm ci && npm run dev & sleep 10 && npm run cypress:run_headless
+    - run: cd frontend && npm ci && npm run dev & sleep 10 && cd frontend && npm run cypress:run_headless

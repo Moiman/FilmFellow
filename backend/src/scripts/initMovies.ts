@@ -216,7 +216,7 @@ const parseMovieResponseData = (movieData: ResponseData) => {
   const reviews = movieData.reviews.results.map(review => {
     return {
       id: review.id,
-      movieid: movieData.id,
+      movieId: movieData.id,
       author: review.author,
       content: review.content,
       created_at: review.created_at,

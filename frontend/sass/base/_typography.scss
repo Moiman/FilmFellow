@@ -62,8 +62,8 @@ a:active {
 }
 
 a:focus {
-  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
-  border-radius: abstracts.$default-border-radius;
+  color: rgba(abstracts.$primary-light, 0.75);
+  outline: 0;
 }
 
 // .highlight-nav: colorful hover using highlight colors for when there is more than 1 link
@@ -74,8 +74,10 @@ $total-colors: length(abstracts.$highlight-colors);
   $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
 
   .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}) {
-    &:hover {
+    &:hover,
+    &:focus {
       color: $default-color;
+      outline: 0;
     }
   }
 }

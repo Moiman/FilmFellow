@@ -63,8 +63,7 @@ $total-colors: length(abstracts.$highlight-colors);
   $color: nth(map-keys(abstracts.$highlight-colors), $i);
   $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
 
-  .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}),
-  .sub-nav > a:nth-child(#{$total-colors}n + #{$i}) {
+  .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}) {
     &:hover {
       color: $default-color;
     }

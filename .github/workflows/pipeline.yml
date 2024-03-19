@@ -1,7 +1,7 @@
 name: Pipeline
 on:
   push:
-    branches: ["main", "cypress-pipeline"]
+    branches: ["main"]
   pull_request:
     branches: ["main"]
 jobs:

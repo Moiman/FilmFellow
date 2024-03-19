@@ -5,7 +5,6 @@ const delay = 20;
 
 export interface PersonData {
   adult: boolean;
-  also_known_as: string[];
   biography: string;
   birthday: string;
   deathday: string | null;
@@ -20,6 +19,10 @@ export interface PersonData {
   profile_path: string;
 }
 
+interface ResponseData extends PersonData {
+  also_known_as : string[]
+}
+
 const fetchPerson = async (personId: number) => {
   try {
     const response = await fetch(`https://api.themoviedb.org/3/person/${personId}?api_key=${apiKey}`);
@@ -28,7 +31,7 @@ const fetchPerson = async (personId: number) => {
       throw response.status;
     }
 
-    const data = (await response.json()) as PersonData;
+    const data = (await response.json()) as ResponseData;
 
     return data;
   } catch (error) {
@@ -49,10 +52,11 @@ const fetchPersonsData =  (personIds: number[]) => {
 
     fetchPerson(personId)
       .then(async personData => {
-        await initPersonDB(personData)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const {also_known_as, ...person } = personData;
+        await initPersonDB(person)
         personsData.push({
           adult: personData.adult,
-          also_known_as: personData.also_known_as,
           biography: personData.biography,
           birthday: personData.birthday,
           deathday: personData.deathday,

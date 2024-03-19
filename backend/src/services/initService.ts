@@ -2,9 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import { MovieDataType } from "../scripts/initMovies.js";
 import { PersonData } from "../scripts/initPersons.js";
 
-const prisma = new PrismaClient();
-
 const initMoviesDB = async (movie: MovieDataType) => {
+  const prisma = new PrismaClient();
+
   const existingMovie = await prisma.movies.findUnique({
     where: { id: movie.movie.id },
   });
@@ -58,6 +58,8 @@ const initMoviesDB = async (movie: MovieDataType) => {
 };
 
 const initPersonDB = async (person: PersonData) => {
+  const prisma = new PrismaClient();
+
   const existingPerson = await prisma.persons.findUnique({
     where: { id: person.id },
   });

@@ -20,7 +20,7 @@ export interface PersonData {
 }
 
 interface ResponseData extends PersonData {
-  also_known_as : string[]
+  also_known_as: string[];
 }
 
 const fetchPerson = async (personId: number) => {
@@ -45,7 +45,7 @@ const fetchPerson = async (personId: number) => {
   }
 };
 
-const fetchPersonsData =  (personIds: number[]) => {
+const fetchPersonsData = (personIds: number[]) => {
   const personsData: PersonData[] = [];
   personIds.forEach(async personId => {
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -53,8 +53,8 @@ const fetchPersonsData =  (personIds: number[]) => {
     fetchPerson(personId)
       .then(async personData => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {also_known_as, ...person } = personData;
-        await initPersonDB(person)
+        const { also_known_as, ...person } = personData;
+        await initPersonDB(person);
         personsData.push({
           adult: personData.adult,
           biography: personData.biography,

@@ -1,3 +1,4 @@
+import fs from "fs";
 import { type MovieDataType, fetchMoviesData } from "./initMovies.js";
 
 interface MovieListResponse {
@@ -42,3 +43,44 @@ while (topRatedMovieIdArray.length !== movies.length) {
 }
 
 console.log(movies.length);
+const personIds = new Set();
+
+movies.forEach(movie => {
+  movie.cast.forEach(person => personIds.add(person.personId));
+  movie.crew.forEach(person => personIds.add(person.personId));
+});
+
+console.log(personIds.size);
+
+const companiesMap = new Map<number, MovieDataType["companies"][0]>();
+
+movies.forEach(movie => movie.companies.forEach(company => companiesMap.set(company.id, company)));
+
+console.log(companiesMap.size);
+
+// console.log(...companies.values());
+
+const moviesJSONdata = {
+  movies: movies.map(movie => movie.movie),
+  movieGenres: movies.map(movie => movie.movieGenres),
+  companies: [...companiesMap.values()],
+  productionCompanies: movies.map(movie => movie.productionCompanies),
+  productionCountries: movies.map(movie => movie.productionCountries),
+  spokenLanguages: movies.map(movie => movie.spokenLanguages),
+  reviews: movies.map(movie => movie.reviews),
+  casts: movies.map(movie => movie.cast),
+  crews: movies.map(movie => movie.crew),
+  releaseDates: movies.map(movie => movie.releaseDates),
+  translations: movies.reduce(
+    (translations, movie) => (movie.translation ? translations.concat(movie.translation) : translations),
+    [] as MovieDataType["translation"][],
+  ),
+};
+movies.forEach(movie => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { companies: _, ...rest } = movie;
+  return rest;
+});
+
+console.log("Writing 'test-data.json' file");
+fs.writeFileSync("test-data.json", JSON.stringify(moviesJSONdata, null, 2));

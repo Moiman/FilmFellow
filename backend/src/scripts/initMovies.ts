@@ -183,35 +183,6 @@ interface ResponseData {
   images: Images;
 }
 
-interface ReviewData {
-  id: string;
-  movieid: number;
-  author: string;
-  content: string;
-}
-
-interface MovieData {
-  adult: boolean;
-  backdrop_path: string;
-  budget: number;
-  homepage: string;
-  id: number;
-  imdb_id: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  revenue: bigint;
-  runtime: number;
-  status: string;
-  tagline: string;
-  title: string;
-  vote_average: number;
-  vote_count: number;
-}
-
 const parseMovieResponseData = (movieData: ResponseData) => {
   const movie = {
     id: movieData.id,
@@ -345,7 +316,7 @@ export type MovieDataType = ReturnType<typeof parseMovieResponseData>;
 const fetchMovie = async (movieId: number) => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,similar,translations,images&language=en-US,fi-FI&include_image_language=en,fi,null`,
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,translations,images&language=en-US,fi-FI&include_image_language=en,fi,null`,
     );
 
     if (!response.ok) {

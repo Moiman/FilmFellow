@@ -116,7 +116,7 @@ model Countries {
 model Companies {
   productionCompanies ProductionCompanies[]
   id                  Int                   @id @db.SmallInt
-  logo_path           String
+  logo_path           String?
   name                String
   origin_country      String
 }

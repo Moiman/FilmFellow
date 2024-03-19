@@ -56,14 +56,14 @@ a:hover {
   color: rgba(abstracts.$primary-light, 0.75);
 }
 
-// .colorful-nav: colorful hover for when there is more than 1 link
+// .highlight-nav: colorful hover using highlight colors for when there is more than 1 link
 $total-colors: length(abstracts.$highlight-colors);
 
 @for $i from 1 through $total-colors {
   $color: nth(map-keys(abstracts.$highlight-colors), $i);
   $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
 
-  .colorful-nav > a:nth-child(#{$total-colors}n + #{$i}),
+  .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}),
   .sub-nav > a:nth-child(#{$total-colors}n + #{$i}) {
     &:hover {
       color: $default-color;

@@ -21,7 +21,7 @@ export const Header = () => {
         <h4>FilmFellow</h4>
       </Link>
 
-      <nav className="main-nav colorful-nav">
+      <nav className="main-nav highlight-nav">
         {Links.map((link, index) => (
           <Link
             key={index}
@@ -45,12 +45,12 @@ export const Header = () => {
       </div>
 
       {/* Replace with dropdown component when done */}
-      <div className="sub-nav-narrow colorful-nav">
+      <div className="sub-nav-narrow highlight-nav">
         <Menu style={{ strokeWidth: 1.5 }} />
       </div>
 
       {/* For w > 1024 sub-nav */}
-      <div className="sub-nav-wide colorful-nav">
+      <div className="sub-nav-wide highlight-nav">
         <>
           {isLoggedIn ? (
             <>

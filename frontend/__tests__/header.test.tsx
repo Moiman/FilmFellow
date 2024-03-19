@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { Header, Links } from "../components/Header";
+import { Header, Links } from "../components/header";
 
 beforeAll(() => {
   render(<Header />);

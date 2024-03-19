@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { Header, Links } from "../components/Header";
 
 beforeAll(() => {
@@ -28,5 +28,24 @@ describe("Header rendering", () => {
       const linkElement = screen.getByText(text);
       expect(linkElement.getAttribute("href")).toBe(href);
     });
+  });
+
+  it("checks if search input is rendered", () => {
+    const searchInput = screen.getByPlaceholderText("Search...");
+    expect(searchInput).not.toBeNull();
+    expect(searchInput).toBeDefined();
+  });
+});
+
+describe("Placeholder search input", () => {
+  it("checks if search input is empty by default", () => {
+    const searchInput = screen.getByPlaceholderText("Search...") as HTMLInputElement;
+    expect(searchInput.value).toBe("");
+  });
+
+  it("checks if search input value changes correctly", () => {
+    const searchInput = screen.getByPlaceholderText("Search...") as HTMLInputElement;
+    fireEvent.change(searchInput, { target: { value: "testing" } });
+    expect(searchInput.value).toBe("testing");
   });
 });

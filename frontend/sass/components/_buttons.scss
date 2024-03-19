@@ -1,5 +1,4 @@
 @use "sass:map";
-
 @use "../abstracts" as abstracts;
 
 button {
@@ -37,4 +36,8 @@ button:hover {
 
 .button-cyan:hover {
   background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
+}
+
+button:focus {
+  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
 }

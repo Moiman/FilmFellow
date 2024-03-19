@@ -50,10 +50,20 @@ a {
   font-size: abstracts.$a-font-size;
   font-weight: 300;
   color: abstracts.$primary-light;
+  padding: 0.2em 0.4em;
 }
 
 a:hover {
   color: rgba(abstracts.$primary-light, 0.75);
+}
+
+a:active {
+  color: abstracts.$primary-light;
+}
+
+a:focus {
+  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+  border-radius: abstracts.$default-border-radius;
 }
 
 // .highlight-nav: colorful hover using highlight colors for when there is more than 1 link

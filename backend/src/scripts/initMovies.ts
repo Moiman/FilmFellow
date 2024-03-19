@@ -249,14 +249,14 @@ const parseMovieResponseData = (movieData: ResponseData) => {
 
   const spokenLanguages = movieData.spoken_languages.map(language => {
     return {
-      movieid: movieData.id,
+      movieId: movieData.id,
       iso_3166_1: language.iso_639_1,
     };
   });
 
   const cast = movieData.credits.cast.map(actor => {
     return {
-      movieid: movieData.id,
+      movieId: movieData.id,
       personId: actor.id,
       credit_id: actor.credit_id,
       character: actor.character,
@@ -266,7 +266,7 @@ const parseMovieResponseData = (movieData: ResponseData) => {
 
   const crew = movieData.credits.crew.map(member => {
     return {
-      movieid: movieData.id,
+      movieId: movieData.id,
       personId: member.id,
       credit_id: member.credit_id,
       department: member.department,

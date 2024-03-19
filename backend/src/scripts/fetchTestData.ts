@@ -58,8 +58,6 @@ movies.forEach(movie => movie.companies.forEach(company => companiesMap.set(comp
 
 console.log(companiesMap.size);
 
-// console.log(...companies.values());
-
 const moviesJSONdata = {
   movies: movies.map(movie => movie.movie),
   movieGenres: movies.map(movie => movie.movieGenres),
@@ -76,11 +74,6 @@ const moviesJSONdata = {
     [] as MovieDataType["translation"][],
   ),
 };
-movies.forEach(movie => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { companies: _, ...rest } = movie;
-  return rest;
-});
 
 console.log("Writing 'test-data.json' file");
 fs.writeFileSync("test-data.json", JSON.stringify(moviesJSONdata, null, 2));

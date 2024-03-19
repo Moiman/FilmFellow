@@ -52,5 +52,4 @@ jobs:
         npm ci
         npm run dev &
         sleep 10
-        cd frontend
         npm run cypress:run_headless

@@ -24,8 +24,6 @@ export const Header = () => {
   const isLoggedIn = false;
   const currentPath = usePathname();
 
-  console.log(currentPath);
-
   return (
     <header className="header">
       <Link

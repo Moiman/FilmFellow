@@ -25,7 +25,7 @@ export const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="header">
+    <header>
       <Link
         href="/"
         className="logo"

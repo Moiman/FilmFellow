@@ -53,30 +53,15 @@ const initMoviesDB = async (movie: MovieDataType) => {
     skipDuplicates: true,
   });
 
-  /*
-  for (const castData of movie.cast) {
-    await prisma.movieCast.create({
-      data: {
-        movieId: castData.movieid,
-        personId: castData.personId,
-        character: castData.character,
-        credit_id: castData.credit_id,
-        order: castData.order
-      }
-    });
-  }
-  for (const crewData of movie.crew) {
-    await prisma.movieCrew.create({
-      data: {
-        movieId: crewData.movieid,
-        personId: crewData.personId,
-        credit_id: crewData.credit_id,
-        department: crewData.department,
-        job: crewData.job,
-      },
-    });
-  }
-  */
+  await prisma.movieCast.createMany({
+    data: movie.cast,
+    skipDuplicates: true
+  })
+
+  await prisma.movieCrew.createMany({
+    data: movie.crew,
+    skipDuplicates:true
+  })
 };
 
 const initPersonDB = async (person: PersonData) => {

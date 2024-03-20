@@ -315,7 +315,7 @@ const parseMovieResponseData = (movieData: ResponseData) => {
 };
 
 export type MovieDataType = ReturnType<typeof parseMovieResponseData>;
-
+const personIds: number[] = [];
 const fetchMovie = async (movieId: number) => {
   try {
     const response = await fetch(
@@ -329,7 +329,8 @@ const fetchMovie = async (movieId: number) => {
     response.body;
 
     const data = (await response.json()) as ResponseData;
-
+    personIds.push(data.credits.cast.map(person => person.id));
+    personIds.push(data.credits.crew.map(person => person.id));
     return data;
   } catch (error) {
     if (error === 429) {
@@ -343,10 +344,11 @@ const fetchMovie = async (movieId: number) => {
 
 let processedMovies = 1;
 export const fetchMoviesData = async (movieIds: number[], storeFunction = initMoviesDB) => {
+
   for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
 
-    fetchMovie(movieId)
+    const test = fetchMovie(movieId)
       .then(async res => {
         const movieData = parseMovieResponseData(res);
         await storeFunction(movieData);
@@ -357,9 +359,11 @@ export const fetchMoviesData = async (movieIds: number[], storeFunction = initMo
       console.log(`Movies processed: ${processedMovies}`);
     }
     processedMovies++;
+     await test;
   }
 
   console.log("database filled with movies and reviews");
+  return personIds.flat();
 };
-
-// await fetchMoviesData([2, 3]);
+const crewAndCastIds =  await fetchMoviesData([2, 3]);
+console.log(crewAndCastIds);

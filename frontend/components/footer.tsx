@@ -5,10 +5,12 @@ export const Footer = () => {
   return (
     <footer>
       <div className="content">
-        <div className="github-link">
-          <GitHub size={18} />
-          <Link href="https://github.com/Moiman/FilmFellow/">GitHub</Link>
-        </div>
+        <Link
+          href="https://github.com/Moiman/FilmFellow/"
+          className="github-link"
+        >
+          <GitHub size={18} /> GitHub
+        </Link>
       </div>
     </footer>
   );

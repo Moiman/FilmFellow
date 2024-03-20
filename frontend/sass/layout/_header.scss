@@ -16,8 +16,8 @@ header {
 
   color: abstracts.$primary-light;
 
-  * {
-    border: px dashed #fff;
+  a {
+    padding: 3px 0px;
   }
 
   .logo {
@@ -68,7 +68,6 @@ header {
   position: relative;
   border-radius: 40px;
   background-color: rgba(abstracts.$primary-light, 0.1);
-  padding: 5px;
   flex: 1;
   display: flex;
 }
@@ -79,6 +78,11 @@ header {
   background-color: transparent;
   border: 0;
   color: abstracts.$primary-light;
+  border-radius: 20px 4px 4px 20px;
+}
+
+.searchbar > button {
+  border-radius: 4px 20px 20px 4px;
 }
 
 @media only screen and (max-width: abstracts.$large-width) {

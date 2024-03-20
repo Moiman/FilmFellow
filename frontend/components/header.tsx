@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
+import { usePathname } from "next/navigation";
 
 export const Links = [
   { text: "New", href: "/new" },
@@ -7,9 +10,18 @@ export const Links = [
   { text: "Best Rated", href: "/bestrated" },
 ];
 
+export const SubNavLinks = [
+  { icon: <Tool style={{ strokeWidth: 1.5 }} />, href: "/admin" },
+  { icon: <User style={{ strokeWidth: 1.5 }} />, href: "/profile" },
+  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, href: "/" },
+];
+
 export const Header = () => {
   // Placeholder: check if user is logged in
   const isLoggedIn = false;
+  const currentPath = usePathname();
+
+  console.log(currentPath);
 
   return (
     <header className="header">
@@ -26,6 +38,7 @@ export const Header = () => {
           <Link
             key={link.href}
             href={link.href}
+            className={currentPath === link.href ? "active-link" : ""}
           >
             {link.text}
           </Link>
@@ -56,18 +69,23 @@ export const Header = () => {
         <>
           {isLoggedIn ? (
             <>
-              <Link href="/admin">
-                <Tool style={{ strokeWidth: 1.5 }} />
-              </Link>
-              <Link href="/profile">
-                <User style={{ strokeWidth: 1.5 }} />
-              </Link>
-              <Link href="/">
-                <LogOut style={{ strokeWidth: 1.5 }} />
-              </Link>
+              {SubNavLinks.map(link => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={currentPath === link.href ? "active-icon" : ""}
+                >
+                  {link.icon}
+                </Link>
+              ))}
             </>
           ) : (
-            <Link href="/login">Login</Link>
+            <Link
+              href="/login"
+              className={currentPath === "/login" ? "active-link" : ""}
+            >
+              Login
+            </Link>
           )}
         </>
       </div>

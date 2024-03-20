@@ -73,11 +73,20 @@ $total-colors: length(abstracts.$highlight-colors);
   $color: nth(map-keys(abstracts.$highlight-colors), $i);
   $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
 
+  .active-link:nth-child(#{$total-colors}n + #{$i}) {
+    outline: 0;
+    box-shadow: inset 0 -2px $default-color;
+  }
+
+  .active-icon:nth-child(#{$total-colors}n + #{$i}) {
+    outline: 0;
+    color: $default-color;
+  }
+
   .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}) {
     &:hover,
     &:focus {
       color: $default-color;
-      outline: 0;
     }
   }
 }

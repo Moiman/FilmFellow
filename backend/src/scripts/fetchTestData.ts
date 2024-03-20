@@ -90,4 +90,4 @@ const moviesJSONdata = {
 };
 
 console.log("Writing 'test-data.json' file");
-fs.writeFileSync("test-data.json", JSON.stringify(moviesJSONdata, null, 2));
+fs.writeFileSync("test-data.json", JSON.stringify(moviesJSONdata));

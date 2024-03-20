@@ -84,7 +84,7 @@ header {
 @media only screen and (max-width: abstracts.$large-width) {
   header {
     display: flex;
-    grid-template-columns: max-content auto fit-content;
+    justify-content: space-between;
 
     .main-nav,
     .sub-nav-wide {

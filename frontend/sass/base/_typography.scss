@@ -21,26 +21,26 @@ h1 {
 h2 {
   font-size: abstracts.$h2-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
 h3 {
   font-size: abstracts.$h3-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 h4 {
   font-size: abstracts.$h4-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 h5 {
   font-size: abstracts.$h5-font-size;
   line-height: abstracts.$default-line-height;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
@@ -48,12 +48,50 @@ h5 {
 a {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$a-font-size;
-  font-weight: 400;
+  font-weight: 300;
   color: abstracts.$primary-light;
+  padding: 0.2em 0.6em;
 }
 
 a:hover {
-  color: map.get(abstracts.$highlight-colors, "yellow");
+  color: rgba(abstracts.$primary-light, 0.75);
+}
+
+a:active {
+  color: abstracts.$primary-light;
+}
+
+a:focus {
+  color: rgba(abstracts.$primary-light, 0.75);
+  outline: 0;
+}
+
+// .highlight-nav: colorful hover using highlight colors for when there is more than 1 link
+// For active links you can give .active-link to have matching colorful underline when it matches to current path
+// For active icons you can give .active-icon to make it matching color when it matched to current path
+$total-colors: length(abstracts.$highlight-colors);
+
+@for $i from 1 through $total-colors {
+  $color: nth(map-keys(abstracts.$highlight-colors), $i);
+  $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
+
+  .active-link:nth-child(#{$total-colors}n + #{$i}) {
+    outline: 0;
+    color: $default-color;
+    box-shadow: inset 0 -4px $default-color;
+  }
+
+  .active-icon:nth-child(#{$total-colors}n + #{$i}) {
+    outline: 0;
+    color: $default-color;
+  }
+
+  .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}) {
+    &:hover,
+    &:focus {
+      color: $default-color;
+    }
+  }
 }
 
 // Body text

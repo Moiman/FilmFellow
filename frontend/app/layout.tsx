@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Poppins, Roboto } from "next/font/google";
 import "../sass/style.scss";
+import { Poppins, Roboto } from "next/font/google";
+import { Header } from "@/components/header";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-poppins" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400"], variable: "--font-poppins" });
 const roboto = Roboto({
   subsets: ["latin"],
   style: ["normal", "italic"],
@@ -21,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${roboto.variable}`}>{children}</body>
+      <body className={`${poppins.variable} ${roboto.variable}`}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,11 +1,96 @@
+@use "sass:map";
+
 @use "../abstracts/" as abstracts;
 
-.header {
+header {
   background-color: abstracts.$primary-dark;
   width: 100%;
   max-width: 100%;
-  padding: 10px;
+  padding: 10px 20px;
 
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 0.5fr 3fr 2fr 1fr;
+
+  box-shadow: abstracts.$default-shadow;
+
+  color: abstracts.$primary-light;
+
+  a {
+    padding: 3px 0px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .sub-nav-wide,
+  .sub-nav-narrow {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 40px;
+
+    a {
+      line-height: 1;
+    }
+  }
+
+  .sub-nav-narrow {
+    display: none;
+  }
+
+  @media only screen and (max-width: abstracts.$large-width) {
+    .main-nav,
+    .sub-nav-wide {
+      display: none;
+    }
+
+    .sub-nav-narrow {
+      display: flex;
+    }
+  }
+}
+
+// Placeholder
+.searchbar {
+  position: relative;
+  border-radius: 40px;
+  background-color: rgba(abstracts.$primary-light, 0.1);
+  flex: 1;
   display: flex;
-  align-items: center;
+}
+
+.searchbar-input {
+  width: calc(100% - 30px);
+  padding: 5px 10px;
+  background-color: transparent;
+  border: 0;
+  color: abstracts.$primary-light;
+  border-radius: 20px 4px 4px 20px;
+}
+
+.searchbar > button {
+  border-radius: 4px 20px 20px 4px;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .header {
+    display: flex;
+  }
+}
+
+.searchbar-icon {
+  color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
 }

@@ -28,7 +28,7 @@ type RegisterUserSchemaType = yup.InferType<typeof registerUserSchema>;
 
 authRouter.post(
   "/register",
-  validate(registerUserSchema),
+  validate.validate(registerUserSchema),
   async (req: RequestBody<RegisterUserSchemaType>, res, next) => {
     try {
       const { email, username, password } = req.body;

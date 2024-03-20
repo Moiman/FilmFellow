@@ -9,8 +9,8 @@ header {
   padding: 10px 20px;
 
   display: grid;
+  grid-template-columns: max-content auto auto max-content;
   gap: 40px;
-  grid-template-columns: 0.5fr 3fr 2fr 1fr;
 
   box-shadow: abstracts.$default-shadow;
 
@@ -24,10 +24,12 @@ header {
     display: flex;
     align-items: center;
     gap: 4px;
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .main-nav {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-around;
 
@@ -51,7 +53,39 @@ header {
     display: none;
   }
 
-  @media only screen and (max-width: abstracts.$large-width) {
+  // Placeholder
+  .searchbar {
+    max-width: 600px;
+    position: relative;
+    border-radius: 40px;
+    background-color: rgba(abstracts.$primary-light, 0.1);
+    flex: 1;
+    display: flex;
+  }
+
+  .searchbar-input {
+    width: calc(100% - 30px);
+    padding: 0px 20px;
+    background-color: transparent;
+    border: 0;
+    color: abstracts.$primary-light;
+    border-radius: 20px 4px 4px 20px;
+  }
+
+  .searchbar-icon {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+
+  .searchbar > button {
+    border-radius: 4px 20px 20px 4px;
+  }
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  header {
+    display: flex;
+    grid-template-columns: max-content auto fit-content;
+
     .main-nav,
     .sub-nav-wide {
       display: none;
@@ -59,38 +93,7 @@ header {
 
     .sub-nav-narrow {
       display: flex;
+      align-items: center;
     }
   }
-}
-
-// Placeholder
-.searchbar {
-  position: relative;
-  border-radius: 40px;
-  background-color: rgba(abstracts.$primary-light, 0.1);
-  flex: 1;
-  display: flex;
-}
-
-.searchbar-input {
-  width: calc(100% - 30px);
-  padding: 0px 20px;
-  background-color: transparent;
-  border: 0;
-  color: abstracts.$primary-light;
-  border-radius: 20px 4px 4px 20px;
-}
-
-.searchbar > button {
-  border-radius: 4px 20px 20px 4px;
-}
-
-@media only screen and (max-width: abstracts.$large-width) {
-  .header {
-    display: flex;
-  }
-}
-
-.searchbar-icon {
-  color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
 }

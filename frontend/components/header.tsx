@@ -22,9 +22,9 @@ export const Header = () => {
       </Link>
 
       <nav className="main-nav highlight-nav">
-        {Links.map((link, index) => (
+        {Links.map(link => (
           <Link
-            key={index}
+            key={link.href}
             href={link.href}
           >
             {link.text}

@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main>
+    <div className="page-wrapper">
       <h1>FilmFellow</h1>
-    </main>
+    </div>
   );
 }

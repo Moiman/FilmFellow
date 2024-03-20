@@ -1,7 +1,7 @@
 export default function Login() {
   return (
-    <main>
+    <div className="page-wrapper">
       <h2>Login</h2>
-    </main>
+    </div>
   );
 }

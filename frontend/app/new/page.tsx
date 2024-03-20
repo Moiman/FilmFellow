@@ -1,7 +1,7 @@
 export default function New() {
   return (
-    <main>
+    <div className="page-wrapper">
       <h2>New</h2>
-    </main>
+    </div>
   );
 }

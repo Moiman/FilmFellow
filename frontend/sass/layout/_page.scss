@@ -1,0 +1,6 @@
+@use "../abstracts/" as abstracts;
+
+// Usable on most pages that doesnt have to be full width
+.page-wrapper {
+  padding: abstracts.$default-page-margin;
+}

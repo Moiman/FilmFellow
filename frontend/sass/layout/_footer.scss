@@ -1,0 +1,20 @@
+@use "../abstracts/" as abstracts;
+
+footer {
+  background-color: abstracts.$primary-dark;
+  padding: 10px;
+  width: 100vw;
+
+  .content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+
+    .github-link {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

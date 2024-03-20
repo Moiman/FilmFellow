@@ -11,7 +11,10 @@ export const Links = [
 ];
 
 export const SubNavLinks = [
-  { icon: <Tool style={{ strokeWidth: 1.5 }} />, href: "/admin" },
+  {
+    icon: <Tool style={{ strokeWidth: 1.5 }} />,
+    href: "/admin",
+  },
   { icon: <User style={{ strokeWidth: 1.5 }} />, href: "/profile" },
   { icon: <LogOut style={{ strokeWidth: 1.5 }} />, href: "/" },
 ];
@@ -83,6 +86,7 @@ export const Header = () => {
             <Link
               href="/login"
               className={currentPath === "/login" ? "active-link" : ""}
+              style={{ lineHeight: "1.4" }}
             >
               Login
             </Link>

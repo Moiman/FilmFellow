@@ -3,9 +3,9 @@ import { MovieDataType } from "../scripts/initMovies.js";
 import { PersonData } from "../scripts/initPersons.js";
 import { Countries, Genre, Languages } from "../scripts/initOtherData.js";
 
-const initMoviesDB = async (movie: MovieDataType) => {
-  const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
+const initMoviesDB = async (movie: MovieDataType) => {
   const existingMovie = await prisma.movies.findUnique({
     where: { id: movie.movie.id },
   });
@@ -55,18 +55,16 @@ const initMoviesDB = async (movie: MovieDataType) => {
 
   await prisma.movieCast.createMany({
     data: movie.cast,
-    skipDuplicates: true
-  })
+    skipDuplicates: true,
+  });
 
   await prisma.movieCrew.createMany({
     data: movie.crew,
-    skipDuplicates:true
-  })
+    skipDuplicates: true,
+  });
 };
 
 const initPersonDB = async (person: PersonData) => {
-  const prisma = new PrismaClient();
-
   const existingPerson = await prisma.persons.findUnique({
     where: { id: person.id },
   });
@@ -78,7 +76,6 @@ const initPersonDB = async (person: PersonData) => {
 };
 
 const initGenresDB = async (genres: Genre[]) => {
-  const prisma = new PrismaClient();
   await prisma.genres.createMany({
     data: genres,
     skipDuplicates: true,
@@ -86,7 +83,6 @@ const initGenresDB = async (genres: Genre[]) => {
 };
 
 const initCountriesDB = async (countries: Countries[]) => {
-  const prisma = new PrismaClient();
   await prisma.countries.createMany({
     data: countries,
     skipDuplicates: true,
@@ -94,7 +90,6 @@ const initCountriesDB = async (countries: Countries[]) => {
 };
 
 const initLanguagesDB = async (languages: Languages[]) => {
-  const prisma = new PrismaClient();
   await prisma.languages.createMany({
     data: languages,
     skipDuplicates: true,

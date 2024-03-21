@@ -109,7 +109,8 @@ model ProductionCountries {
 
 model Countries {
   iso_3166_1          String                @id
-  name                String                @unique
+  english_name        String                @unique
+  native_name         String
   productionCountries ProductionCountries[]
 }
 

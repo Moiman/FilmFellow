@@ -1,5 +1,4 @@
 import { initPersonDB } from "../services/initService.js";
-import { fetchMoviesData } from "./initMovies.js";
 
 const apiKey = process.env.API_KEY;
 const delay = 20;
@@ -66,5 +65,5 @@ export const fetchPersonsData = async (personIds: number[], storeFunction = init
   }
   console.log("database filled with persons");
 };
-const crewAndCastIds = await fetchMoviesData([2, 3]);
-await fetchPersonsData(crewAndCastIds);
+// const crewAndCastIds = await fetchMoviesData([2, 3]);
+// await fetchPersonsData(crewAndCastIds);

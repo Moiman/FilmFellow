@@ -1,29 +1,14 @@
 import { initMoviesDB } from "../services/initService.js";
+import type { Genre, Country, Language } from "./fetchOtherData.js";
 
 const apiKey = process.env.API_KEY;
 const delay = 20;
 
-interface Genres {
-  id: number;
-  name: string;
-}
-
-interface Companies {
+interface Company {
   id: number;
   logo_path: string;
   name: string;
   origin_country: string;
-}
-
-interface Countries {
-  iso_3166_1: string;
-  name: string;
-}
-
-interface Languages {
-  english_name: string;
-  iso_639_1: string;
-  name: string;
 }
 
 interface Author {
@@ -155,7 +140,7 @@ interface ResponseData {
   adult: boolean;
   backdrop_path: string;
   budget: number;
-  genres: Genres[];
+  genres: Genre[];
   homepage: string;
   id: number;
   imdb_id: string;
@@ -164,12 +149,12 @@ interface ResponseData {
   overview: string;
   popularity: number;
   poster_path: string;
-  production_companies: Companies[];
-  production_countries: Countries[];
+  production_companies: Company[];
+  production_countries: Country[];
   release_date: string;
   revenue: bigint;
   runtime: number;
-  spoken_languages: Languages[];
+  spoken_languages: Language[];
   status: string;
   tagline: string;
   title: string;
@@ -315,7 +300,7 @@ const parseMovieResponseData = (movieData: ResponseData) => {
 };
 
 export type MovieDataType = ReturnType<typeof parseMovieResponseData>;
-const personIds: number[] = [];
+// const personIds: number[] = [];
 const fetchMovie = async (movieId: number) => {
   try {
     const response = await fetch(
@@ -329,8 +314,8 @@ const fetchMovie = async (movieId: number) => {
     response.body;
 
     const data = (await response.json()) as ResponseData;
-    personIds.push(data.credits.cast.map(person => person.id));
-    personIds.push(data.credits.crew.map(person => person.id));
+    // personIds.push(...data.credits.cast.map(person => person.id));
+    // personIds.push(...data.credits.crew.map(person => person.id));
     return data;
   } catch (error) {
     if (error === 429) {
@@ -344,11 +329,10 @@ const fetchMovie = async (movieId: number) => {
 
 let processedMovies = 1;
 export const fetchMoviesData = async (movieIds: number[], storeFunction = initMoviesDB) => {
-
   for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
 
-    const test = fetchMovie(movieId)
+    fetchMovie(movieId)
       .then(async res => {
         const movieData = parseMovieResponseData(res);
         await storeFunction(movieData);
@@ -359,11 +343,11 @@ export const fetchMoviesData = async (movieIds: number[], storeFunction = initMo
       console.log(`Movies processed: ${processedMovies}`);
     }
     processedMovies++;
-     await test;
+    // await test;
   }
 
   console.log("database filled with movies and reviews");
-  return personIds.flat();
+  // return personIds;
 };
-const crewAndCastIds =  await fetchMoviesData([2, 3]);
-console.log(crewAndCastIds);
+// const crewAndCastIds =  await fetchMoviesData([2, 3]);
+// console.log(crewAndCastIds);

@@ -1,6 +1,9 @@
-import fs from "fs";
+import { createWriteStream } from "fs";
+import { createGzip } from "zlib";
+import { Readable } from "stream";
 import { type MovieDataType, fetchMoviesData } from "./initMovies.js";
 import { fetchPersonsData, type PersonData } from "./initPersons.js";
+import { fetchCountries, fetchGenres, fetchLanguages } from "./fetchOtherData.js";
 
 interface MovieListResponse {
   page: number;
@@ -71,7 +74,14 @@ movies.forEach(movie => movie.companies.forEach(company => companiesMap.set(comp
 
 console.log(companiesMap.size);
 
+const genres = await fetchGenres();
+const countries = await fetchCountries();
+const languages = await fetchLanguages();
+
 const moviesJSONdata = {
+  genres,
+  countries,
+  languages,
   persons,
   movies: movies.map(movie => movie.movie),
   movieGenres: movies.map(movie => movie.movieGenres),
@@ -89,5 +99,7 @@ const moviesJSONdata = {
   ),
 };
 
-console.log("Writing 'test-data.json' file");
-fs.writeFileSync("test-data.json", JSON.stringify(moviesJSONdata));
+Readable.from([JSON.stringify(moviesJSONdata)])
+  .pipe(createGzip())
+  .pipe(createWriteStream("test-data.json.gz"))
+  .on("finish", () => console.log("Created 'test-data.json.gz' file"));

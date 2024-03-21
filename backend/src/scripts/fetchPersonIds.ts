@@ -37,5 +37,3 @@ export const fetchPersonIds = async () => {
     throw error;
   }
 };
-
-console.log((await fetchPersonIds()).length);

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { MovieDataType } from "../scripts/initMovies.js";
 import { PersonData } from "../scripts/initPersons.js";
-import { Countries, Genre, Languages } from "../scripts/initOtherData.js";
+import { Country, Genre, Language } from "../scripts/fetchOtherData.js";
 
 const prisma = new PrismaClient();
 
@@ -82,14 +82,14 @@ const initGenresDB = async (genres: Genre[]) => {
   });
 };
 
-const initCountriesDB = async (countries: Countries[]) => {
+const initCountriesDB = async (countries: Country[]) => {
   await prisma.countries.createMany({
     data: countries,
     skipDuplicates: true,
   });
 };
 
-const initLanguagesDB = async (languages: Languages[]) => {
+const initLanguagesDB = async (languages: Language[]) => {
   await prisma.languages.createMany({
     data: languages,
     skipDuplicates: true,

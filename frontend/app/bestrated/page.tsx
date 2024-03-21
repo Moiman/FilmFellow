@@ -1,7 +1,7 @@
 export default function BestRated() {
   return (
-    <div className="page-wrapper">
+    <main>
       <h2>Best Rated</h2>
-    </div>
+    </main>
   );
 }

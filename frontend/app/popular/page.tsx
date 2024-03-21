@@ -1,7 +1,7 @@
 export default function Popular() {
   return (
-    <div className="page-wrapper">
+    <main>
       <h2>Popular</h2>
-    </div>
+    </main>
   );
 }

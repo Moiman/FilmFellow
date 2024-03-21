@@ -1,0 +1,25 @@
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+COPY package*.json ./
+COPY ./src ./src
+COPY ./prisma ./prisma
+COPY ./tsconfig*.json ./
+
+RUN npm ci
+RUN npm run build
+
+FROM node:20-alpine AS final
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY ./package*.json ./
+COPY ./prisma ./prisma
+
+ENV DATABASE_URL=${DATABASE_URL}
+
+RUN npm ci --omit=dev
+
+EXPOSE ${BACKEND_PORT}
+
+CMD ["npm", "start"]

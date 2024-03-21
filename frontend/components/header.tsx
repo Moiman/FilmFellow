@@ -16,7 +16,7 @@ export const SubNavLinks = [
     href: "/admin",
   },
   { icon: <User style={{ strokeWidth: 1.5 }} />, href: "/profile" },
-  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, href: "/" },
+  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, href: "" },
 ];
 
 export const Header = () => {
@@ -25,7 +25,7 @@ export const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="header">
+    <header>
       <Link
         href="/"
         className="logo"

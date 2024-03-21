@@ -1,7 +1,7 @@
 import { initPersonDB } from "../services/initService.js";
 
 const apiKey = process.env.API_KEY;
-const delay = 20;
+const delay = 30;
 
 export interface PersonData {
   adult: boolean;

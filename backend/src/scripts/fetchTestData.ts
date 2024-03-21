@@ -84,22 +84,24 @@ const moviesJSONdata = {
   languages,
   persons,
   movies: movies.map(movie => movie.movie),
-  movieGenres: movies.map(movie => movie.movieGenres),
+  movieGenres: movies.map(movie => movie.movieGenres).flat(),
   companies: [...companiesMap.values()],
-  productionCompanies: movies.map(movie => movie.productionCompanies),
-  productionCountries: movies.map(movie => movie.productionCountries),
-  spokenLanguages: movies.map(movie => movie.spokenLanguages),
-  reviews: movies.map(movie => movie.reviews),
-  casts: movies.map(movie => movie.cast),
-  crews: movies.map(movie => movie.crew),
-  releaseDates: movies.map(movie => movie.releaseDates),
+  productionCompanies: movies.map(movie => movie.productionCompanies).flat(),
+  productionCountries: movies.map(movie => movie.productionCountries).flat(),
+  spokenLanguages: movies.map(movie => movie.spokenLanguages).flat(),
+  reviews: movies.map(movie => movie.reviews).flat(),
+  casts: movies.map(movie => movie.cast).flat(),
+  crews: movies.map(movie => movie.crew).flat(),
+  releaseDates: movies.map(movie => movie.releaseDates).flat(),
   translations: movies.reduce(
     (translations, movie) => (movie.translation ? translations.concat(movie.translation) : translations),
-    [] as MovieDataType["translation"][],
+    [] as NonNullable<MovieDataType["translation"]>[],
   ),
 };
 
+export type MoviesJSONdata = typeof moviesJSONdata;
+
 Readable.from([JSON.stringify(moviesJSONdata)])
   .pipe(createGzip())
-  .pipe(createWriteStream("test-data.json.gz"))
+  .pipe(createWriteStream("data/test-data.json.gz"))
   .on("finish", () => console.log("Created 'test-data.json.gz' file"));

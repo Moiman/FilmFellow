@@ -1,4 +1,4 @@
-import { initMoviesDB } from "../services/initService.js";
+import { initMovieDB } from "../services/initService.js";
 import type { Genre, Country, Language } from "./fetchOtherData.js";
 
 const apiKey = process.env.API_KEY;
@@ -328,7 +328,7 @@ const fetchMovie = async (movieId: number) => {
 };
 
 let processedMovies = 1;
-export const fetchMoviesData = async (movieIds: number[], storeFunction = initMoviesDB) => {
+export const fetchMoviesData = async (movieIds: number[], storeFunction = initMovieDB) => {
   for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
 

@@ -93,7 +93,7 @@ model ProductionCompanies {
   companyId Int
   movieId   Int
   companies Companies @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([companyId, movieId])
 }
@@ -116,7 +116,7 @@ model Countries {
 
 model Companies {
   productionCompanies ProductionCompanies[]
-  id                  Int                   @id @db.SmallInt
+  id                  Int                   @id
   logo_path           String?
   name                String
   origin_country      String

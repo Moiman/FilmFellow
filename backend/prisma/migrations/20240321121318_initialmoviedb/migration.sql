@@ -1,10 +1,10 @@
 -- CreateTable
 CREATE TABLE "Movies" (
+    "id" INTEGER NOT NULL,
     "adult" BOOLEAN NOT NULL,
     "backdrop_path" TEXT NOT NULL,
     "budget" INTEGER NOT NULL,
     "homepage" TEXT NOT NULL,
-    "id" SERIAL NOT NULL,
     "imdb_id" TEXT NOT NULL,
     "original_language" TEXT NOT NULL,
     "original_title" TEXT NOT NULL,
@@ -19,34 +19,37 @@ CREATE TABLE "Movies" (
     "title" TEXT NOT NULL,
     "vote_average" DOUBLE PRECISION NOT NULL,
     "vote_count" INTEGER NOT NULL,
-    "similarId" INTEGER,
 
     CONSTRAINT "Movies_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ImportedReviews" (
-    "movieId" INTEGER NOT NULL,
     "id" TEXT NOT NULL,
+    "movieId" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "author" TEXT NOT NULL
+    "author" TEXT NOT NULL,
+
+    CONSTRAINT "ImportedReviews_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Reviews" (
+    "id" SERIAL NOT NULL,
     "movieId" INTEGER NOT NULL,
-    "id" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" INTEGER NOT NULL
+    "userId" INTEGER NOT NULL,
+
+    CONSTRAINT "Reviews_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Genres" (
-    "id" SMALLSERIAL NOT NULL,
+    "id" SMALLINT NOT NULL,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "Genres_pkey" PRIMARY KEY ("id")
@@ -79,15 +82,16 @@ CREATE TABLE "ProductionCountries" (
 -- CreateTable
 CREATE TABLE "Countries" (
     "iso_3166_1" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "english_name" TEXT NOT NULL,
+    "native_name" TEXT NOT NULL,
 
     CONSTRAINT "Countries_pkey" PRIMARY KEY ("iso_3166_1")
 );
 
 -- CreateTable
 CREATE TABLE "Companies" (
-    "id" SMALLSERIAL NOT NULL,
-    "logo_path" TEXT NOT NULL,
+    "id" INTEGER NOT NULL,
+    "logo_path" TEXT,
     "name" TEXT NOT NULL,
     "origin_country" TEXT NOT NULL,
 
@@ -114,14 +118,9 @@ CREATE TABLE "Languages" (
 -- CreateTable
 CREATE TABLE "MovieCast" (
     "movieId" INTEGER NOT NULL,
-    "adult" BOOLEAN NOT NULL,
-    "gender" INTEGER NOT NULL,
     "personId" INTEGER NOT NULL,
-    "known_for_department" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "original_name" TEXT NOT NULL,
-    "character" TEXT NOT NULL,
     "credit_id" TEXT NOT NULL,
+    "character" TEXT NOT NULL,
     "order" INTEGER NOT NULL,
 
     CONSTRAINT "MovieCast_pkey" PRIMARY KEY ("credit_id")
@@ -143,16 +142,16 @@ CREATE TABLE "Persons" (
     "id" INTEGER NOT NULL,
     "adult" BOOLEAN NOT NULL,
     "biography" TEXT NOT NULL,
-    "birthday" TEXT NOT NULL,
-    "deathday" TEXT NOT NULL,
+    "birthday" TEXT,
+    "deathday" TEXT,
     "gender" INTEGER NOT NULL,
-    "homepage" TEXT NOT NULL,
-    "imdb_id" TEXT NOT NULL,
+    "homepage" TEXT,
+    "imdb_id" TEXT,
     "known_for_department" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "place_of_birth" TEXT NOT NULL,
+    "place_of_birth" TEXT,
     "popularity" DOUBLE PRECISION NOT NULL,
-    "profile_path" TEXT NOT NULL,
+    "profile_path" TEXT,
 
     CONSTRAINT "Persons_pkey" PRIMARY KEY ("id")
 );
@@ -189,16 +188,7 @@ CREATE TABLE "Images" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ImportedReviews_id_key" ON "ImportedReviews"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Reviews_id_key" ON "Reviews"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Countries_name_key" ON "Countries"("name");
-
--- AddForeignKey
-ALTER TABLE "Movies" ADD CONSTRAINT "Movies_similarId_fkey" FOREIGN KEY ("similarId") REFERENCES "Movies"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+CREATE UNIQUE INDEX "Countries_english_name_key" ON "Countries"("english_name");
 
 -- AddForeignKey
 ALTER TABLE "ImportedReviews" ADD CONSTRAINT "ImportedReviews_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movies"("id") ON DELETE CASCADE ON UPDATE CASCADE;

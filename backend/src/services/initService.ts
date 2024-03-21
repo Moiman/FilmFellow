@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
-import { MovieDataType } from "../scripts/initMovies.js";
-import { PersonData } from "../scripts/initPersons.js";
-import { Country, Genre, Language } from "../scripts/fetchOtherData.js";
+import type { MovieDataType } from "../scripts/initMovies.js";
+import type { PersonData } from "../scripts/initPersons.js";
+import type { Country, Genre, Language } from "../scripts/fetchOtherData.js";
 
 const prisma = new PrismaClient();
 
-const initMoviesDB = async (movie: MovieDataType) => {
+const initMovieDB = async (movie: MovieDataType) => {
   const existingMovie = await prisma.movies.findUnique({
     where: { id: movie.movie.id },
   });
@@ -64,6 +64,83 @@ const initMoviesDB = async (movie: MovieDataType) => {
   });
 };
 
+const initMoviesDB = async (movies: MovieDataType["movie"][]) => {
+  await prisma.movies.createMany({
+    data: movies,
+    skipDuplicates: true,
+  });
+};
+
+const initReviewsDB = async (reviews: MovieDataType["reviews"]) => {
+  await prisma.importedReviews.createMany({
+    data: reviews,
+    skipDuplicates: true,
+  });
+};
+
+const initCompaniesDB = async (companies: MovieDataType["companies"]) => {
+  await prisma.companies.createMany({
+    data: companies,
+    skipDuplicates: true,
+  });
+};
+
+const initSpokenLanguagesDB = async (spokenLanguages: MovieDataType["spokenLanguages"]) => {
+  await prisma.spokenLanguages.createMany({
+    data: spokenLanguages,
+    skipDuplicates: true,
+  });
+};
+
+const initProductionCompaniesDB = async (productionCompanies: MovieDataType["productionCompanies"]) => {
+  await prisma.productionCompanies.createMany({
+    data: productionCompanies,
+    skipDuplicates: true,
+  });
+};
+
+const initProductionCountriesDB = async (productionCountries: MovieDataType["productionCountries"]) => {
+  await prisma.productionCountries.createMany({
+    data: productionCountries,
+    skipDuplicates: true,
+  });
+};
+
+const initReleaseDatesDB = async (releaseDates: MovieDataType["releaseDates"]) => {
+  await prisma.releaseDates.createMany({
+    data: releaseDates,
+    skipDuplicates: true,
+  });
+};
+
+const initTranslationsDB = async (translations: NonNullable<MovieDataType["translation"]>[]) => {
+  await prisma.translations.createMany({
+    data: translations,
+    skipDuplicates: true,
+  });
+};
+
+const initmovieGenresDB = async (movieGenres: MovieDataType["movieGenres"]) => {
+  await prisma.movieGenres.createMany({
+    data: movieGenres,
+    skipDuplicates: true,
+  });
+};
+
+const initCastDB = async (cast: MovieDataType["cast"]) => {
+  await prisma.movieCast.createMany({
+    data: cast,
+    skipDuplicates: true,
+  });
+};
+
+const initCrewDB = async (crew: MovieDataType["crew"]) => {
+  await prisma.movieCrew.createMany({
+    data: crew,
+    skipDuplicates: true,
+  });
+};
+
 const initPersonDB = async (person: PersonData) => {
   const existingPerson = await prisma.persons.findUnique({
     where: { id: person.id },
@@ -73,6 +150,13 @@ const initPersonDB = async (person: PersonData) => {
       data: person,
     });
   }
+};
+
+const initPersonsDB = async (persons: PersonData[]) => {
+  await prisma.persons.createMany({
+    data: persons,
+    skipDuplicates: true,
+  });
 };
 
 const initGenresDB = async (genres: Genre[]) => {
@@ -96,4 +180,22 @@ const initLanguagesDB = async (languages: Language[]) => {
   });
 };
 
-export { initMoviesDB, initPersonDB, initGenresDB, initCountriesDB, initLanguagesDB };
+export {
+  initPersonDB,
+  initPersonsDB,
+  initGenresDB,
+  initCountriesDB,
+  initLanguagesDB,
+  initCompaniesDB,
+  initMovieDB,
+  initMoviesDB,
+  initCastDB,
+  initCrewDB,
+  initReviewsDB,
+  initSpokenLanguagesDB,
+  initProductionCompaniesDB,
+  initProductionCountriesDB,
+  initReleaseDatesDB,
+  initmovieGenresDB,
+  initTranslationsDB,
+};

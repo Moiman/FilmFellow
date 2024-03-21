@@ -5,8 +5,14 @@ import { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre } from "../
 
 const requestQuerySchema = yup.object({
   limit: yup.number().positive().integer().required(),
-  type: yup.string().required(),
-  genre: yup.string().required(),
+  type: yup
+    .string()
+    .required()
+    .matches(/[a-zA-Z]+/g, "Only letters allowed"),
+  genre: yup
+    .string()
+    .required()
+    .matches(/[a-zA-Z]+/g, "Only letters allowed"),
 });
 
 const movieRouter = Router();
@@ -15,7 +21,7 @@ movieRouter.get("/", validate.validateReqQuery(requestQuerySchema), async (req, 
   try {
     const { limit, type, genre } = req.query as { limit: string; type: string; genre: string };
     const result = await getMovieByLimitTypeGenre(parseInt(limit), type, genre);
-    if (!result) {
+    if (!result || result.length === 0) {
       return res.status(404).json({ error: `movies not found` });
     }
     return res.status(200).json(result);

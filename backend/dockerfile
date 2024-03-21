@@ -16,6 +16,8 @@ COPY --from=builder /app/dist ./dist
 COPY ./package*.json ./
 COPY ./prisma ./prisma
 
+ENV DATABASE_URL=${DATABASE_URL}
+
 RUN npm ci --omit=dev
 
 EXPOSE ${BACKEND_PORT}

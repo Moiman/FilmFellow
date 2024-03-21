@@ -2,7 +2,7 @@ import { Router } from "express";
 import argon2 from "argon2";
 import * as yup from "yup";
 import { createUser } from "../services/authService.js";
-import validate from "../middlewares/validate.js";
+import { validate } from "../middlewares/validate.js";
 import type { RequestBody } from "../types/types.js";
 
 const authRouter = Router();
@@ -28,7 +28,7 @@ type RegisterUserSchemaType = yup.InferType<typeof registerUserSchema>;
 
 authRouter.post(
   "/register",
-  validate.validate(registerUserSchema),
+  validate(registerUserSchema),
   async (req: RequestBody<RegisterUserSchemaType>, res, next) => {
     try {
       const { email, username, password } = req.body;

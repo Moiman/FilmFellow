@@ -51,4 +51,4 @@ const validateReqQuery =
     }
   };
 
-export default { validate, validateReqQuery };
+export { validate, validateReqQuery };

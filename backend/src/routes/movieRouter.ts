@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as yup from "yup";
-import validate from "../middlewares/validate.js";
+import { validateReqQuery } from "../middlewares/validate.js";
 import { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre } from "../services/movieService.js";
 
 const requestQuerySchema = yup.object({
@@ -17,7 +17,7 @@ const requestQuerySchema = yup.object({
 
 const movieRouter = Router();
 //?limit=10&type=new&genre=horror
-movieRouter.get("/", validate.validateReqQuery(requestQuerySchema), async (req, res, next) => {
+movieRouter.get("/", validateReqQuery(requestQuerySchema), async (req, res, next) => {
   try {
     const { limit, type, genre } = req.query as { limit: string; type: string; genre: string };
     const result = await getMovieByLimitTypeGenre(parseInt(limit), type, genre);

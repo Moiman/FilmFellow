@@ -33,17 +33,30 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
         },
       });
       return moviesDescendingOrder;
-    } else {
-      const moviesAscendingOrder = await prisma.movies.findMany({
+    }
+    if (givenType === "popular") {
+      const moviesPopularOrder = await prisma.movies.findMany({
         where: {
           id: { in: movieIdsForCertainGenre.map(movie => movie.movieId) },
         },
         take: limit,
         orderBy: {
-          release_date: "asc",
+          popularity: "desc",
         },
       });
-      return moviesAscendingOrder;
+      return moviesPopularOrder;
+    }
+    if (givenType === "bestrated") {
+      const moviesBestRatedOrder = await prisma.movies.findMany({
+        where: {
+          id: { in: movieIdsForCertainGenre.map(movie => movie.movieId) },
+        },
+        take: limit,
+        orderBy: {
+          vote_average: "desc",
+        },
+      });
+      return moviesBestRatedOrder;
     }
   }
 };

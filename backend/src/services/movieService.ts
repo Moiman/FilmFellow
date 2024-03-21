@@ -11,24 +11,41 @@ const getMovieById = async (movieId: number) => {
   return movie;
 };
 
-const getMovieByLimitTypeGenre = async (limit?: number, type?: string, genre?: string) => {
-  console.log(limit);
+const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: string) => {
   const genres = await prisma.genres.findMany();
-  const queryGenre = genres.find(Genre => Genre.name === genre);
-
-  const movieIdsForCertainGenre = await prisma.movieGenres.findMany({
-    where: {
-      genreId: queryGenre?.id,
-    },
-  });
-
-  const moviesWithCertainGenre = await prisma.movies.findMany({
-    where: {
-      id: { in: movieIdsForCertainGenre.map(movie => movie.movieId) },
-    },
-    take: limit,
-  });
-  return moviesWithCertainGenre;
+  const givenGenre = genre[0].toUpperCase() + genre.substring(1);
+  const givenType = type.toLowerCase();
+  const queryGenre = genres.find(Genre => Genre.name === givenGenre);
+  if (queryGenre) {
+    const movieIdsForCertainGenre = await prisma.movieGenres.findMany({
+      where: {
+        genreId: queryGenre.id,
+      },
+    });
+    if (givenType === "new") {
+      const moviesWithCertainGenre = await prisma.movies.findMany({
+        where: {
+          id: { in: movieIdsForCertainGenre.map(movie => movie.movieId) },
+        },
+        take: limit,
+        orderBy: {
+          release_date: "desc",
+        },
+      });
+      return moviesWithCertainGenre;
+    } else {
+      const moviesWithCertainGenre = await prisma.movies.findMany({
+        where: {
+          id: { in: movieIdsForCertainGenre.map(movie => movie.movieId) },
+        },
+        take: limit,
+        orderBy: {
+          release_date: "asc",
+        },
+      });
+      return moviesWithCertainGenre;
+    }
+  }
 };
 
 const getMovieReviewsById = async (movieId: number) => {

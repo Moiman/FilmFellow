@@ -22,3 +22,7 @@ input {
 textarea {
   padding: 15px;
 }
+input:focus,
+textarea:focus {
+  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+}

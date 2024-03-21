@@ -40,3 +40,17 @@ jobs:
     - run: docker compose up postgres -d
     - run: cd backend && cp .env.example .env && npm ci && npx prisma migrate deploy
     - run: cd backend && npm run test
+  test-cypress:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - name: Running cypress tests
+      run: |
+        cd frontend
+        npm ci
+        npm run dev &
+        sleep 10
+        npm run cypress:run_headless

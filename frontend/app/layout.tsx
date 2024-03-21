@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../sass/style.scss";
+import "@/sass/style.scss";
 import { Poppins, Roboto } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";

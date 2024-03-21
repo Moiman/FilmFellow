@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import { Footer } from "../components/footer";
+import { Footer } from "@/components/footer";
 
 const githubLink = { text: "GitHub", href: "https://github.com/Moiman/FilmFellow/" };
 

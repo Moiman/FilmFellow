@@ -1,3 +1,4 @@
+import { ImageType } from "@prisma/client";
 import { fetchTMDB } from "./fetchHelper.js";
 import type { MovieResponse } from "./types.js";
 
@@ -118,7 +119,26 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
 
   // const providers = ...
 
-  // const images = movieData.images.
+  const images = movieData.images.backdrops
+    .map(image => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { aspect_ratio, vote_count, ...rest } = image;
+      return { movieId: movieData.id, type: ImageType.backdrop as ImageType, ...rest };
+    })
+    .concat(
+      movieData.images.logos.map(image => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { aspect_ratio, vote_count, ...rest } = image;
+        return { movieId: movieData.id, type: ImageType.logo, ...rest };
+      }),
+    )
+    .concat(
+      movieData.images.posters.map(image => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { aspect_ratio, vote_count, ...rest } = image;
+        return { movieId: movieData.id, type: ImageType.poster, ...rest };
+      }),
+    );
 
   return {
     movie,
@@ -132,6 +152,7 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
     crew,
     releaseDates,
     translation,
+    images,
   };
 };
 

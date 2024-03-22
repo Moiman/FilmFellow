@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "ImageType" AS ENUM ('backdrop', 'logo', 'poster');
+
 -- CreateTable
 CREATE TABLE "Movies" (
     "id" INTEGER NOT NULL,
@@ -178,10 +181,11 @@ CREATE TABLE "Translations" (
 -- CreateTable
 CREATE TABLE "Images" (
     "movieId" INTEGER NOT NULL,
+    "type" "ImageType" NOT NULL,
     "iso_639_1" TEXT NOT NULL,
     "vote_average" DOUBLE PRECISION NOT NULL,
     "height" INTEGER NOT NULL,
-    "Width" INTEGER NOT NULL,
+    "width" INTEGER NOT NULL,
     "file_path" TEXT NOT NULL,
 
     CONSTRAINT "Images_pkey" PRIMARY KEY ("file_path")

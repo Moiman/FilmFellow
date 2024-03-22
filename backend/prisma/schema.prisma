@@ -208,18 +208,25 @@ model Translations {
 
 model Images {
   movieId      Int
+  type         ImageType
   iso_639_1    String
   vote_average Float
   height       Int
-  Width        Int
-  file_path    String @id
-  movie        Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  width        Int
+  file_path    String    @id
+  movie        Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
 }
 
 enum Role {
   admin
   user
   moderator
+}
+
+enum ImageType {
+  backdrop
+  logo
+  poster
 }
 
 datasource db {

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, type Images } from "@prisma/client";
 import type { MovieDataType } from "../scripts/initMovies.js";
 import type { PersonData } from "../scripts/initPersons.js";
 import type { Country, Genre, Language } from "../scripts/types.js";
@@ -141,6 +141,13 @@ const initCrewDB = async (crew: MovieDataType["crew"]) => {
   });
 };
 
+const initImagesDB = async (images: Images[]) => {
+  await prisma.images.createMany({
+    data: images,
+    skipDuplicates: true,
+  });
+};
+
 const initPersonDB = async (person: PersonData) => {
   const existingPerson = await prisma.persons.findUnique({
     where: { id: person.id },
@@ -191,6 +198,7 @@ export {
   initMoviesDB,
   initCastDB,
   initCrewDB,
+  initImagesDB,
   initReviewsDB,
   initSpokenLanguagesDB,
   initProductionCompaniesDB,

@@ -80,19 +80,20 @@ const moviesJSONdata = {
   languages,
   persons,
   movies: movies.map(movie => movie.movie),
-  movieGenres: movies.map(movie => movie.movieGenres).flat(),
+  movieGenres: movies.flatMap(movie => movie.movieGenres),
   companies: [...companiesMap.values()],
-  productionCompanies: movies.map(movie => movie.productionCompanies).flat(),
-  productionCountries: movies.map(movie => movie.productionCountries).flat(),
-  spokenLanguages: movies.map(movie => movie.spokenLanguages).flat(),
-  reviews: movies.map(movie => movie.reviews).flat(),
-  casts: movies.map(movie => movie.cast).flat(),
-  crews: movies.map(movie => movie.crew).flat(),
-  releaseDates: movies.map(movie => movie.releaseDates).flat(),
+  productionCompanies: movies.flatMap(movie => movie.productionCompanies),
+  productionCountries: movies.flatMap(movie => movie.productionCountries),
+  spokenLanguages: movies.flatMap(movie => movie.spokenLanguages),
+  reviews: movies.flatMap(movie => movie.reviews),
+  casts: movies.flatMap(movie => movie.cast),
+  crews: movies.flatMap(movie => movie.crew),
+  releaseDates: movies.flatMap(movie => movie.releaseDates),
   translations: movies.reduce(
     (translations, movie) => (movie.translation ? translations.concat(movie.translation) : translations),
     [] as NonNullable<MovieDataType["translation"]>[],
   ),
+  images: movies.flatMap(movie => movie.images),
 };
 
 Readable.from([JSON.stringify(moviesJSONdata)])

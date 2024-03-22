@@ -22,5 +22,34 @@ const createUser = async (email: string, username: string, password: string) => 
 
   return newUser;
 };
+const findUserByEmail = async (email: string) => {
+  const user = await prisma.users.findUnique({
+    where: {
+      email: email,
+    },
+  });
 
-export { createUser };
+  return user;
+};
+
+const findUserById = async (id: number) => {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  return user;
+};
+
+const deleteUserById = async (id: number) => {
+  const user = await prisma.users.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return user;
+};
+
+export { createUser, findUserByEmail, deleteUserById, findUserById };

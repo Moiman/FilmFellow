@@ -22,7 +22,7 @@ movieRouter.get("/", validateReqQuery(requestQuerySchema), async (req, res, next
     const { limit, type, genre } = req.query as { limit: string; type: string; genre: string };
     const result = await getMovieByLimitTypeGenre(parseInt(limit), type, genre);
     if (!result || result.length === 0) {
-      return res.status(404).json({ error: `movies not found` });
+      return res.status(404).json({ error: `Movies not found` });
     }
     return res.status(200).json(result);
   } catch (err) {
@@ -35,7 +35,7 @@ movieRouter.get("/:movieId(\\d+)", async (req, res, next) => {
     const movieId = parseInt(req.params.movieId);
     const result = await getMovieById(movieId);
     if (!result) {
-      return res.status(404).json({ error: `movie not found with id ${movieId}` });
+      return res.status(404).json({ error: `Movie not found with id ${movieId}` });
     }
     return res.status(200).json(result);
   } catch (err) {
@@ -48,7 +48,7 @@ movieRouter.get("/:movieId/reviews", async (req, res, next) => {
     const movieId = parseInt(req.params.movieId);
     const result = await getMovieReviewsById(movieId);
     if (result.length === 0) {
-      return res.status(404).json({ error: `movie not found with id ${movieId}` });
+      return res.status(404).json({ error: `Movie not found with id ${movieId}` });
     }
     return res.status(200).json(result);
   } catch (err) {

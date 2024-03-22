@@ -1,7 +1,7 @@
 import { Router } from "express";
 import argon2 from "argon2";
 import * as yup from "yup";
-import { createUser } from "../services/authService.js";
+import { createUser, findUserByEmail, findUserById, deleteUserById } from "../services/authService.js";
 import { validate } from "../middlewares/validate.js";
 import type { RequestBody } from "../types/types.js";
 
@@ -32,7 +32,10 @@ authRouter.post(
   async (req: RequestBody<RegisterUserSchemaType>, res, next) => {
     try {
       const { email, username, password } = req.body;
-
+      const existingUser = await findUserByEmail(email);
+      if (existingUser) {
+        return res.status(409).json({ error: "User already exists with that email" });
+      }
       const hashedPassword = await argon2.hash(password);
       const newUser = await createUser(email, username, hashedPassword);
       return res.status(200).json(newUser);
@@ -41,5 +44,19 @@ authRouter.post(
     }
   },
 );
+
+authRouter.delete("/delete/:userId(\\d+)", async (req, res, next) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const existingUser = await findUserById(userId);
+    if (!existingUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const deletedUser = await deleteUserById(userId);
+    return res.status(200).json(deletedUser);
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default authRouter;

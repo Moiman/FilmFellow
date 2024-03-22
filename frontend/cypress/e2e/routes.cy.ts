@@ -1,4 +1,5 @@
 describe("Routes tests", () => {
+  const gitHubHref = "https://github.com/Moiman/FilmFellow/";
   it("visit default page", () => {
     cy.visit("/");
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
@@ -46,5 +47,9 @@ describe("Routes tests", () => {
     cy.visit("/");
     cy.get('input[placeholder="Search..."]').type("Jaws");
     cy.get('[data-cy="search-input"]').should("have.value", "Jaws");
+  });
+  it("Test footer github link", () => {
+    cy.visit("/");
+    cy.get(".content").find(".github-link").should("have.attr", "href", gitHubHref);
   });
 });

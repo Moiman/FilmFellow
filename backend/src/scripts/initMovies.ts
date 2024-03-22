@@ -1,174 +1,10 @@
-import { initMovieDB } from "../services/initService.js";
-import type { Genre, Country, Language } from "./fetchOtherData.js";
+import { fetchTMDB } from "./fetchHelper.js";
+import type { MovieResponse } from "./types.js";
 
 const apiKey = process.env.API_KEY;
 const delay = 20;
 
-interface Company {
-  id: number;
-  logo_path: string;
-  name: string;
-  origin_country: string;
-}
-
-interface Author {
-  name: string;
-  username: string;
-  avatar_path: string | null;
-  rating: number | null;
-}
-
-interface Review {
-  id: string;
-  content: string;
-  created_at: string;
-  updated_at: string;
-  author: string;
-  author_details: Author;
-}
-
-interface Reviews {
-  results: Review[];
-}
-
-interface ReleaseDates {
-  results: ReleaseDate[];
-}
-
-interface ReleaseDate {
-  iso_3166_1: string;
-  release_dates: ReleaseDateData[];
-}
-
-interface ReleaseDateData {
-  certification: string;
-  note: string;
-  type: number;
-  iso_639_1: string;
-  release_date: Date;
-}
-
-interface WatchProviders {
-  results: WatchProvidersCountries[];
-}
-
-interface WatchProvidersCountries {
-  link: string;
-  rent: WatchProviderData[];
-  buy: WatchProviderData[];
-  flatrate: WatchProviderData[];
-}
-
-interface WatchProviderData {
-  logo_path: string;
-  provider_id: number;
-  provider_name: string;
-  display_priority: number;
-}
-
-interface Translations {
-  translations: Translation[];
-}
-
-interface Translation {
-  iso_3166_1: string;
-  iso_639_1: string;
-  name: string;
-  english_name: string;
-  data: TranslationData;
-}
-
-interface TranslationData {
-  homepage: string;
-  overview: string;
-  runtime: number;
-  tagline: string;
-  title: string;
-}
-
-interface Image {
-  aspect_ratio: number;
-  height: number;
-  iso_639_1: string;
-  file_path: string;
-  vote_average: number;
-  vote_count: number;
-  width: number;
-}
-
-interface Images {
-  backdrops: Image[];
-  logos: Image[];
-  posters: Image[];
-}
-
-interface Credits {
-  cast: Cast[];
-  crew: Crew[];
-}
-
-interface Cast {
-  adult: boolean;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string;
-  cast_id: number;
-  character: string;
-  credit_id: string;
-  order: number;
-}
-
-interface Crew {
-  adult: boolean;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string;
-  credit_id: string;
-  department: string;
-  job: string;
-}
-
-interface ResponseData {
-  adult: boolean;
-  backdrop_path: string;
-  budget: number;
-  genres: Genre[];
-  homepage: string;
-  id: number;
-  imdb_id: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  production_companies: Company[];
-  production_countries: Country[];
-  release_date: string;
-  revenue: bigint;
-  runtime: number;
-  spoken_languages: Language[];
-  status: string;
-  tagline: string;
-  title: string;
-  vote_average: number;
-  vote_count: number;
-  credits: Credits;
-  reviews: Reviews;
-  release_dates: ReleaseDates;
-  "watch/providers": WatchProviders;
-  translations: Translations;
-  images: Images;
-}
-
-const parseMovieResponseData = (movieData: ResponseData) => {
+const parseMovieResponseData = (movieData: MovieResponse) => {
   const movie = {
     id: movieData.id,
     adult: movieData.adult,
@@ -300,35 +136,14 @@ const parseMovieResponseData = (movieData: ResponseData) => {
 };
 
 export type MovieDataType = ReturnType<typeof parseMovieResponseData>;
-// const personIds: number[] = [];
-const fetchMovie = async (movieId: number) => {
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,translations,images&language=en-US,fi-FI&include_image_language=en,fi,null`,
-    );
 
-    if (!response.ok) {
-      throw response.status;
-    }
-
-    response.body;
-
-    const data = (await response.json()) as ResponseData;
-    // personIds.push(...data.credits.cast.map(person => person.id));
-    // personIds.push(...data.credits.crew.map(person => person.id));
-    return data;
-  } catch (error) {
-    if (error === 429) {
-      console.log("429");
-      // await new Promise(resolve => setTimeout(resolve, 1000));
-      // return fetchMovie(movieId);
-    }
-    throw error;
-  }
-};
+const fetchMovie = async (movieId: number) =>
+  fetchTMDB<MovieResponse>(
+    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,translations,images&language=en-US,fi-FI&include_image_language=en,fi,null`,
+  );
 
 let processedMovies = 1;
-export const fetchMoviesData = async (movieIds: number[], storeFunction = initMovieDB) => {
+export const fetchMoviesData = async (movieIds: number[], storeFunction: (movie: MovieDataType) => Promise<void>) => {
   for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
 
@@ -343,11 +158,7 @@ export const fetchMoviesData = async (movieIds: number[], storeFunction = initMo
       console.log(`Movies processed: ${processedMovies}`);
     }
     processedMovies++;
-    // await test;
   }
 
   console.log("database filled with movies and reviews");
-  // return personIds;
 };
-// const crewAndCastIds =  await fetchMoviesData([2, 3]);
-// console.log(crewAndCastIds);

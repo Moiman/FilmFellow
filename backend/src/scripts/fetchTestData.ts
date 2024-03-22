@@ -4,13 +4,9 @@ import { Readable } from "stream";
 import { type MovieDataType, fetchMoviesData } from "./initMovies.js";
 import { fetchPersonsData, type PersonData } from "./initPersons.js";
 import { fetchCountries, fetchGenres, fetchLanguages } from "./fetchOtherData.js";
+import type { MovieListResponse } from "./types.js";
 
-interface MovieListResponse {
-  page: number;
-  results: {
-    id: number;
-  }[];
-}
+export type MoviesJSONdata = typeof moviesJSONdata;
 
 const movies: MovieDataType[] = [];
 
@@ -98,8 +94,6 @@ const moviesJSONdata = {
     [] as NonNullable<MovieDataType["translation"]>[],
   ),
 };
-
-export type MoviesJSONdata = typeof moviesJSONdata;
 
 Readable.from([JSON.stringify(moviesJSONdata)])
   .pipe(createGzip())

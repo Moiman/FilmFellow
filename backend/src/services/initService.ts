@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import type { MovieDataType } from "../scripts/initMovies.js";
 import type { PersonData } from "../scripts/initPersons.js";
-import type { Country, Genre, Language } from "../scripts/fetchOtherData.js";
+import type { Country, Genre, Language } from "../scripts/types.js";
 
 const prisma = new PrismaClient();
 

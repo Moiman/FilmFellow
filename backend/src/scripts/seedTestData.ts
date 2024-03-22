@@ -6,6 +6,7 @@ import {
   initCastDB,
   initCompaniesDB,
   initCountriesDB,
+  initCrewDB,
   initGenresDB,
   initLanguagesDB,
   initMoviesDB,
@@ -40,5 +41,6 @@ gunzip(testDataGzip, async (err, res) => {
   await initTranslationsDB(testData.translations);
   await initmovieGenresDB(testData.movieGenres);
   await initCastDB(testData.casts);
+  await initCrewDB(testData.crews);
   console.log("Test data stored in database");
 });

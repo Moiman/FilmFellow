@@ -4,18 +4,16 @@
 button {
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
-  line-height: abstracts.$default-line-height;
   font-weight: 400;
-  color: abstracts.$primary-light;
-}
 
-button {
   background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  color: abstracts.$primary-dark;
+
   border: 0;
   border-radius: 25px;
   padding: 5px 15px;
+
   cursor: pointer;
-  color: abstracts.$primary-dark;
 }
 
 button:hover {
@@ -23,7 +21,7 @@ button:hover {
 }
 
 .button-pink {
-  background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "defailt");
+  background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
 
 .button-pink:hover {

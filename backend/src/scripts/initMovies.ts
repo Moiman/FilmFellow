@@ -3,7 +3,8 @@ import { fetchTMDB } from "./fetchHelper.js";
 import type { MovieResponse } from "./types.js";
 
 const apiKey = process.env.API_KEY;
-const delay = 20;
+let delay = 25;
+const waitAfter429 = 4000;
 
 const parseMovieResponseData = (movieData: MovieResponse) => {
   const movie = {
@@ -164,16 +165,42 @@ const fetchMovie = async (movieId: number) =>
   );
 
 let processedMovies = 1;
+let retry = false;
 export const fetchMoviesData = async (movieIds: number[], storeFunction: (movie: MovieDataType) => Promise<void>) => {
   for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
+    if (retry) {
+      await new Promise(resolve => setTimeout(resolve, waitAfter429));
+      retry = false;
+    }
 
     fetchMovie(movieId)
       .then(async res => {
         const movieData = parseMovieResponseData(res);
         await storeFunction(movieData);
       })
-      .catch(err => console.error("failed to fetch", movieId, err));
+      .catch(async err => {
+        if (err === 429) {
+          console.log("Got 429. Tying to fetch movie =", movieId, "again and increasing delay to", delay + 1);
+          delay += 1;
+          retry = true;
+          await new Promise(resolve => setTimeout(resolve, waitAfter429));
+          fetchMovie(movieId)
+            .then(async res => {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const movieData = parseMovieResponseData(res);
+              await storeFunction(movieData);
+              console.log("Fetched =", movieId, "again successfully");
+            })
+            .catch(err => {
+              console.error("Fatal: Failed to fetch movie =", movieId);
+              throw err;
+            });
+        } else {
+          console.error("Fatal: Failed to fetch movie =", movieId);
+          throw err;
+        }
+      });
 
     if (processedMovies % 1000 === 0) {
       console.log(`Movies processed: ${processedMovies}`);
@@ -181,5 +208,5 @@ export const fetchMoviesData = async (movieIds: number[], storeFunction: (movie:
     processedMovies++;
   }
 
-  console.log("database filled with movies and reviews");
+  console.log("Fetched movies and related data");
 };

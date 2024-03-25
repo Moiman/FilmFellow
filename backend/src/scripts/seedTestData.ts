@@ -43,6 +43,6 @@ gunzip(testDataGzip, async (err, res) => {
   await initmovieGenresDB(testData.movieGenres);
   await initCastDB(testData.casts);
   await initCrewDB(testData.crews);
-  await initImagesDB(testData.images ?? []);
+  await initImagesDB(testData.images);
   console.log("Test data stored in database");
 });

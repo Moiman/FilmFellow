@@ -182,7 +182,7 @@ CREATE TABLE "Translations" (
 CREATE TABLE "Images" (
     "movieId" INTEGER NOT NULL,
     "type" "ImageType" NOT NULL,
-    "iso_639_1" TEXT NOT NULL,
+    "iso_639_1" TEXT,
     "vote_average" DOUBLE PRECISION NOT NULL,
     "height" INTEGER NOT NULL,
     "width" INTEGER NOT NULL,

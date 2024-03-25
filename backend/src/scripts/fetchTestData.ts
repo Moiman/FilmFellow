@@ -45,8 +45,13 @@ console.log(topRatedMovieIdArray.length);
 await fetchMoviesData(topRatedMovieIdArray, storeMovie);
 
 // Wait for all requests to finnish
+let waitedSecs = 0;
 while (topRatedMovieIdArray.length !== movies.length) {
-  await new Promise(resolve => setTimeout(resolve, 10));
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  waitedSecs++;
+  if (waitedSecs > 100) {
+    throw "Failed to get movies. Timeout 100 secs";
+  }
 }
 
 console.log(movies.length);
@@ -60,8 +65,13 @@ movies.forEach(movie => {
 console.log(personIds.size);
 
 await fetchPersonsData([...personIds.values()], storePerson);
+waitedSecs = 0;
 while (personIds.size !== persons.length) {
-  await new Promise(resolve => setTimeout(resolve, 10));
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  waitedSecs++;
+  if (waitedSecs > 100) {
+    throw "Failed to get persons. Timeout 100 secs";
+  }
 }
 
 const companiesMap = new Map<number, MovieDataType["companies"][0]>();

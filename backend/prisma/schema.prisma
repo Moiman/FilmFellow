@@ -209,7 +209,7 @@ model Translations {
 model Images {
   movieId      Int
   type         ImageType
-  iso_639_1    String
+  iso_639_1    String?
   vote_average Float
   height       Int
   width        Int

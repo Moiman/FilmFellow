@@ -83,7 +83,13 @@ authRouter.post("/login", validate(loginUserSchema), async (req: RequestBody<Log
     const { email, password } = req.body;
     const existingUser = await findUserByEmail(email);
     if (existingUser && (await argon2.verify(existingUser.password, password))) {
-      return res.status(200).json(existingUser);
+      const loggedInUser = {
+        username: existingUser.username,
+        email: existingUser.email,
+        id: existingUser.id,
+        role: existingUser.role
+      };
+      return res.status(200).json(loggedInUser);
     } else {
       return res.status(400).json({ error: "Credentials doesnt match" });
     }

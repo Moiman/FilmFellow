@@ -3,7 +3,7 @@ import { Role } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-interface User {
+export interface User {
   username: string;
   email: string;
   password: string;
@@ -14,6 +14,7 @@ const selectUserFields = {
   id: true,
   email: true,
   username: true,
+  role: true
 };
 
 const createUser = async (email: string, username: string, password: string) => {
@@ -54,6 +55,7 @@ const findUserByUsername = async (username: string) => {
     where: {
       username: username,
     },
+    select: selectUserFields
   });
 
   return user;
@@ -63,6 +65,7 @@ const updateUser = async (userId: number, user: User) => {
   const updatedUser = await prisma.users.update({
     where: { id: userId },
     data: user,
+    select: selectUserFields
   });
 
   return updatedUser;
@@ -73,6 +76,7 @@ const deleteUserById = async (id: number) => {
     where: {
       id: id,
     },
+    select: selectUserFields
   });
 
   return user;

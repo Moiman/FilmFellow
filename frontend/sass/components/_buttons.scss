@@ -37,7 +37,7 @@ button:hover {
 }
 
 button:focus {
-  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+  outline: 2px rgba(abstracts.$primary-light, 0.5) solid;
 }
 
 .button-transparent {
@@ -52,4 +52,8 @@ button:focus {
 
 .button-transparent:hover {
   background-color: transparent;
+}
+
+.button-transparent:focus {
+  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
 }

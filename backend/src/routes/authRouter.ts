@@ -130,6 +130,9 @@ authRouter.put(
         user.username = username;
       }
       if (role) {
+        if (user.role !== Role.admin) {
+          return res.status(400).json({ error: "Cant change user role unless admin" });
+        }
         user.role = role;
       }
       const updatedUser = await updateUser(userId, user);

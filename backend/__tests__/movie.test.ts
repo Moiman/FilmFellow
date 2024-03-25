@@ -36,6 +36,20 @@ describe("Movie route", () => {
     expect(response.statusCode).toBe(200);
   });
 
+  it("/movies/?limit=15&type=popular&genre=drama test movie endpoint for returning movies with limit 15, type most popular first and genre drama", async () => {
+    const response = await request(app).get(`/movies/?limit=15&type=popular&genre=drama`);
+    expect(response.body.length).toBe(15);
+    expect(response.body[0]).toHaveProperty("genres");
+    expect(response.statusCode).toBe(200);
+  });
+
+  it("/movies/?limit=20&type=bestrated&genre=drama test movie endpoint for returning movies with limit 20, type highest rated first and genre drama", async () => {
+    const response = await request(app).get(`/movies/?limit=20&type=bestrated&genre=drama`);
+    expect(response.body.length).toBe(20);
+    expect(response.body[0]).toHaveProperty("genres");
+    expect(response.statusCode).toBe(200);
+  });
+
   it("/movies/?limit=abcdefg&type=123&genre=123 test movie endpoint with faulty values", async () => {
     const response = await request(app).get(`/movies/?limit=abcdefg&type=123&genre=123`);
     expect(response.body.error).toContain("3 errors occurred");

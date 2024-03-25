@@ -1,10 +1,10 @@
-import { expect, it, afterEach, describe } from "vitest";
+import { expect, test, afterEach, describe } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { Section } from "@/components/section";
 
 afterEach(() => cleanup());
 
-it("Renders Section component", () => {
+test("Renders Section component", () => {
   render(
     <Section header="Test Header">
       <div>Test Content</div>
@@ -13,7 +13,7 @@ it("Renders Section component", () => {
 });
 
 describe("Section header", () => {
-  it("Renders header as string", () => {
+  test("Renders header as string", () => {
     render(
       <Section header="Test Header">
         <div>Test Content</div>
@@ -22,7 +22,7 @@ describe("Section header", () => {
     expect(screen.getByText("Test Header")).toBeDefined();
   });
 
-  it("Renders header as h3 if it's a string", () => {
+  test("Renders header as h3 if it's a string", () => {
     render(
       <Section header="Test Header">
         <div>Test Content</div>
@@ -31,7 +31,7 @@ describe("Section header", () => {
     expect(screen.getByRole("heading", { level: 3 })).toBeDefined();
   });
 
-  it("Renders header as React element", () => {
+  test("Renders header as React element", () => {
     const headerElement = <h1>Test Header</h1>;
 
     render(
@@ -42,7 +42,7 @@ describe("Section header", () => {
     expect(screen.getByText("Test Header")).toBeDefined();
   });
 
-  it("Renders header as right React element", () => {
+  test("Renders header as right React element", () => {
     const headerElement = <h1>Test Header</h1>;
     render(
       <Section header={headerElement}>
@@ -55,7 +55,7 @@ describe("Section header", () => {
 });
 
 describe("Section content", () => {
-  it("Renders content", () => {
+  test("Renders content", () => {
     render(
       <Section header="Test Header">
         <div>Test Content</div>

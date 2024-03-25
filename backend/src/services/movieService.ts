@@ -7,6 +7,17 @@ const getMovieById = async (movieId: number) => {
     where: {
       id: movieId,
     },
+    include: {
+      genres: {
+        select: {
+          genre: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
   });
   return movie;
 };
@@ -31,6 +42,17 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
         orderBy: {
           release_date: "desc",
         },
+        include: {
+          genres: {
+            select: {
+              genre: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
       });
       return moviesDescendingOrder;
     }
@@ -42,6 +64,17 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
         take: limit,
         orderBy: {
           popularity: "desc",
+        },
+        include: {
+          genres: {
+            select: {
+              genre: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
         },
       });
       return moviesPopularOrder;
@@ -55,6 +88,17 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
         orderBy: {
           vote_average: "desc",
         },
+        include: {
+          genres: {
+            select: {
+              genre: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
       });
       return moviesBestRatedOrder;
     }
@@ -66,10 +110,10 @@ const getMovieReviewsById = async (movieId: number) => {
     where: {
       movieId: movieId,
     },
-
     select: {
       content: true,
       author: true,
+      movie: true,
     },
   });
 

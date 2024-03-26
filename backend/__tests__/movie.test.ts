@@ -40,7 +40,7 @@ describe("Movie route", () => {
   });
 
   it("/movies/:id/reviews try to get movie reviews with wrong id", async () => {
-    const response = await request(app).get(`/movies/${123456789}`);
+    const response = await request(app).get(`/movies/${123456789}/reviews`);
     expect(response.statusCode).toBe(404);
   });
 

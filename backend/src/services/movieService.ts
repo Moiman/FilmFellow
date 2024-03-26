@@ -17,6 +17,13 @@ const getMovieById = async (movieId: number) => {
           },
         },
       },
+      cast: {
+        take: 6,
+      },
+      crew: {
+        take: 6,
+      },
+      importedReviews: true,
     },
   });
   if (!movie) {

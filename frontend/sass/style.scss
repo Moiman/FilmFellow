@@ -21,7 +21,13 @@ body {
 }
 
 main {
-  padding: abstracts.$default-page-margin;
+  padding: abstracts.$default-page-margin 200px;
   height: fit-content;
   flex: 1;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  main {
+    padding: 40px;
+  }
 }

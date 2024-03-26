@@ -2,6 +2,7 @@
 import { DropdownMenu, type dropdownMenuItem } from "@/components/dropdownMenu";
 import { Section } from "@/components/section";
 import { useState } from "react";
+import { Menu } from "react-feather";
 
 export default function Home() {
   const exampleHeader = (
@@ -31,15 +32,31 @@ export default function Home() {
 
       <DropdownMenu
         options={exampleList}
-        defaultOption={exampleList[0]}
         onSelect={handleGenreChange}
-        maxWidth={600}
+        defaultOption={exampleList[0]}
+        zIndex={20}
       />
 
       <DropdownMenu
         options={exampleList}
         onSelect={handleGenreChange}
+        defaultOption={exampleList[0]}
         button={<button>Testi</button>}
+        zIndex={10}
+      />
+
+      <DropdownMenu
+        options={exampleList}
+        onSelect={handleGenreChange}
+        defaultOption={exampleList[0]}
+        button={
+          <button className="button-transparent">
+            <Menu
+              size={20}
+              color={"white"}
+            />
+          </button>
+        }
       />
 
       <Section header={exampleHeader}>

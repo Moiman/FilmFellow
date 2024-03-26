@@ -1,19 +1,28 @@
 "use client";
 import { ReactElement, useState } from "react";
-import { ChevronDown, ChevronUp } from "react-feather";
+import { Check, ChevronDown, ChevronUp } from "react-feather";
 
 export type dropdownMenuItem = {
   id: number | string;
   name: string;
 };
 
+// PROPS:
+// options: Array of items (dropdownMenuItem) to be used in dropdown menu
+// onSelect: Function that takes selected item back to the parent and handles it there e.g. with UseState
+
+// defaultOption: Optional default item that is already selected (e.g. "All")
+// button: Optional ReactElement that can be used as button for the menu
+// maxWidth: Optional maximum width of the dropdown menu, without this width is 100%
+// zIndex: Optional z-index to ease future layout handling
+
 interface DropdownMenuProps {
   options: dropdownMenuItem[];
+  onSelect: (item: dropdownMenuItem) => void;
   defaultOption?: dropdownMenuItem;
   button?: ReactElement;
   maxWidth?: string | number;
-  zIndex?: string | number;
-  onSelect: (item: dropdownMenuItem) => void;
+  zIndex?: number;
 }
 
 export const DropdownMenu = ({ options, defaultOption, button, maxWidth, zIndex, onSelect }: DropdownMenuProps) => {
@@ -38,8 +47,8 @@ export const DropdownMenu = ({ options, defaultOption, button, maxWidth, zIndex,
       {button ? (
         button
       ) : (
-        <div className="header">
-          {selected !== null ? selected.name : "Select one"}
+        <button className="header">
+          {selected.name ? selected.name : "Select one"}
           {!isOpen ? (
             <ChevronDown
               size={20}
@@ -51,18 +60,25 @@ export const DropdownMenu = ({ options, defaultOption, button, maxWidth, zIndex,
               color={"#ffc700"}
             />
           )}
-        </div>
+        </button>
       )}
+
       {isOpen && (
         <div className="menu">
           {options.map((option: dropdownMenuItem) => (
-            <div
+            <button
               key={option.id}
               onClick={() => changeValue(option)}
-              className={option.id === selected.id ? "selected item" : "item"}
+              className="item"
             >
               {option.name}
-            </div>
+              {option.id === selected.id ? (
+                <Check
+                  size={20}
+                  color="#ffc700"
+                />
+              ) : null}
+            </button>
           ))}
         </div>
       )}

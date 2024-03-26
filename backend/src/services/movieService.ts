@@ -19,7 +19,10 @@ const getMovieById = async (movieId: number) => {
       },
     },
   });
-  return movie;
+  if (!movie) {
+    return null;
+  }
+  return { ...movie, genres: movie?.genres.map(genre => genre.genre.name) };
 };
 
 const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: string) => {
@@ -54,7 +57,10 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
           },
         },
       });
-      return moviesDescendingOrder;
+      const moviesWithRearrangedGenres = moviesDescendingOrder.map(element => {
+        return { ...element, genres: element.genres.map(genre => genre.genre.name) };
+      });
+      return moviesWithRearrangedGenres;
     }
     if (givenType === "popular") {
       const moviesPopularOrder = await prisma.movies.findMany({
@@ -77,7 +83,10 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
           },
         },
       });
-      return moviesPopularOrder;
+      const moviesWithRearrangedGenres = moviesPopularOrder.map(element => {
+        return { ...element, genres: element.genres.map(genre => genre.genre.name) };
+      });
+      return moviesWithRearrangedGenres;
     }
     if (givenType === "bestrated") {
       const moviesBestRatedOrder = await prisma.movies.findMany({
@@ -100,7 +109,10 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
           },
         },
       });
-      return moviesBestRatedOrder;
+      const moviesWithRearrangedGenres = moviesBestRatedOrder.map(element => {
+        return { ...element, genres: element.genres.map(genre => genre.genre.name) };
+      });
+      return moviesWithRearrangedGenres;
     }
   }
 };

@@ -4,7 +4,7 @@ import { validateReqQuery } from "../middlewares/validate.js";
 import { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre } from "../services/movieService.js";
 
 const requestQuerySchema = yup.object({
-  limit: yup.number().positive().integer().required(),
+  limit: yup.number().positive().integer().required().max(50),
   type: yup
     .string()
     .required()

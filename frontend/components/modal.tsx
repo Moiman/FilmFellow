@@ -1,34 +1,47 @@
-import React from "react";
-import ReactDOM from "react-dom";
+"use client";
 
-const Modal = ({ onClose, children, title }: { onClose: any; children: any; title: any }) => {
-  const handleCloseClick = (e: any) => {
-    e.preventDefault();
-    onClose();
-  };
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useRef } from "react";
+import { X } from "react-feather";
 
-  const modalContent = (
-    <div className="modal-overlay">
-      {/* Wrap the whole Modal inside the newly created StyledModalWrapper
-            and use the ref */}
-      <div className="modal-wrapper">
-        <div className="modal">
-          <div className="modal-header">
-            <a
-              href="#"
-              onClick={handleCloseClick}
-            >
-              x
-            </a>
+interface Props {
+  title: string;
+  content: React.ReactNode;
+}
+
+const Modal = ({ content, title }: Props) => {
+  const searchParams = useSearchParams();
+  const dialogRef = useRef<null | HTMLDialogElement>(null);
+  const showDialog = searchParams.get("showDialog");
+
+  useEffect(() => {
+    if (showDialog === "y") {
+      dialogRef.current?.showModal();
+    } else {
+      dialogRef.current?.close();
+    }
+  }, [showDialog]);
+
+  const dialog =
+    showDialog === "y" ? (
+      <dialog>
+        <div>
+          <div>
+            <h1>{title}</h1>
+            <X onClick={() => dialogRef.current?.close()} />
           </div>
-          {title && <h1>{title}</h1>}
-          <div className="modal-body">{children}</div>
+          <div>{content}</div>
         </div>
-      </div>
-    </div>
-  );
+      </dialog>
+    ) : null;
 
-  return ReactDOM.createPortal(modalContent, document.getElementById("modal-root"));
+  return (
+    <>
+      <Link href="/?showDialog=y"></Link>
+      {dialog}
+    </>
+  );
 };
 
 export default Modal;

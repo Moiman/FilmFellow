@@ -3,7 +3,7 @@ import { createGzip } from "zlib";
 import { Readable } from "stream";
 import { type MovieDataType, fetchMoviesData } from "./initMovies.js";
 import { fetchPersonsData, type PersonData } from "./initPersons.js";
-import { fetchCountries, fetchGenres, fetchLanguages } from "./fetchOtherData.js";
+import { fetchCountries, fetchGenres, fetchLanguages, fetchProviders } from "./fetchOtherData.js";
 import type { MovieListResponse } from "./types.js";
 
 export type MoviesJSONdata = typeof moviesJSONdata;
@@ -83,12 +83,16 @@ console.log(companiesMap.size);
 const genres = await fetchGenres();
 const countries = await fetchCountries();
 const languages = await fetchLanguages();
+const providers = await fetchProviders();
 
 const moviesJSONdata = {
   genres,
   countries,
   languages,
   persons,
+  watchProviders: providers.watchProviders,
+  watchProviderCountries: providers.watchProviderCountries,
+  movieProviders: movies.flatMap(movie => movie.movieProviders),
   movies: movies.map(movie => movie.movie),
   movieGenres: movies.flatMap(movie => movie.movieGenres),
   companies: [...companiesMap.values()],

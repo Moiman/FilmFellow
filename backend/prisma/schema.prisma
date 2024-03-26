@@ -51,6 +51,7 @@ model Movies {
   // watchProviders      WatchProviders[]
   translations        Translations[]
   images              Images[]
+  movieProvider       MovieProviders[]
 }
 
 model ImportedReviews {
@@ -108,10 +109,12 @@ model ProductionCountries {
 }
 
 model Countries {
-  iso_3166_1          String                @id
-  english_name        String                @unique
-  native_name         String
-  productionCountries ProductionCountries[]
+  iso_3166_1             String                   @id
+  english_name           String                   @unique
+  native_name            String
+  productionCountries    ProductionCountries[]
+  WatchProviderCountries WatchProviderCountries[]
+  movieProvider          MovieProviders[]
 }
 
 model Companies {
@@ -186,14 +189,46 @@ model ReleaseDates {
   @@id([movieId, iso_3166_1])
 }
 
-// model WatchProviders {
-//   movieId Int
-//   movie   Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
-// }
+model WatchProviders {
+  provider_id      Int    @id
+  display_priority Int
+  logo_path        String
+  provider_name    String
 
-// model WatchProviderCountries {
+  WatchProviderCountries WatchProviderCountries[]
+  movieProvider          MovieProviders[]
+}
 
-// }
+model WatchProviderCountries {
+  provider_id      Int
+  iso_3166_1       String
+  display_priority Int
+
+  provider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
+  country  Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+
+  @@id([provider_id, iso_3166_1])
+}
+
+model MovieProviders {
+  movieId     Int
+  provider_id Int
+  iso_3166_1  String
+  type        ProviderType
+
+  movie    Movies         @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  provider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
+  country  Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+
+  @@id([movieId, provider_id, iso_3166_1])
+}
+
+enum ProviderType {
+  free
+  flatrate
+  buy
+  rent
+}
 
 model Translations {
   movieId   Int

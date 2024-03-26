@@ -1,4 +1,5 @@
-import { PrismaClient, type Images } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import type { Images, WatchProviders, WatchProviderCountries, MovieProviders } from "@prisma/client";
 import type { MovieDataType } from "../scripts/initMovies.js";
 import type { PersonData } from "../scripts/initPersons.js";
 import type { Country, Genre, Language } from "../scripts/types.js";
@@ -187,6 +188,32 @@ const initLanguagesDB = async (languages: Language[]) => {
   });
 };
 
+const initWatchProviders = async (watchProviders: WatchProviders[]) => {
+  await prisma.watchProviders.createMany({
+    data: watchProviders,
+    skipDuplicates: true,
+  });
+};
+
+const initWatchProviderCountries = async (watchProviderCountries: WatchProviderCountries[]) => {
+  for (const w of watchProviderCountries) {
+    if (await prisma.countries.findFirst({ where: { iso_3166_1: w.iso_3166_1 } })) {
+      console.log(w);
+      await prisma.watchProviderCountries.createMany({
+        data: w,
+        skipDuplicates: true,
+      });
+    }
+  }
+};
+
+const initMovieProviders = async (movieProviders: MovieProviders[]) => {
+  await prisma.movieProviders.createMany({
+    data: movieProviders,
+    skipDuplicates: true,
+  });
+};
+
 export {
   initPersonDB,
   initPersonsDB,
@@ -206,4 +233,7 @@ export {
   initReleaseDatesDB,
   initmovieGenresDB,
   initTranslationsDB,
+  initWatchProviders,
+  initWatchProviderCountries,
+  initMovieProviders,
 };

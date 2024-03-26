@@ -1,3 +1,5 @@
+import type { WatchProviders } from "@prisma/client";
+
 interface Company {
   id: number;
   logo_path: string;
@@ -42,15 +44,24 @@ interface ReleaseDateData {
   release_date: Date;
 }
 
-interface WatchProviders {
-  results: WatchProvidersCountries[];
+export interface WatchProvidersResponse {
+  results: WatchProviderDetail[];
 }
 
-interface WatchProvidersCountries {
+interface WatchProviderDetail extends WatchProviders {
+  display_priorities: Record<string, number>;
+}
+
+export interface MovieProviderResponse {
+  results: Record<string, WatchProviderCountry>;
+}
+
+interface WatchProviderCountry {
   link: string;
-  rent: WatchProviderData[];
-  buy: WatchProviderData[];
-  flatrate: WatchProviderData[];
+  rent?: WatchProviderData[];
+  buy?: WatchProviderData[];
+  flatrate?: WatchProviderData[];
+  free?: WatchProviderData[];
 }
 
 interface WatchProviderData {
@@ -157,7 +168,7 @@ export interface MovieResponse {
   credits: Credits;
   reviews: Reviews;
   release_dates: ReleaseDates;
-  "watch/providers": WatchProviders;
+  "watch/providers": MovieProviderResponse;
   translations: Translations;
   images: Images;
 }

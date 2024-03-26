@@ -1,4 +1,4 @@
-import { ImageType } from "@prisma/client";
+import { ImageType, type MovieProviders } from "@prisma/client";
 import { fetchTMDB } from "./fetchHelper.js";
 import type { MovieResponse } from "./types.js";
 
@@ -118,8 +118,6 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
       }
     : null;
 
-  // const providers = ...
-
   const images = movieData.images.backdrops
     .map(image => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -141,6 +139,43 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
       }),
     );
 
+  const movieProviders: MovieProviders[] = [];
+
+  for (const [iso_3166_1, providerCountry] of Object.entries(movieData["watch/providers"].results)) {
+    providerCountry.buy?.forEach(provider =>
+      movieProviders.push({
+        iso_3166_1,
+        provider_id: provider.provider_id,
+        movieId: movieData.id,
+        type: "buy",
+      }),
+    );
+    providerCountry.free?.forEach(provider =>
+      movieProviders.push({
+        iso_3166_1,
+        provider_id: provider.provider_id,
+        movieId: movieData.id,
+        type: "free",
+      }),
+    );
+    providerCountry.flatrate?.forEach(provider =>
+      movieProviders.push({
+        iso_3166_1,
+        provider_id: provider.provider_id,
+        movieId: movieData.id,
+        type: "flatrate",
+      }),
+    );
+    providerCountry.rent?.forEach(provider =>
+      movieProviders.push({
+        iso_3166_1,
+        provider_id: provider.provider_id,
+        movieId: movieData.id,
+        type: "rent",
+      }),
+    );
+  }
+
   return {
     movie,
     movieGenres,
@@ -154,6 +189,7 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
     releaseDates,
     translation,
     images,
+    movieProviders,
   };
 };
 

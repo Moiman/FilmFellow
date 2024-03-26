@@ -10,6 +10,7 @@ import {
   initGenresDB,
   initImagesDB,
   initLanguagesDB,
+  initMovieProviders,
   initMoviesDB,
   initPersonsDB,
   initProductionCompaniesDB,
@@ -18,6 +19,8 @@ import {
   initReviewsDB,
   initSpokenLanguagesDB,
   initTranslationsDB,
+  initWatchProviderCountries,
+  initWatchProviders,
   initmovieGenresDB,
 } from "../services/initService.js";
 
@@ -44,5 +47,8 @@ gunzip(testDataGzip, async (err, res) => {
   await initCastDB(testData.casts);
   await initCrewDB(testData.crews);
   await initImagesDB(testData.images);
+  await initWatchProviders(testData.watchProviders);
+  await initWatchProviderCountries(testData.watchProviderCountries);
+  await initMovieProviders(testData.movieProviders);
   console.log("Test data stored in database");
 });

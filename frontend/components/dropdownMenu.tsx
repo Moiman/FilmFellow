@@ -15,6 +15,7 @@ export type dropdownMenuItem = {
 // button: Optional ReactElement that can be used as button for the menu
 // maxWidth: Optional maximum width of the dropdown menu, without this width is 100%
 // zIndex: Optional z-index to ease future layout handling
+// showSelected: show checkmark on selected item
 
 interface DropdownMenuProps {
   options: dropdownMenuItem[];
@@ -23,9 +24,18 @@ interface DropdownMenuProps {
   button?: ReactElement;
   maxWidth?: string | number;
   zIndex?: number;
+  showSelected?: boolean;
 }
 
-export const DropdownMenu = ({ options, defaultOption, button, maxWidth, zIndex, onSelect }: DropdownMenuProps) => {
+export const DropdownMenu = ({
+  options,
+  defaultOption,
+  button,
+  maxWidth,
+  zIndex,
+  onSelect,
+  showSelected,
+}: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<dropdownMenuItem | null>(defaultOption ? defaultOption : null);
 
@@ -48,7 +58,7 @@ export const DropdownMenu = ({ options, defaultOption, button, maxWidth, zIndex,
         button
       ) : (
         <button className="header">
-          {selected.name ? selected.name : "Select one"}
+          {selected && selected.name}
           {!isOpen ? (
             <ChevronDown
               size={20}
@@ -72,7 +82,7 @@ export const DropdownMenu = ({ options, defaultOption, button, maxWidth, zIndex,
               className="item"
             >
               {option.name}
-              {option.id === selected.id ? (
+              {option.id === selected.id && showSelected === true ? (
                 <Check
                   size={20}
                   color="#ffc700"

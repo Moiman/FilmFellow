@@ -34,7 +34,16 @@ export default function Home() {
         options={exampleList}
         onSelect={handleGenreChange}
         defaultOption={exampleList[0]}
+        zIndex={30}
+        maxWidth={400}
+      />
+
+      <DropdownMenu
+        options={exampleList}
+        onSelect={handleGenreChange}
+        defaultOption={exampleList[1]}
         zIndex={20}
+        showSelected={true}
       />
 
       <DropdownMenu
@@ -50,7 +59,10 @@ export default function Home() {
         onSelect={handleGenreChange}
         defaultOption={exampleList[0]}
         button={
-          <button className="button-transparent">
+          <button
+            className="button-transparent"
+            style={{ display: "inline-flex", justifyContent: "right", width: "100%" }}
+          >
             <Menu
               size={20}
               color={"white"}

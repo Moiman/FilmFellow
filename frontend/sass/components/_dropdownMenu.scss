@@ -1,0 +1,63 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.dropdown-menu {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 0;
+
+  .header,
+  .menu {
+    color: abstracts.$primary-light;
+    font-family: abstracts.$default-text-font;
+    font-size: abstracts.$p-font-size;
+    letter-spacing: abstracts.$text-letter-spacing;
+    text-align: left;
+
+    background-color: abstracts.$primary-darkgrey;
+    border-radius: abstracts.$default-border-radius;
+
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .header {
+    display: inline-flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid abstracts.$primary-dark;
+  }
+
+  .menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    background-color: abstracts.$primary-darkgrey;
+
+    .item {
+      color: abstracts.$primary-light;
+      border: 1px solid abstracts.$primary-dark;
+      border-top: 0px;
+      padding: 10px;
+
+      width: 100%;
+
+      &:hover {
+        background-color: rgba(abstracts.$primary-dark, 0.5);
+      }
+    }
+
+    .selected {
+      border: 1px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    }
+  }
+
+  .dropdown-footer {
+    color: abstracts.$primary-dark;
+    background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    padding: 10px;
+    border: 1px solid abstracts.$primary-dark;
+    border-top: 0px;
+  }
+}

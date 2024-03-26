@@ -3,6 +3,7 @@ import cors from "cors";
 import authRouter from "./routes/authRouter.js";
 import { anyRoute } from "./middlewares/anyRoute.js";
 import movieRouter from "./routes/movieRouter.js";
+import personsRouter from "./routes/personsRouter.js";
 
 declare global {
   interface BigInt {
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRouter);
 app.use("/movies", movieRouter);
+app.use("/persons",personsRouter);
 app.use(anyRoute);
 
 export default app;

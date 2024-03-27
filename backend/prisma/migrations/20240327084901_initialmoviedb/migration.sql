@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "ProviderType" AS ENUM ('free', 'flatrate', 'buy', 'rent');
+
+-- CreateEnum
 CREATE TYPE "ImageType" AS ENUM ('backdrop', 'logo', 'poster');
 
 -- CreateTable
@@ -169,6 +172,35 @@ CREATE TABLE "ReleaseDates" (
 );
 
 -- CreateTable
+CREATE TABLE "WatchProviders" (
+    "provider_id" INTEGER NOT NULL,
+    "display_priority" INTEGER NOT NULL,
+    "logo_path" TEXT NOT NULL,
+    "provider_name" TEXT NOT NULL,
+
+    CONSTRAINT "WatchProviders_pkey" PRIMARY KEY ("provider_id")
+);
+
+-- CreateTable
+CREATE TABLE "WatchProviderCountries" (
+    "provider_id" INTEGER NOT NULL,
+    "iso_3166_1" TEXT NOT NULL,
+    "display_priority" INTEGER NOT NULL,
+
+    CONSTRAINT "WatchProviderCountries_pkey" PRIMARY KEY ("provider_id","iso_3166_1")
+);
+
+-- CreateTable
+CREATE TABLE "MovieProviders" (
+    "movieId" INTEGER NOT NULL,
+    "provider_id" INTEGER NOT NULL,
+    "iso_3166_1" TEXT NOT NULL,
+    "type" "ProviderType" NOT NULL,
+
+    CONSTRAINT "MovieProviders_pkey" PRIMARY KEY ("movieId","provider_id","iso_3166_1")
+);
+
+-- CreateTable
 CREATE TABLE "Translations" (
     "movieId" INTEGER NOT NULL,
     "iso_639_1" TEXT NOT NULL,
@@ -241,6 +273,21 @@ ALTER TABLE "MovieCrew" ADD CONSTRAINT "MovieCrew_movieId_fkey" FOREIGN KEY ("mo
 
 -- AddForeignKey
 ALTER TABLE "ReleaseDates" ADD CONSTRAINT "ReleaseDates_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "WatchProviderCountries" ADD CONSTRAINT "WatchProviderCountries_provider_id_fkey" FOREIGN KEY ("provider_id") REFERENCES "WatchProviders"("provider_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "WatchProviderCountries" ADD CONSTRAINT "WatchProviderCountries_iso_3166_1_fkey" FOREIGN KEY ("iso_3166_1") REFERENCES "Countries"("iso_3166_1") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "MovieProviders" ADD CONSTRAINT "MovieProviders_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "MovieProviders" ADD CONSTRAINT "MovieProviders_provider_id_fkey" FOREIGN KEY ("provider_id") REFERENCES "WatchProviders"("provider_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "MovieProviders" ADD CONSTRAINT "MovieProviders_iso_3166_1_fkey" FOREIGN KEY ("iso_3166_1") REFERENCES "Countries"("iso_3166_1") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Translations" ADD CONSTRAINT "Translations_iso_639_1_fkey" FOREIGN KEY ("iso_639_1") REFERENCES "Languages"("iso_639_1") ON DELETE CASCADE ON UPDATE CASCADE;

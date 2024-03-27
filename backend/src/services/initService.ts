@@ -196,20 +196,26 @@ const initWatchProviders = async (watchProviders: WatchProviders[]) => {
 };
 
 const initWatchProviderCountries = async (watchProviderCountries: WatchProviderCountries[]) => {
-  for (const w of watchProviderCountries) {
-    if (await prisma.countries.findFirst({ where: { iso_3166_1: w.iso_3166_1 } })) {
-      console.log(w);
-      await prisma.watchProviderCountries.createMany({
-        data: w,
-        skipDuplicates: true,
-      });
-    }
-  }
+  const validCountries = (await prisma.countries.findMany({ select: { iso_3166_1: true } })).map(
+    country => country.iso_3166_1,
+  );
+  const validWatchProviderCountries = watchProviderCountries.filter(providerCountry =>
+    validCountries.includes(providerCountry.iso_3166_1),
+  );
+  await prisma.watchProviderCountries.createMany({
+    data: validWatchProviderCountries,
+    skipDuplicates: true,
+  });
 };
 
 const initMovieProviders = async (movieProviders: MovieProviders[]) => {
+  const validCountries = (await prisma.countries.findMany({ select: { iso_3166_1: true } })).map(
+    country => country.iso_3166_1,
+  );
+  const validMovieProviders = movieProviders.filter(movieProvider => validCountries.includes(movieProvider.iso_3166_1));
+
   await prisma.movieProviders.createMany({
-    data: movieProviders,
+    data: validMovieProviders,
     skipDuplicates: true,
   });
 };

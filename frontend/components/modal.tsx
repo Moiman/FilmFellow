@@ -1,5 +1,6 @@
 "use client";
 
+import "@/sass/style.scss";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
@@ -17,30 +18,27 @@ const Modal = ({ content, title }: Props) => {
 
   useEffect(() => {
     if (showDialog === "y") {
-      dialogRef.current?.showModal();
+      dialogRef.current?.show();
     } else {
       dialogRef.current?.close();
     }
   }, [showDialog]);
 
-  const dialog =
-    showDialog === "y" ? (
-      <dialog>
-        <div>
-          <div>
-            <h1>{title}</h1>
-            <X onClick={() => dialogRef.current?.close()} />
-          </div>
-          <div>{content}</div>
-        </div>
-      </dialog>
-    ) : null;
-
   return (
-    <>
-      <Link href="/?showDialog=y"></Link>
-      {dialog}
-    </>
+    <div>
+      <Link href="new/?showDialog=y">test</Link>
+      {showDialog === "y" ? (
+        <dialog className="modal-background">
+          <div className="modal-content">
+            <div>
+              <h1>{title}</h1>
+              <X onClick={() => dialogRef.current?.close()} />
+            </div>
+            <div>{content}</div>
+          </div>
+        </dialog>
+      ) : null}
+    </div>
   );
 };
 

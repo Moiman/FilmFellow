@@ -1,5 +1,5 @@
 "use client";
-import { DropdownMenu } from "@/components/dropdownMenu";
+import { DropdownMenu } from "@/components/dropdown";
 import { Section } from "@/components/section";
 import { useState } from "react";
 import { Check } from "react-feather";

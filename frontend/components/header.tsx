@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
-import { DropdownMenu } from "./dropdownMenu";
+import { DropdownMenu } from "./dropdown";
 
 export const Links = [
   { text: "New", href: "/new" },

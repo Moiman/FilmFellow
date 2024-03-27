@@ -19,7 +19,7 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
     overview: movieData.overview,
     popularity: movieData.popularity,
     poster_path: movieData.poster_path,
-    release_date: movieData.release_date,
+    release_date: new Date(movieData.release_date),
     revenue: movieData.revenue,
     runtime: movieData.runtime,
     status: movieData.status,

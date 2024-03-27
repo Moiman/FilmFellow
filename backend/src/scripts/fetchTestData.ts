@@ -40,7 +40,7 @@ for (let page = 1; page < 6; page++) {
   }
 }
 
-console.log(topRatedMovieIdArray.length);
+console.log("Fetching", topRatedMovieIdArray.length, "movies");
 
 await fetchMoviesData(topRatedMovieIdArray, storeMovie);
 
@@ -54,7 +54,6 @@ while (topRatedMovieIdArray.length !== movies.length) {
   }
 }
 
-console.log(movies.length);
 const personIds = new Set<number>();
 
 movies.forEach(movie => {
@@ -62,7 +61,7 @@ movies.forEach(movie => {
   movie.crew.forEach(person => personIds.add(person.personId));
 });
 
-console.log(personIds.size);
+console.log("Fetching", personIds.size, "persons");
 
 await fetchPersonsData([...personIds.values()], storePerson);
 waitedSecs = 0;
@@ -77,8 +76,6 @@ while (personIds.size !== persons.length) {
 const companiesMap = new Map<number, MovieDataType["companies"][0]>();
 
 movies.forEach(movie => movie.companies.forEach(company => companiesMap.set(company.id, company)));
-
-console.log(companiesMap.size);
 
 const genres = await fetchGenres();
 const countries = await fetchCountries();

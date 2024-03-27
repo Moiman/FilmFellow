@@ -17,7 +17,7 @@ CREATE TABLE "Movies" (
     "overview" TEXT NOT NULL,
     "popularity" DOUBLE PRECISION NOT NULL,
     "poster_path" TEXT NOT NULL,
-    "release_date" TEXT NOT NULL,
+    "release_date" DATE,
     "revenue" BIGINT NOT NULL,
     "runtime" INTEGER NOT NULL,
     "status" TEXT NOT NULL,

@@ -31,7 +31,7 @@ model Movies {
   overview            String
   popularity          Float
   poster_path         String
-  release_date        String
+  release_date        DateTime?             @db.Date
   revenue             BigInt
   runtime             Int
   status              String
@@ -48,7 +48,6 @@ model Movies {
   cast                MovieCast[]
   crew                MovieCrew[]
   release_dates       ReleaseDates[]
-  // watchProviders      WatchProviders[]
   translations        Translations[]
   images              Images[]
   movieProvider       MovieProviders[]

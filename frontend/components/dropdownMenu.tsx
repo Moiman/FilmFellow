@@ -63,7 +63,10 @@ export const DropdownMenu = ({ children, selected, button, buttonAlign, width, h
         <div
           className="dropdown-menu"
           onClick={() => setIsOpen(!isOpen)}
-          style={{ maxHeight: height ? height + "px" : "fit-content", minWidth: width ? width + "px" : "fit-content" }}
+          style={{
+            maxHeight: height ? height + "px" : "fit-content",
+            minWidth: width ? width + "px" : "fit-content",
+          }}
         >
           {children}
         </div>

@@ -27,17 +27,17 @@ export default function Home() {
     name: string;
   };
 
-  /* Placeholder for data */
+  /* Placeholder data */
   const exampleGenres: Genre[] = [
     { id: 1, name: "All" },
     { id: 23, name: "Drama" },
     { id: 5, name: "Horror" },
     { id: 2, name: "Sci-fi" },
     { id: 16, name: "Western" },
-    { id: 161, name: "Action" },
-    { id: 162, name: "Romance" },
-    { id: 163, name: "Comedy" },
-    { id: 164, name: "Musical" },
+    { id: 9, name: "Action" },
+    { id: 12, name: "Romance" },
+    { id: 86, name: "Comedy" },
+    { id: 234, name: "Musical" },
   ];
 
   const [selectedGenre, setSelectedGenre] = useState<Genre>(exampleGenres[0]);
@@ -50,6 +50,7 @@ export default function Home() {
     <main>
       <h1>FilmFellow</h1>
 
+      {/* Example of dropdown element */}
       <div
         style={{
           marginBottom: "10px",
@@ -84,6 +85,7 @@ export default function Home() {
         </DropdownMenu>
       </div>
 
+      {/* Examples of sections */}
       <Section header={exampleHeader}>
         <p>This is a example usage of {"<Section>"} with component header.</p>
       </Section>

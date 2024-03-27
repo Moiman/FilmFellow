@@ -6,7 +6,6 @@
   flex: 1;
 
   position: relative;
-  padding: 0;
 
   .dropdown-header,
   .dropdown-menu {
@@ -78,13 +77,5 @@
         outline: 0;
       }
     }
-  }
-
-  .dropdown-footer {
-    color: abstracts.$primary-dark;
-    background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-    padding: 10px;
-    border: 1px solid abstracts.$primary-dark;
-    border-top: 0px;
   }
 }

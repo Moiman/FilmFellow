@@ -31,10 +31,6 @@
     &:focus {
       outline: 1px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     }
-
-    & > * {
-      color: abstracts.$primary-dark;
-    }
   }
 
   .dropdown-menu {

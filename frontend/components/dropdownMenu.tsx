@@ -1,12 +1,5 @@
-import { ReactElement, useState } from "react";
+import { ReactNode, useState } from "react";
 import { ChevronDown, ChevronUp } from "react-feather";
-
-/* Add more optional items if needed, id and name are only mandatory ones? */
-export type dropdownMenuItem = {
-  id: number | string;
-  name: string;
-  href?: string;
-};
 
 type buttonAlign = "center" | "right" | "left";
 
@@ -15,7 +8,7 @@ MANDATORY PROPS:
 children: Needs at least 1 child: you can use button with dropdown-item class for styling or make a custom one
 
 OPTIONAL PROPS:
-selected: Optional default item that is already selected (e.g. "All")
+selected: String for header, for example currently selected option, default is "Choose one"
 button: Optional ReactElement that can be used as button for the menu instead showing selected item
 buttonAlign: Optional align for custom button, default is left
 width: Optional width of the dropdown menu, without this width is 100% parent width
@@ -24,9 +17,9 @@ zIndex: Optional z-index to ease future layout handling
 */
 
 interface DropdownMenuProps {
-  children: any;
-  selected?: dropdownMenuItem;
-  button?: ReactElement;
+  children: ReactNode;
+  selected?: string;
+  button?: ReactNode;
   buttonAlign?: buttonAlign;
   width?: number;
   height?: number;
@@ -51,7 +44,7 @@ export const DropdownMenu = ({ children, selected, button, buttonAlign, width, h
           className="dropdown-header"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {selected ? selected.name : "Choose one"}
+          {selected ? selected : "Choose one"}
           {!isOpen ? (
             <ChevronDown
               size={20}

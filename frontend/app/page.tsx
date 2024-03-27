@@ -7,7 +7,17 @@ import { Check } from "react-feather";
 export default function Home() {
   const exampleHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <h3>Component header</h3> <button>Button</button>
+      <h3>Component header</h3>{" "}
+      <DropdownMenu
+        button={<button>Test menu</button>}
+        zIndex={10}
+        width={200}
+        buttonAlign="right"
+      >
+        <button className="dropdown-item">1</button>
+        <button className="dropdown-item">2</button>
+        <button className="dropdown-item">3</button>
+      </DropdownMenu>
     </div>
   );
 
@@ -40,37 +50,39 @@ export default function Home() {
     <main>
       <h1>FilmFellow</h1>
 
-      <DropdownMenu
-        selected={selectedGenre ? selectedGenre : exampleGenres.find((genre: Genre) => (genre.name = "All"))}
-        zIndex={30}
-        width={400}
+      <div
+        style={{
+          marginBottom: "10px",
+          width: "100%",
+          display: "inline-flex",
+          justifyContent: "end",
+          alignItems: "center",
+          gap: "10px",
+        }}
       >
-        {exampleGenres.map((option: Genre) => (
-          <button
-            key={option.id}
-            onClick={() => handleGenreChange(option)}
-            className="dropdown-item"
-          >
-            {option.name}
-            {option.id === selectedGenre.id ? (
-              <Check
-                size={20}
-                color="#ffc700"
-              />
-            ) : null}
-          </button>
-        ))}
-      </DropdownMenu>
-
-      <DropdownMenu
-        button={<button>Test menu with align and button</button>}
-        zIndex={10}
-        buttonAlign="right"
-      >
-        <button className="dropdown-item">1</button>
-        <button className="dropdown-item">2</button>
-        <button className="dropdown-item">3</button>
-      </DropdownMenu>
+        <p>Select</p>
+        <DropdownMenu
+          selected={selectedGenre ? selectedGenre.name : ""}
+          zIndex={30}
+          width={400}
+        >
+          {exampleGenres.map((option: Genre) => (
+            <button
+              key={option.id}
+              onClick={() => handleGenreChange(option)}
+              className="dropdown-item"
+            >
+              {option.name}
+              {option.id === selectedGenre.id ? (
+                <Check
+                  size={20}
+                  color="#ffc700"
+                />
+              ) : null}
+            </button>
+          ))}
+        </DropdownMenu>
+      </div>
 
       <Section header={exampleHeader}>
         <p>This is a example usage of {"<Section>"} with component header.</p>

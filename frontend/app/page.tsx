@@ -10,7 +10,6 @@ export default function Home() {
       <h3>Component header</h3>{" "}
       <DropdownMenu
         button={<button>Test menu</button>}
-        zIndex={10}
         width={200}
         buttonAlign="right"
       >
@@ -61,11 +60,11 @@ export default function Home() {
           gap: "10px",
         }}
       >
-        <p>Select</p>
+        <h6>Genre</h6>
         <DropdownMenu
           selected={selectedGenre ? selectedGenre.name : ""}
-          zIndex={30}
-          width={400}
+          width={200}
+          zIndex={10}
         >
           {exampleGenres.map((option: Genre) => (
             <button

@@ -63,10 +63,10 @@ export const Header = () => {
         </button>
       </div>
 
-      <div className="sub-nav-narrow highlight-nav">
+      <div className="sub-nav-narrow">
         <DropdownMenu
           width={100}
-          zIndex={10}
+          zIndex={20}
           button={
             <button
               className="button-transparent"
@@ -95,7 +95,6 @@ export const Header = () => {
               {link.text}
             </Link>
           ))}
-
           {isLoggedIn ? (
             SubNavLinks.map((link: any) => (
               <Link

@@ -58,6 +58,7 @@ export const DropdownMenu = ({
 
   const changeValue = (item: dropdownMenuItem) => {
     setSelected(item);
+    setIsOpen(false);
     onSelect(item);
   };
 
@@ -67,6 +68,7 @@ export const DropdownMenu = ({
       style={{
         zIndex: zIndex,
         justifyContent: buttonAlign ? buttonAlign : "left",
+        maxWidth: width ? width + "px" : "100%",
       }}
     >
       {button ? (

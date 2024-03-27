@@ -7,7 +7,7 @@ import { Check } from "react-feather";
 export default function Home() {
   const exampleHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <h3>Component header</h3>{" "}
+      <h3>Component header</h3>
       <DropdownMenu
         button={<button>Test menu</button>}
         width={200}

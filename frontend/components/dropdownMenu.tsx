@@ -5,7 +5,7 @@ type buttonAlign = "center" | "right" | "left";
 
 /* 
 MANDATORY PROPS:
-children: Needs at least 1 child: you can use button with dropdown-item class for styling or make a custom one
+children: Needs at least 1 child: you can use button with dropdown-item class for default styling or make a custom one
 
 OPTIONAL PROPS:
 selected: String for header, for example currently selected option, default is "Choose one"

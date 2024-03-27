@@ -1,5 +1,5 @@
 "use client";
-import { DropdownMenu } from "@/components/dropdown";
+import { Dropdown } from "@/components/dropdown";
 import { Section } from "@/components/section";
 import { useState } from "react";
 import { Check } from "react-feather";
@@ -8,7 +8,7 @@ export default function Home() {
   const exampleHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h3>Component header</h3>
-      <DropdownMenu
+      <Dropdown
         button={<button>Test menu</button>}
         width={200}
         buttonAlign="right"
@@ -16,7 +16,7 @@ export default function Home() {
         <button className="dropdown-item">1</button>
         <button className="dropdown-item">2</button>
         <button className="dropdown-item">3</button>
-      </DropdownMenu>
+      </Dropdown>
     </div>
   );
 
@@ -61,7 +61,7 @@ export default function Home() {
         }}
       >
         <h6>Genre</h6>
-        <DropdownMenu
+        <Dropdown
           selected={selectedGenre ? selectedGenre.name : ""}
           width={200}
           zIndex={10}
@@ -81,7 +81,7 @@ export default function Home() {
               ) : null}
             </button>
           ))}
-        </DropdownMenu>
+        </Dropdown>
       </div>
 
       {/* Examples of sections */}

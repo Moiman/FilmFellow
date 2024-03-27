@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
-import { DropdownMenu } from "./dropdown";
+import { Dropdown } from "./dropdown";
 
 export const Links = [
   { text: "New", href: "/new" },
@@ -64,7 +64,7 @@ export const Header = () => {
       </div>
 
       <div className="sub-nav-narrow">
-        <DropdownMenu
+        <Dropdown
           width={100}
           zIndex={20}
           button={
@@ -114,7 +114,7 @@ export const Header = () => {
               Login
             </Link>
           )}
-        </DropdownMenu>
+        </Dropdown>
       </div>
 
       {/* For w > 1024 sub-nav */}

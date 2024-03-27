@@ -4,6 +4,8 @@ import { ChevronDown, ChevronUp } from "react-feather";
 type buttonAlign = "center" | "right" | "left";
 
 /* 
+This can be used for example as dropdown menu or select component.
+
 MANDATORY PROPS:
 children: Needs at least 1 child: you can use button with dropdown-item class for default styling or make a custom one
 
@@ -26,7 +28,7 @@ interface DropdownMenuProps {
   zIndex?: number;
 }
 
-export const DropdownMenu = ({ children, selected, button, buttonAlign, width, height, zIndex }: DropdownMenuProps) => {
+export const Dropdown = ({ children, selected, button, buttonAlign, width, height, zIndex }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <div

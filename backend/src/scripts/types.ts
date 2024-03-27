@@ -52,7 +52,7 @@ interface WatchProviderDetail extends WatchProviders {
   display_priorities: Record<string, number>;
 }
 
-export interface MovieProviderResponse {
+interface MovieProviderResponse {
   results: Record<string, WatchProviderCountry>;
 }
 

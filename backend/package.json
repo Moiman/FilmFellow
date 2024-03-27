@@ -13,15 +13,11 @@
     "lint": "eslint . --ext ts",
     "prettier-check": "prettier --check .",
     "prisma:migration": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
     "create-admin": "tsx -r dotenv/config ./src/scripts/createAdmin.ts",
-    "init-movies": "tsx -r dotenv/config ./src/scripts/initMovies.ts",
-    "fetch-test-data": "tsx -r dotenv/config ./src/scripts/fetchTestData.ts",
-    "init-persons": "tsx -r dotenv/config ./src/scripts/initPersons.ts",
-    "fetch-movieids": "tsx -r dotenv/config ./src/scripts/fetchMovieIds.ts",
-    "init-other-data": "tsx -r dotenv/config ./src/scripts/initOtherData.ts",
-    "db-seed": "prisma db seed"
+    "fetch-test-data": "tsx -r dotenv/config ./src/scripts/fetchTestData.ts"
   },
-   "prisma": {
+  "prisma": {
     "seed": "tsx ./src/scripts/seedTestData.ts"
   },
   "keywords": [],

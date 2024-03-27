@@ -1,8 +1,8 @@
 import { createWriteStream } from "fs";
 import { createGzip } from "zlib";
 import { Readable } from "stream";
-import { type MovieDataType, fetchMoviesData } from "./initMovies.js";
-import { fetchPersonsData, type PersonData } from "./initPersons.js";
+import { type MovieDataType, fetchMoviesData } from "./fetchMovies.js";
+import { fetchPersonsData, type PersonData } from "./fetchPersons.js";
 import { fetchCountries, fetchGenres, fetchLanguages, fetchProviders } from "./fetchOtherData.js";
 import type { MovieListResponse } from "./types.js";
 

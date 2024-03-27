@@ -3,8 +3,8 @@
 
 .dropdown-menu {
   position: relative;
-  margin-bottom: 20px;
   padding: 0;
+  display: flex;
 
   .header,
   .menu {
@@ -17,7 +17,6 @@
     background-color: abstracts.$primary-darkgrey;
     border-radius: abstracts.$default-border-radius;
 
-    cursor: pointer;
     width: 100%;
   }
 
@@ -39,15 +38,17 @@
   .menu {
     position: absolute;
     top: 100%;
-    left: 0;
 
     background-color: abstracts.$primary-darkgrey;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     .item {
       color: abstracts.$primary-light;
       font-size: inherit;
 
       border: 1px solid abstracts.$primary-dark;
+      background-color: abstracts.$primary-darkgrey;
       border-top: 0;
       border-radius: 0;
       padding: 10px;
@@ -59,6 +60,7 @@
       text-align: left;
 
       width: 100%;
+      min-width: 100px;
       background-color: transparent;
 
       &:hover {

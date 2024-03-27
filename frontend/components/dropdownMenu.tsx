@@ -1,6 +1,5 @@
-"use client";
 import { ReactElement, useState } from "react";
-import { Check, ChevronDown, ChevronUp } from "react-feather";
+import { ChevronDown, ChevronUp } from "react-feather";
 
 /* Add more optional items if needed, id and name are only mandatory ones? */
 export type dropdownMenuItem = {
@@ -13,58 +12,32 @@ type buttonAlign = "center" | "right" | "left";
 
 /* 
 MANDATORY PROPS:
-options: Array of items (dropdownMenuItem) to be used in dropdown menu
-onSelect: Function that takes selected item back to the parent and handles it there e.g. with UseState
+children: Needs at least 1 child: you can use button with dropdown-item class for styling or make a custom one
 
 OPTIONAL PROPS:
-defaultOption: Optional default item that is already selected (e.g. "All")
-button: Optional ReactElement that can be used as button for the menu
+selected: Optional default item that is already selected (e.g. "All")
+button: Optional ReactElement that can be used as button for the menu instead showing selected item
 buttonAlign: Optional align for custom button, default is left
 width: Optional width of the dropdown menu, without this width is 100% parent width
 maxHeight: Optional maximum height of the dropdown menu, without this height is as long as it's content
 zIndex: Optional z-index to ease future layout handling
-showSelected: show checkmark on selected item
 */
 
 interface DropdownMenuProps {
-  options: dropdownMenuItem[];
-  onSelect: (item: dropdownMenuItem) => void;
-  defaultOption?: dropdownMenuItem;
+  children: any;
+  selected?: dropdownMenuItem;
   button?: ReactElement;
   buttonAlign?: buttonAlign;
   width?: number;
   height?: number;
   zIndex?: number;
-  showSelected?: boolean;
 }
 
-export const DropdownMenu = ({
-  options,
-  defaultOption,
-  button,
-  buttonAlign,
-  width,
-  height,
-  zIndex,
-  onSelect,
-  showSelected,
-}: DropdownMenuProps) => {
+export const DropdownMenu = ({ children, selected, button, buttonAlign, width, height, zIndex }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<dropdownMenuItem | null>(defaultOption ? defaultOption : options[0]);
-
-  if (selected === null) {
-    return null;
-  }
-
-  const changeValue = (item: dropdownMenuItem) => {
-    setSelected(item);
-    setIsOpen(false);
-    onSelect(item);
-  };
-
   return (
     <div
-      className="dropdown-menu"
+      className="dropdown"
       style={{
         zIndex: zIndex,
         justifyContent: buttonAlign ? buttonAlign : "left",
@@ -75,10 +48,10 @@ export const DropdownMenu = ({
         <div onClick={() => setIsOpen(!isOpen)}>{button}</div>
       ) : (
         <button
-          className="header"
+          className="dropdown-header"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {selected && selected.name}
+          {selected ? selected.name : "Choose one"}
           {!isOpen ? (
             <ChevronDown
               size={20}
@@ -95,24 +68,11 @@ export const DropdownMenu = ({
 
       {isOpen && (
         <div
-          className="menu"
+          className="dropdown-menu"
+          onClick={() => setIsOpen(!isOpen)}
           style={{ maxHeight: height ? height + "px" : "fit-content", minWidth: width ? width + "px" : "fit-content" }}
         >
-          {options.map((option: dropdownMenuItem) => (
-            <button
-              key={option.id}
-              onClick={() => changeValue(option)}
-              className="item"
-            >
-              {option.name}
-              {option.id === selected.id && showSelected === true ? (
-                <Check
-                  size={20}
-                  color="#ffc700"
-                />
-              ) : null}
-            </button>
-          ))}
+          {children}
         </div>
       )}
     </div>

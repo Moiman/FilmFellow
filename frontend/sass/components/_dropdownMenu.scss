@@ -1,13 +1,13 @@
 @use "sass:map";
 @use "../abstracts" as abstracts;
 
-.dropdown-menu {
+.dropdown {
   position: relative;
   padding: 0;
   display: flex;
 
-  .header,
-  .menu {
+  .dropdown-header,
+  .dropdown-menu {
     color: abstracts.$primary-light;
     font-family: abstracts.$default-text-font;
     font-size: abstracts.$p-font-size;
@@ -20,7 +20,7 @@
     width: 100%;
   }
 
-  .header {
+  .dropdown-header {
     display: inline-flex;
     justify-content: space-between;
     padding: 10px;
@@ -35,7 +35,7 @@
     }
   }
 
-  .menu {
+  .dropdown-menu {
     position: absolute;
     top: 100%;
 
@@ -43,7 +43,9 @@
     overflow-y: auto;
     overflow-x: hidden;
 
-    .item {
+    display: flex;
+    flex-direction: column;
+    .dropdown-item {
       color: abstracts.$primary-light;
       font-size: inherit;
 

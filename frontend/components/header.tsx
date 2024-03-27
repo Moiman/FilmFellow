@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
+import { DropdownMenu } from "./dropdownMenu";
 
 export const Links = [
   { text: "New", href: "/new" },
@@ -13,10 +14,11 @@ export const Links = [
 export const SubNavLinks = [
   {
     icon: <Tool style={{ strokeWidth: 1.5 }} />,
+    text: "Admin",
     href: "/admin",
   },
-  { icon: <User style={{ strokeWidth: 1.5 }} />, href: "/profile" },
-  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, href: "" },
+  { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile" },
+  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, text: "Logout", href: "" },
 ];
 
 export const Header = () => {
@@ -61,9 +63,59 @@ export const Header = () => {
         </button>
       </div>
 
-      {/* Replace with dropdown component when done */}
       <div className="sub-nav-narrow highlight-nav">
-        <Menu style={{ strokeWidth: 1.5 }} />
+        <DropdownMenu
+          width={100}
+          zIndex={10}
+          button={
+            <button
+              className="button-transparent"
+              style={{
+                display: "inline-flex",
+                justifyContent: "right",
+                alignContent: "center",
+                margin: "0",
+                padding: "0",
+              }}
+            >
+              <Menu
+                style={{ strokeWidth: 1.5 }}
+                color="white"
+              />
+            </button>
+          }
+          buttonAlign="right"
+        >
+          {Links.map((link: any) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="dropdown-item"
+            >
+              {link.text}
+            </Link>
+          ))}
+
+          {isLoggedIn ? (
+            SubNavLinks.map((link: any) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="dropdown-item"
+              >
+                {link.text}
+              </Link>
+            ))
+          ) : (
+            <Link
+              key="login"
+              href="/login"
+              className="dropdown-item"
+            >
+              Login
+            </Link>
+          )}
+        </DropdownMenu>
       </div>
 
       {/* For w > 1024 sub-nav */}

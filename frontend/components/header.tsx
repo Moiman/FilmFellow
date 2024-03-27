@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export const Links = [
   { text: "New", href: "/new" },
@@ -21,8 +22,10 @@ export const SubNavLinks = [
 
 export const Header = () => {
   // Placeholder: check if user is logged in
+  const {data: session} = useSession();
   const isLoggedIn = false;
   const currentPath = usePathname();
+  console.log(session?.user);
 
   return (
     <header>
@@ -89,6 +92,11 @@ export const Header = () => {
             >
               Login
             </Link>
+          )}
+          {session ? (
+            <button onClick={() => signOut()}>Sign Out</button>
+          ) : (
+            <button onClick={() => signIn()}>Sign In</button>
           )}
         </>
       </div>

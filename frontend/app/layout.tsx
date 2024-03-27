@@ -3,6 +3,8 @@ import "@/sass/style.scss";
 import { Poppins, Roboto } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { getServerSession } from "next-auth";
+import SessionProvider from "../components/sessionProvider"
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400"], variable: "--font-poppins" });
 const roboto = Roboto({
@@ -16,17 +18,20 @@ export const metadata: Metadata = {
   title: "FilmFellow",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession();
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${roboto.variable}`}>
-        <Header />
-        {children}
-        <Footer />
+        <SessionProvider session={session}>
+          <Header />
+          {children}
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );

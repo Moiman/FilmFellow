@@ -1,5 +1,7 @@
+"use client";
+
 import { expect, test, describe, afterEach } from "vitest";
-import { render, fireEvent, cleanup, waitFor } from "@testing-library/react";
+import { render, fireEvent, cleanup } from "@testing-library/react";
 import { Dropdown } from "@/components/dropdown";
 
 afterEach(() => cleanup());

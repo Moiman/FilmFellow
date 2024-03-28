@@ -21,13 +21,7 @@ export default function Home() {
   );
 
   /* Placeholder data */
-  /* For dropdown example */
-  type Genre = {
-    id: number;
-    name: string;
-  };
-
-  const exampleGenres: Genre[] = [
+  const exampleGenres = [
     { id: 1, name: "All" },
     { id: 23, name: "Drama" },
     { id: 5, name: "Horror" },
@@ -39,11 +33,7 @@ export default function Home() {
     { id: 234, name: "Musical" },
   ];
 
-  const [selectedGenre, setSelectedGenre] = useState<Genre>(exampleGenres[0]);
-
-  const handleGenreChange = (genre: Genre) => {
-    setSelectedGenre(genre);
-  };
+  const [selectedGenre, setSelectedGenre] = useState(exampleGenres[0]);
 
   return (
     <main>
@@ -66,10 +56,10 @@ export default function Home() {
           width={200}
           zIndex={10}
         >
-          {exampleGenres.map((option: Genre) => (
+          {exampleGenres.map(option => (
             <button
               key={option.id}
-              onClick={() => handleGenreChange(option)}
+              onClick={() => setSelectedGenre(option)}
               className="dropdown-item"
             >
               {option.name}

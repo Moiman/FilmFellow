@@ -3,21 +3,6 @@ import { ChevronDown, ChevronUp } from "react-feather";
 
 type buttonAlign = "center" | "right" | "left";
 
-/* 
-This can be used for example as dropdown menu or select component, works as a wrapper for links, options etc.
- 
-MANDATORY PROPS:
-children: Needs at least 1 child: you can use button with dropdown-item class for default styling or make a custom one
-
-OPTIONAL PROPS:
-selected: String for header, for example currently selected option, default is "Choose one"
-button: Optional ReactNode to replace header, use only Buttons for accessibility 
-buttonAlign: Optional align for custom button, default is left
-width: Optional width of the dropdown menu, without this width is 100% parent width
-maxHeight: Optional maximum height of the dropdown menu, without this height if fit-content
-zIndex: Optional z-index to ease future layout handling
-*/
-
 interface DropdownMenuProps {
   children: ReactNode;
   selected?: string;
@@ -27,6 +12,20 @@ interface DropdownMenuProps {
   height?: number;
   zIndex?: number;
 }
+
+/**
+ * This component can be used as a dropdown menu or select component. It works as a wrapper for links, options, etc.
+ *
+ * @component
+ * @param {React.ReactNode} children - The children of the Dropdown component. Needs at least 1 child. You can use a button with the "dropdown-item" class for default styling or make a custom one.
+ * @param {string} [selected] - Optional string for the header, for example, the currently selected option. Default is "Choose one".
+ * @param {React.ReactNode} [button] - Optional ReactNode to replace the header. Use only Buttons for accessibility.
+ * @param {"center"|"left"|"right"} [buttonAlign] - Optional alignment (center, right, left) for custom button. Default is "left".
+ * @param {string} [width] - Optional width of the dropdown menu. Without this default width is 100% of parent width.
+ * @param {string} [maxHeight] - Optional maximum height of the dropdown menu. Without this default height is "fit-content".
+ * @param {number} [zIndex] - Optional z-index to ease future layout handling.
+ * @returns {JSX.Element} A JSX element representing the Dropdown component.
+ */
 
 export const Dropdown = ({ children, selected, button, buttonAlign, width, height, zIndex }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

@@ -1,10 +1,10 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Register() {
-  const router = useRouter();
+  // const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,29 +27,46 @@ export default function Register() {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        name="username"
-        onChange={e => setUsername(e.target.value)}
-        value={username}
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        onChange={e => setEmail(e.target.value)}
-        value={email}
-        required
-      />
-      <input
-        required
-        onChange={e => setPassword(e.target.value)}
-        type="password"
-        name="password"
-        value={password}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <main>
+      <form onSubmit={onSubmit}>
+        <label
+          htmlFor="username"
+        >
+          Username
+        </label>
+        <input
+          type="text"
+          name="username"
+          onChange={e => setUsername(e.target.value)}
+          value={username}
+          required
+        />
+        <label
+          htmlFor="email"
+        >
+          Email
+        </label>
+        <input
+          type="email"
+          name="email"
+          onChange={e => setEmail(e.target.value)}
+          value={email}
+          required
+        />
+        <label
+          htmlFor="password"
+        >
+          Password
+        </label>
+        <input
+          required
+          onChange={e => setPassword(e.target.value)}
+          type="password"
+          name="password"
+          value={password}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </main>
   );
 }

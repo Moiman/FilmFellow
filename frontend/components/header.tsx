@@ -88,7 +88,7 @@ export const Header = () => {
             </Link>
           ))}
           {isLoggedIn ? (
-            SubNavLinks.map((link: any) => (
+            SubNavLinks.map(link => (
               <Link
                 key={link.href}
                 href={link.href}

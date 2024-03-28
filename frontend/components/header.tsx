@@ -68,17 +68,9 @@ export const Header = () => {
           width={100}
           zIndex={20}
           button={
-            <button
-              className="button-transparent"
-              style={{
-                display: "inline-flex",
-                justifyContent: "right",
-                alignContent: "center",
-                margin: "0",
-                padding: "0",
-              }}
-            >
+            <button className="button-transparent">
               <Menu
+                data-cy="menu-icon"
                 style={{ strokeWidth: 1.5 }}
                 color="white"
               />

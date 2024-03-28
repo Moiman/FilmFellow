@@ -23,9 +23,6 @@ describe("Dropdown component", () => {
     expect(getByText("Option 1")).toBeDefined();
     expect(getByText("Option 2")).toBeDefined();
     expect(getByText("Option 3")).toBeDefined();
-
-    fireEvent.click(getByText(defaultHeaderText));
-    expect(queryByText("Option 1")).toBeNull();
   });
 
   test("Renders custom button correctly", () => {

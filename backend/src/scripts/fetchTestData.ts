@@ -87,7 +87,7 @@ const moviesJSONdata = {
   languages,
   persons,
   watchProviders: providers.watchProviders,
-  watchProviderCountries: providers.watchProviderCountries,
+  watchProviderCountryPriorities: providers.watchProviderCountryPriorities,
   movieProviders: movies.flatMap(movie => movie.movieProviders),
   movies: movies.map(movie => movie.movie),
   movieGenres: movies.flatMap(movie => movie.movieGenres),

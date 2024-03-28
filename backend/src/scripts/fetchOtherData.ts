@@ -1,4 +1,4 @@
-import type { WatchProviderCountries } from "@prisma/client";
+import type { WatchProviderCountryPriorities } from "@prisma/client";
 import { fetchTMDB } from "./fetchHelper.js";
 import type { Country, Genres, Language, WatchProvidersResponse } from "./types.js";
 
@@ -23,7 +23,7 @@ export const fetchProviders = async () => {
     return providerDetails;
   });
 
-  const watchProviderCountries = res.results.flatMap(provider => {
+  const watchProviderCountryPriorities = res.results.flatMap(provider => {
     return Object.entries(provider.display_priorities).reduce(
       (watchProviderCountriesResult, [iso_3166_1, display_priority]) =>
         watchProviderCountriesResult.concat({
@@ -31,9 +31,9 @@ export const fetchProviders = async () => {
           iso_3166_1,
           display_priority,
         }),
-      [] as WatchProviderCountries[],
+      [] as WatchProviderCountryPriorities[],
     );
   });
 
-  return { watchProviders, watchProviderCountries };
+  return { watchProviders, watchProviderCountryPriorities };
 };

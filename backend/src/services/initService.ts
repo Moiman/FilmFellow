@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import type {
-  Images,
-  WatchProviders,
-  WatchProviderCountryPriorities,
-  MovieProviders,
-  Genres,
-  Languages,
   Countries,
+  Genres,
+  Images,
+  Languages,
+  MovieProviders,
   Persons,
+  WatchProviderCountryPriorities,
+  WatchProviders,
 } from "@prisma/client";
 import type { MovieDataType } from "../scripts/fetchMovies.js";
 
@@ -115,8 +115,13 @@ const initProductionCountriesDB = async (productionCountries: MovieDataType["pro
 };
 
 const initReleaseDatesDB = async (releaseDates: MovieDataType["releaseDates"]) => {
+  const validCountries = (await prisma.countries.findMany({ select: { iso_3166_1: true } })).map(
+    country => country.iso_3166_1,
+  );
+  const validReleaseDates = releaseDates.filter(releaseDate => validCountries.includes(releaseDate.iso_3166_1));
+
   await prisma.releaseDates.createMany({
-    data: releaseDates,
+    data: validReleaseDates,
     skipDuplicates: true,
   });
 };
@@ -128,7 +133,7 @@ const initTranslationsDB = async (translations: NonNullable<MovieDataType["trans
   });
 };
 
-const initmovieGenresDB = async (movieGenres: MovieDataType["movieGenres"]) => {
+const initMovieGenresDB = async (movieGenres: MovieDataType["movieGenres"]) => {
   await prisma.movieGenres.createMany({
     data: movieGenres,
     skipDuplicates: true,
@@ -195,14 +200,16 @@ const initLanguagesDB = async (languages: Languages[]) => {
   });
 };
 
-const initWatchProviders = async (watchProviders: WatchProviders[]) => {
+const initWatchProvidersDB = async (watchProviders: WatchProviders[]) => {
   await prisma.watchProviders.createMany({
     data: watchProviders,
     skipDuplicates: true,
   });
 };
 
-const initWatchProviderCountries = async (watchProviderCountryPriorities: WatchProviderCountryPriorities[]) => {
+const initWatchProviderCountryPrioritiesDB = async (
+  watchProviderCountryPriorities: WatchProviderCountryPriorities[],
+) => {
   const validCountries = (await prisma.countries.findMany({ select: { iso_3166_1: true } })).map(
     country => country.iso_3166_1,
   );
@@ -215,7 +222,7 @@ const initWatchProviderCountries = async (watchProviderCountryPriorities: WatchP
   });
 };
 
-const initMovieProviders = async (movieProviders: MovieProviders[]) => {
+const initMovieProvidersDB = async (movieProviders: MovieProviders[]) => {
   const validCountries = (await prisma.countries.findMany({ select: { iso_3166_1: true } })).map(
     country => country.iso_3166_1,
   );
@@ -228,25 +235,25 @@ const initMovieProviders = async (movieProviders: MovieProviders[]) => {
 };
 
 export {
+  initCastDB,
+  initCompaniesDB,
+  initCountriesDB,
+  initCrewDB,
+  initGenresDB,
+  initImagesDB,
+  initLanguagesDB,
+  initMovieDB,
+  initMovieGenresDB,
+  initMovieProvidersDB,
+  initMoviesDB,
   initPersonDB,
   initPersonsDB,
-  initGenresDB,
-  initCountriesDB,
-  initLanguagesDB,
-  initCompaniesDB,
-  initMovieDB,
-  initMoviesDB,
-  initCastDB,
-  initCrewDB,
-  initImagesDB,
-  initReviewsDB,
-  initSpokenLanguagesDB,
   initProductionCompaniesDB,
   initProductionCountriesDB,
   initReleaseDatesDB,
-  initmovieGenresDB,
+  initReviewsDB,
+  initSpokenLanguagesDB,
   initTranslationsDB,
-  initWatchProviders,
-  initWatchProviderCountries,
-  initMovieProviders,
+  initWatchProviderCountryPrioritiesDB,
+  initWatchProvidersDB,
 };

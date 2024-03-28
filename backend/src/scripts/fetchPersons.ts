@@ -78,7 +78,7 @@ export const fetchPersonsData = async (
 
     processedPersons++;
     if (processedPersons % 1000 === 0) {
-      console.log(`Persons processed: ${(processedPersons / personIds.length) * 100}%`);
+      console.log(`Persons processed: ${Math.trunc((processedPersons / personIds.length) * 100)}%`);
     }
   }
 

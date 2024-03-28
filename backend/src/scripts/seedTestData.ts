@@ -10,7 +10,8 @@ import {
   initGenresDB,
   initImagesDB,
   initLanguagesDB,
-  initMovieProviders,
+  initMovieGenresDB,
+  initMovieProvidersDB,
   initMoviesDB,
   initPersonsDB,
   initProductionCompaniesDB,
@@ -19,9 +20,8 @@ import {
   initReviewsDB,
   initSpokenLanguagesDB,
   initTranslationsDB,
-  initWatchProviderCountries,
-  initWatchProviders,
-  initmovieGenresDB,
+  initWatchProviderCountryPrioritiesDB,
+  initWatchProvidersDB,
 } from "../services/initService.js";
 
 const testDataGzip = readFileSync("data/test-data.json.gz");
@@ -43,12 +43,12 @@ gunzip(testDataGzip, async (err, res) => {
   await initProductionCountriesDB(testData.productionCountries);
   await initReleaseDatesDB(testData.releaseDates);
   await initTranslationsDB(testData.translations);
-  await initmovieGenresDB(testData.movieGenres);
+  await initMovieGenresDB(testData.movieGenres);
   await initCastDB(testData.casts);
   await initCrewDB(testData.crews);
   await initImagesDB(testData.images);
-  await initWatchProviders(testData.watchProviders);
-  await initWatchProviderCountries(testData.watchProviderCountries);
-  await initMovieProviders(testData.movieProviders);
+  await initWatchProvidersDB(testData.watchProviders);
+  await initWatchProviderCountryPrioritiesDB(testData.watchProviderCountryPriorities);
+  await initMovieProvidersDB(testData.movieProviders);
   console.log("Test data stored in database");
 });

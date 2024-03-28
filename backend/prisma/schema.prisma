@@ -9,36 +9,38 @@ generator client {
 }
 
 model Users {
-  id         Int       @id @default(autoincrement())
-  username   String    @unique
-  email      String    @unique
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
   password   String
   role       Role
-  updated_at DateTime  @default(now())
-  created_at DateTime  @default(now())
-  reviews    Reviews[]
+  updated_at DateTime @default(now())
+  created_at DateTime @default(now())
+
+  reviews Reviews[]
 }
 
 model Movies {
-  id                  Int                   @id
-  adult               Boolean
-  backdrop_path       String
-  budget              Int
-  homepage            String
-  imdb_id             String
-  original_language   String
-  original_title      String
-  overview            String
-  popularity          Float
-  poster_path         String
-  release_date        DateTime?             @db.Date
-  revenue             BigInt
-  runtime             Int
-  status              String
-  tagline             String
-  title               String
-  vote_average        Float
-  vote_count          Int
+  id                Int       @id
+  adult             Boolean
+  backdrop_path     String
+  budget            Int
+  homepage          String
+  imdb_id           String
+  original_language String
+  original_title    String
+  overview          String
+  popularity        Float
+  poster_path       String
+  release_date      DateTime? @db.Date
+  revenue           BigInt
+  runtime           Int
+  status            String
+  tagline           String
+  title             String
+  vote_average      Float
+  vote_count        Int
+
   importedReviews     ImportedReviews[]
   reviews             Reviews[]
   genres              MovieGenres[]
@@ -55,36 +57,40 @@ model Movies {
 
 model ImportedReviews {
   id         String   @id
-  movie      Movies   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   movieId    Int
   content    String
   created_at DateTime
   updated_at DateTime
   author     String
+
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Reviews {
   id         Int      @id @default(autoincrement())
-  movie      Movies   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   movieId    Int
   content    String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   userId     Int
-  user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user  Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Genres {
-  id     Int           @id @db.SmallInt
-  name   String
+  id   Int    @id @db.SmallInt
+  name String
+
   movies MovieGenres[]
 }
 
 model MovieGenres {
   movieId Int
   genreId Int
-  genre   Genres @relation(fields: [genreId], references: [id], onDelete: Cascade)
-  movie   Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  genre Genres @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
   @@id([movieId, genreId])
 }
@@ -92,6 +98,7 @@ model MovieGenres {
 model ProductionCompanies {
   companyId Int
   movieId   Int
+
   companies Companies @relation(fields: [companyId], references: [id], onDelete: Cascade)
   movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
@@ -101,8 +108,9 @@ model ProductionCompanies {
 model ProductionCountries {
   iso_3166_1 String
   movieId    Int
-  countries  Countries @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
-  movie      Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  country Countries @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+  movie   Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
   @@id([iso_3166_1, movieId])
 }
@@ -115,59 +123,66 @@ model Countries {
   productionCountries            ProductionCountries[]
   watchProviderCountryPriorities WatchProviderCountryPriorities[]
   movieProvider                  MovieProviders[]
+  ReleaseDates                   ReleaseDates[]
 }
 
 model Companies {
+  id             Int     @id
+  logo_path      String?
+  name           String
+  origin_country String
+
   productionCompanies ProductionCompanies[]
-  id                  Int                   @id
-  logo_path           String?
-  name                String
-  origin_country      String
 }
 
 model SpokenLanguages {
   movieId   Int
   iso_639_1 String
-  language  Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
-  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  language Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
+  movie    Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
   @@id([movieId, iso_639_1])
 }
 
 model Languages {
-  english_name    String
-  iso_639_1       String            @id
-  name            String
+  iso_639_1    String @id
+  english_name String
+  name         String
+
   spokenLanguages SpokenLanguages[]
   translation     Translations[]
+  Images          Images[]
 }
 
 model MovieCast {
+  credit_id String @id
   movieId   Int
   personId  Int
-  credit_id String  @id
   character String
   order     Int
-  person    Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
-  movie     Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  person Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
+  movie  Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
 }
 
 model MovieCrew {
+  credit_id  String @id
   movieId    Int
   personId   Int
-  credit_id  String  @id
   department String
   job        String
-  person     Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
-  movie      Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  person Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
+  movie  Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
 }
 
 model Persons {
-  id                   Int         @id
+  id                   Int       @id
   adult                Boolean
   biography            String
-  birthday             DateTime?   @db.Date
-  deathday             DateTime?   @db.Date
+  birthday             DateTime? @db.Date
+  deathday             DateTime? @db.Date
   gender               Int
   homepage             String?
   imdb_id              String?
@@ -176,15 +191,18 @@ model Persons {
   place_of_birth       String?
   popularity           Float
   profile_path         String?
-  movieCast            MovieCast[]
-  movieCrew            MovieCrew[]
+
+  movieCast MovieCast[]
+  movieCrew MovieCrew[]
 }
 
 model ReleaseDates {
   iso_3166_1    String
   movieId       Int
   certification String
-  movie         Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  movie   Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  country Countries @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
 
   @@id([movieId, iso_3166_1])
 }
@@ -233,23 +251,26 @@ enum ProviderType {
 model Translations {
   movieId   Int
   iso_639_1 String
-  language  Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
-  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
   overview  String
   title     String
+
+  language Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
+  movie    Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
   @@id([movieId, iso_639_1])
 }
 
 model Images {
+  file_path    String    @id
   movieId      Int
   type         ImageType
   iso_639_1    String?
   vote_average Float
   height       Int
   width        Int
-  file_path    String    @id
-  movie        Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  movie    Movies     @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  language Languages? @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
 }
 
 enum Role {

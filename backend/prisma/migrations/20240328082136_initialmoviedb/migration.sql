@@ -114,8 +114,8 @@ CREATE TABLE "SpokenLanguages" (
 
 -- CreateTable
 CREATE TABLE "Languages" (
-    "english_name" TEXT NOT NULL,
     "iso_639_1" TEXT NOT NULL,
+    "english_name" TEXT NOT NULL,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "Languages_pkey" PRIMARY KEY ("iso_639_1")
@@ -123,9 +123,9 @@ CREATE TABLE "Languages" (
 
 -- CreateTable
 CREATE TABLE "MovieCast" (
+    "credit_id" TEXT NOT NULL,
     "movieId" INTEGER NOT NULL,
     "personId" INTEGER NOT NULL,
-    "credit_id" TEXT NOT NULL,
     "character" TEXT NOT NULL,
     "order" INTEGER NOT NULL,
 
@@ -134,9 +134,9 @@ CREATE TABLE "MovieCast" (
 
 -- CreateTable
 CREATE TABLE "MovieCrew" (
+    "credit_id" TEXT NOT NULL,
     "movieId" INTEGER NOT NULL,
     "personId" INTEGER NOT NULL,
-    "credit_id" TEXT NOT NULL,
     "department" TEXT NOT NULL,
     "job" TEXT NOT NULL,
 
@@ -212,13 +212,13 @@ CREATE TABLE "Translations" (
 
 -- CreateTable
 CREATE TABLE "Images" (
+    "file_path" TEXT NOT NULL,
     "movieId" INTEGER NOT NULL,
     "type" "ImageType" NOT NULL,
     "iso_639_1" TEXT,
     "vote_average" DOUBLE PRECISION NOT NULL,
     "height" INTEGER NOT NULL,
     "width" INTEGER NOT NULL,
-    "file_path" TEXT NOT NULL,
 
     CONSTRAINT "Images_pkey" PRIMARY KEY ("file_path")
 );
@@ -275,6 +275,9 @@ ALTER TABLE "MovieCrew" ADD CONSTRAINT "MovieCrew_movieId_fkey" FOREIGN KEY ("mo
 ALTER TABLE "ReleaseDates" ADD CONSTRAINT "ReleaseDates_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "ReleaseDates" ADD CONSTRAINT "ReleaseDates_iso_3166_1_fkey" FOREIGN KEY ("iso_3166_1") REFERENCES "Countries"("iso_3166_1") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "WatchProviderCountryPriorities" ADD CONSTRAINT "WatchProviderCountryPriorities_provider_id_fkey" FOREIGN KEY ("provider_id") REFERENCES "WatchProviders"("provider_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -297,3 +300,6 @@ ALTER TABLE "Translations" ADD CONSTRAINT "Translations_movieId_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "Images" ADD CONSTRAINT "Images_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Images" ADD CONSTRAINT "Images_iso_639_1_fkey" FOREIGN KEY ("iso_639_1") REFERENCES "Languages"("iso_639_1") ON DELETE CASCADE ON UPDATE CASCADE;

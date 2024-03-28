@@ -20,13 +20,13 @@ export default function Home() {
     </div>
   );
 
+  /* Placeholder data */
   /* For dropdown example */
   type Genre = {
     id: number;
     name: string;
   };
 
-  /* Placeholder data */
   const exampleGenres: Genre[] = [
     { id: 1, name: "All" },
     { id: 23, name: "Drama" },

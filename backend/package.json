@@ -12,7 +12,13 @@
     "build": "tsc -p tsconfig-build.json",
     "lint": "eslint . --ext ts",
     "prettier-check": "prettier --check .",
-    "prisma:migration": "prisma migrate dev"
+    "prisma:migration": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "create-admin": "tsx -r dotenv/config ./src/scripts/createAdmin.ts",
+    "fetch-test-data": "tsx -r dotenv/config ./src/scripts/fetchTestData.ts"
+  },
+  "prisma": {
+    "seed": "tsx ./src/scripts/seedTestData.ts"
   },
   "keywords": [],
   "author": "",

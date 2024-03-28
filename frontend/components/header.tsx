@@ -78,7 +78,7 @@ export const Header = () => {
           }
           buttonAlign="right"
         >
-          {Links.map((link: any) => (
+          {Links.map(link => (
             <Link
               key={link.href}
               href={link.href}

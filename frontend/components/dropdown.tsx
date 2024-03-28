@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "react-feather";
 
 type buttonAlign = "center" | "right" | "left";
@@ -9,7 +9,7 @@ interface DropdownMenuProps {
   button?: ReactNode;
   buttonAlign?: buttonAlign;
   width?: number;
-  height?: number;
+  maxHeight?: number;
   zIndex?: number;
 }
 
@@ -27,8 +27,20 @@ interface DropdownMenuProps {
  * @returns {JSX.Element} A JSX element representing the Dropdown component.
  */
 
-export const Dropdown = ({ children, selected, button, buttonAlign, width, height, zIndex }: DropdownMenuProps) => {
+export const Dropdown = ({ children, selected, button, buttonAlign, width, maxHeight, zIndex }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const isOutsideDropdown = !(event.target as HTMLElement).closest(".dropdown");
+      if (isOutsideDropdown && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
   return (
     <div
       className="dropdown"
@@ -65,7 +77,7 @@ export const Dropdown = ({ children, selected, button, buttonAlign, width, heigh
           className="dropdown-menu"
           onClick={() => setIsOpen(!isOpen)}
           style={{
-            maxHeight: height ? height + "px" : "fit-content",
+            maxHeight: maxHeight ? maxHeight + "px" : "fit-content",
             minWidth: width ? width + "px" : "fit-content",
           }}
         >

@@ -62,7 +62,7 @@ export default function Home() {
       >
         <h6>Genre</h6>
         <Dropdown
-          selected={selectedGenre ? selectedGenre.name : ""}
+          selected={selectedGenre ? selectedGenre.name : undefined}
           width={200}
           zIndex={10}
         >

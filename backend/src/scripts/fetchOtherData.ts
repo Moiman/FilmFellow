@@ -17,7 +17,6 @@ export const fetchProviders = async () => {
   const res = await fetchTMDB<WatchProvidersResponse>(
     `https://api.themoviedb.org/3/watch/providers/movie?api_key=${apiKey}`,
   );
-  // const {display_priorities, ...rest} =
   const watchProviders = res.results.map(provider => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { display_priorities, ...providerDetails } = provider;

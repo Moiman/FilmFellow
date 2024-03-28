@@ -11,17 +11,17 @@ interface PersonIdsType {
   popularity: number;
 }
 
+const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
+const yesterdayDate =
+  ("0" + (yesterday.getMonth() + 1)).slice(-2) +
+  "_" +
+  ("0" + yesterday.getDate()).slice(-2) +
+  "_" +
+  yesterday.getFullYear();
+
 export const fetchMovieIds = async () => {
   try {
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-
-    const yesterdayDate =
-      ("0" + (yesterday.getMonth() + 1)).slice(-2) +
-      "_" +
-      ("0" + yesterday.getDate()).slice(-2) +
-      "_" +
-      yesterday.getFullYear();
-
     const response = await fetch(`http://files.tmdb.org/p/exports/movie_ids_${yesterdayDate}.json.gz`);
     if (!response.ok) {
       throw response.status;
@@ -39,22 +39,13 @@ export const fetchMovieIds = async () => {
 
     return movieIds;
   } catch (error) {
-    console.error("Error fetching file:", error);
+    console.error("Error fetching movie_ids:", error);
     throw error;
   }
 };
 
 export const fetchPersonIds = async () => {
   try {
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-
-    const yesterdayDate =
-      ("0" + (yesterday.getMonth() + 1)).slice(-2) +
-      "_" +
-      ("0" + yesterday.getDate()).slice(-2) +
-      "_" +
-      yesterday.getFullYear();
-
     const response = await fetch(`http://files.tmdb.org/p/exports/person_ids_${yesterdayDate}.json.gz`);
     if (!response.ok) {
       throw response.status;
@@ -72,7 +63,7 @@ export const fetchPersonIds = async () => {
 
     return personIds;
   } catch (error) {
-    console.error("Error fetching file:", error);
+    console.error("Error fetching person_ids:", error);
     throw error;
   }
 };

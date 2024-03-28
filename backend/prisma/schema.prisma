@@ -108,12 +108,13 @@ model ProductionCountries {
 }
 
 model Countries {
-  iso_3166_1             String                   @id
-  english_name           String                   @unique
-  native_name            String
-  productionCountries    ProductionCountries[]
-  WatchProviderCountries WatchProviderCountries[]
-  movieProvider          MovieProviders[]
+  iso_3166_1   String @id
+  english_name String @unique
+  native_name  String
+
+  productionCountries            ProductionCountries[]
+  watchProviderCountryPriorities WatchProviderCountryPriorities[]
+  movieProvider                  MovieProviders[]
 }
 
 model Companies {
@@ -165,8 +166,8 @@ model Persons {
   id                   Int         @id
   adult                Boolean
   biography            String
-  birthday             String?
-  deathday             String?
+  birthday             DateTime?   @db.Date
+  deathday             DateTime?   @db.Date
   gender               Int
   homepage             String?
   imdb_id              String?
@@ -194,17 +195,17 @@ model WatchProviders {
   logo_path        String
   provider_name    String
 
-  WatchProviderCountries WatchProviderCountries[]
-  movieProvider          MovieProviders[]
+  watchProviderCountryPriorities WatchProviderCountryPriorities[]
+  movieProvider                  MovieProviders[]
 }
 
-model WatchProviderCountries {
+model WatchProviderCountryPriorities {
   provider_id      Int
   iso_3166_1       String
   display_priority Int
 
-  provider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
-  country  Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+  watchProvider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
+  country       Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
 
   @@id([provider_id, iso_3166_1])
 }
@@ -215,9 +216,9 @@ model MovieProviders {
   iso_3166_1  String
   type        ProviderType
 
-  movie    Movies         @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  provider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
-  country  Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+  movie         Movies         @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  watchProvider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
+  country       Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
 
   @@id([movieId, provider_id, iso_3166_1])
 }

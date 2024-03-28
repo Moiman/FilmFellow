@@ -1,8 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import type { Images, WatchProviders, WatchProviderCountries, MovieProviders } from "@prisma/client";
+import type {
+  Images,
+  WatchProviders,
+  WatchProviderCountryPriorities,
+  MovieProviders,
+  Genres,
+  Languages,
+  Countries,
+  Persons,
+} from "@prisma/client";
 import type { MovieDataType } from "../scripts/fetchMovies.js";
-import type { PersonData } from "../scripts/fetchPersons.js";
-import type { Country, Genre, Language } from "../scripts/types.js";
 
 const prisma = new PrismaClient();
 
@@ -149,7 +156,7 @@ const initImagesDB = async (images: Images[]) => {
   });
 };
 
-const initPersonDB = async (person: PersonData) => {
+const initPersonDB = async (person: Persons) => {
   const existingPerson = await prisma.persons.findUnique({
     where: { id: person.id },
   });
@@ -160,28 +167,28 @@ const initPersonDB = async (person: PersonData) => {
   }
 };
 
-const initPersonsDB = async (persons: PersonData[]) => {
+const initPersonsDB = async (persons: Persons[]) => {
   await prisma.persons.createMany({
     data: persons,
     skipDuplicates: true,
   });
 };
 
-const initGenresDB = async (genres: Genre[]) => {
+const initGenresDB = async (genres: Genres[]) => {
   await prisma.genres.createMany({
     data: genres,
     skipDuplicates: true,
   });
 };
 
-const initCountriesDB = async (countries: Country[]) => {
+const initCountriesDB = async (countries: Countries[]) => {
   await prisma.countries.createMany({
     data: countries,
     skipDuplicates: true,
   });
 };
 
-const initLanguagesDB = async (languages: Language[]) => {
+const initLanguagesDB = async (languages: Languages[]) => {
   await prisma.languages.createMany({
     data: languages,
     skipDuplicates: true,
@@ -195,15 +202,15 @@ const initWatchProviders = async (watchProviders: WatchProviders[]) => {
   });
 };
 
-const initWatchProviderCountries = async (watchProviderCountries: WatchProviderCountries[]) => {
+const initWatchProviderCountries = async (watchProviderCountryPriorities: WatchProviderCountryPriorities[]) => {
   const validCountries = (await prisma.countries.findMany({ select: { iso_3166_1: true } })).map(
     country => country.iso_3166_1,
   );
-  const validWatchProviderCountries = watchProviderCountries.filter(providerCountry =>
+  const validWatchProviderCountryPriorities = watchProviderCountryPriorities.filter(providerCountry =>
     validCountries.includes(providerCountry.iso_3166_1),
   );
-  await prisma.watchProviderCountries.createMany({
-    data: validWatchProviderCountries,
+  await prisma.watchProviderCountryPriorities.createMany({
+    data: validWatchProviderCountryPriorities,
     skipDuplicates: true,
   });
 };

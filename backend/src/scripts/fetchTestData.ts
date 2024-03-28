@@ -1,8 +1,9 @@
 import { createWriteStream } from "fs";
 import { createGzip } from "zlib";
 import { Readable } from "stream";
+import type { Persons } from "@prisma/client";
 import { type MovieDataType, fetchMoviesData } from "./fetchMovies.js";
-import { fetchPersonsData, type PersonData } from "./fetchPersons.js";
+import { fetchPersonsData } from "./fetchPersons.js";
 import { fetchCountries, fetchGenres, fetchLanguages, fetchProviders } from "./fetchOtherData.js";
 import type { MovieListResponse } from "./types.js";
 
@@ -10,15 +11,13 @@ export type MoviesJSONdata = typeof moviesJSONdata;
 
 const movies: MovieDataType[] = [];
 
-const persons: PersonData[] = [];
+const persons: Persons[] = [];
 
-// eslint-disable-next-line @typescript-eslint/require-await
-const storeMovie = async (movie: MovieDataType) => {
+const storeMovie = (movie: MovieDataType) => {
   movies.push(movie);
 };
 
-// eslint-disable-next-line @typescript-eslint/require-await
-const storePerson = async (person: PersonData) => {
+const storePerson = (person: Persons) => {
   persons.push(person);
 };
 
@@ -110,4 +109,4 @@ const moviesJSONdata = {
 Readable.from([JSON.stringify(moviesJSONdata)])
   .pipe(createGzip())
   .pipe(createWriteStream("data/test-data.json.gz"))
-  .on("finish", () => console.log("Created 'test-data.json.gz' file"));
+  .on("finish", () => console.log("Created 'data/test-data.json.gz' file"));

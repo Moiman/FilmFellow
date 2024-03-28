@@ -148,8 +148,8 @@ CREATE TABLE "Persons" (
     "id" INTEGER NOT NULL,
     "adult" BOOLEAN NOT NULL,
     "biography" TEXT NOT NULL,
-    "birthday" TEXT,
-    "deathday" TEXT,
+    "birthday" DATE,
+    "deathday" DATE,
     "gender" INTEGER NOT NULL,
     "homepage" TEXT,
     "imdb_id" TEXT,
@@ -182,12 +182,12 @@ CREATE TABLE "WatchProviders" (
 );
 
 -- CreateTable
-CREATE TABLE "WatchProviderCountries" (
+CREATE TABLE "WatchProviderCountryPriorities" (
     "provider_id" INTEGER NOT NULL,
     "iso_3166_1" TEXT NOT NULL,
     "display_priority" INTEGER NOT NULL,
 
-    CONSTRAINT "WatchProviderCountries_pkey" PRIMARY KEY ("provider_id","iso_3166_1")
+    CONSTRAINT "WatchProviderCountryPriorities_pkey" PRIMARY KEY ("provider_id","iso_3166_1")
 );
 
 -- CreateTable
@@ -275,10 +275,10 @@ ALTER TABLE "MovieCrew" ADD CONSTRAINT "MovieCrew_movieId_fkey" FOREIGN KEY ("mo
 ALTER TABLE "ReleaseDates" ADD CONSTRAINT "ReleaseDates_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WatchProviderCountries" ADD CONSTRAINT "WatchProviderCountries_provider_id_fkey" FOREIGN KEY ("provider_id") REFERENCES "WatchProviders"("provider_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "WatchProviderCountryPriorities" ADD CONSTRAINT "WatchProviderCountryPriorities_provider_id_fkey" FOREIGN KEY ("provider_id") REFERENCES "WatchProviders"("provider_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WatchProviderCountries" ADD CONSTRAINT "WatchProviderCountries_iso_3166_1_fkey" FOREIGN KEY ("iso_3166_1") REFERENCES "Countries"("iso_3166_1") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "WatchProviderCountryPriorities" ADD CONSTRAINT "WatchProviderCountryPriorities_iso_3166_1_fkey" FOREIGN KEY ("iso_3166_1") REFERENCES "Countries"("iso_3166_1") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "MovieProviders" ADD CONSTRAINT "MovieProviders_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movies"("id") ON DELETE CASCADE ON UPDATE CASCADE;

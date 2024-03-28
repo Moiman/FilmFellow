@@ -19,7 +19,7 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
     overview: movieData.overview,
     popularity: movieData.popularity,
     poster_path: movieData.poster_path,
-    release_date: new Date(movieData.release_date),
+    release_date: movieData.release_date ? new Date(movieData.release_date) : null,
     revenue: movieData.revenue,
     runtime: movieData.runtime,
     status: movieData.status,
@@ -42,8 +42,8 @@ const parseMovieResponseData = (movieData: MovieResponse) => {
       movieId: movieData.id,
       author: review.author,
       content: review.content,
-      created_at: review.created_at,
-      updated_at: review.created_at,
+      created_at: new Date(review.created_at),
+      updated_at: new Date(review.created_at),
     };
   });
 
@@ -200,9 +200,12 @@ const fetchMovie = async (movieId: number) =>
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,reviews,release_dates,watch/providers,translations,images&language=en-US,fi-FI&include_image_language=en,fi,null`,
   );
 
-let processedMovies = 1;
+let processedMovies = 0;
 let retry = false;
-export const fetchMoviesData = async (movieIds: number[], storeFunction: (movie: MovieDataType) => Promise<void>) => {
+export const fetchMoviesData = async (
+  movieIds: number[],
+  storeFunction: (movie: MovieDataType) => Promise<void> | void,
+) => {
   for (const movieId of movieIds) {
     await new Promise(resolve => setTimeout(resolve, delay));
     if (retry) {
@@ -212,24 +215,21 @@ export const fetchMoviesData = async (movieIds: number[], storeFunction: (movie:
 
     fetchMovie(movieId)
       .then(async res => {
-        const movieData = parseMovieResponseData(res);
-        await storeFunction(movieData);
+        await storeFunction(parseMovieResponseData(res));
       })
       .catch(async err => {
         if (err === 429) {
-          console.log("Got 429. Tying to fetch movie =", movieId, "again and increasing delay to", delay + 1);
+          console.log("Got 429. Tying to fetch movie =", movieId, "again and increasing delay to", delay + 1, "ms");
           delay += 1;
           retry = true;
           await new Promise(resolve => setTimeout(resolve, waitAfter429));
           fetchMovie(movieId)
             .then(async res => {
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              const movieData = parseMovieResponseData(res);
-              await storeFunction(movieData);
+              await storeFunction(parseMovieResponseData(res));
               console.log("Fetched =", movieId, "again successfully");
             })
             .catch(err => {
-              console.error("Fatal: Failed to fetch movie =", movieId);
+              console.error("Fatal: Failed again to fetch movie =", movieId);
               throw err;
             });
         } else {
@@ -238,10 +238,10 @@ export const fetchMoviesData = async (movieIds: number[], storeFunction: (movie:
         }
       });
 
-    if (processedMovies % 1000 === 0) {
-      console.log(`Movies processed: ${processedMovies}`);
-    }
     processedMovies++;
+    if (processedMovies % 1000 === 0) {
+      console.log(`Movies processed: ${(processedMovies / movieIds.length) * 100}%`);
+    }
   }
 
   console.log("Fetched movies and related data");

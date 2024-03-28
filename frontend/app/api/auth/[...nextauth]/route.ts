@@ -1,21 +1,22 @@
+import { SessionStrategy } from "next-auth";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
 
 const backendURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 const frontURL = process.env.NEXTAUTH_URL;
 export const authOptions = {
-  /*
   session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    strategy: "jwt" as SessionStrategy,
+    maxAge: 7 * 24 * 60 * 60, // one week
+  },
+  jwt: {
+    maxAge: 7 * 24 * 60 * 60, // one week
+  },
+  /*
+  pages: {
+    // signIn: "/register",
   },
 */
-
-  pages: {
-    signIn: "/register",
-    Register: "/register",
-  },
-
   providers: [
     Credentials({
       // name: "Register",
@@ -49,14 +50,16 @@ export const authOptions = {
         });
         // console.log(resp);
         const user = await resp.json();
-        console.log(user);
+        // console.log(user);
         if (user && resp.ok && !user.error) {
-          //   console.log("next auth user: " + user);
-
           return user;
+        }
+        if (user.error.message) {
+          throw new Error(user.error.message);
         } else {
           console.log("check your credentials");
-          return null;
+          throw new Error(user.error);
+          // return null;
         }
       },
     }),
@@ -89,12 +92,16 @@ export const authOptions = {
         });
         // console.log(resp);
         const user = await resp.json();
-        console.log(user);
+        // console.log(user);
         if (user && resp.ok && !user.error) {
           return user;
+        }
+        if (user.error.message) {
+          throw new Error(user.error.message);
         } else {
           console.log("check your credentials");
-          return null;
+          throw new Error(user.error);
+          // return null;
         }
       },
     }),
@@ -113,7 +120,7 @@ export const authOptions = {
         // token.user_type = user.data.auth.userType;
         // token.accessToken = user.data.auth.token;
       }
-      // console.log(token);
+       console.log(token);
       return token;
     },
 
@@ -126,7 +133,7 @@ export const authOptions = {
         // session.user.username = token.userName;
         // session.user.accessToken = token.accessToken;
       }
-      //  console.log(session);
+        console.log(session);
       return session;
     },
   },

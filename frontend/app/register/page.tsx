@@ -1,13 +1,14 @@
 "use client";
 import { signIn } from "next-auth/react";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Register() {
-  // const router = useRouter();
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -16,24 +17,25 @@ export default function Register() {
       email: email,
       password: password,
     };
+
     const response = await signIn("register", {
       ...credentials,
-      redirect: true,
-      callbackUrl: "/",
+      redirect: false,
+      // callbackUrl: "/",
     });
     if (response?.error) {
-      console.log(response.error);
+      setError(response.error);
+    }
+
+    if (response?.ok) {
+      router.push("/");
     }
   };
 
   return (
     <main>
       <form onSubmit={onSubmit}>
-        <label
-          htmlFor="username"
-        >
-          Username
-        </label>
+        <label htmlFor="username">Username</label>
         <input
           type="text"
           name="username"
@@ -41,11 +43,7 @@ export default function Register() {
           value={username}
           required
         />
-        <label
-          htmlFor="email"
-        >
-          Email
-        </label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           name="email"
@@ -53,11 +51,7 @@ export default function Register() {
           value={email}
           required
         />
-        <label
-          htmlFor="password"
-        >
-          Password
-        </label>
+        <label htmlFor="password">Password</label>
         <input
           required
           onChange={e => setPassword(e.target.value)}
@@ -67,6 +61,7 @@ export default function Register() {
         />
         <button type="submit">Submit</button>
       </form>
+      {error}
     </main>
   );
 }

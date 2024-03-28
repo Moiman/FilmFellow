@@ -15,7 +15,7 @@ export async function GET(req: Request, res: Response) {
         },
       );
     }
-    return NextResponse.json({ name: session.user.email }, { status: 200 });
+    return NextResponse.json({ email: session.user.email }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ error: err });
   }

@@ -5,13 +5,13 @@ import argon2 from "argon2";
 
 const loginUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),
-  password: yup.string().required("Password is required").min(6, "Must be at least 6 characters long"),
+  password: yup.string().required("Password is required").min(6, "Password must be at least 6 characters long"),
 });
 
 export async function POST(req: Request, res: Response) {
   try {
     const data = await req.json();
-    console.log(data);
+    // console.log(data);
     await loginUserSchema.validate(data);
     const existingUser = await findUserByEmail(data.email);
     if (existingUser && (await argon2.verify(existingUser.password, data.password))) {

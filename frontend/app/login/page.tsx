@@ -1,24 +1,33 @@
 "use client";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const credentials = {
       email: email,
       password: password,
     };
+
     const response = await signIn("login", {
       ...credentials,
-      redirect: true,
-      callbackUrl: "/",
+      redirect: false,
+      // callbackUrl: "/",
     });
     if (response?.error) {
-      console.log(response.error);
+      setError(response.error);
     }
+
+    if (response?.ok) {
+      router.push("/");
+    }
+    // console.log(response?.error);
   };
   return (
     <main>
@@ -41,6 +50,7 @@ export default function Login() {
         />
         <button type="submit">Submit</button>
       </form>
+      {error}
     </main>
   );
 }

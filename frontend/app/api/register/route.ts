@@ -14,7 +14,7 @@ const registerUserSchema = yup.object({
   password: yup
     .string()
     .required("Password is required")
-    .min(6, "Must be at least 6 characters long")
+    .min(6, "Password must be at least 6 characters long")
     .matches(/^(?=.*[a-z])/, "Password requires atleast 1 regural character")
     .matches(/^(?=.*[A-Z])/, "Password requires atleast 1 capital character")
     .matches(/^(?=.*[0-9])/, "Password requires atleast 1 number")
@@ -24,7 +24,7 @@ const registerUserSchema = yup.object({
 export async function POST(req: Request, res: Response) {
   try {
     const data = await req.json();
-    console.log(data);
+    // console.log(data);
     await registerUserSchema.validate(data);
     const existingEmail = await findUserByEmail(data.email);
 

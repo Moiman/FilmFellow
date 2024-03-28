@@ -240,7 +240,7 @@ export const fetchMoviesData = async (
 
     processedMovies++;
     if (processedMovies % 1000 === 0) {
-      console.log(`Movies processed: ${Math.trunc((processedMovies / movieIds.length) * 100)}%`);
+      console.log(`Movies processed: ${Math.trunc((processedMovies / movieIds.length) * 100 * 100) / 100}%`);
     }
   }
 

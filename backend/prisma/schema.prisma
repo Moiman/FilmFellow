@@ -16,12 +16,273 @@ model Users {
   role       Role
   updated_at DateTime @default(now())
   created_at DateTime @default(now())
+
+  reviews Reviews[]
+}
+
+model Movies {
+  id                Int       @id
+  adult             Boolean
+  backdrop_path     String
+  budget            Int
+  homepage          String
+  imdb_id           String
+  original_language String
+  original_title    String
+  overview          String
+  popularity        Float
+  poster_path       String
+  release_date      DateTime? @db.Date
+  revenue           BigInt
+  runtime           Int
+  status            String
+  tagline           String
+  title             String
+  vote_average      Float
+  vote_count        Int
+
+  importedReviews     ImportedReviews[]
+  reviews             Reviews[]
+  genres              MovieGenres[]
+  productionCompanies ProductionCompanies[]
+  productionCountries ProductionCountries[]
+  spokenLanguages     SpokenLanguages[]
+  cast                MovieCast[]
+  crew                MovieCrew[]
+  release_dates       ReleaseDates[]
+  translations        Translations[]
+  images              Images[]
+  movieProvider       MovieProviders[]
+}
+
+model ImportedReviews {
+  id         String   @id
+  movieId    Int
+  content    String
+  created_at DateTime
+  updated_at DateTime
+  author     String
+
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Reviews {
+  id         Int      @id @default(autoincrement())
+  movieId    Int
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  userId     Int
+
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user  Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Genres {
+  id   Int    @id @db.SmallInt
+  name String
+
+  movies MovieGenres[]
+}
+
+model MovieGenres {
+  movieId Int
+  genreId Int
+
+  genre Genres @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([movieId, genreId])
+}
+
+model ProductionCompanies {
+  companyId Int
+  movieId   Int
+
+  companies Companies @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  movie     Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([companyId, movieId])
+}
+
+model ProductionCountries {
+  iso_3166_1 String
+  movieId    Int
+
+  country Countries @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+  movie   Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([iso_3166_1, movieId])
+}
+
+model Countries {
+  iso_3166_1   String @id
+  english_name String @unique
+  native_name  String
+
+  productionCountries            ProductionCountries[]
+  watchProviderCountryPriorities WatchProviderCountryPriorities[]
+  movieProvider                  MovieProviders[]
+  ReleaseDates                   ReleaseDates[]
+}
+
+model Companies {
+  id             Int     @id
+  logo_path      String?
+  name           String
+  origin_country String
+
+  productionCompanies ProductionCompanies[]
+}
+
+model SpokenLanguages {
+  movieId   Int
+  iso_639_1 String
+
+  language Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
+  movie    Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([movieId, iso_639_1])
+}
+
+model Languages {
+  iso_639_1    String @id
+  english_name String
+  name         String
+
+  spokenLanguages SpokenLanguages[]
+  translation     Translations[]
+  Images          Images[]
+}
+
+model MovieCast {
+  credit_id String @id
+  movieId   Int
+  personId  Int
+  character String
+  order     Int
+
+  person Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
+  movie  Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+}
+
+model MovieCrew {
+  credit_id  String @id
+  movieId    Int
+  personId   Int
+  department String
+  job        String
+
+  person Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
+  movie  Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+}
+
+model Persons {
+  id                   Int       @id
+  adult                Boolean
+  biography            String
+  birthday             DateTime? @db.Date
+  deathday             DateTime? @db.Date
+  gender               Int
+  homepage             String?
+  imdb_id              String?
+  known_for_department String
+  name                 String
+  place_of_birth       String?
+  popularity           Float
+  profile_path         String?
+
+  movieCast MovieCast[]
+  movieCrew MovieCrew[]
+}
+
+model ReleaseDates {
+  iso_3166_1    String
+  movieId       Int
+  certification String
+
+  movie   Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  country Countries @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+
+  @@id([movieId, iso_3166_1])
+}
+
+model WatchProviders {
+  provider_id      Int    @id
+  display_priority Int
+  logo_path        String
+  provider_name    String
+
+  watchProviderCountryPriorities WatchProviderCountryPriorities[]
+  movieProvider                  MovieProviders[]
+}
+
+model WatchProviderCountryPriorities {
+  provider_id      Int
+  iso_3166_1       String
+  display_priority Int
+
+  watchProvider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
+  country       Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+
+  @@id([provider_id, iso_3166_1])
+}
+
+model MovieProviders {
+  movieId     Int
+  provider_id Int
+  iso_3166_1  String
+  type        ProviderType
+
+  movie         Movies         @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  watchProvider WatchProviders @relation(fields: [provider_id], references: [provider_id], onDelete: Cascade)
+  country       Countries      @relation(fields: [iso_3166_1], references: [iso_3166_1], onDelete: Cascade)
+
+  @@id([movieId, provider_id, iso_3166_1])
+}
+
+enum ProviderType {
+  free
+  flatrate
+  buy
+  rent
+}
+
+model Translations {
+  movieId   Int
+  iso_639_1 String
+  overview  String
+  title     String
+
+  language Languages @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
+  movie    Movies    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([movieId, iso_639_1])
+}
+
+model Images {
+  file_path    String    @id
+  movieId      Int
+  type         ImageType
+  iso_639_1    String?
+  vote_average Float
+  height       Int
+  width        Int
+
+  movie    Movies     @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  language Languages? @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
 }
 
 enum Role {
   admin
   user
   moderator
+}
+
+enum ImageType {
+  backdrop
+  logo
+  poster
 }
 
 datasource db {

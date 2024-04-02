@@ -4,7 +4,7 @@ import { stdin as input, stdout as output } from "node:process";
 import { PrismaClient } from "@prisma/client";
 import { Role } from "@prisma/client";
 import argon2 from "argon2";
-
+const createAdmin = async () => {
 try {
   const rl = readline.createInterface({ input, output });
 
@@ -36,3 +36,5 @@ try {
 } catch (error) {
   console.error(error);
 }
+}
+createAdmin();

@@ -7,12 +7,14 @@ interface Params {
 export async function GET(req: NextRequest, { params }: { params: Params }) {
   try {
     const movieId = parseInt(params.id);
+    console.log(movieId);
     const result = await getMovieReviewsById(movieId);
     if (result.length === 0) {
       return NextResponse.json({ error: `Movie not found with id ${movieId}` }, { status: 404 });
     }
     return NextResponse.json(result, { status: 200 });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ error: err });
   }
 }

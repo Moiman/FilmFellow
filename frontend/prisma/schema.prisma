@@ -33,7 +33,7 @@ model Movies {
   popularity        Float
   poster_path       String
   release_date      DateTime? @db.Date
-  revenue           BigInt
+  revenue           Float
   runtime           Int
   status            String
   tagline           String

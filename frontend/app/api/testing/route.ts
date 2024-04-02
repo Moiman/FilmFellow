@@ -1,11 +1,13 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request, res: Response) {
+export async function GET(req: NextRequest, res: Response) {
   try {
     const session = await getServerSession(authOptions);
+    console.log(req)
     console.log(session);
+    console.log(req.cookies.get("next-auth.session-token")?.value);
 
     if (!session) {
       return NextResponse.json(

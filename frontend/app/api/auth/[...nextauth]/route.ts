@@ -19,7 +19,7 @@ export const authOptions = {
 */
   providers: [
     Credentials({
-      // name: "Register",
+       // name: "Register",
       id: "register",
       type: "credentials",
       credentials: {
@@ -120,7 +120,7 @@ export const authOptions = {
         // token.user_type = user.data.auth.userType;
         // token.accessToken = user.data.auth.token;
       }
-       console.log(token);
+      // console.log(token);
       return token;
     },
 
@@ -133,7 +133,7 @@ export const authOptions = {
         // session.user.username = token.userName;
         // session.user.accessToken = token.accessToken;
       }
-        console.log(session);
+      // console.log(session);
       return session;
     },
   },

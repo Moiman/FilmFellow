@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export const Links = [
   { text: "New", href: "/new" },
@@ -84,26 +84,30 @@ export const Header = () => {
                 </Link>
               ))}
             </>
-          ) : (!session &&(
-            <><Link
-                href="/login"
-                className={currentPath === "/login" ? "active-link" : ""}
-                style={{ lineHeight: "1.4" }}
-              >
-                Login
-              </Link><Link
-                href="/register"
-                className={currentPath === "/login" ? "active-link" : ""}
-                style={{ lineHeight: "1.4" }}
-              >
+          ) : (
+            !session && (
+              <>
+                <Link
+                  href="/login"
+                  className={currentPath === "/login" ? "active-link" : ""}
+                  style={{ lineHeight: "1.4" }}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className={currentPath === "/login" ? "active-link" : ""}
+                  style={{ lineHeight: "1.4" }}
+                >
                   Register
-                </Link></>
-          ))}
-          {session &&  (
-            <button onClick={() => signOut()}>Sign Out</button>
+                </Link>
+              </>
+            )
           )}
+          {session && <button onClick={() => signOut()}>Sign Out</button>}
         </>
       </div>
+      <button onClick={() => signIn()}>Sign In</button>
     </header>
   );
 };

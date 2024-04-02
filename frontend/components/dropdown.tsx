@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { ChevronDown, ChevronUp } from "react-feather";
 
 type buttonAlign = "center" | "right" | "left";
@@ -29,20 +29,27 @@ interface DropdownMenuProps {
 
 export const Dropdown = ({ children, selected, button, buttonAlign, width, maxHeight, zIndex }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const isOutsideDropdown = !(event.target as HTMLElement).closest(".dropdown");
-      if (isOutsideDropdown && isOpen) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [isOpen]);
 
   return (
     <div
+      ref={dropdownRef}
       className="dropdown"
       style={{
         zIndex: zIndex,

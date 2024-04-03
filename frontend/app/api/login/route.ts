@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, res: Response) {
     const data = await req.json();
     console.log(req.cookies.get("next-auth.session-token")?.value);
     // console.log(data);
-    await loginUserSchema.validate(data);
+    await loginUserSchema.validate(data, {abortEarly: false});
 
     const existingUser = await findUserByEmail(data.email);
     if (existingUser && (await argon2.verify(existingUser.password, data.password))) {

@@ -25,7 +25,7 @@ export async function POST(req: Request, res: Response) {
   try {
     const data = await req.json();
     // console.log(data);
-    await registerUserSchema.validate(data);
+    await registerUserSchema.validate(data, {abortEarly: false});
     const existingEmail = await findUserByEmail(data.email);
 
     if (existingEmail) {

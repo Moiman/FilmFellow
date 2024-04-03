@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
       type: type,
       genre: genre,
     };
-    await requestQuerySchema.validate(validationObj);
+    await requestQuerySchema.validate(validationObj, {abortEarly: false});
 
     const result = await getMovieByLimitTypeGenre(parseInt(limit!), type!, genre!);
     if (!result || result.length === 0) {

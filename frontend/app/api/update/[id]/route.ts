@@ -31,7 +31,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
   try {
     const userId = parseInt(params.id);
     const data = await req.json();
-    await updateUserSchema.validate(data);
+    await updateUserSchema.validate(data, { abortEarly: false });
     const { email, username, password, role } = data;
     if (!email && !password && !username && !role) {
       return NextResponse.json(

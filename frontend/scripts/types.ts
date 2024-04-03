@@ -157,7 +157,7 @@ export interface MovieResponse {
   production_companies: Company[];
   production_countries: Country[];
   release_date: string;
-  revenue: bigint;
+  revenue: number;
   runtime: number;
   spoken_languages: Language[];
   status: string;

@@ -3,35 +3,35 @@
 import { useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
 
-type iconAlign = "right" | "left";
+type IconAlign = "right" | "left";
 
 interface SidebarProps {
   children: ReactNode;
-  iconAlign?: iconAlign;
-  open?: boolean;
+  iconPosition?: IconAlign;
+  defaultOpen?: boolean;
 }
 
 /**
- * This component can be used as a sidebar. It works as a wrapper, is as wide as it's content and as long as it's parent .
+ * A sidebar that can be toggled open and closed.
  *
  * @component
  * @param {object} props
- * @param {React.ReactNode} props.children - The children of the Sidebar component. Needs at least 1 child.
- * @param {"right" | "left"} [props.iconAlign] - Align for icon that opens and closes Sidebar. Should always be aligned to same side where main content is. Default is "left";
- * @param {boolean} [props.open] - Is sidebar open by default. Default is "true".
+ * @param {React.ReactNode} props.children - The content of the Sidebar. Needs at least 1 child.
+ * @param {"right" | "left"} [props.iconPosition] - Optional position of the toggle icon. Default is "left".
+ * @param {boolean} [props.defaultOpen] - Whether the sidebar is open by default. Default is true.
  */
 
-export const Sidebar = ({ children, iconAlign, open }: SidebarProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(open === false ? false : true);
+export const Sidebar = ({ children, iconPosition, defaultOpen }: SidebarProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(defaultOpen !== undefined ? defaultOpen : true);
 
   const renderIcon = () => {
     const IconComponent = isOpen
-      ? iconAlign === "left"
-        ? ChevronRight
-        : ChevronLeft
-      : iconAlign === "left"
+      ? iconPosition === "right"
         ? ChevronLeft
-        : ChevronRight;
+        : ChevronRight
+      : iconPosition === "right"
+        ? ChevronRight
+        : ChevronLeft;
     return (
       <IconComponent
         color="#ffc700"
@@ -42,10 +42,7 @@ export const Sidebar = ({ children, iconAlign, open }: SidebarProps) => {
 
   return (
     <div className="sidebar">
-      <div
-        className="sidebar-header"
-        style={{ justifyContent: iconAlign === "right" ? "right" : "left" }}
-      >
+      <div className={`sidebar-header ${iconPosition === "right" ? "sidebar-header--right" : ""}`}>
         <button
           className="button-transparent"
           data-testid="toggle-button"

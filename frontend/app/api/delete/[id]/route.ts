@@ -2,7 +2,7 @@ import { deleteUserById, findUserById } from "@/services/authService";
 import { NextRequest, NextResponse } from "next/server";
 interface Params {
   id: string;
-};
+}
 
 export async function DELETE(req: NextRequest, { params }: { params: Params }) {
   try {
@@ -15,6 +15,6 @@ export async function DELETE(req: NextRequest, { params }: { params: Params }) {
     const deletedUser = await deleteUserById(userId);
     return NextResponse.json(deletedUser, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err },{status: 400});
+    return NextResponse.json({ error: err }, { status: 400 });
   }
 }

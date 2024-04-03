@@ -11,9 +11,9 @@ const loginUserSchema = yup.object({
 export async function POST(req: NextRequest, res: Response) {
   try {
     const data = await req.json();
-    console.log(req.cookies.get("next-auth.session-token")?.value);
-    // console.log(data);
-    await loginUserSchema.validate(data, {abortEarly: false});
+    // console.log(req.cookies.get("next-auth.session-token")?.value);
+
+    await loginUserSchema.validate(data, { abortEarly: false });
 
     const existingUser = await findUserByEmail(data.email);
     if (existingUser && (await argon2.verify(existingUser.password, data.password))) {
@@ -28,6 +28,6 @@ export async function POST(req: NextRequest, res: Response) {
       return NextResponse.json({ error: "Credentials doesnt match" }, { status: 400 });
     }
   } catch (err) {
-    return NextResponse.json({ error: err }, {status: 400});
+    return NextResponse.json({ error: err }, { status: 400 });
   }
 }

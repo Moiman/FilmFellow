@@ -6,7 +6,7 @@ import { Role } from "@prisma/client";
 
 interface Params {
   id: string;
-};
+}
 
 const updateUserSchema = yup.object({
   email: yup.string().trim().optional().email("Must be a valid email"),

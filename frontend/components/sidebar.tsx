@@ -22,7 +22,7 @@ interface SidebarProps {
  */
 
 export const Sidebar = ({ children, iconAlign, open }: SidebarProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(open ? open : false);
+  const [isOpen, setIsOpen] = useState<boolean>(open === false ? false : true);
 
   const renderIcon = () => {
     const IconComponent = isOpen

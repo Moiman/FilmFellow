@@ -48,7 +48,7 @@ describe("Navbar tests", () => {
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
     cy.get('a[href="/login"]').click();
     cy.url().should("include", "/login");
-    cy.get("h2").contains("Login");
+    cy.get("a").contains("Login");
   });
 
   it("Test navbar input field", () => {

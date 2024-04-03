@@ -19,6 +19,6 @@ export async function GET(req: NextRequest, res: Response) {
     }
     return NextResponse.json({ email: session.user.email }, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err });
+    return NextResponse.json({ error: err }, { status: 400 });
   }
 }

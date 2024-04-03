@@ -15,6 +15,6 @@ export async function DELETE(req: NextRequest, { params }: { params: Params }) {
     const deletedUser = await deleteUserById(userId);
     return NextResponse.json(deletedUser, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err });
+    return NextResponse.json({ error: err },{status: 400});
   }
 }

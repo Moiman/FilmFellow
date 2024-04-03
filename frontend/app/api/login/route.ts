@@ -14,6 +14,7 @@ export async function POST(req: NextRequest, res: Response) {
     console.log(req.cookies.get("next-auth.session-token")?.value);
     // console.log(data);
     await loginUserSchema.validate(data);
+
     const existingUser = await findUserByEmail(data.email);
     if (existingUser && (await argon2.verify(existingUser.password, data.password))) {
       const loggedInUser = {
@@ -27,6 +28,6 @@ export async function POST(req: NextRequest, res: Response) {
       return NextResponse.json({ error: "Credentials doesnt match" }, { status: 400 });
     }
   } catch (err) {
-    return NextResponse.json({ error: err });
+    return NextResponse.json({ error: err }, {status: 400});
   }
 }

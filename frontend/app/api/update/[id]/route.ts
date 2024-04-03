@@ -93,6 +93,6 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
     const updatedUser = await updateUser(userId, user);
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err });
+    return NextResponse.json({ error: err }, { status: 400 });
   }
 }

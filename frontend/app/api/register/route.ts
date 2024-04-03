@@ -49,6 +49,6 @@ export async function POST(req: Request, res: Response) {
     const newUser = await createUser(data.email, data.username, hashedPassword);
     return NextResponse.json(newUser, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err });
+    return NextResponse.json({ error: err }, { status: 400 });
   }
 }

@@ -26,7 +26,6 @@ interface PersonResponse extends PersonData {
 }
 
 const parsePersonData = (personData: PersonResponse) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { also_known_as, birthday, deathday, ...restOfPerson } = personData;
   return {
     birthday: birthday ? new Date(birthday) : null,

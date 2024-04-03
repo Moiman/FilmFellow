@@ -18,7 +18,6 @@ export const fetchProviders = async () => {
     `https://api.themoviedb.org/3/watch/providers/movie?api_key=${apiKey}`,
   );
   const watchProviders = res.results.map(provider => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { display_priorities, ...providerDetails } = provider;
     return providerDetails;
   });

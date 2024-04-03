@@ -44,7 +44,7 @@ export const Sidebar = ({ children, iconAlign, open }: SidebarProps) => {
     <div className="sidebar">
       <div
         className="sidebar-header"
-        style={{ justifyContent: iconAlign ? iconAlign : "left" }}
+        style={{ justifyContent: iconAlign === "right" ? "right" : "left" }}
       >
         <button
           className="button-transparent"

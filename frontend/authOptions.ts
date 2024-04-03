@@ -1,4 +1,4 @@
-import { NextAuthOptions, SessionStrategy } from "next-auth";
+import { type NextAuthOptions, SessionStrategy } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { type Session, type User } from "next-auth";
 import { JWT } from "next-auth/jwt";

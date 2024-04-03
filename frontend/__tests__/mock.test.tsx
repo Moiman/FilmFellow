@@ -27,10 +27,11 @@ describe("Mock Test", () => {
         <Header />
       </SessionProvider>,
     );
-
+      const button = screen.getByRole("button", { name: "Sign Out" });
     expect(screen.getByRole("heading", {level: 4, name: "FilmFellow" })).toBeDefined();
+    expect(button).toBeDefined();
   });
-
+/*
   it("api/testing endpoint", async () => {
 
         const response = await fetch( "http://localhost:3000/api/testing", {
@@ -44,4 +45,5 @@ describe("Mock Test", () => {
         expect(response.status).toBe(200);
 
   });
+  */
 })

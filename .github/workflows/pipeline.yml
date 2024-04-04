@@ -52,7 +52,10 @@ jobs:
         node-version: '20.x'
     - name: Running cypress tests
       run: |
+        cp .env.example .env
+        docker compose up postgres -d
         cd frontend
+        cp .env.example .env
         npm ci
         npm run dev &
         sleep 10

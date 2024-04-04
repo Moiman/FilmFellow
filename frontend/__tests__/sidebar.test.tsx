@@ -1,6 +1,6 @@
 import { test, expect, describe, afterEach } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { Sidebar } from "../components/sidebar";
+import { Sidebar } from "@/components/sidebar";
 
 afterEach(() => {
   cleanup();

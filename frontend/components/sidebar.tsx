@@ -18,7 +18,8 @@ interface SidebarProps {
  * @param {object} props
  * @param {React.ReactNode} props.children - The content of the Sidebar. Needs at least 1 child.
  * @param {"right" | "left"} [props.iconPosition] - Position of the toggle icon. Default is "left".
- * @param {boolean} [props.defaultOpen] - Whether the sidebar is open by default. Default is true.
+ * @param {boolean} [props.defaultOpen] - Whether the sidebar is open by default. Default is "true".
+ * @returns {JSX.Element} A JSX element representing the Sidebar component.
  */
 
 export const Sidebar = ({ children, iconPosition, defaultOpen }: SidebarProps) => {

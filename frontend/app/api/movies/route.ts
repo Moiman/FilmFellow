@@ -17,7 +17,7 @@ const requestQuerySchema = yup.object({
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
-    const searchParams = new URLSearchParams(url.searchParams)
+    const searchParams = new URLSearchParams(url.searchParams);
     const limit = searchParams.get("limit");
     const type = searchParams.get("type");
     const genre = searchParams.get("genre");

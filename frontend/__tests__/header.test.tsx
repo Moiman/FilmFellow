@@ -4,7 +4,11 @@ import { Header, Links } from "@/components/header";
 import { SessionProvider } from "next-auth/react";
 
 beforeAll(() => {
-  render(<SessionProvider session={null}><Header/></SessionProvider>);
+  render(
+    <SessionProvider session={null}>
+      <Header />
+    </SessionProvider>,
+  );
 });
 
 afterAll(() => {

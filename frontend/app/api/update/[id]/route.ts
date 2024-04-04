@@ -63,7 +63,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       );
     }
 
-    if (email && session.user.id === userId || session.user.role === Role.admin) {
+    if ((email && session.user.id === userId) || session.user.role === Role.admin) {
       const foundEmail = await findUserByEmail(email);
       if (foundEmail) {
         return NextResponse.json(
@@ -75,10 +75,10 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       }
       user.email = email;
     }
-    if (password && session.user.id === userId || session.user.role === Role.admin) {
+    if ((password && session.user.id === userId) || session.user.role === Role.admin) {
       user.password = await argon2.hash(password);
     }
-    if (username && session.user.id === userId || session.user.role === Role.admin) {
+    if ((username && session.user.id === userId) || session.user.role === Role.admin) {
       const foundUsername = await findUserByUsername(username);
       if (foundUsername) {
         return NextResponse.json(

@@ -77,7 +77,7 @@ describe("/api/movies/id", () => {
     const response = await getMovieById(req, { params });
     expect(response.status).toBe(200);
     const movie = await response.json();
-    expect(movie.id).toEqual(278)
+    expect(movie.id).toEqual(278);
   });
   it("Try to get movie by wrong id", async () => {
     const params = { id: "123456789" };
@@ -120,7 +120,6 @@ describe("/api/movies/id/reviews", () => {
 
 describe("/api/movies/?limit&genre&type", () => {
   it("/movies/?limit=10&type=new&genre=drama test movie endpoint for returning movies with limit 10, type from newest to oldest and genre drama", async () => {
-
     const { req, res } = createMocks<ApiRequest, APiResponse>({
       method: "GET",
       url: `${process.env.NEXTAUTH_URL}/api/movies?limit=10&&type=new&genre=drama`,
@@ -129,15 +128,14 @@ describe("/api/movies/?limit&genre&type", () => {
 
     const moviesWithQuery = await response.json();
     const responseBody = moviesWithQuery as Movie[];
-     expect(responseBody.length).toBe(10);
-     expect(responseBody[0]).toHaveProperty("genres");
-     const sortMoviesByReleaseDate = responseBody.sort((a, b) => {
-       return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
-     });
-     expect(sortMoviesByReleaseDate[0].release_date).toEqual(moviesWithQuery[0].release_date);
-     expect(moviesWithQuery[0].genres).toContain("Drama");
-     expect(response.status).toBe(200);
-
+    expect(responseBody.length).toBe(10);
+    expect(responseBody[0]).toHaveProperty("genres");
+    const sortMoviesByReleaseDate = responseBody.sort((a, b) => {
+      return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
+    });
+    expect(sortMoviesByReleaseDate[0].release_date).toEqual(moviesWithQuery[0].release_date);
+    expect(moviesWithQuery[0].genres).toContain("Drama");
+    expect(response.status).toBe(200);
   });
   it("/movies/?limit=15&type=popular&genre=drama test movie endpoint for returning movies with limit 15, type most popular first and genre drama", async () => {
     const { req, res } = createMocks<ApiRequest, APiResponse>({
@@ -237,9 +235,7 @@ describe("Auth route", () => {
   it("/auth/register without values", async () => {
     const { req, res } = createMocks<ApiRequest, APiResponse>({
       method: "POST",
-      body: {
-
-      }
+      body: {},
     });
 
     const response = await register(req);
@@ -262,15 +258,14 @@ describe("Auth route", () => {
     });
     const response = await register(req);
     // console.log(response);
-     const registeredUser = await response.json();
-     console.log(registeredUser);
+    const registeredUser = await response.json();
+    console.log(registeredUser);
     user.id = registeredUser.id;
     user.email = registeredUser.email;
     user.username = registeredUser.username;
     expect(response.status).toBe(200);
-
   });
-/*
+  /*
   it("/auth/login try to login with wrong user credentials", async () => {
     const { req, res } = createMocks<ApiRequest, APiResponse>({
       method: "POST",
@@ -405,4 +400,4 @@ describe("Auth route", () => {
     expect(response.status).toBe(404);
   });
   */
-})
+});

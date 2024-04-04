@@ -5,36 +5,36 @@ import { PrismaClient } from "@prisma/client";
 import { Role } from "@prisma/client";
 import argon2 from "argon2";
 const createAdmin = async () => {
-try {
-  const rl = readline.createInterface({ input, output });
+  try {
+    const rl = readline.createInterface({ input, output });
 
-  const username = await rl.question("username: ");
-  const email = await rl.question("email: ");
-  const password = await rl.question("password: ");
+    const username = await rl.question("username: ");
+    const email = await rl.question("email: ");
+    const password = await rl.question("password: ");
 
-  rl.close();
+    rl.close();
 
-  const prisma = new PrismaClient();
+    const prisma = new PrismaClient();
 
-  const existingUser = await prisma.users.findFirst({
-    where: { OR: [{ email: { equals: email } }, { username: { equals: username } }] },
-  });
-
-  if (!existingUser) {
-    const createdAdmin = await prisma.users.create({
-      data: {
-        username,
-        email,
-        password: await argon2.hash(password),
-        role: Role.admin,
-      },
+    const existingUser = await prisma.users.findFirst({
+      where: { OR: [{ email: { equals: email } }, { username: { equals: username } }] },
     });
-    console.log("Admin account", createdAdmin.username, createdAdmin.email, "created successfully");
-  } else {
-    console.error("username or email is already in use for user", existingUser.username);
+
+    if (!existingUser) {
+      const createdAdmin = await prisma.users.create({
+        data: {
+          username,
+          email,
+          password: await argon2.hash(password),
+          role: Role.admin,
+        },
+      });
+      console.log("Admin account", createdAdmin.username, createdAdmin.email, "created successfully");
+    } else {
+      console.error("username or email is already in use for user", existingUser.username);
+    }
+  } catch (error) {
+    console.error(error);
   }
-} catch (error) {
-  console.error(error);
-}
-}
+};
 createAdmin();

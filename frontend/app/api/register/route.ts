@@ -21,7 +21,7 @@ const registerUserSchema = yup.object({
     .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
     await registerUserSchema.validate(data, { abortEarly: false });

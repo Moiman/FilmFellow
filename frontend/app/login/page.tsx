@@ -31,6 +31,7 @@ export default function Login() {
   };
   return (
     <main>
+      <h2>Login</h2>
       <form onSubmit={onSubmit}>
         <label htmlFor="email">Email</label>
         <input

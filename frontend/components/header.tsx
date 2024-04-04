@@ -139,7 +139,7 @@ export const Header = () => {
                 </Link>
                 <Link
                   href="/register"
-                  className={currentPath === "/login" ? "active-link" : ""}
+                  className={currentPath === "/register" ? "active-link" : ""}
                   style={{ lineHeight: "1.4" }}
                 >
                   Register

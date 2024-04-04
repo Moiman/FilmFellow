@@ -37,8 +37,8 @@ export default function Home() {
   const [selectedGenre, setSelectedGenre] = useState(exampleGenres[0]);
 
   return (
-    <main style={{ display: "inline-flex", padding: 0 }}>
-      <div style={{ flex: 1, padding: "40px" }}>
+    <main className="sidebar-main">
+      <div className="home-content">
         <h1>FilmFellow</h1>
 
         {/* Example of dropdown element */}

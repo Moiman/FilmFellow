@@ -2,6 +2,7 @@
 @use "./base/" as base;
 @use "./components/" as components;
 @use "./layout/" as layout;
+@use "./pages/" as pages;
 
 body {
   max-width: 100vw;
@@ -24,6 +25,11 @@ main {
   padding: abstracts.$default-page-margin 200px;
   height: fit-content;
   flex: 1;
+}
+
+main.sidebar-main {
+  display: inline-flex;
+  padding: 0;
 }
 
 @media only screen and (max-width: abstracts.$large-width) {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
+import { Dropdown } from "./dropdown";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export const Links = [
@@ -14,15 +15,16 @@ export const Links = [
 export const SubNavLinks = [
   {
     icon: <Tool style={{ strokeWidth: 1.5 }} />,
+    text: "Admin",
     href: "/admin",
   },
-  { icon: <User style={{ strokeWidth: 1.5 }} />, href: "/profile" },
-  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, href: "" },
+  { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile" },
+  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, text: "Logout", href: "" },
 ];
 
 export const Header = () => {
   // Placeholder: check if user is logged in
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const isLoggedIn = false;
   const currentPath = usePathname();
   console.log(session?.user);
@@ -64,9 +66,50 @@ export const Header = () => {
         </button>
       </div>
 
-      {/* Replace with dropdown component when done */}
-      <div className="sub-nav-narrow highlight-nav">
-        <Menu style={{ strokeWidth: 1.5 }} />
+      <div className="sub-nav-narrow">
+        <Dropdown
+          width={100}
+          zIndex={20}
+          button={
+            <button className="button-transparent">
+              <Menu
+                data-cy="menu-icon"
+                style={{ strokeWidth: 1.5 }}
+                color="white"
+              />
+            </button>
+          }
+          buttonAlign="right"
+        >
+          {Links.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="dropdown-item"
+            >
+              {link.text}
+            </Link>
+          ))}
+          {isLoggedIn ? (
+            SubNavLinks.map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="dropdown-item"
+              >
+                {link.text}
+              </Link>
+            ))
+          ) : (
+            <Link
+              key="login"
+              href="/login"
+              className="dropdown-item"
+            >
+              Login
+            </Link>
+          )}
+        </Dropdown>
       </div>
 
       {/* For w > 1024 sub-nav */}

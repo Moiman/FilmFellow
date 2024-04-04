@@ -1,4 +1,3 @@
-const gitHubHref = "https://github.com/Moiman/FilmFellow/";
 describe("Routes tests", () => {
   it("Visit default page", () => {
     cy.visit("/");

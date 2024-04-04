@@ -57,6 +57,7 @@ jobs:
         cd frontend
         cp .env.example .env
         npm ci
+        npx prisma migrate deploy
         npm run dev &
         sleep 10
         npm run cypress:run_headless

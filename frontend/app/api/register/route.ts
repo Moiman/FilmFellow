@@ -1,5 +1,5 @@
 import { createUser, findUserByEmail, findUserByUsername } from "@/services/authService";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import argon2 from "argon2";
 import * as yup from "yup";
 
@@ -21,7 +21,7 @@ const registerUserSchema = yup.object({
     .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
 });
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   try {
     const data = await req.json();
     await registerUserSchema.validate(data, { abortEarly: false });
@@ -48,6 +48,7 @@ export async function POST(req: Request, res: Response) {
     const newUser = await createUser(data.email, data.username, hashedPassword);
     return NextResponse.json(newUser, { status: 200 });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ error: err }, { status: 400 });
   }
 }

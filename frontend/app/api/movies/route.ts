@@ -16,9 +16,11 @@ const requestQuerySchema = yup.object({
 
 export async function GET(req: NextRequest) {
   try {
-    const limit = req.nextUrl.searchParams.get("limit");
-    const type = req.nextUrl.searchParams.get("type");
-    const genre = req.nextUrl.searchParams.get("genre");
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.searchParams)
+    const limit = searchParams.get("limit");
+    const type = searchParams.get("type");
+    const genre = searchParams.get("genre");
     const validationObj = {
       limit: limit,
       type: type,

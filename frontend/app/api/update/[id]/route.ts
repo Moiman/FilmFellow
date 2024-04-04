@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import argon2 from "argon2";
 import * as yup from "yup";
 import { Role } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
 
 interface Params {
   id: string;
@@ -31,6 +33,15 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
   try {
     const userId = parseInt(params.id);
     const data = await req.json();
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json(
+        { error: "Not Authorized" },
+        {
+          status: 400,
+        },
+      );
+    }
     await updateUserSchema.validate(data, { abortEarly: false });
     const { email, username, password, role } = data;
     if (!email && !password && !username && !role) {
@@ -52,7 +63,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       );
     }
 
-    if (email) {
+    if (email && session.user.id === userId || session.user.role === Role.admin) {
       const foundEmail = await findUserByEmail(email);
       if (foundEmail) {
         return NextResponse.json(
@@ -64,10 +75,10 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       }
       user.email = email;
     }
-    if (password) {
+    if (password && session.user.id === userId || session.user.role === Role.admin) {
       user.password = await argon2.hash(password);
     }
-    if (username) {
+    if (username && session.user.id === userId || session.user.role === Role.admin) {
       const foundUsername = await findUserByUsername(username);
       if (foundUsername) {
         return NextResponse.json(

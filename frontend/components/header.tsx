@@ -107,7 +107,6 @@ export const Header = () => {
           {session && <button onClick={() => signOut()}>Sign Out</button>}
         </>
       </div>
-      <button onClick={() => signIn()}>Sign In</button>
     </header>
   );
 };

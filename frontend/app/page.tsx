@@ -1,6 +1,7 @@
 "use client";
 import { Dropdown } from "@/components/dropdown";
 import { Section } from "@/components/section";
+import { Sidebar } from "@/components/sidebar";
 import { useState } from "react";
 import { Check } from "react-feather";
 
@@ -36,52 +37,60 @@ export default function Home() {
   const [selectedGenre, setSelectedGenre] = useState(exampleGenres[0]);
 
   return (
-    <main>
-      <h1>FilmFellow</h1>
+    <main className="sidebar-main">
+      <div className="home-content">
+        <h1>FilmFellow</h1>
 
-      {/* Example of dropdown element */}
-      <div
-        style={{
-          marginBottom: "10px",
-          width: "100%",
-          display: "inline-flex",
-          justifyContent: "end",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
-        <h6>Genre</h6>
-        <Dropdown
-          selected={selectedGenre ? selectedGenre.name : undefined}
-          width={200}
-          zIndex={10}
+        {/* Example of dropdown element */}
+        <div
+          style={{
+            marginBottom: "10px",
+            width: "100%",
+            display: "inline-flex",
+            justifyContent: "end",
+            alignItems: "center",
+            gap: "10px",
+          }}
         >
-          {exampleGenres.map(option => (
-            <button
-              key={option.id}
-              onClick={() => setSelectedGenre(option)}
-              className="dropdown-item"
-            >
-              {option.name}
-              {option.id === selectedGenre.id ? (
-                <Check
-                  size={20}
-                  color="#ffc700"
-                />
-              ) : null}
-            </button>
-          ))}
-        </Dropdown>
+          <h6>Genre</h6>
+          <Dropdown
+            selected={selectedGenre ? selectedGenre.name : undefined}
+            width={200}
+            zIndex={10}
+          >
+            {exampleGenres.map(option => (
+              <button
+                key={option.id}
+                onClick={() => setSelectedGenre(option)}
+                className="dropdown-item"
+              >
+                {option.name}
+                {option.id === selectedGenre.id ? (
+                  <Check
+                    size={20}
+                    color="#ffc700"
+                  />
+                ) : null}
+              </button>
+            ))}
+          </Dropdown>
+        </div>
+
+        {/* Examples of sections */}
+        <Section header={exampleHeader}>
+          <p>This is a example usage of {"<Section>"} with component header.</p>
+        </Section>
+
+        <Section header="String header">
+          <p>This is a example usage of {"<Section>"} with string header.</p>
+        </Section>
       </div>
 
-      {/* Examples of sections */}
-      <Section header={exampleHeader}>
-        <p>This is a example usage of {"<Section>"} with component header.</p>
-      </Section>
-
-      <Section header="String header">
-        <p>This is a example usage of {"<Section>"} with string header.</p>
-      </Section>
+      <Sidebar iconPosition="left">
+        <p style={{ width: "300px", padding: "20px" }}>
+          This is a example of sidebar that is on the right side and is open by default.
+        </p>
+      </Sidebar>
     </main>
   );
 }

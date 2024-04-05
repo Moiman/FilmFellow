@@ -1,4 +1,5 @@
 @use "../abstracts" as abstracts;
+@use "sass:map";
 
 input,
 textarea {
@@ -17,6 +18,7 @@ textarea {
 
 input {
   padding: 10px 15px;
+  margin-top: 10px;
 }
 
 textarea {
@@ -25,4 +27,45 @@ textarea {
 input:focus,
 textarea:focus {
   outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+}
+
+label {
+  font-weight: 600;
+
+  font-family: abstracts.$default-title-font;
+}
+ .error-text {
+  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+}
+
+form {
+  width: 50%;
+  padding: 50px;
+  background-color: abstracts.$primary-grey;
+}
+
+.login-submit {
+  width: 100%;
+  font-weight: 600;
+  font-size: 1.25rem;
+  font-family: abstracts.$default-title-font;
+}
+
+.loginForm {
+  display: grid;
+  justify-items: center;
+}
+.loginText {
+  text-align: center;
+  font-weight: 600;
+  margin-top: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 50%;
+  background-color: abstracts.$primary-dark;
+}
+.login-route-change {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
 }

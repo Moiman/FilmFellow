@@ -97,18 +97,24 @@ $total-colors: length(abstracts.$highlight-colors);
 
 // Body text
 p,
-.description {
+.description,
+label {
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
-  line-height: abstracts.$default-line-height;
   letter-spacing: abstracts.$text-letter-spacing;
 }
 
 p {
   font-weight: 400;
+  line-height: abstracts.$default-line-height;
 }
 
 .description {
   font-weight: 300;
   font-style: italic;
+  line-height: abstracts.$default-line-height;
+}
+
+label {
+  line-height: 1.4em;
 }

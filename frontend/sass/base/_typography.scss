@@ -7,41 +7,42 @@ h1,
 h2,
 h3,
 h4,
-h5 {
+h5,
+h6 {
   font-family: abstracts.$default-title-font;
+  line-height: abstracts.$default-line-height;
   letter-spacing: abstracts.$title-letter-spacing;
 }
 
 h1 {
   font-size: abstracts.$h1-font-size;
-  line-height: abstracts.$default-line-height;
   font-weight: 400;
 }
 
 h2 {
   font-size: abstracts.$h2-font-size;
-  line-height: abstracts.$default-line-height;
   font-weight: 400;
-  letter-spacing: 0;
 }
 
 h3 {
   font-size: abstracts.$h3-font-size;
-  line-height: abstracts.$default-line-height;
   font-weight: 300;
 }
 
 h4 {
   font-size: abstracts.$h4-font-size;
-  line-height: abstracts.$default-line-height;
   font-weight: 300;
 }
 
 h5 {
   font-size: abstracts.$h5-font-size;
-  line-height: abstracts.$default-line-height;
   font-weight: 400;
+}
+
+h6 {
   letter-spacing: 0;
+  font-size: abstracts.$h6-font-size;
+  font-weight: 300;
 }
 
 // Links

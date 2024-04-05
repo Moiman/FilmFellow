@@ -1,0 +1,79 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.dropdown {
+  display: flex;
+  flex: 1;
+
+  position: relative;
+
+  .dropdown-header,
+  .dropdown-menu {
+    font-size: 0.8em;
+    text-align: left;
+
+    background-color: abstracts.$primary-darkgrey;
+    border-radius: abstracts.$default-border-radius;
+
+    width: 100%;
+  }
+
+  .dropdown-header {
+    color: abstracts.$primary-light;
+    letter-spacing: abstracts.$text-letter-spacing;
+
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid abstracts.$primary-dark;
+
+    &:focus {
+      outline: 1px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+
+    border-top: 1px solid abstracts.$primary-dark;
+    background-color: abstracts.$primary-darkgrey;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    .dropdown-item {
+      color: abstracts.$primary-light;
+      font-size: 1em;
+
+      border: 1px solid abstracts.$primary-dark;
+      background-color: abstracts.$primary-darkgrey;
+      border-top: 0;
+      border-radius: 0;
+      padding: 10px;
+      margin: 0;
+
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+
+      text-align: left;
+
+      width: 100%;
+      min-width: 100px;
+      background-color: transparent;
+
+      &:hover {
+        background-color: rgba(abstracts.$primary-dark, 0.5);
+      }
+
+      &:focus {
+        color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+        outline: 0;
+      }
+    }
+  }
+}

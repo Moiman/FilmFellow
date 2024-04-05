@@ -1,8 +1,10 @@
 @use "sass:map";
 @use "../abstracts" as abstracts;
 
-input,
+input[type="text"],
 textarea {
+  width: 100%;
+
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
   line-height: abstracts.$default-line-height;
@@ -14,12 +16,12 @@ textarea {
   background-color: abstracts.$primary-light;
 }
 
-input {
-  padding: 10px 15px;
+input[type="text"] {
+  padding: 5px 10px;
 }
 
 textarea {
-  padding: 15px;
+  padding: 10px;
 }
 
 input:focus,
@@ -28,18 +30,13 @@ textarea:focus {
 }
 
 label {
+  margin: 5px 0;
+}
+
+.label-row {
   display: flex;
   align-items: center;
   gap: 4px;
-
-  & > * {
-    flex: 0;
-  }
-}
-
-.label-column {
-  flex-direction: column;
-  align-items: start;
 }
 
 // Radio button

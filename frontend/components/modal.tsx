@@ -1,6 +1,5 @@
 "use client";
 
-import "@/sass/style.scss";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
@@ -9,12 +8,13 @@ import { X } from "react-feather";
 interface Props {
   content: React.ReactNode;
   _footer?: React.ReactNode;
+  okLink?: React.ReactNode;
+  openModal: React.ReactNode;
   //onOK needs "use server"
   _onOk?: () => Promise<void>;
-  buttontxt?: string;
 }
 
-const Modal = ({ content, _footer, _onOk, buttontxt }: Props) => {
+const Modal = ({ content, _footer, _onOk, okLink, openModal }: Props) => {
   const searchParams = useSearchParams();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
   const pathName = usePathname();
@@ -46,14 +46,16 @@ const Modal = ({ content, _footer, _onOk, buttontxt }: Props) => {
               </Link>
             </div>
             <div className="modal-content">{content}</div>
-            <div className="modal-btn">
-              {_onOk ? (
-                <Link href={pathName}>
-                  <button onClick={() => okClicked()}>{buttontxt}</button>
+            {_onOk ? (
+              <div className="modal-btn">
+                <Link
+                  href={pathName}
+                  onClick={() => okClicked()}
+                >
+                  {okLink}
                 </Link>
-              ) : null}
-            </div>
-
+              </div>
+            ) : null}
             <div className="modal-footer">{_footer}</div>
           </div>
         </div>
@@ -62,9 +64,7 @@ const Modal = ({ content, _footer, _onOk, buttontxt }: Props) => {
 
   return (
     <>
-      <Link href="?showModal=y">
-        <button>modal</button>
-      </Link>
+      <Link href="?showModal=y">{openModal}</Link>
       {dialog}
     </>
   );

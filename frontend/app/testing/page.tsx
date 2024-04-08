@@ -28,7 +28,8 @@ export default function testing() {
           </div>
         }
         _onOk={test}
-        buttontxt="modal"
+        okLink={<button>test</button>}
+        openModal={<p>open</p>}
       />
     </main>
   );

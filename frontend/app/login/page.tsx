@@ -56,23 +56,25 @@ export default function Login() {
     // console.log(response?.error);
   };
   return (
-    <main className="loginForm">
-      <h2 className="loginText">Login</h2>
+    <main className="form-grid">
+      <h2 className="form-main-text">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">Email</label>
         <input
+          id="email"
           type="email"
           {...register("email")}
         />
         {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
         <label htmlFor="password">Password</label>
-        <div className="login-form-group">
+        <div className="form-group">
           <input
+            id="password"
             type={showPassword ? "text" : "password"}
             {...register("password")}
           />
           <button
-            className="login-form-group-icon"
+            className="form-group-icon"
             type="button"
             onClick={() => setShowPassword(!showPassword)}
           >
@@ -85,13 +87,13 @@ export default function Login() {
         </div>
         {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
         <button
-          className="login-submit"
+          className="form-submit"
           type="submit"
           disabled={isSubmitting}
         >
           Login
         </button>
-        <div className="login-route-change">
+        <div className="form-route-change">
           <Link href="/">Cant login ?</Link>
           <p> / </p>
           <Link href="/register">Register</Link>

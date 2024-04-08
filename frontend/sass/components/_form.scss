@@ -43,7 +43,7 @@ form {
   background-color: abstracts.$primary-grey;
 }
 
-.login-submit {
+.form-submit {
   width: 100%;
   font-weight: 600;
   font-size: 1.25rem;
@@ -52,11 +52,11 @@ form {
   margin-bottom: 25px;
 }
 
-.loginForm {
+.form-grid {
   display: grid;
   justify-items: center;
 }
-.loginText {
+.form-main-text {
   text-align: center;
   font-weight: 600;
   margin-top: auto;
@@ -65,21 +65,21 @@ form {
   width: 50%;
   background-color: abstracts.$primary-dark;
 }
-.login-route-change {
+.form-route-change {
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: center;
 }
 
-.login-form-group-icon {
+.form-group-icon {
   position: absolute;
   background-color: inherit;
   right: 10px;
   top: 12px;
 }
-.login-form-group-icon:hover {
+.form-group-icon:hover {
   background-color: inherit
 }
-.login-form-group {
+.form-group {
   position: relative;
 }

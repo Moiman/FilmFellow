@@ -50,7 +50,7 @@ export default function Register() {
       username: "",
       email: "",
       password: "",
-      retypepassword: ""
+      retypepassword: "",
     },
     resolver: yupResolver(registerUserSchema),
   });
@@ -84,7 +84,7 @@ export default function Register() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">Email</label>
         <input
-        id="email"
+          id="email"
           type="email"
           {...register("email")}
         />
@@ -144,8 +144,13 @@ export default function Register() {
           Register
         </button>
         <div className="form-route-change">
-          <p>Already have an account ? </p>
-          <Link href="/login">Login</Link>
+          <p className="form-route-change-p">Already have an account? </p>
+          <Link
+            className="form-route-change-link-style"
+            href="/login"
+          >
+            Login
+          </Link>
         </div>
       </form>
       <p className="error-text">{error}</p>

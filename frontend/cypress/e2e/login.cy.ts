@@ -11,6 +11,7 @@ describe("Login tests && protected route", () => {
     cy.get('input[name="username"]').type("testuser");
     cy.get('input[name="email"]').type("test@gmail.com");
     cy.get('input[name="password"]').type("Password1!");
+    cy.get('input[name="retypepassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
     cy.get("button").contains("Sign Out");
     cy.request({ url: "/api/testing", failOnStatusCode: false }).should(response => {

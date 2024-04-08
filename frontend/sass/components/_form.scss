@@ -78,8 +78,18 @@ form {
   top: 12px;
 }
 .form-group-icon:hover {
-  background-color: inherit
+  background-color: inherit;
 }
 .form-group {
   position: relative;
+}
+.form-route-change-link-style {
+  text-decoration: underline;
+}
+.form-route-change-p {
+  font-family: abstracts.$default-title-font;
+  font-size: abstracts.$a-font-size;
+  font-weight: 300;
+  color: abstracts.$primary-light;
+  padding: 0.2em 0.6em;
 }

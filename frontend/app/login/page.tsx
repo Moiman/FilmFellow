@@ -94,9 +94,19 @@ export default function Login() {
           Login
         </button>
         <div className="form-route-change">
-          <Link href="/">Cant login ?</Link>
-          <p> / </p>
-          <Link href="/register">Register</Link>
+          <Link
+            className="form-route-change-link-style"
+            href="/"
+          >
+            Cant login?
+          </Link>
+          <p className="form-route-change-p"> / </p>
+          <Link
+            className="form-route-change-link-style"
+            href="/register"
+          >
+            Register
+          </Link>
         </div>
       </form>
       <p className="error-text">{error}</p>

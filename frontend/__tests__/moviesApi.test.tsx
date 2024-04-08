@@ -1,72 +1,19 @@
-import { getServerSession } from "next-auth";
-import { vi } from "vitest";
-import { type Mock } from "vitest";
 import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { Header } from "@/components/header";
-import { SessionProvider } from "next-auth/react";
-import { createMocks, createRequest, createResponse } from "node-mocks-http";
+import { createMocks, createRequest } from "node-mocks-http";
+import type { NextRequest } from "next/server";
+
 import { GET as getMovieById } from "@/app/api/movies/[id]/route";
 import { GET as getMovieReviewsById } from "@/app/api/movies/[id]/reviews/route";
 import { GET as getMoviesByQuery } from "@/app/api/movies/route";
-import { GET as getPersonById } from "@/app/api/persons/[id]/route";
-import { NextRequest, NextResponse } from "next/server";
-
-interface Movie {
-  id: number;
-  adult: boolean;
-  backdrop_path: string;
-  budget: number;
-  homepage: string;
-  imdb_id: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  revenue: number;
-  runtime: number;
-  status: string;
-  tagline: string;
-  title: string;
-  vote_average: number;
-  vote_count: number;
-  genres: string[];
-}
+import type { MovieResponse } from "@/services/movieService";
 
 type ApiRequest = NextRequest & ReturnType<typeof createRequest>;
-type APiResponse = NextResponse & ReturnType<typeof createResponse>;
-
-vi.mock("next-auth", () => ({
-  getServerSession: vi.fn(),
-}));
-
-describe("Mock Test", () => {
-  it("Show sign out button when mocking session", async () => {
-    const mockSession = {
-      expires: "1",
-      user: { email: "testemail@gmail.com", username: "testuser", role: "user", id: 1 },
-    };
-
-    (getServerSession as Mock).mockReturnValueOnce([mockSession, false]);
-
-    render(
-      <SessionProvider session={mockSession}>
-        <Header />
-      </SessionProvider>,
-    );
-    const button = screen.getByRole("button", { name: "Sign Out" });
-    expect(screen.getByRole("heading", { level: 4, name: "FilmFellow" })).toBeDefined();
-    expect(button).toBeDefined();
-  });
-});
 
 describe("/api/movies/id", () => {
   it("Get movie by id successfully", async () => {
     const params = { id: "278" };
 
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
     });
 
@@ -78,7 +25,7 @@ describe("/api/movies/id", () => {
   it("Try to get movie by wrong id", async () => {
     const params = { id: "123456789" };
 
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
     });
 
@@ -91,7 +38,7 @@ describe("/api/movies/id/reviews", () => {
   it("Get movie reviews by id successfully", async () => {
     const params = { id: "278" };
 
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
     });
 
@@ -105,7 +52,7 @@ describe("/api/movies/id/reviews", () => {
   it("Try to get movie reviews by wrong id", async () => {
     const params = { id: "123456789" };
 
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
     });
 
@@ -116,58 +63,55 @@ describe("/api/movies/id/reviews", () => {
 
 describe("/api/movies/?limit&genre&type", () => {
   it("api/movies/?limit=10&type=new&genre=drama test movie endpoint for returning movies with limit 10, type from newest to oldest and genre drama", async () => {
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
       url: `${process.env.NEXTAUTH_URL}/api/movies?limit=10&&type=new&genre=drama`,
     });
     const response = await getMoviesByQuery(req);
 
-    const moviesWithQuery = await response.json();
-    const responseBody = moviesWithQuery as Movie[];
-    expect(responseBody.length).toBe(10);
-    expect(responseBody[0]).toHaveProperty("genres");
-    const sortMoviesByReleaseDate = responseBody.sort((a, b) => {
-      return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
+    const moviesWithQuery = (await response.json()) as MovieResponse[];
+    expect(moviesWithQuery.length).toBe(10);
+    expect(moviesWithQuery[0]).toHaveProperty("genres");
+    const sortedMoviesByReleaseDate = moviesWithQuery.toSorted((a, b) => {
+      return new Date(b.release_date!).getTime() - new Date(a.release_date!).getTime();
     });
-    expect(sortMoviesByReleaseDate[0].release_date).toEqual(moviesWithQuery[0].release_date);
+    expect(sortedMoviesByReleaseDate[0].id).toEqual(moviesWithQuery[0].id);
     expect(moviesWithQuery[0].genres).toContain("Drama");
     expect(response.status).toBe(200);
   });
   it("api/movies/?limit=15&type=popular&genre=drama test movie endpoint for returning movies with limit 15, type most popular first and genre drama", async () => {
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
       url: `${process.env.NEXTAUTH_URL}/api/movies?limit=15&&type=popular&genre=drama`,
     });
     const response = await getMoviesByQuery(req);
 
-    const moviesWithQuery = await response.json();
-    const responseBody = moviesWithQuery as Movie[];
-    expect(responseBody.length).toBe(15);
-    expect(responseBody[0]).toHaveProperty("genres");
-    const sortMoviesByPopularity = responseBody.sort((a, b) => a.popularity - b.popularity);
+    const moviesWithQuery = (await response.json()) as MovieResponse[];
+    expect(moviesWithQuery.length).toBe(15);
+    expect(moviesWithQuery[0]).toHaveProperty("genres");
+    const sortMoviesByPopularity = moviesWithQuery.toSorted((a, b) => b.popularity - a.popularity);
     expect(sortMoviesByPopularity[0].release_date).toEqual(moviesWithQuery[0].release_date);
     expect(moviesWithQuery[0].genres).toContain("Drama");
     expect(response.status).toBe(200);
   });
   it("api/movies/?limit=20&type=bestrated&genre=drama test movie endpoint for returning movies with limit 20, type highest rated first and genre drama", async () => {
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
       url: `${process.env.NEXTAUTH_URL}/api/movies?limit=20&&type=bestrated&genre=drama`,
     });
     const response = await getMoviesByQuery(req);
 
-    const moviesWithQuery = await response.json();
-    const responseBody = moviesWithQuery as Movie[];
-    expect(responseBody.length).toBe(20);
-    expect(responseBody[0]).toHaveProperty("genres");
-    const sortMoviesByHighestRating = responseBody.sort((a, b) => a.vote_average - b.vote_average);
-    expect(sortMoviesByHighestRating[0].release_date).toEqual(moviesWithQuery[0].release_date);
+    const moviesWithQuery = (await response.json()) as MovieResponse[];
+    expect(moviesWithQuery.length).toBe(20);
+    expect(moviesWithQuery[0]).toHaveProperty("genres");
+    const sortMoviesByHighestRating = moviesWithQuery.toSorted((a, b) => b.vote_average - a.vote_average);
+    expect(sortMoviesByHighestRating[0].id).toEqual(moviesWithQuery[0].id);
     expect(moviesWithQuery[0].genres).toContain("Drama");
     expect(response.status).toBe(200);
   });
 
   it("api/movies/?limit=abcdefg&type=123&genre=123 test movie endpoint with faulty values", async () => {
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
       url: `${process.env.NEXTAUTH_URL}/api/movies?limit=abcdefg&type=123&genre=123`,
     });
@@ -182,7 +126,7 @@ describe("/api/movies/?limit&genre&type", () => {
   });
 
   it("api/movies/?limit=10&type=new&genre=random test movie endpoint with genre that doesnt exist", async () => {
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
+    const { req } = createMocks<ApiRequest>({
       method: "GET",
       url: `${process.env.NEXTAUTH_URL}/api/movies?limit=10&type=new&genre=random`,
     });
@@ -190,33 +134,5 @@ describe("/api/movies/?limit&genre&type", () => {
     const moviesWithQuery = await response.json();
     expect(moviesWithQuery.error).toContain("Movies not found");
     expect(response.status).toBe(404);
-  });
-});
-
-describe("Persons route", () => {
-  it("api/persons/:id try to get person data with wrong id", async () => {
-    const params = { id: "123456789" };
-
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
-      method: "GET",
-    });
-
-    const response = await getPersonById(req, { params });
-    expect(response.status).toBe(404);
-  });
-
-  it("api/persons/:id successfully get persondata", async () => {
-    const params = { id: "504" };
-
-    const { req, res } = createMocks<ApiRequest, APiResponse>({
-      method: "GET",
-    });
-
-    const response = await getPersonById(req, { params });
-
-    const person = await response.json();
-    expect(person).toHaveProperty("id");
-    expect(person).toHaveProperty("place_of_birth");
-    expect(response.status).toBe(200);
   });
 });

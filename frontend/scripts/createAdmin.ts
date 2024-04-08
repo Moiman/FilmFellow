@@ -1,9 +1,9 @@
 import * as readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-
+import argon2 from "argon2";
 import { PrismaClient } from "@prisma/client";
 import { Role } from "@prisma/client";
-import argon2 from "argon2";
+
 const createAdmin = async () => {
   try {
     const rl = readline.createInterface({ input, output });

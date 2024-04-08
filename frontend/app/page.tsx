@@ -78,7 +78,54 @@ export default function Home() {
 
         {/* Examples of sections */}
         <Section header={exampleHeader}>
-          <p>This is a example usage of {"<Section>"} with component header.</p>
+          <>
+            <p>
+              This is a example usage of {"<Section>"} with component header. Here is some inputs for testing purposes:
+            </p>
+            <form>
+              <label className="label-row">
+                <input type="checkbox" /> Checkbox
+              </label>
+
+              <label className="label-row">
+                <input
+                  type="radio"
+                  name="selectOne"
+                />
+                Radio button 1
+              </label>
+              <label className="label-row">
+                <input
+                  type="radio"
+                  name="selectOne"
+                />
+                Radio button 2
+              </label>
+              <label className="label-row">
+                <input
+                  type="radio"
+                  name="selectOne"
+                />
+                Radio button 3
+              </label>
+
+              <label>
+                Range (0-10):
+                <input
+                  type="range"
+                  min={0}
+                  max={10}
+                  step={1}
+                  list="values"
+                />
+              </label>
+
+              <label className="label-row">
+                Text
+                <input type="text" />
+              </label>
+            </form>
+          </>
         </Section>
 
         <Section header="String header">

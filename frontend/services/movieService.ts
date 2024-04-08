@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export type MovieResponse = NonNullable<Awaited<ReturnType<typeof getMovieById>>>;
 const getMovieById = async (movieId: number) => {
   const movie = await prisma.movies.findUnique({
     where: {

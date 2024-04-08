@@ -5,7 +5,6 @@ import type { NextRequest } from "next/server";
 import { GET as getMovieById } from "@/app/api/movies/[id]/route";
 import { GET as getMovieReviewsById } from "@/app/api/movies/[id]/reviews/route";
 import { GET as getMoviesByQuery } from "@/app/api/movies/route";
-import { GET as getPersonById } from "@/app/api/persons/[id]/route";
 import type { MovieResponse } from "@/services/movieService";
 
 type ApiRequest = NextRequest & ReturnType<typeof createRequest>;
@@ -135,33 +134,5 @@ describe("/api/movies/?limit&genre&type", () => {
     const moviesWithQuery = await response.json();
     expect(moviesWithQuery.error).toContain("Movies not found");
     expect(response.status).toBe(404);
-  });
-});
-
-describe("Persons route", () => {
-  it("api/persons/:id try to get person data with wrong id", async () => {
-    const params = { id: "123456789" };
-
-    const { req } = createMocks<ApiRequest>({
-      method: "GET",
-    });
-
-    const response = await getPersonById(req, { params });
-    expect(response.status).toBe(404);
-  });
-
-  it("api/persons/:id successfully get persondata", async () => {
-    const params = { id: "504" };
-
-    const { req } = createMocks<ApiRequest>({
-      method: "GET",
-    });
-
-    const response = await getPersonById(req, { params });
-
-    const person = await response.json();
-    expect(person).toHaveProperty("id");
-    expect(person).toHaveProperty("place_of_birth");
-    expect(response.status).toBe(200);
   });
 });

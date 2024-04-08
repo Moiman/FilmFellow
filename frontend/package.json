@@ -14,7 +14,7 @@
     "cypress:run_headless": "cypress run",
     "prisma:migration": "prisma migrate dev",
     "prisma:seed": "prisma db seed",
-    "create-admin": "tsx ./scripts/createAdmin.mts",
+    "create-admin": "tsx ./scripts/createAdmin.ts",
     "fetch-test-data": "tsx ./scripts/fetchTestData.ts"
   },
   "prisma": {

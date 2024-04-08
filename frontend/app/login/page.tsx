@@ -66,11 +66,23 @@ export default function Login() {
         />
         {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
         <label htmlFor="password">Password</label>
-        <input
-          type={showPassword ? "text" : "password"}
-          {...register("password")}
-        />
-        <button onClick={() => setShowPassword(!showPassword)}>{showPassword ? <Eye /> : <EyeOff />}</button>
+        <div className="login-form-group">
+          <input
+            type={showPassword ? "text" : "password"}
+            {...register("password")}
+          />
+          <button
+            className="login-form-group-icon"
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <Eye style={{ fill: "white", stroke: "#FFC700" }} />
+            ) : (
+              <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
+            )}
+          </button>
+        </div>
         {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
         <button
           className="login-submit"

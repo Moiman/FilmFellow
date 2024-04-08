@@ -31,10 +31,9 @@ textarea:focus {
 
 label {
   font-weight: 600;
-
   font-family: abstracts.$default-title-font;
 }
- .error-text {
+.error-text {
   color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
 
@@ -49,6 +48,8 @@ form {
   font-weight: 600;
   font-size: 1.25rem;
   font-family: abstracts.$default-title-font;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .loginForm {
@@ -68,4 +69,17 @@ form {
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: center;
+}
+
+.login-form-group-icon {
+  position: absolute;
+  background-color: inherit;
+  right: 10px;
+  top: 12px;
+}
+.login-form-group-icon:hover {
+  background-color: inherit
+}
+.login-form-group {
+  position: relative;
 }

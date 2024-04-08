@@ -1,7 +1,10 @@
+@use "sass:map";
 @use "../abstracts" as abstracts;
 
-input,
+input[type="text"],
 textarea {
+  width: 100%;
+
   font-family: abstracts.$default-text-font;
   font-size: abstracts.$p-font-size;
   line-height: abstracts.$default-line-height;
@@ -11,18 +14,130 @@ textarea {
   border-radius: abstracts.$default-border-radius;
   border: abstracts.$default-border;
   background-color: abstracts.$primary-light;
-
-  width: 100%;
 }
 
-input {
-  padding: 10px 15px;
+input[type="text"] {
+  padding: 5px 10px;
 }
 
 textarea {
-  padding: 15px;
+  padding: 10px;
 }
+
 input:focus,
 textarea:focus {
   outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+}
+
+label {
+  margin: 5px 0;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+input[type="radio"],
+input[type="checkbox"],
+input[type="range"] {
+  padding: 0;
+  margin: 0;
+}
+
+// Radio button
+input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: abstracts.$primary-light;
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid abstracts.$primary-dark;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 10px 10px map-get(map-get(abstracts.$highlight-colors, "pink"), "default");
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+// Checkbox
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: abstracts.$primary-light;
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid abstracts.$primary-dark;
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 10px 10px map-get(map-get(abstracts.$highlight-colors, "pink"), "default");
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1.2);
+}
+
+// Range
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  border: 0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #808080;
+  height: 10px;
+  border-radius: abstracts.$default-border-radius;
+}
+
+input[type="range"]::-moz-range-track {
+  background: #808080;
+  height: 10px;
+  border-radius: abstracts.$default-border-radius;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px;
+  background-color: map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+  border: none;
+  background-color: map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
 }

@@ -11,13 +11,23 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "cypress:open": "cypress open",
-    "cypress:run_headless": "cypress run"
+    "cypress:run_headless": "cypress run",
+    "prisma:migration": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "create-admin": "tsx ./scripts/createAdmin.ts",
+    "fetch-test-data": "tsx ./scripts/fetchTestData.ts"
+  },
+  "prisma": {
+    "seed": "tsx ./scripts/seedTestData.ts"
   },
   "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "argon2": "^0.40.1",
     "next": "14.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-feather": "^2.0.10"
+    "react-feather": "^2.0.10",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@testing-library/react": "^14.2.2",
@@ -31,8 +41,11 @@
     "eslint-config-next": "14.1.4",
     "eslint-config-prettier": "^9.1.0",
     "jsdom": "^24.0.0",
+    "node-mocks-http": "^1.14.1",
     "prettier": "^3.2.5",
+    "prisma": "^5.12.1",
     "sass": "^1.72.0",
+    "tsx": "^4.7.2",
     "typescript": "^5.4.3",
     "vitest": "^1.3.1"
   }

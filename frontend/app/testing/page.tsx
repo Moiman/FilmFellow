@@ -1,4 +1,5 @@
 import Modal from "@/components/modal";
+import { useRef } from "react";
 
 async function test() {
   "use server";
@@ -10,6 +11,7 @@ export default function testing() {
     <main>
       <h2>Testing</h2>
       <Modal
+        modalId={1}
         _footer={
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -29,6 +31,27 @@ export default function testing() {
         }
         _onOk={test}
         okLink={<button>test</button>}
+        openModal={<p>open</p>}
+      />
+      <Modal
+        modalId={2}
+        _footer={<p>Test2.</p>}
+        content={
+          <div>
+            <p>Test2</p>
+          </div>
+        }
+        _onOk={test}
+        okLink={<button>test</button>}
+        openModal={<p>open</p>}
+      />
+      <Modal
+        modalId={3}
+        content={
+          <div>
+            <p>Test3</p>
+          </div>
+        }
         openModal={<p>open</p>}
       />
     </main>

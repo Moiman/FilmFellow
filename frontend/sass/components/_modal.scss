@@ -20,14 +20,14 @@
   overflow: hidden;
   color: white;
   width: 700px;
-  height: 400px;
+  min-height: 400px;
   a {
     padding: 0;
   }
 }
 
 .modal-title {
-  background-color: abstracts.$primary-grey;
+  background-color: abstracts.$primary-darkgrey;
   display: flex;
   justify-content: flex-end;
   padding: 5px 10px;

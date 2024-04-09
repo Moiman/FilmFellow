@@ -2,6 +2,8 @@
 @use "../abstracts" as abstracts;
 
 input[type="text"],
+input[type="password"],
+input[type="email"],
 textarea {
   width: 100%;
 
@@ -16,7 +18,9 @@ textarea {
   background-color: abstracts.$primary-light;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   padding: 5px 10px;
 }
 
@@ -146,14 +150,13 @@ input[type="range"]::-moz-range-thumb {
   color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
 
-form {
-  width: 50%;
+.form {
   padding: 50px;
   background-color: abstracts.$primary-grey;
+  display: grid;
 }
 
 .form-submit {
-  width: 100%;
   font-weight: 600;
   font-size: 1.25rem;
   font-family: abstracts.$default-title-font;
@@ -161,19 +164,19 @@ form {
   margin-bottom: 25px;
 }
 
-.form-grid {
+.section-wrapper {
+  margin-top: 20px;
   display: grid;
-  justify-items: center;
+  justify-content: center;
 }
 
 .form-main-text {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   font-weight: 600;
   margin-top: auto;
   padding-top: 10px;
   padding-bottom: 10px;
-  width: 50%;
-  background-color: abstracts.$primary-dark;
 }
 
 .form-route-change {
@@ -185,12 +188,16 @@ form {
 .form-group-icon {
   position: absolute;
   background-color: inherit;
-  right: 10px;
-  top: 12px;
+  right: 0;
+  top: 0;
 }
 
 .form-group-icon:hover {
   background-color: inherit;
+}
+
+.form-group-icon:focus {
+  outline: none;
 }
 
 .form-group {

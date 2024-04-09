@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Eye, EyeOff } from "react-feather";
 import Link from "next/link";
+import { Section } from "@/components/section";
 
 interface LoginFormData {
   email: string;
@@ -55,10 +56,81 @@ export default function Login() {
     }
     // console.log(response?.error);
   };
+  const loginHeader = (
+    <div className="form-main-text">
+      <h2>Login</h2>
+    </div>
+  );
   return (
+    <div className="section-wrapper">
+      <Section header={loginHeader}>
+        <main>
+          <form
+            className="form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              {...register("email")}
+            />
+            {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
+            <label htmlFor="password">Password</label>
+            <div className="form-group">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                {...register("password")}
+              />
+              <button
+                className="form-group-icon"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
+                ) : (
+                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
+                )}
+              </button>
+            </div>
+            {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
+            <button
+              className="form-submit"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Login
+            </button>
+            <div className="form-route-change">
+              <Link
+                className="form-route-change-link-style"
+                href="/"
+              >
+                Cant login?
+              </Link>
+              <p className="form-route-change-p"> / </p>
+              <Link
+                className="form-route-change-link-style"
+                href="/register"
+              >
+                Register
+              </Link>
+            </div>
+          </form>
+          <p className="error-text">{error}</p>
+        </main>
+      </Section>
+    </div>
+  );
+}
+
+/*
+(
     <main className="form-grid">
       <h2 className="form-main-text">Login</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="form"onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">Email</label>
         <input
           id="email"
@@ -112,4 +184,4 @@ export default function Login() {
       <p className="error-text">{error}</p>
     </main>
   );
-}
+*/

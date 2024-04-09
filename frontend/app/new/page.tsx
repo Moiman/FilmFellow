@@ -5,10 +5,6 @@ export default function New() {
   return (
     <main>
       <h2>New</h2>
-      <Modal
-        title={"test"}
-        content={<div>test</div>}
-      />
     </main>
   );
 }

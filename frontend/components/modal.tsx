@@ -60,7 +60,10 @@ const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) =
     } else {
       dialogRef.current?.close();
     }
-  }, [showModal, modalId]);
+    document.addEventListener("keydown", e => {
+      if (e.key == "Escape") router.push(pathName);
+    });
+  }, [showModal, modalId, router, pathName]);
 
   const okClicked = () => {
     if (_onOk) _onOk();

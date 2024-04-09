@@ -1,8 +1,10 @@
 import { type NextAuthOptions, SessionStrategy } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { type Session, type User } from "next-auth";
+import type { Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
+
 const frontURL = process.env.NEXTAUTH_URL;
+
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt" as SessionStrategy,

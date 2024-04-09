@@ -31,7 +31,7 @@ export default function testing() {
         }
         _onOk={test}
         okLink={<button>test</button>}
-        openModal={<p>open</p>}
+        openModal={<button>open</button>}
       />
       <Modal
         modalId={2}
@@ -43,7 +43,7 @@ export default function testing() {
         }
         _onOk={test}
         okLink={<button>test</button>}
-        openModal={<p>open</p>}
+        openModal={<button>open</button>}
       />
       <Modal
         modalId={3}
@@ -52,7 +52,7 @@ export default function testing() {
             <p>Test3</p>
           </div>
         }
-        openModal={<p>open</p>}
+        openModal={<button>open</button>}
       />
     </main>
   );

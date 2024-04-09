@@ -1,0 +1,63 @@
+@use "../abstracts" as abstracts;
+
+.modal-background {
+  display: flex;
+  position: fixed;
+  background-color: rgba(abstracts.$primary-dark, 0.5);
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-box {
+  background-color: abstracts.$primary-grey;
+  border-radius: abstracts.$default-border-radius;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: white;
+  width: 700px;
+  min-height: 400px;
+  a {
+    padding: 0;
+  }
+}
+
+.modal-title {
+  background-color: abstracts.$primary-darkgrey;
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 10px;
+  & > a {
+    line-height: 1;
+  }
+  & > svg {
+    cursor: pointer;
+  }
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-start;
+  padding: 20px 10px;
+}
+
+.modal-footer {
+  background-color: abstracts.$primary-darkgrey;
+  display: flex;
+  justify-self: flex-end;
+  padding: 10px;
+}
+
+.modal-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+}

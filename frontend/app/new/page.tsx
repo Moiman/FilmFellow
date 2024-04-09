@@ -1,4 +1,3 @@
-import Modal from "@/components/modal";
 import { Chicle } from "next/font/google";
 
 export default function New() {

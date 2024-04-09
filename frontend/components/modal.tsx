@@ -39,7 +39,10 @@ const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) =
                 className="button-transparent"
                 onClick={() => closeModal()}
               >
-                <X color="#eff2f2" />
+                <X
+                  aria-label="close"
+                  color="#eff2f2"
+                />
               </button>
             </div>
             <div className="modal-content">

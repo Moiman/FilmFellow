@@ -36,13 +36,11 @@ const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) =
           >
             <div className="modal-title">
               <button
+                aria-label="close"
                 className="button-transparent"
                 onClick={() => closeModal()}
               >
-                <X
-                  aria-label="close"
-                  color="#eff2f2"
-                />
+                <X color="#eff2f2" />
               </button>
             </div>
             <div className="modal-content">

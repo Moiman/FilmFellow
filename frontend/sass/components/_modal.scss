@@ -13,21 +13,27 @@
 }
 
 .modal-box {
-  background-color: abstracts.$primary-dark;
+  background-color: abstracts.$primary-grey;
+  border-radius: abstracts.$default-border-radius;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   color: white;
   width: 700px;
-  height: 400px;
+  min-height: 400px;
+  a {
+    padding: 0;
+  }
 }
 
 .modal-title {
+  background-color: abstracts.$primary-darkgrey;
   display: flex;
   justify-content: flex-end;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
+  padding: 5px 10px;
+  & > a {
+    line-height: 1;
+  }
 }
 
 .modal-content {
@@ -35,27 +41,20 @@
   flex-direction: column;
   flex-grow: 1;
   justify-content: flex-start;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
+  padding: 20px 10px;
 }
 
 .modal-footer {
+  background-color: abstracts.$primary-darkgrey;
   display: flex;
-  align-self: flex-end;
   justify-self: flex-end;
-  margin: 10px;
+  padding: 10px;
 }
 
 .modal-btn {
   display: flex;
   justify-content: flex-end;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-}
-
-a {
-  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
 }

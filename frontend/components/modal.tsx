@@ -1,42 +1,41 @@
 "use client";
 
-import "@/sass/style.scss";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
 import { X } from "react-feather";
 
 interface Props {
+  modalId: number | null;
   content: React.ReactNode;
   _footer?: React.ReactNode;
+  okLink?: React.ReactNode;
+  openModal: React.ReactNode;
   //onOK needs "use server"
   _onOk?: () => Promise<void>;
-  buttontxt?: string;
 }
 
-const Modal = ({ content, _footer, _onOk, buttontxt }: Props) => {
+const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) => {
   const searchParams = useSearchParams();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
   const pathName = usePathname();
   let showModal = searchParams.get("showModal");
+  const link = `?showModal=${modalId}`;
 
   useEffect(() => {
-    if (showModal === "y") {
+    if (showModal == modalId) {
       dialogRef.current?.show();
     } else {
       dialogRef.current?.close();
     }
-  }, [showModal]);
+  }, [showModal, modalId]);
 
   const okClicked = () => {
-    //check if _onOk exists
     if (_onOk) _onOk();
   };
 
-  //shows modal when url has showmodal = y
-  //content div renders button if _onOk has a function
   const dialog: JSX.Element | null =
-    showModal === "y" ? (
+    showModal == modalId ? (
       <dialog ref={dialogRef}>
         <div className="modal-background">
           <div className="modal-box">
@@ -45,11 +44,14 @@ const Modal = ({ content, _footer, _onOk, buttontxt }: Props) => {
                 <X />
               </Link>
             </div>
-            <div className="modal-content">{content}</div>
-            <div className="modal-btn">
+            <div className="modal-content">
+              {content}
               {_onOk ? (
-                <Link href={pathName}>
-                  <button onClick={() => okClicked()}>{buttontxt}</button>
+                <Link
+                  href={pathName}
+                  onClick={() => okClicked()}
+                >
+                  {okLink}
                 </Link>
               ) : null}
             </div>
@@ -62,9 +64,7 @@ const Modal = ({ content, _footer, _onOk, buttontxt }: Props) => {
 
   return (
     <>
-      <Link href="?showModal=y">
-        <button>modal</button>
-      </Link>
+      <Link href={link}>{openModal}</Link>
       {dialog}
     </>
   );

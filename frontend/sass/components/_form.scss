@@ -151,7 +151,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .form {
-  padding: 50px;
+  padding: 25px;
   background-color: abstracts.$primary-grey;
   display: grid;
 }
@@ -164,10 +164,14 @@ input[type="range"]::-moz-range-thumb {
   margin-bottom: 25px;
 }
 
+.form-main {
+  display: grid;
+  justify-items: center;
+}
+
 .section-wrapper {
   margin-top: 20px;
-  display: grid;
-  justify-content: center;
+  min-width: 50%;
 }
 
 .form-main-text {

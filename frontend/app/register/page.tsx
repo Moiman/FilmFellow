@@ -85,87 +85,94 @@ export default function Register() {
     </div>
   );
   return (
-    <div className="section-wrapper">
-      <Section header={registerHeader}>
-        <main>
-          <form
-            className="form"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              {...register("email")}
-            />
-            {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              type="text"
-              {...register("username")}
-            />
-            {errors?.username && <p className="error-text">{errors?.username?.message}</p>}
-            <label htmlFor="password">Password</label>
-            <div className="form-group">
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                {...register("password")}
-              />
-              <button
-                className="form-group-icon"
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                ) : (
-                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                )}
-              </button>
-            </div>
-            {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
-            <label htmlFor="retypepassword">Confirm Password</label>
-            <div className="form-group">
-              <input
-                id="retypepassword"
-                type={retypeShowPassword ? "text" : "password"}
-                {...register("retypepassword")}
-              />
-              <button
-                className="form-group-icon"
-                type="button"
-                onClick={() => retypesetShowPassword(!retypeShowPassword)}
-              >
-                {retypeShowPassword ? (
-                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                ) : (
-                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                )}
-              </button>
-            </div>
-            {errors?.retypepassword && <p className="error-text">{errors?.retypepassword?.message}</p>}
-            <button
-              className="form-submit"
-              type="submit"
-              disabled={isSubmitting}
+    <main className="form-main">
+      <div className="section-wrapper">
+        <Section header={registerHeader}>
+          <>
+            <form
+              className="form"
+              onSubmit={handleSubmit(onSubmit)}
             >
-              Register
-            </button>
-            <div className="form-route-change">
-              <p className="form-route-change-p">Already have an account? </p>
-              <Link
-                className="form-route-change-link-style"
-                href="/login"
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                {...register("email")}
+              />
+              {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
+              <label htmlFor="username">Username</label>
+              <input
+                id="username"
+                type="text"
+                {...register("username")}
+              />
+              {errors?.username && <p className="error-text">{errors?.username?.message}</p>}
+              <label htmlFor="password">Password</label>
+              <div className="form-group">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  {...register("password")}
+                />
+                <button
+                  className="form-group-icon"
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <Eye style={{ fill: "white", stroke: "#FFC700" }} />
+                  ) : (
+                    <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
+                  )}
+                </button>
+              </div>
+              {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
+              <label htmlFor="retypepassword">Confirm Password</label>
+              <div className="form-group">
+                <input
+                  id="retypepassword"
+                  type={retypeShowPassword ? "text" : "password"}
+                  {...register("retypepassword")}
+                />
+                <button
+                  className="form-group-icon"
+                  type="button"
+                  onClick={() => retypesetShowPassword(!retypeShowPassword)}
+                >
+                  {retypeShowPassword ? (
+                    <Eye style={{ fill: "white", stroke: "#FFC700" }} />
+                  ) : (
+                    <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
+                  )}
+                </button>
+              </div>
+              {errors?.retypepassword && <p className="error-text">{errors?.retypepassword?.message}</p>}
+              <button
+                className="form-submit"
+                type="submit"
+                disabled={isSubmitting}
               >
-                Login
-              </Link>
-            </div>
-          </form>
-          <p className="error-text">{error}</p>
-        </main>
-      </Section>
-    </div>
+                Register
+              </button>
+              <p
+                className="error-text"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {error}
+              </p>
+              <div className="form-route-change">
+                <p className="form-route-change-p">Already have an account? </p>
+                <Link
+                  className="form-route-change-link-style"
+                  href="/login"
+                >
+                  Login
+                </Link>
+              </div>
+            </form>
+          </>
+        </Section>
+      </div>
+    </main>
   );
 }

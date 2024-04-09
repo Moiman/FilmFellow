@@ -34,6 +34,9 @@
   & > a {
     line-height: 1;
   }
+  & > svg {
+    cursor: pointer;
+  }
 }
 
 .modal-content {

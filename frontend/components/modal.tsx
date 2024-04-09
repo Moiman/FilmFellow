@@ -23,49 +23,6 @@ const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) =
   let showModal = searchParams.get("showModal");
   const link = `?showModal=${modalId}`;
 
-  useEffect(() => {
-    if (showModal == modalId) {
-      dialogRef.current?.showModal();
-    } else {
-      dialogRef.current?.close();
-    }
-
-    if (showModal === modalId) {
-      const modalElement = dialogRef.current;
-      const focusableElements = modalElement!.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-      );
-
-      const firstElement = focusableElements[0];
-      const lastElement = focusableElements[focusableElements.length - 1];
-
-      const handleTabKeyPress = (event: KeyboardEvent) => {
-        if (event.key === "Tab") {
-          if (event.shiftKey && document.activeElement === firstElement) {
-            event.preventDefault();
-            (lastElement as HTMLDialogElement).focus();
-          } else if (!event.shiftKey && document.activeElement === lastElement) {
-            event.preventDefault();
-            (firstElement as HTMLDialogElement).focus();
-          }
-        }
-      };
-
-      modalElement?.addEventListener("keydown", handleTabKeyPress);
-      return () => {
-        modalElement?.removeEventListener("keydown", handleTabKeyPress);
-      };
-    }
-  }, [showModal, modalId, router, pathName]);
-
-  const okClicked = () => {
-    if (_onOk) _onOk();
-  };
-
-  const closeModal = () => {
-    router.push(pathName);
-  };
-
   const dialog: JSX.Element | null =
     showModal == modalId ? (
       <dialog ref={dialogRef}>
@@ -78,27 +35,41 @@ const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) =
             className="modal-box"
           >
             <div className="modal-title">
-              <Link href={pathName}>
-                <X />
-              </Link>
+              <X onClick={() => closeModal()} />
             </div>
             <div className="modal-content">
               {content}
               {_onOk ? (
-                <Link
-                  href={pathName}
+                <div
+                  className="ok"
                   onClick={() => okClicked()}
                 >
                   {okLink}
-                </Link>
+                </div>
               ) : null}
             </div>
-
             <div className="modal-footer">{_footer}</div>
           </div>
         </div>
       </dialog>
     ) : null;
+
+  useEffect(() => {
+    if (showModal == modalId) {
+      dialogRef.current?.showModal();
+    } else {
+      dialogRef.current?.close();
+    }
+  }, [showModal, modalId]);
+
+  const okClicked = () => {
+    if (_onOk) _onOk();
+    closeModal();
+  };
+
+  const closeModal = () => {
+    router.push(pathName);
+  };
 
   return (
     <>

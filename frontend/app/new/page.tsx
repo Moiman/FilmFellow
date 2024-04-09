@@ -1,5 +1,3 @@
-import { Chicle } from "next/font/google";
-
 export default function New() {
   return (
     <main>

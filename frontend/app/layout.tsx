@@ -4,7 +4,7 @@ import { Poppins, Roboto } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { getServerSession } from "next-auth";
-import SessionProvider from "../components/sessionProvider";
+import SessionProvider from "@/components/sessionProvider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400"], variable: "--font-poppins" });
 const roboto = Roboto({

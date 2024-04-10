@@ -48,8 +48,8 @@ describe("Login tests", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");
     cy.get('button[type="submit"]').click();
-    cy.contains("Email is required").should("be.visible");
-    cy.contains("Password is required").should("be.visible");
+    cy.contains("Email is required", { timeout: 1000 }).should("be.visible");
+    cy.contains("Password is required", { timeout: 1000 }).should("be.visible");
   });
   it("Try to login with false username / password", () => {
     cy.visit("/login");

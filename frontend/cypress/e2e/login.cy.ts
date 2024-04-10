@@ -16,7 +16,9 @@ describe("Registration tests", () => {
     cy.get('input[name="password"]').type("Password1!");
     cy.get('input[name="retypepassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
+    cy.wait(1000);
     cy.get("button").contains("Sign Out");
+    cy.get("button").contains("Sign Out").click();
   });
 
   it("Try to register new user with email that already exists", () => {
@@ -27,6 +29,7 @@ describe("Registration tests", () => {
     cy.get('input[name="password"]').type("Password1!");
     cy.get('input[name="retypepassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
+    cy.wait(1000);
     cy.contains("User already exists with that email").should("be.visible");
   });
 
@@ -38,6 +41,7 @@ describe("Registration tests", () => {
     cy.get('input[name="password"]').type("Password1!");
     cy.get('input[name="retypepassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
+    cy.wait(1000);
     cy.contains("User already exists with that username").should("be.visible");
   });
 });
@@ -56,15 +60,18 @@ describe("Login tests", () => {
     cy.get('input[name="email"]').type("any@gmail.com");
     cy.get('input[name="password"]').type("Password1!");
     cy.get('button[type="submit"]').click();
+    cy.wait(1000);
     cy.contains("Credentials doesnt match").should("be.visible");
   });
-  it("successfully login user", () => {
+  it("Successfully login user", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");
     cy.get('input[name="email"]').type("test@gmail.com");
     cy.get('input[name="password"]').type("Password1!");
     cy.get('button[type="submit"]').click();
+    cy.wait(1000);
     cy.get("button").contains("Sign Out");
+    cy.get("button").contains("Sign Out").click();
   });
 });
 
@@ -166,6 +173,7 @@ describe("Protected route tests", () => {
     cy.get("button").contains("Sign Out");
     cy.visit("/register");
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
+    cy.get("button").contains("Sign Out").click();
   });
   it("Try to go to login page as logged in user", () => {
     cy.visit("/login");
@@ -176,5 +184,6 @@ describe("Protected route tests", () => {
     cy.get("button").contains("Sign Out");
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
+    cy.get("button").contains("Sign Out").click();
   });
 });

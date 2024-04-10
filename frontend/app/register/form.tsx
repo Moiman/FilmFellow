@@ -115,6 +115,7 @@ export default function Register() {
                   {...register("password")}
                 />
                 <button
+                  data-cy="show-password"
                   className="form-group-icon"
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -135,6 +136,7 @@ export default function Register() {
                   {...register("retypepassword")}
                 />
                 <button
+                  data-cy="show-retypepassword"
                   className="form-group-icon"
                   type="button"
                   onClick={() => retypesetShowPassword(!retypeShowPassword)}

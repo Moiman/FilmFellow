@@ -3,6 +3,15 @@ describe("Api login and register tests", () => {
   const username = "mattiTesti";
   const password = "Password1!";
 
+  after(() => {
+    cy.login(email, password);
+    cy.request({
+      method: "DELETE",
+      url: "/api/delete",
+    });
+    cy.clearAllSessionStorage();
+  });
+
   it("Login without account", () => {
     cy.request({
       method: "POST",

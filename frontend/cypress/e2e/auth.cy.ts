@@ -332,6 +332,7 @@ describe("Api delete tests", () => {
     }).should(res => {
       expect(res.status).to.eq(200);
     });
+    Cypress.session.clearAllSavedSessions();
   });
 
   it("Delete second dummy user successfully", () => {
@@ -342,5 +343,6 @@ describe("Api delete tests", () => {
     }).should(res => {
       expect(res.status).to.eq(200);
     });
+    Cypress.session.clearAllSavedSessions();
   });
 });

@@ -1,6 +1,5 @@
 import { authOptions } from "@/authOptions";
-import { deleteUserById, findUserById } from "@/services/authService";
-import { Role } from "@prisma/client";
+import { deleteUserById } from "@/services/authService";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,7 +14,6 @@ export async function DELETE(req: NextRequest) {
         },
       );
     }
-    console.log("User to delete", session.user.id);
     const deletedUser = await deleteUserById(Number(session.user.id));
     return NextResponse.json(deletedUser, { status: 200 });
   } catch (err) {

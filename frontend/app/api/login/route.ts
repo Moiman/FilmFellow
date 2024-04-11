@@ -11,8 +11,6 @@ const loginUserSchema = yup.object({
 export async function POST(req: NextRequest, res: Response) {
   try {
     const data = await req.json();
-    // console.log(req.cookies.get("next-auth.session-token")?.value);
-
     await loginUserSchema.validate(data, { abortEarly: false });
 
     const existingUser = await findUserByEmail(data.email);

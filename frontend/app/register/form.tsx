@@ -68,7 +68,6 @@ export default function Register() {
     const response = await signIn("register", {
       ...credentials,
       redirect: false,
-      // callbackUrl: "/",
     });
     if (response?.error) {
       setError(response.error);
@@ -77,7 +76,6 @@ export default function Register() {
     if (response?.ok) {
       router.push("/");
     }
-    // console.log(response?.error);
   };
   const registerHeader = (
     <div className="form-main-text">

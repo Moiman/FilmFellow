@@ -36,7 +36,6 @@ export default function Login() {
 
   const router = useRouter();
   const onSubmit = async (data: LoginFormData) => {
-    console.log(data);
     const credentials = {
       email: data.email,
       password: data.password,
@@ -45,7 +44,6 @@ export default function Login() {
     const response = await signIn("login", {
       ...credentials,
       redirect: false,
-      // callbackUrl: "/",
     });
     if (response?.error) {
       setError(response.error);
@@ -54,7 +52,6 @@ export default function Login() {
     if (response?.ok) {
       router.push("/");
     }
-    // console.log(response?.error);
   };
   const loginHeader = (
     <div className="form-main-text">

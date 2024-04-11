@@ -2,14 +2,13 @@
 
 import { Dropdown } from "@/components/dropdown";
 import { StarRating } from "@/components/starRating";
+
 import { type MovieCrew, type Movies } from "@prisma/client";
-import { usePathname } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import { Heart, Star } from "react-feather";
 
-export default function Movie() {
-  const pathname = usePathname();
-
+export default function Movie({ params }: { params: { id: string } }) {
   const [movie, setMovie] = useState<Movies | null>(null);
   const [directors, setDirectors] = useState<string[]>([]);
 
@@ -37,17 +36,19 @@ export default function Movie() {
   useEffect(() => {
     const getMovie = async () => {
       try {
-        const parts = pathname.split("/");
-        const movie = await fetch("/api/movies/" + parts[2]).then(response => response.json());
-        getDirectors(movie.crew);
-        setMovie(movie);
+        const movie = await fetch("/api/movies/" + params.id).then(response => response.json());
+
+        if (!movie.error) {
+          getDirectors(movie.crew);
+          setMovie(movie);
+        }
       } catch (error) {
         console.error("Error fetching movie data:", error);
       }
     };
 
     getMovie();
-  }, [pathname]);
+  }, [params.id]);
 
   if (!movie) {
     return null;

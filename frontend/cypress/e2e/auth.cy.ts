@@ -115,12 +115,7 @@ describe("Api update tests", () => {
     });
   });
   it("Try to update user details with empty body", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${firstNewUserId}`,
@@ -137,12 +132,8 @@ describe("Api update tests", () => {
       email: "testing",
       password: "test",
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${firstNewUserId}`,
@@ -156,12 +147,8 @@ describe("Api update tests", () => {
     const changeUserDetails = {
       username: "something",
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${secondNewUserId}`,
@@ -176,12 +163,8 @@ describe("Api update tests", () => {
     const changeUserDetails = {
       email: "test@testing.com",
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${secondNewUserId}`,
@@ -196,12 +179,8 @@ describe("Api update tests", () => {
     const changeUserDetails = {
       password: "newPassword1!",
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${secondNewUserId}`,
@@ -216,12 +195,8 @@ describe("Api update tests", () => {
     const changeuserDetails = {
       username: "newusername",
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${123456789}`,
@@ -237,12 +212,8 @@ describe("Api update tests", () => {
     const changeUserDetails = {
       role: "admin",
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${firstNewUserId}`,
@@ -258,12 +229,8 @@ describe("Api update tests", () => {
     const changeUserDetails = {
       email: secondNewUser.email,
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${firstNewUserId}`,
@@ -279,12 +246,8 @@ describe("Api update tests", () => {
     const changeUserDetails = {
       username: secondNewUser.username,
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${firstNewUserId}`,
@@ -302,12 +265,8 @@ describe("Api update tests", () => {
       email: "test@testing.com",
       password: "newPassword1!",
     };
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(firstNewUser.email);
-    cy.get('input[name="password"]').type(firstNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+
+    cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
       url: `/api/update/${firstNewUserId}`,
@@ -333,12 +292,7 @@ describe("Api delete tests", () => {
   });
 
   it("Try to delete another user that isnt the session holder", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(user.email);
-    cy.get('input[name="password"]').type(user.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+    cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
       url: `/api/delete/${secondNewUserId}`,
@@ -350,12 +304,7 @@ describe("Api delete tests", () => {
   });
 
   it("Try to delete another user with false id", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(user.email);
-    cy.get('input[name="password"]').type(user.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+    cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
       url: `/api/delete/${123456789}`,
@@ -367,12 +316,7 @@ describe("Api delete tests", () => {
   });
 
   it("Delete first dummy user successfully", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(user.email);
-    cy.get('input[name="password"]').type(user.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+    cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
       url: `/api/delete/${firstNewUserId}`,
@@ -382,12 +326,7 @@ describe("Api delete tests", () => {
   });
 
   it("Delete second dummy user successfully", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type(secondNewUser.email);
-    cy.get('input[name="password"]').type(secondNewUser.password);
-    cy.get('button[type="submit"]').click();
-    cy.wait(500);
+    cy.login(secondNewUser.email, secondNewUser.password);
     cy.request({
       method: "DELETE",
       url: `/api/delete/${secondNewUserId}`,

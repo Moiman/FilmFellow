@@ -4,6 +4,7 @@ import { Dropdown } from "@/components/dropdown";
 import { StarRating } from "@/components/starRating";
 
 import { type MovieCrew, type Movies } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import { Heart, Star } from "react-feather";
@@ -17,6 +18,8 @@ export default function Movie({ params }: { params: { id: string } }) {
   const [watchlist, setWatchlist] = useState<boolean>(false);
 
   const [userRating, setUserRating] = useState<number>(0);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleRatingChange = (rating: number) => {
     setUserRating(rating);
@@ -42,6 +45,8 @@ export default function Movie({ params }: { params: { id: string } }) {
           getDirectors(movie.crew);
           setMovie(movie);
         }
+
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching movie data:", error);
       }
@@ -49,6 +54,16 @@ export default function Movie({ params }: { params: { id: string } }) {
 
     getMovie();
   }, [params.id]);
+
+  if (isLoading) {
+    return (
+      <main className="rotating">
+        <Star />
+      </main>
+    );
+  } else if (!isLoading && !movie) {
+    notFound();
+  }
 
   if (!movie) {
     return null;

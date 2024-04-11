@@ -4,7 +4,7 @@ import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
 import { Dropdown } from "./dropdown";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export const Links = [
   { text: "New", href: "/new" },

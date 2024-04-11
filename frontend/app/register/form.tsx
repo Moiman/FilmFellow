@@ -58,7 +58,6 @@ export default function Register() {
 
   const router = useRouter();
   const onSubmit = async (data: RegisterFormData) => {
-    console.log(data);
     const credentials = {
       username: data.username,
       email: data.email,

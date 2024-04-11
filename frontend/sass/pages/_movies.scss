@@ -1,0 +1,170 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.movieContent {
+  background-color: abstracts.$primary-grey;
+  box-shadow: abstracts.$default-shadow;
+  display: flex;
+  flex-direction: column;
+
+  .wrapper {
+    display: inline-flex;
+    width: 100%;
+
+    .img {
+      background-color: rgb(40, 40, 40);
+      min-width: 400px;
+      position: relative;
+      display: inline-flex; // Placeholder style for "image comes here" text, remove when needed
+      align-items: center; // Placeholder style for "image comes here" text, remove when needed
+      justify-content: center; // Placeholder style for "image comes here" text, remove when needed
+
+      .gradient {
+        background: abstracts.$primary-dark;
+        background: linear-gradient(
+          90deg,
+          rgba(abstracts.$primary-grey, 0.25) 70%,
+          rgba(abstracts.$primary-grey, 1) 95%
+        );
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin: 20px;
+      flex: 1;
+      min-height: 400px;
+
+      h1 {
+        line-height: 3.4rem;
+      }
+
+      .rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+
+        .currentRating {
+          border-radius: 50%;
+          background-color: abstracts.$primary-dark;
+          width: 60px;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          font-family: abstracts.$default-title-font;
+          line-height: abstracts.$default-line-height;
+          letter-spacing: abstracts.$title-letter-spacing;
+          color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+          font-size: 1.6rem;
+
+          & > * {
+            margin: auto;
+          }
+        }
+      }
+
+      .basicData {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 100%;
+
+        .data-row {
+          display: inline-flex;
+          gap: 20px;
+
+          p {
+            font-size: 1rem;
+            letter-spacing: normal;
+          }
+
+          .yellow {
+            color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+          }
+
+          .cyan {
+            color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+          }
+        }
+      }
+
+      .allButtons {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 40px;
+
+        svg {
+          fill: abstracts.$primary-light;
+          cursor: pointer;
+        }
+
+        .buttons,
+        .buttons2 {
+          display: inline-flex;
+          gap: 20px;
+
+          button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+          }
+        }
+
+        .buttons2 {
+          button {
+            color: abstracts.$primary-light;
+          }
+
+          .yellow {
+            color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+
+            svg {
+              fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+            }
+          }
+
+          .pink {
+            color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+
+            svg {
+              fill: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.websites {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: abstracts.$primary-darkgrey;
+  width: 100%;
+  min-height: 10px;
+  padding: 10px;
+  gap: 10px;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .movieContent > .img {
+    display: none;
+  }
+
+  .movieContent > .allButtons {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -62,47 +62,55 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         },
       );
     }
-
-    if ((email && session.user.id === userId) || session.user.role === Role.admin) {
-      const foundEmail = await findUserByEmail(email);
-      if (foundEmail) {
-        return NextResponse.json(
-          { error: "User already exists with that email" },
-          {
-            status: 409,
-          },
-        );
+    if (session.user.id === userId || session.user.role === Role.admin) {
+      if (email) {
+        const foundEmail = await findUserByEmail(email);
+        if (foundEmail) {
+          return NextResponse.json(
+            { error: "User already exists with that email" },
+            {
+              status: 409,
+            },
+          );
+        }
+        user.email = email;
       }
-      user.email = email;
-    }
-    if ((password && session.user.id === userId) || session.user.role === Role.admin) {
-      user.password = await argon2.hash(password);
-    }
-    if ((username && session.user.id === userId) || session.user.role === Role.admin) {
-      const foundUsername = await findUserByUsername(username);
-      if (foundUsername) {
-        return NextResponse.json(
-          { error: "User already exists with that name" },
-          {
-            status: 409,
-          },
-        );
+      if (password) {
+        user.password = await argon2.hash(password);
       }
-      user.username = username;
-    }
-    if (role) {
-      if (user.role !== Role.admin) {
-        return NextResponse.json(
-          { error: "Cant change user role unless admin" },
-          {
-            status: 400,
-          },
-        );
+      if (username) {
+        const foundUsername = await findUserByUsername(username);
+        if (foundUsername) {
+          return NextResponse.json(
+            { error: "User already exists with that username" },
+            {
+              status: 409,
+            },
+          );
+        }
+        user.username = username;
       }
-      user.role = role;
+      if (role) {
+        if (user.role !== Role.admin) {
+          return NextResponse.json(
+            { error: "Cant change user role unless admin" },
+            {
+              status: 400,
+            },
+          );
+        }
+        user.role = role;
+      }
+      const updatedUser = await updateUser(userId, user);
+      return NextResponse.json(updatedUser, { status: 200 });
+    } else {
+      return NextResponse.json(
+        { error: "Cant change other user details unless admin" },
+        {
+          status: 400,
+        },
+      );
     }
-    const updatedUser = await updateUser(userId, user);
-    return NextResponse.json(updatedUser, { status: 200 });
   } catch (err) {
     return NextResponse.json({ error: err }, { status: 400 });
   }

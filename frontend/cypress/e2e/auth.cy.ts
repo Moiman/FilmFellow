@@ -67,3 +67,332 @@ describe("Api login and register tests", () => {
     });
   });
 });
+const firstNewUser = {
+  email: "newuser@gmail.com",
+  username: "newuser",
+  password: "Password1!",
+};
+let firstNewUserId = "";
+const secondNewUser = {
+  email: "secondnewuser@gmail.com",
+  username: "secondnewuser",
+  password: "Password1!",
+};
+let secondNewUserId = "";
+describe("Register dummy users for tests", () => {
+  it("Create 2 dummy users", () => {
+    cy.request({ method: "POST", url: "/api/register", body: firstNewUser, failOnStatusCode: false }).should(
+      response => {
+        expect(response.status).to.eq(200);
+        expect(response.body.email).to.equal(firstNewUser.email);
+        firstNewUserId = response.body.id;
+      },
+    );
+    cy.request({ method: "POST", url: "/api/register", body: secondNewUser, failOnStatusCode: false }).should(
+      response => {
+        expect(response.status).to.eq(200);
+        expect(response.body.email).to.equal(secondNewUser.email);
+        secondNewUserId = response.body.id;
+      },
+    );
+  });
+});
+describe("Api update tests", () => {
+  it("Try to update user details without authorization", () => {
+    const changeUserDetails = {
+      username: "something",
+      email: "test@testing.com",
+      password: "newPassword1!",
+    };
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(response => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq("Not Authorized");
+    });
+  });
+  it("Try to update user details with empty body", () => {
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: {},
+    }).should(response => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq("Missing email, password, username or role");
+    });
+  });
+  it("Try to update user details with faulty values", () => {
+    const changeUserDetails = {
+      username: "t",
+      email: "testing",
+      password: "test",
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+    });
+  });
+  it("Try to update other user username than yourself without beign admin", () => {
+    const changeUserDetails = {
+      username: "something",
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${secondNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Cant change other user details unless admin");
+    });
+  });
+  it("Try to update other user email than yourself without beign admin", () => {
+    const changeUserDetails = {
+      email: "test@testing.com",
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${secondNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Cant change other user details unless admin");
+    });
+  });
+  it("Try to update other user password than yourself without beign admin", () => {
+    const changeUserDetails = {
+      password: "newPassword1!",
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${secondNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Cant change other user details unless admin");
+    });
+  });
+  it("Try to update username with false id", () => {
+    const changeuserDetails = {
+      username: "newusername",
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${123456789}`,
+      failOnStatusCode: false,
+      body: changeuserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(404);
+      expect(res.body.error).to.eq(`Coundnt find user with id ${123456789}`);
+    });
+  });
+
+  it("Try to change user role without admin role", () => {
+    const changeUserDetails = {
+      role: "admin",
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Cant change user role unless admin");
+    });
+  });
+
+  it("Try to update email to same as someone else already has", () => {
+    const changeUserDetails = {
+      email: secondNewUser.email,
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(409);
+      expect(res.body.error).to.eq("User already exists with that email");
+    });
+  });
+
+  it("Try to update username to same as someone else already has", () => {
+    const changeUserDetails = {
+      username: secondNewUser.username,
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(409);
+      expect(res.body.error).to.eq("User already exists with that username");
+    });
+  });
+
+  it("Update username, email and password successfully", () => {
+    const changedUserDetails = {
+      username: "something",
+      email: "test@testing.com",
+      password: "newPassword1!",
+    };
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(firstNewUser.email);
+    cy.get('input[name="password"]').type(firstNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${firstNewUserId}`,
+      body: changedUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(200);
+      expect(res.body.email).to.eq(changedUserDetails.email);
+    });
+  });
+});
+
+describe("Api delete tests", () => {
+  const user = { email: "test@testing.com", password: "newPassword1!" };
+  it("Try to delete user without authorization", () => {
+    cy.request({
+      method: "DELETE",
+      url: `/api/delete/${firstNewUserId}`,
+      failOnStatusCode: false,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Not Authorized");
+    });
+  });
+
+  it("Try to delete another user that isnt the session holder", () => {
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(user.email);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "DELETE",
+      url: `/api/delete/${secondNewUserId}`,
+      failOnStatusCode: false,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Cant delete other users unless admin");
+    });
+  });
+
+  it("Try to delete another user with false id", () => {
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(user.email);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "DELETE",
+      url: `/api/delete/${123456789}`,
+      failOnStatusCode: false,
+    }).should(res => {
+      expect(res.status).to.eq(404);
+      expect(res.body.error).to.eq("User not found");
+    });
+  });
+
+  it("Delete first dummy user successfully", () => {
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(user.email);
+    cy.get('input[name="password"]').type(user.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "DELETE",
+      url: `/api/delete/${firstNewUserId}`,
+    }).should(res => {
+      expect(res.status).to.eq(200);
+    });
+  });
+
+  it("Delete second dummy user successfully", () => {
+    cy.visit("/login");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+    cy.get('input[name="email"]').type(secondNewUser.email);
+    cy.get('input[name="password"]').type(secondNewUser.password);
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+    cy.request({
+      method: "DELETE",
+      url: `/api/delete/${secondNewUserId}`,
+    }).should(res => {
+      expect(res.status).to.eq(200);
+    });
+  });
+});

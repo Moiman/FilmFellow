@@ -120,7 +120,7 @@ describe("Api update tests", () => {
     cy.get('input[name="email"]').type(firstNewUser.email);
     cy.get('input[name="password"]').type(firstNewUser.password);
     cy.get('button[type="submit"]').click();
-    cy.wait(500);
+    cy.wait(1000);
     cy.request({
       method: "PUT",
       url: `/api/update/${firstNewUserId}`,

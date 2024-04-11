@@ -9,7 +9,7 @@ describe("Api login and register tests", () => {
       method: "DELETE",
       url: "/api/delete",
     });
-    cy.clearAllSessionStorage();
+    Cypress.session.clearAllSavedSessions();
   });
 
   it("Login without account", () => {

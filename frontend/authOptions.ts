@@ -49,6 +49,9 @@ export const authOptions: NextAuthOptions = {
         }
         if (user.error.message) {
           throw new Error(user.error.message);
+        }
+        if (user.error.name) {
+          throw new Error(user.error.name);
         } else {
           console.log("check your credentials");
           throw new Error(user.error);
@@ -89,6 +92,9 @@ export const authOptions: NextAuthOptions = {
         }
         if (user.error.message) {
           throw new Error(user.error.message);
+        }
+        if (user.error.name) {
+          throw new Error(user.error.name);
         } else {
           console.log("check your credentials");
           throw new Error(user.error);

@@ -28,6 +28,6 @@ export async function POST(req: NextRequest, res: Response) {
       return NextResponse.json({ error: "Credentials doesnt match" }, { status: 400 });
     }
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 500 });
+    return NextResponse.json({ error: err }, { status: 400 });
   }
 }

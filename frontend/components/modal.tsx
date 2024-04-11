@@ -88,17 +88,10 @@ const ModalComponent = ({ content, _footer, _onOk, okLink, openModal, modalId }:
   );
 };
 
-const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) => {
+const Modal = (props: Props) => {
   return (
     <Suspense>
-      <ModalComponent
-        modalId={modalId}
-        content={content}
-        openModal={openModal}
-        _footer={_footer}
-        _onOk={_onOk}
-        okLink={okLink}
-      />
+      <ModalComponent {...props} />
     </Suspense>
   );
 };

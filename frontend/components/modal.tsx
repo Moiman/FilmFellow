@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { X } from "react-feather";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
   _onOk?: () => Promise<void>;
 }
 
-const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) => {
+const ModalComponent = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
@@ -85,6 +85,21 @@ const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) =
       <Link href={link}>{openModal}</Link>
       {dialog}
     </>
+  );
+};
+
+const Modal = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) => {
+  return (
+    <Suspense>
+      <ModalComponent
+        modalId={modalId}
+        content={content}
+        openModal={openModal}
+        _footer={_footer}
+        _onOk={_onOk}
+        okLink={okLink}
+      />
+    </Suspense>
   );
 };
 

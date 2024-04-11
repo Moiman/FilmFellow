@@ -94,7 +94,8 @@ export const authOptions: NextAuthOptions = {
           throw new Error(user.error.message);
         }
         if (user.error.name) {
-          throw new Error(user.error.name);
+          // throw new Error(user.error.name);
+          throw new Error("Internal server error");
         } else {
           console.log("check your credentials");
           throw new Error(user.error);

@@ -116,8 +116,13 @@
         .buttons,
         .buttons2 {
           display: inline-flex;
-          gap: 10px;
           align-items: center;
+          flex-wrap: wrap;
+          gap: 10px;
+
+          & > * {
+            max-width: max-content;
+          }
 
           button {
             display: inline-flex;
@@ -129,8 +134,11 @@
         }
 
         .buttons2 {
+          justify-content: flex-end;
+
           button {
             color: abstracts.$primary-light;
+            padding: 0;
           }
 
           .yellow {
@@ -160,6 +168,7 @@
       .allButtons {
         display: flex;
         flex-direction: column;
+        flex-wrap: wrap;
         gap: 10px;
       }
     }

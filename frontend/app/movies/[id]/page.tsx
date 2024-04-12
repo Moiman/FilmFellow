@@ -143,15 +143,15 @@ export default function Movie({ params }: { params: { id: string } }) {
                   className={favorite ? "button-transparent pink" : "button-transparent"}
                   onClick={() => setFavorite(!favorite)}
                 >
-                  <Heart size={30} />
-                  Add to favorites
+                  <Heart size={24} />
+                  {favorite ? "Remove from favorites" : "Add to favorites"}
                 </button>
                 <button
                   className={watchlist ? "button-transparent yellow" : "button-transparent"}
                   onClick={() => setWatchlist(!watchlist)}
                 >
-                  <Star size={30} />
-                  Add to watchlist
+                  <Star size={24} />
+                  {watchlist ? "Remove from watchlist" : "Add to watchlist"}
                 </button>
               </div>
             </div>

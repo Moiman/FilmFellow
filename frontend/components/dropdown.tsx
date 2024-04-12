@@ -57,7 +57,7 @@ export const Dropdown = ({ children, selected, button, buttonAlign, width, maxHe
       style={{
         zIndex: zIndex,
         justifyContent: buttonAlign ? buttonAlign : "left",
-        maxWidth: width ? width + "px" : "100%",
+        width: width ? width + "px" : "100%",
       }}
     >
       {button ? (

@@ -3,9 +3,11 @@
 
 .dropdown {
   display: flex;
-  flex: 1;
-
   position: relative;
+
+  & > * {
+    flex-shrink: 0;
+  }
 
   .dropdown-header,
   .dropdown-menu {

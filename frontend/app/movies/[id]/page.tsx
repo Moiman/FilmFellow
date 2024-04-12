@@ -44,9 +44,9 @@ export default function Movie({ params }: { params: { id: string } }) {
         if (!movie.error) {
           getDirectors(movie.crew);
           setMovie(movie);
+        } else {
+          setIsLoading(false);
         }
-
-        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching movie data:", error);
       }
@@ -82,13 +82,12 @@ export default function Movie({ params }: { params: { id: string } }) {
 
     directorNames = directorNameResponses.map(response => response.name);
     setDirectors(directorNames);
-
     setIsLoading(false);
   }
 
   return (
     <main style={{ padding: 0 }}>
-      <div className="movieContent">
+      <div className="movie-content">
         <div className="wrapper">
           {/* Img not working until we have posters to path to, can be tested with any img url until then */}
           <div
@@ -104,10 +103,10 @@ export default function Movie({ params }: { params: { id: string } }) {
 
           <div className="info">
             <div className="rating">
-              <div className="currentRating">{movie.vote_average ? movie.vote_average.toFixed(1) : null}</div>
+              <div className="current-rating">{movie.vote_average ? movie.vote_average.toFixed(1) : null}</div>
               <StarRating onChange={handleRatingChange} />
             </div>
-            <div className="basicData">
+            <div className="basic-data">
               <h1>{movie.title}</h1>
 
               <div className="data-row">
@@ -118,10 +117,10 @@ export default function Movie({ params }: { params: { id: string } }) {
                 <p className="cyan">(Age restriction)</p>
                 <p className="cyan">{movie.runtime ? movie.runtime : null} min</p>
               </div>
-              <p className="description">{movie.overview}</p>
+              <p className="movie-description">{movie.overview}</p>
             </div>
 
-            <div className="allButtons">
+            <div className="all-buttons">
               <div className="buttons">
                 <Dropdown
                   button={<button>Add to list</button>}
@@ -138,7 +137,7 @@ export default function Movie({ params }: { params: { id: string } }) {
                   {watched ? "Remove from watched" : "Mark as watched"}
                 </button>
               </div>
-              <div className="buttons2">
+              <div className="transparent-buttons">
                 <button
                   className={favorite ? "button-transparent pink" : "button-transparent"}
                   onClick={() => setFavorite(!favorite)}

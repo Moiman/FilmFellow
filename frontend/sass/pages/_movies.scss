@@ -42,7 +42,6 @@
       margin: 20px;
       flex: 1;
       min-height: 400px;
-      max-width: 1000px;
 
       h1 {
         line-height: 3.4rem;
@@ -97,13 +96,16 @@
             color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
           }
         }
+
+        .description {
+          max-width: 1000px;
+        }
       }
 
       .allButtons {
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
-        gap: 20px;
         margin-top: 40px;
 
         svg {
@@ -114,11 +116,14 @@
         .buttons,
         .buttons2 {
           display: inline-flex;
-          gap: 20px;
+          gap: 10px;
+          align-items: center;
 
           button {
             display: inline-flex;
             align-items: center;
+            max-height: fit-content;
+            min-width: fit-content;
             gap: 10px;
           }
         }
@@ -147,7 +152,7 @@
       }
     }
 
-    @media only screen and (max-width: abstracts.$large-width) {
+    @media only screen and (max-width: 1200px) {
       .img {
         display: none;
       }
@@ -155,6 +160,7 @@
       .allButtons {
         display: flex;
         flex-direction: column;
+        gap: 10px;
       }
     }
   }

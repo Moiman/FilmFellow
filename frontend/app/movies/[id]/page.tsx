@@ -82,16 +82,26 @@ export default function Movie({ params }: { params: { id: string } }) {
 
     directorNames = directorNameResponses.map(response => response.name);
     setDirectors(directorNames);
+
+    setIsLoading(false);
   }
 
   return (
     <main style={{ padding: 0 }}>
       <div className="movieContent">
         <div className="wrapper">
-          <div className="img">
-            <p>(image comes here)</p>
+          {/* Img not working until we have posters to path to, can be tested with any img url until then */}
+          <div
+            className="img"
+            style={{
+              background: `URL(${movie.poster_path})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          >
             <div className="gradient" />
           </div>
+
           <div className="info">
             <div className="rating">
               <div className="currentRating">{movie.vote_average ? movie.vote_average.toFixed(1) : null}</div>
@@ -108,8 +118,7 @@ export default function Movie({ params }: { params: { id: string } }) {
                 <p className="cyan">(Age restriction)</p>
                 <p className="cyan">{movie.runtime ? movie.runtime : null} min</p>
               </div>
-
-              <p>{movie.overview}</p>
+              <p className="description">{movie.overview}</p>
             </div>
 
             <div className="allButtons">

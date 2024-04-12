@@ -1,5 +1,4 @@
 import Modal from "@/components/modal";
-import { useRef } from "react";
 
 async function test() {
   "use server";
@@ -10,6 +9,7 @@ export default function testing() {
   return (
     <main>
       <h2>Testing</h2>
+
       <Modal
         modalId={1}
         _footer={

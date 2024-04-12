@@ -3,7 +3,6 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
 import { Header, Links } from "@/components/header";
 
-
 beforeAll(() => {
   render(
     <SessionProvider session={null}>

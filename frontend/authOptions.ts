@@ -1,4 +1,4 @@
-import type { NextAuthOptions, SessionStrategy, Session, User} from "next-auth";
+import type { NextAuthOptions, SessionStrategy, Session, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 
@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
           body: JSON.stringify(registerCredentials),
         });
         const user = await resp.json();
+        console.log(user);
         if (user && resp.ok && !user.error) {
           return user;
         }

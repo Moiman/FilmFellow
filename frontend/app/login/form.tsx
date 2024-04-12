@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { Eye, EyeOff } from "react-feather";
 import Link from "next/link";
 import { Section } from "@/components/section";
+import { useRouter } from "next/navigation";
 
 interface LoginFormData {
   email: string;
@@ -33,7 +34,7 @@ export default function Login() {
     },
     resolver: yupResolver(loginUserSchema),
   });
-
+  const router = useRouter();
   const onSubmit = async (data: LoginFormData) => {
     const credentials = {
       email: data.email,
@@ -42,8 +43,7 @@ export default function Login() {
 
     const response = await signIn("login", {
       ...credentials,
-      redirect: true,
-      callbackUrl: "/"
+      redirect: false
     });
     if (response?.error) {
       setError(response.error);
@@ -51,6 +51,7 @@ export default function Login() {
     if (response?.ok) {
       reset();
       setError("");
+      router.push("/");
     }
   };
   const loginHeader = (

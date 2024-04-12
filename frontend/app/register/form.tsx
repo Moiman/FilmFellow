@@ -7,6 +7,7 @@ import { Eye, EyeOff } from "react-feather";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Section } from "@/components/section";
+import { useRouter } from "next/navigation";
 
 interface RegisterFormData {
   username: string;
@@ -55,7 +56,7 @@ export default function Register() {
     },
     resolver: yupResolver(registerUserSchema),
   });
-
+  const router = useRouter();
   const onSubmit = async (data: RegisterFormData) => {
     const credentials = {
       username: data.username,
@@ -74,6 +75,7 @@ export default function Register() {
     if (response?.ok) {
       reset();
       setError("");
+      router.push("/");
     }
   };
   const registerHeader = (

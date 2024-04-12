@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createMocks, createRequest } from "node-mocks-http";
 import type { NextRequest } from "next/server";
-
 import { GET as getPersonById } from "@/app/api/persons/[id]/route";
 
 type ApiRequest = NextRequest & ReturnType<typeof createRequest>;

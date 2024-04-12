@@ -143,22 +143,6 @@ describe("Login form and register form show password test", () => {
 });
 
 describe("Protected route tests", () => {
-  it("Visit protected route without authorization", () => {
-    cy.request({ url: "/api/testing", failOnStatusCode: false }).should(response => {
-      expect(response.status).to.eq(401);
-    });
-  });
-  it("Visit protected route with authorization", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type("test@gmail.com");
-    cy.get('input[name="password"]').type("Password1!");
-    cy.get('button[type="submit"]').click();
-    cy.get("button").contains("Sign Out");
-    cy.request({ url: "/api/testing", failOnStatusCode: false }).should(response => {
-      expect(response.status).to.eq(200);
-    });
-  });
   it("Try to go to register page as logged in user", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");

@@ -341,7 +341,7 @@ describe("Api delete tests", () => {
       url: `/api/delete/${secondNewUserId}`,
       failOnStatusCode: false,
     }).should(res => {
-      expect(res.status).to.eq(400);
+      expect(res.status).to.eq(401);
       expect(res.body.error).to.eq("Cant delete other users unless admin");
     });
   });

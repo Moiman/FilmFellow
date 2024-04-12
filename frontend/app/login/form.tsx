@@ -43,7 +43,7 @@ export default function Login() {
 
     const response = await signIn("login", {
       ...credentials,
-      redirect: false
+      redirect: false,
     });
     if (response?.error) {
       setError(response.error);
@@ -63,72 +63,70 @@ export default function Login() {
     <main className="form-main">
       <div className="section-wrapper">
         <Section header={loginHeader}>
-          <>
-            <form
-              className="form"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <label htmlFor="email">Email</label>
+          <form
+            className="form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              {...register("email")}
+              required
+              autoComplete="username"
+            />
+            {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
+            <label htmlFor="password">Password</label>
+            <div className="form-group">
               <input
-                id="email"
-                type="email"
-                {...register("email")}
+                id="password"
+                type={showPassword ? "text" : "password"}
+                {...register("password")}
                 required
-                autoComplete="username"
+                autoComplete="current-password"
               />
-              {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
-              <label htmlFor="password">Password</label>
-              <div className="form-group">
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                  required
-                  autoComplete="current-password"
-                />
-                <button
-                  className="form-group-icon"
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                  ) : (
-                    <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                  )}
-                </button>
-              </div>
-              {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
               <button
-                className="form-submit"
-                type="submit"
-                disabled={isSubmitting}
+                className="form-group-icon"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                Login
+                {showPassword ? (
+                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
+                ) : (
+                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
+                )}
               </button>
-              <p
-                className="error-text"
-                style={{ display: "flex", justifyContent: "center" }}
+            </div>
+            {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
+            <button
+              className="form-submit"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Login
+            </button>
+            <p
+              className="error-text"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              {error}
+            </p>
+            <div className="form-route-change">
+              <Link
+                className="form-route-change-link-style"
+                href="/"
               >
-                {error}
-              </p>
-              <div className="form-route-change">
-                <Link
-                  className="form-route-change-link-style"
-                  href="/"
-                >
-                  Cant login?
-                </Link>
-                <p className="form-route-change-p"> / </p>
-                <Link
-                  className="form-route-change-link-style"
-                  href="/register"
-                >
-                  Register
-                </Link>
-              </div>
-            </form>
-          </>
+                Cant login?
+              </Link>
+              <p className="form-route-change-p"> / </p>
+              <Link
+                className="form-route-change-link-style"
+                href="/register"
+              >
+                Register
+              </Link>
+            </div>
+          </form>
         </Section>
       </div>
     </main>

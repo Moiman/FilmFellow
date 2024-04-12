@@ -32,7 +32,6 @@ const updateUserSchema = yup.object({
 
 export async function PUT(req: NextRequest, { params }: { params: Params }) {
   try {
-    const userId = parseInt(params.id);
     const data = await req.json();
     const session = await getServerSession(authOptions);
     if (!session) {
@@ -42,6 +41,14 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
           status: 401,
         },
       );
+    }
+
+    const userId = parseInt(params.id);
+    if (isNaN(userId)) {
+      return NextResponse.json({ error: "User id not a number" }, { status: 400 });
+    }
+    if (userId <= 1) {
+      return NextResponse.json({ error: "User id cant be under 1" }, { status: 400 });
     }
     await updateUserSchema.validate(data, { abortEarly: false });
     const { email, username, password, role } = data;

@@ -268,6 +268,40 @@ describe("Api update tests", () => {
     });
   });
 
+  it("Try to update user with negative id", () => {
+    const changeUserDetails = {
+      username: secondNewUser.username,
+    };
+
+    cy.login(firstNewUser.email, firstNewUser.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${-123}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("User id cant be under 1");
+    });
+  });
+
+  it("Try to update user with character as id", () => {
+    const changeUserDetails = {
+      username: secondNewUser.username,
+    };
+
+    cy.login(firstNewUser.email, firstNewUser.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/update/${"abcdef"}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("User id not a number");
+    });
+  });
+
   it("Update username, email and password successfully", () => {
     const changedUserDetails = {
       username: "something",
@@ -321,6 +355,30 @@ describe("Api delete tests", () => {
     }).should(res => {
       expect(res.status).to.eq(404);
       expect(res.body.error).to.eq("User not found");
+    });
+  });
+
+  it("Try to delete user with negative id", () => {
+    cy.login(user.email, user.password);
+    cy.request({
+      method: "DELETE",
+      url: `/api/delete/${-123}`,
+      failOnStatusCode: false,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("User id cant be under 1");
+    });
+  });
+
+  it("Try to delete user with character as id", () => {
+    cy.login(user.email, user.password);
+    cy.request({
+      method: "DELETE",
+      url: `/api/delete/${"abcdef"}`,
+      failOnStatusCode: false,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("User id not a number");
     });
   });
 

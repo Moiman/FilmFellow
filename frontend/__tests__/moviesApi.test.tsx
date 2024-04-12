@@ -22,6 +22,17 @@ describe("/api/movies/id", () => {
     const movie = await response.json();
     expect(movie.id).toEqual(278);
   });
+
+  it("Try to get movie with negative id", async () => {
+    const params = { id: "-1" };
+
+    const { req } = createMocks<ApiRequest>({
+      method: "GET",
+    });
+
+    const response = await getMovieById(req, { params });
+    expect(response.status).toBe(400);
+  });
   it("Try to get movie by wrong id", async () => {
     const params = { id: "123456789" };
 
@@ -31,6 +42,16 @@ describe("/api/movies/id", () => {
 
     const response = await getMovieById(req, { params });
     expect(response.status).toBe(404);
+  });
+  it("Try to get movie by character", async () => {
+    const params = { id: "a" };
+
+    const { req } = createMocks<ApiRequest>({
+      method: "GET",
+    });
+
+    const response = await getMovieById(req, { params });
+    expect(response.status).toBe(400);
   });
 });
 
@@ -49,6 +70,17 @@ describe("/api/movies/id/reviews", () => {
     expect(movieReviews[0]).toHaveProperty("content");
     expect(movieReviews[0]).toHaveProperty("author");
   });
+
+  it("Try to get movie reviews with negative id", async () => {
+    const params = { id: "-1" };
+
+    const { req } = createMocks<ApiRequest>({
+      method: "GET",
+    });
+
+    const response = await getMovieReviewsById(req, { params });
+    expect(response.status).toBe(400);
+  });
   it("Try to get movie reviews by wrong id", async () => {
     const params = { id: "123456789" };
 
@@ -58,6 +90,16 @@ describe("/api/movies/id/reviews", () => {
 
     const response = await getMovieReviewsById(req, { params });
     expect(response.status).toBe(404);
+  });
+  it("Try to get movie with character", async () => {
+    const params = { id: "a" };
+
+    const { req } = createMocks<ApiRequest>({
+      method: "GET",
+    });
+
+    const response = await getMovieReviewsById(req, { params });
+    expect(response.status).toBe(400);
   });
 });
 

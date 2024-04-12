@@ -18,6 +18,26 @@ describe("Persons route", () => {
     expect(response.status).toBe(404);
   });
 
+  it("api/persons/:id try to get person data with negative id", async () => {
+    const params = { id: "-1" };
+
+    const { req } = createMocks<ApiRequest>({
+      method: "GET",
+    });
+
+    const response = await getPersonById(req, { params });
+    expect(response.status).toBe(400);
+  });
+  it("api/persons/:id try to get person data with character", async () => {
+    const params = { id: "a" };
+
+    const { req } = createMocks<ApiRequest>({
+      method: "GET",
+    });
+
+    const response = await getPersonById(req, { params });
+    expect(response.status).toBe(400);
+  });
   it("api/persons/:id successfully get persondata", async () => {
     const params = { id: "504" };
 

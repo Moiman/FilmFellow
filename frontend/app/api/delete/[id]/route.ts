@@ -9,8 +9,6 @@ interface Params {
 
 export async function DELETE(req: NextRequest, { params }: { params: Params }) {
   try {
-    const userId = parseInt(params.id);
-
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json(
@@ -19,6 +17,14 @@ export async function DELETE(req: NextRequest, { params }: { params: Params }) {
           status: 401,
         },
       );
+    }
+
+    const userId = parseInt(params.id);
+    if (isNaN(userId)) {
+      return NextResponse.json({ error: "User id not a number" }, { status: 400 });
+    }
+    if (userId <= 1) {
+      return NextResponse.json({ error: "User id cant be under 1" }, { status: 400 });
     }
 
     const existingUser = await findUserById(userId);

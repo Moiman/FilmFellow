@@ -1,24 +1,20 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, res: Response) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-    // console.log(req.headers);
-    // console.log(session);
-    // console.log(req.cookies.get("next-auth.session-token")?.value);
-
     if (!session) {
       return NextResponse.json(
         { error: "Not Authorized" },
         {
-          status: 400,
+          status: 401,
         },
       );
     }
     return NextResponse.json({ email: session.user.email }, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 400 });
+    return NextResponse.json({ error: err }, { status: 500 });
   }
 }

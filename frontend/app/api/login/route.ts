@@ -2,13 +2,14 @@ import { findUserByEmail } from "@/services/authService";
 import { NextRequest, NextResponse } from "next/server";
 import * as yup from "yup";
 import argon2 from "argon2";
+import { ValidationError } from "yup";
 
 const loginUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),
   password: yup.string().required("Password is required").min(6, "Password must be at least 6 characters long"),
 });
 
-export async function POST(req: NextRequest, res: Response) {
+export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
     await loginUserSchema.validate(data, { abortEarly: false });
@@ -26,6 +27,10 @@ export async function POST(req: NextRequest, res: Response) {
       return NextResponse.json({ error: "Credentials doesnt match" }, { status: 400 });
     }
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 400 });
+    if (err instanceof ValidationError) {
+      return NextResponse.json({ error: err }, { status: 400 });
+    } else {
+      return NextResponse.json({ error: err }, { status: 500 });
+    }
   }
 }

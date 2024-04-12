@@ -2,6 +2,7 @@ import { createUser, findUserByEmail, findUserByUsername } from "@/services/auth
 import { NextRequest, NextResponse } from "next/server";
 import argon2 from "argon2";
 import * as yup from "yup";
+import { ValidationError } from "yup";
 
 const registerUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),
@@ -48,6 +49,10 @@ export async function POST(req: NextRequest) {
     const newUser = await createUser(data.email, data.username, hashedPassword);
     return NextResponse.json(newUser, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 400 });
+    if (err instanceof ValidationError) {
+      return NextResponse.json({ error: err }, { status: 400 });
+    } else {
+      return NextResponse.json({ error: err }, { status: 500 });
+    }
   }
 }

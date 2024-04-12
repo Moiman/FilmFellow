@@ -16,7 +16,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Params }) {
       return NextResponse.json(
         { error: "Not Authorized" },
         {
-          status: 400,
+          status: 401,
         },
       );
     }
@@ -32,6 +32,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Params }) {
       return NextResponse.json({ error: "Cant delete other users unless admin" }, { status: 400 });
     }
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 400 });
+    console.log(err);
+    return NextResponse.json({ error: err }, { status: 500 });
   }
 }

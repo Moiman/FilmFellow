@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
+import { ValidationError } from "yup";
 
 interface Params {
   id: string;
@@ -38,7 +39,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       return NextResponse.json(
         { error: "Not Authorized" },
         {
-          status: 400,
+          status: 401,
         },
       );
     }
@@ -112,6 +113,10 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       );
     }
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 400 });
+    if (err instanceof ValidationError) {
+      return NextResponse.json({ error: err }, { status: 400 });
+    } else {
+      return NextResponse.json({ error: err }, { status: 500 });
+    }
   }
 }

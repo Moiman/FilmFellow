@@ -145,7 +145,7 @@ describe("Login form and register form show password test", () => {
 describe("Protected route tests", () => {
   it("Visit protected route without authorization", () => {
     cy.request({ url: "/api/testing", failOnStatusCode: false }).should(response => {
-      expect(response.status).to.eq(400);
+      expect(response.status).to.eq(401);
     });
   });
   it("Visit protected route with authorization", () => {

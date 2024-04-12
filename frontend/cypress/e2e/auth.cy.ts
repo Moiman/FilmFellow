@@ -119,7 +119,7 @@ describe("Api update tests", () => {
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(response => {
-      expect(response.status).to.eq(400);
+      expect(response.status).to.eq(401);
       expect(response.body.error).to.eq("Not Authorized");
     });
   });
@@ -295,7 +295,7 @@ describe("Api delete tests", () => {
       url: `/api/delete/${firstNewUserId}`,
       failOnStatusCode: false,
     }).should(res => {
-      expect(res.status).to.eq(400);
+      expect(res.status).to.eq(401);
       expect(res.body.error).to.eq("Not Authorized");
     });
   });

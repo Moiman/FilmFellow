@@ -1,6 +1,5 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -13,7 +12,7 @@ interface RegisterFormData {
   username: string;
   email: string;
   password: string;
-  retypepassword: string;
+  confirmPassword: string;
 }
 
 const registerUserSchema = yup.object({
@@ -32,7 +31,7 @@ const registerUserSchema = yup.object({
     .matches(/^(?=.*[A-Z])/, "Password requires atleast 1 capital character")
     .matches(/^(?=.*[0-9])/, "Password requires atleast 1 number")
     .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
-  retypepassword: yup
+  confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Passwords must match")
     .required("Confirm password is required"),
@@ -41,22 +40,22 @@ const registerUserSchema = yup.object({
 export default function Register() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [retypeShowPassword, retypesetShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     defaultValues: {
       username: "",
       email: "",
       password: "",
-      retypepassword: "",
+      confirmPassword: "",
     },
     resolver: yupResolver(registerUserSchema),
   });
 
-  const router = useRouter();
   const onSubmit = async (data: RegisterFormData) => {
     const credentials = {
       username: data.username,
@@ -66,14 +65,15 @@ export default function Register() {
 
     const response = await signIn("register", {
       ...credentials,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/",
     });
     if (response?.error) {
       setError(response.error);
     }
-
     if (response?.ok) {
-      router.push("/");
+      reset();
+      setError("");
     }
   };
   const registerHeader = (
@@ -85,91 +85,96 @@ export default function Register() {
     <main className="form-main">
       <div className="section-wrapper">
         <Section header={registerHeader}>
-          <>
-            <form
-              className="form"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <label htmlFor="email">Email</label>
+          <form
+            className="form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              {...register("email")}
+              required
+            />
+            {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              {...register("username")}
+              required
+              autoComplete="nickname"
+            />
+            {errors?.username && <p className="error-text">{errors?.username?.message}</p>}
+            <label htmlFor="password">Password</label>
+            <div className="form-group">
               <input
-                id="email"
-                type="email"
-                {...register("email")}
+                id="password"
+                type={showPassword ? "text" : "password"}
+                {...register("password")}
+                required
+                autoComplete="new-password"
               />
-              {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
-              <label htmlFor="username">Username</label>
-              <input
-                id="username"
-                type="text"
-                {...register("username")}
-              />
-              {errors?.username && <p className="error-text">{errors?.username?.message}</p>}
-              <label htmlFor="password">Password</label>
-              <div className="form-group">
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                />
-                <button
-                  data-cy="show-password"
-                  className="form-group-icon"
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                  ) : (
-                    <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                  )}
-                </button>
-              </div>
-              {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
-              <label htmlFor="retypepassword">Confirm Password</label>
-              <div className="form-group">
-                <input
-                  id="retypepassword"
-                  type={retypeShowPassword ? "text" : "password"}
-                  {...register("retypepassword")}
-                />
-                <button
-                  data-cy="show-retypepassword"
-                  className="form-group-icon"
-                  type="button"
-                  onClick={() => retypesetShowPassword(!retypeShowPassword)}
-                >
-                  {retypeShowPassword ? (
-                    <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                  ) : (
-                    <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                  )}
-                </button>
-              </div>
-              {errors?.retypepassword && <p className="error-text">{errors?.retypepassword?.message}</p>}
               <button
-                className="form-submit"
-                type="submit"
-                disabled={isSubmitting}
+                data-cy="show-password"
+                className="form-group-icon"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                Register
+                {showPassword ? (
+                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
+                ) : (
+                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
+                )}
               </button>
-              <p
-                className="error-text"
-                style={{ display: "flex", justifyContent: "center" }}
+            </div>
+            {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
+            <label htmlFor="retypepassword">Confirm Password</label>
+            <div className="form-group">
+              <input
+                id="retypepassword"
+                type={showConfirmPassword ? "text" : "password"}
+                {...register("confirmPassword")}
+                required
+                autoComplete="new-password"
+              />
+              <button
+                data-cy="show-retypepassword"
+                className="form-group-icon"
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                {error}
-              </p>
-              <div className="form-route-change">
-                <p className="form-route-change-p">Already have an account? </p>
-                <Link
-                  className="form-route-change-link-style"
-                  href="/login"
-                >
-                  Login
-                </Link>
-              </div>
-            </form>
-          </>
+                {showConfirmPassword ? (
+                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
+                ) : (
+                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
+                )}
+              </button>
+            </div>
+            {errors?.confirmPassword && <p className="error-text">{errors?.confirmPassword?.message}</p>}
+            <button
+              className="form-submit"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Register
+            </button>
+            <p
+              className="error-text"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              {error}
+            </p>
+            <div className="form-route-change">
+              <p className="form-route-change-p">Already have an account? </p>
+              <Link
+                className="form-route-change-link-style"
+                href="/login"
+              >
+                Login
+              </Link>
+            </div>
+          </form>
         </Section>
       </div>
     </main>

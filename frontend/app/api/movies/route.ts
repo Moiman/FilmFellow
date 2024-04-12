@@ -1,7 +1,6 @@
-import { getMovieByLimitTypeGenre } from "@/services/movieService";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import * as yup from "yup";
-import { ValidationError } from "yup";
+import { getMovieByLimitTypeGenre } from "@/services/movieService";
 
 const requestQuerySchema = yup.object({
   limit: yup.number().positive().integer().required().max(50),
@@ -35,10 +34,10 @@ export async function GET(req: NextRequest) {
     }
     return NextResponse.json(result, { status: 200 });
   } catch (err) {
-    if (err instanceof ValidationError) {
+    if (err instanceof yup.ValidationError) {
       return NextResponse.json({ error: err }, { status: 400 });
     } else {
-      return NextResponse.json({ error: err }, { status: 500 });
+      return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
   }
 }

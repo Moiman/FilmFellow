@@ -17,6 +17,6 @@ export async function DELETE() {
     const deletedUser = await deleteUserById(Number(session.user.id));
     return NextResponse.json(deletedUser, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

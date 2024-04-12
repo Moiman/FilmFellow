@@ -1,7 +1,6 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -25,6 +24,7 @@ export default function Login() {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     defaultValues: {
@@ -34,7 +34,6 @@ export default function Login() {
     resolver: yupResolver(loginUserSchema),
   });
 
-  const router = useRouter();
   const onSubmit = async (data: LoginFormData) => {
     const credentials = {
       email: data.email,
@@ -43,14 +42,15 @@ export default function Login() {
 
     const response = await signIn("login", {
       ...credentials,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/"
     });
     if (response?.error) {
       setError(response.error);
     }
-
     if (response?.ok) {
-      router.push("/");
+      reset();
+      setError("");
     }
   };
   const loginHeader = (
@@ -72,6 +72,8 @@ export default function Login() {
                 id="email"
                 type="email"
                 {...register("email")}
+                required
+                autoComplete="username"
               />
               {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
               <label htmlFor="password">Password</label>
@@ -80,6 +82,8 @@ export default function Login() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
+                  required
+                  autoComplete="current-password"
                 />
                 <button
                   className="form-group-icon"

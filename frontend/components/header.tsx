@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
-import { Dropdown } from "./dropdown";
 import { signOut, useSession } from "next-auth/react";
+import { Dropdown } from "./dropdown";
 
 export const Links = [
   { text: "New", href: "/new" },
@@ -27,7 +27,6 @@ export const Header = () => {
   const { data: session } = useSession();
   const isLoggedIn = false;
   const currentPath = usePathname();
-  console.log(session?.user);
 
   return (
     <header>

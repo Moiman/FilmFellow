@@ -1,5 +1,5 @@
+import { type NextRequest, NextResponse } from "next/server";
 import { getMovieById } from "@/services/movieService";
-import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
   id: string;
@@ -20,6 +20,6 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
     }
     return NextResponse.json(result, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

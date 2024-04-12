@@ -1,8 +1,7 @@
-import { findUserByEmail } from "@/services/authService";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import * as yup from "yup";
 import argon2 from "argon2";
-import { ValidationError } from "yup";
+import { findUserByEmail } from "@/services/authService";
 
 const loginUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),
@@ -27,10 +26,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Credentials doesnt match" }, { status: 400 });
     }
   } catch (err) {
-    if (err instanceof ValidationError) {
+    if (err instanceof yup.ValidationError) {
       return NextResponse.json({ error: err }, { status: 400 });
     } else {
-      return NextResponse.json({ error: err }, { status: 500 });
+      return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
   }
 }

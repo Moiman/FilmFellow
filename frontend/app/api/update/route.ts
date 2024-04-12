@@ -2,13 +2,9 @@ import { type NextRequest, NextResponse } from "next/server";
 import argon2 from "argon2";
 import * as yup from "yup";
 import { getServerSession } from "next-auth";
-import { Role } from "@prisma/client";
 import { authOptions } from "@/authOptions";
+import { Role } from "@prisma/client";
 import { findUserByEmail, findUserById, findUserByUsername, updateUser } from "@/services/authService";
-
-interface Params {
-  id: string;
-}
 
 const updateUserSchema = yup.object({
   email: yup.string().trim().optional().email("Must be a valid email"),
@@ -29,7 +25,7 @@ const updateUserSchema = yup.object({
   role: yup.string().optional().oneOf(Object.values(Role), "Role must be either admin, user or moderator"),
 });
 
-export async function PUT(req: NextRequest, { params }: { params: Params }) {
+export async function PUT(req: NextRequest) {
   try {
     const data = await req.json();
     const session = await getServerSession(authOptions);
@@ -42,13 +38,8 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       );
     }
 
-    const userId = parseInt(params.id);
-    if (isNaN(userId)) {
-      return NextResponse.json({ error: "User id not a number" }, { status: 400 });
-    }
-    if (userId <= 1) {
-      return NextResponse.json({ error: "User id cant be under 1" }, { status: 400 });
-    }
+    const userId = Number(session.user.id);
+
     await updateUserSchema.validate(data, { abortEarly: false });
     const { email, username, password, role } = data;
     if (!email && !password && !username && !role) {
@@ -69,55 +60,46 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         },
       );
     }
-    if (session.user.id === userId || session.user.role === Role.admin) {
-      if (email) {
-        const foundEmail = await findUserByEmail(email);
-        if (foundEmail) {
-          return NextResponse.json(
-            { error: "User already exists with that email" },
-            {
-              status: 409,
-            },
-          );
-        }
-        user.email = email;
+    if (email) {
+      const foundEmail = await findUserByEmail(email);
+      if (foundEmail) {
+        return NextResponse.json(
+          { error: "User already exists with that email" },
+          {
+            status: 409,
+          },
+        );
       }
-      if (password) {
-        user.password = await argon2.hash(password);
-      }
-      if (username) {
-        const foundUsername = await findUserByUsername(username);
-        if (foundUsername) {
-          return NextResponse.json(
-            { error: "User already exists with that username" },
-            {
-              status: 409,
-            },
-          );
-        }
-        user.username = username;
-      }
-      if (role) {
-        if (user.role !== Role.admin) {
-          return NextResponse.json(
-            { error: "Cant change user role unless admin" },
-            {
-              status: 400,
-            },
-          );
-        }
-        user.role = role;
-      }
-      const updatedUser = await updateUser(userId, user);
-      return NextResponse.json(updatedUser, { status: 200 });
-    } else {
-      return NextResponse.json(
-        { error: "Cant change other user details unless admin" },
-        {
-          status: 400,
-        },
-      );
+      user.email = email;
     }
+    if (password) {
+      user.password = await argon2.hash(password);
+    }
+    if (username) {
+      const foundUsername = await findUserByUsername(username);
+      if (foundUsername) {
+        return NextResponse.json(
+          { error: "User already exists with that username" },
+          {
+            status: 409,
+          },
+        );
+      }
+      user.username = username;
+    }
+    if (role) {
+      if (user.role !== Role.admin) {
+        return NextResponse.json(
+          { error: "Cant change user role unless admin" },
+          {
+            status: 401,
+          },
+        );
+      }
+      user.role = role;
+    }
+    const updatedUser = await updateUser(userId, user);
+    return NextResponse.json(updatedUser, { status: 200 });
   } catch (err) {
     if (err instanceof yup.ValidationError) {
       return NextResponse.json({ error: err }, { status: 400 });

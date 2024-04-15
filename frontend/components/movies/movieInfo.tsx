@@ -1,8 +1,10 @@
-import { Movies } from "@prisma/client";
 import { useState } from "react";
+import { Heart, Star } from "react-feather";
+
 import { StarRating } from "./starRating";
 import { Dropdown } from "../dropdown";
-import { Heart, Star } from "react-feather";
+
+import type { Movie } from "@/app/movies/[id]/page";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",
@@ -16,11 +18,10 @@ const placeholderIcon = {
 };
 
 interface MovieInfoProps {
-  movie: Movies;
-  directors: string[];
+  movie: Movie;
 }
 
-export const MovieInfo = ({ movie, directors }: MovieInfoProps) => {
+export const MovieInfo = ({ movie }: MovieInfoProps) => {
   const [watched, setWatched] = useState<boolean>(false);
   const [favorite, setFavorite] = useState<boolean>(false);
   const [watchlist, setWatchlist] = useState<boolean>(false);
@@ -31,6 +32,12 @@ export const MovieInfo = ({ movie, directors }: MovieInfoProps) => {
     setUserRating(rating);
   };
 
+  const minutesToHoursAndMinutesString = (totalMinutes: number): string => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours} h ${minutes} min`;
+  };
+
   return (
     <div className="movie-content">
       <div className="wrapper">
@@ -38,7 +45,7 @@ export const MovieInfo = ({ movie, directors }: MovieInfoProps) => {
         <div
           className="img"
           style={{
-            background: `URL(${movie.poster_path})`,
+            background: `URL(${movie.posterPath})`,
             backgroundPosition: "center",
             backgroundSize: "cover",
           }}
@@ -48,20 +55,18 @@ export const MovieInfo = ({ movie, directors }: MovieInfoProps) => {
 
         <div className="info">
           <div className="rating">
-            <div className="current-rating">{movie.vote_average ? movie.vote_average.toFixed(1) : null}</div>
+            <div className="current-rating">{movie.voteAverage ? movie.voteAverage.toFixed(1) : null}</div>
             <StarRating onChange={handleRatingChange} />
           </div>
           <div className="basic-data">
             <h1>{movie.title}</h1>
 
             <div className="data-row">
-              {directors.length > 0 ? <p className="yellow">Directed by {directors.join(", ")}</p> : null}
-              <p className="cyan">
-                {movie.release_date ? new Date(movie.release_date as Date).getFullYear().toString() : null}
-              </p>
-              {/* No data for age restrictions yet */}
-              <p className="cyan">(?)</p>
-              <p className="cyan">{movie.runtime ? movie.runtime : null} min</p>
+              {movie.directors.length > 0 ? <p className="yellow">Directed by {movie.directors.join(", ")}</p> : null}
+              <p className="cyan">{movie.releaseYear ? movie.releaseYear : null}</p>
+              {/* No real data for age restrictions yet */}
+              <p className="cyan">{movie.ageRestrictions}</p>
+              <p className="cyan">{movie.runtime ? minutesToHoursAndMinutesString(movie.runtime) : null}</p>
             </div>
             <p className="movie-description">{movie.overview}</p>
           </div>

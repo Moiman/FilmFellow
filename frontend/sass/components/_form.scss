@@ -216,7 +216,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .form-group-icon:focus {
-  outline: none;
+  outline: 1px rgba(abstracts.$primary-grey, 0.5) solid;
 }
 
 .form-group {

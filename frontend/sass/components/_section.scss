@@ -9,6 +9,9 @@
   border: 1px solid abstracts.$primary-dark;
   border-radius: abstracts.$default-border-radius;
 }
+.section:last-child {
+  margin: auto;
+}
 
 .section-header {
   background-color: abstracts.$primary-darkgrey;

@@ -123,6 +123,7 @@ describe("Api update tests", () => {
       expect(response.body.error).to.eq("Not Authorized");
     });
   });
+
   it("Try to update user details with empty body", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
@@ -135,6 +136,7 @@ describe("Api update tests", () => {
       expect(response.body.error).to.eq("Missing email, password, username or role");
     });
   });
+
   it("Try to update user details with faulty values", () => {
     const changeUserDetails = {
       username: "t",
@@ -152,6 +154,7 @@ describe("Api update tests", () => {
       expect(res.status).to.eq(400);
     });
   });
+
   it("Try to update other user username than yourself without beign admin", () => {
     const changeUserDetails = {
       username: "something",
@@ -168,6 +171,7 @@ describe("Api update tests", () => {
       expect(res.body.error).to.eq("Cant change other user details unless admin");
     });
   });
+
   it("Try to update other user email than yourself without beign admin", () => {
     const changeUserDetails = {
       email: "test@testing.com",
@@ -184,6 +188,7 @@ describe("Api update tests", () => {
       expect(res.body.error).to.eq("Cant change other user details unless admin");
     });
   });
+
   it("Try to update other user password than yourself without beign admin", () => {
     const changeUserDetails = {
       password: "newPassword1!",
@@ -200,6 +205,7 @@ describe("Api update tests", () => {
       expect(res.body.error).to.eq("Cant change other user details unless admin");
     });
   });
+
   it("Try to update username with false id", () => {
     const changeuserDetails = {
       username: "newusername",
@@ -323,6 +329,7 @@ describe("Api update tests", () => {
 
 describe("Api delete tests", () => {
   const user = { email: "test@testing.com", password: "newPassword1!" };
+
   it("Try to delete user without authorization", () => {
     cy.request({
       method: "DELETE",

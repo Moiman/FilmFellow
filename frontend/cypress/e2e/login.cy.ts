@@ -5,6 +5,7 @@ describe("Registration tests", () => {
     cy.get('button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 4);
   });
+
   it("Successfully register user", () => {
     cy.visit("/register");
     cy.url().should("eq", Cypress.env("baseUrl") + "/register");
@@ -47,6 +48,7 @@ describe("Login tests", () => {
     cy.get('button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 2);
   });
+
   it("Try to login with false username / password", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");
@@ -55,6 +57,7 @@ describe("Login tests", () => {
     cy.get('button[type="submit"]').click();
     cy.contains("Credentials doesnt match").should("be.visible");
   });
+
   it("Successfully login user", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");
@@ -79,6 +82,7 @@ describe("Test Links in login && register", () => {
       .click();
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
   });
+
   it("Try register link on loginpage", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");
@@ -91,6 +95,7 @@ describe("Test Links in login && register", () => {
       .click();
     cy.url().should("eq", Cypress.env("baseUrl") + "/register");
   });
+
   it("Try login link on registerpage", () => {
     cy.visit("/register");
     cy.url().should("eq", Cypress.env("baseUrl") + "/register");
@@ -120,6 +125,7 @@ describe("Login form and register form show password test", () => {
       .click();
     cy.get('input[type="text"]').should("be.visible");
   });
+
   it("Should show password on register form as text", () => {
     cy.visit("/register");
     cy.url().should("eq", Cypress.env("baseUrl") + "/register");
@@ -144,6 +150,7 @@ describe("Protected route tests", () => {
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
     cy.get("button").contains("Sign Out").click();
   });
+
   it("Try to go to login page as logged in user", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");

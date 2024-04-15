@@ -26,6 +26,23 @@ test("renders MovieInfo component with given movie data", () => {
   expect(getByText("This is a test movie overview")).toBeDefined();
 });
 
+test('does not render "Directed by" when directors array is empty', () => {
+  const movie = {
+    title: "Test Movie",
+    directors: [],
+    releaseYear: 2022,
+    ageRestrictions: "PG-13",
+    runtime: 150,
+    overview: "This is a test movie overview",
+    posterPath: "test_poster.jpg",
+    voteAverage: 7.55,
+  };
+
+  const { queryByText } = render(<MovieInfo movie={movie} />);
+
+  expect(queryByText("Directed by")).toBeNull();
+});
+
 test("handles button clicks correctly", () => {
   const { getByText } = render(<MovieInfo movie={mockedMovie} />);
   const markAsWatchedButton = getByText("Mark as watched");

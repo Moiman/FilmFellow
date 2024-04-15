@@ -33,9 +33,13 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
   };
 
   const minutesToHoursAndMinutesString = (totalMinutes: number): string => {
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    return `${hours} h ${minutes} min`;
+    if (totalMinutes < 60) {
+      return `${totalMinutes} min`;
+    } else {
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      return `${hours} h ${minutes} min`;
+    }
   };
 
   return (

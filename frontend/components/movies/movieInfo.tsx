@@ -55,7 +55,7 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
 
         <div className="movie-info">
           <div className="movie-rating">
-            <div className="current-rating">{movie.voteAverage ? movie.voteAverage.toFixed(1) : null}</div>
+            <div className="current-rating">{movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}</div>
             <StarRating onChange={handleRatingChange} />
           </div>
           <div className="basic-data">

@@ -19,71 +19,73 @@ export type Movie = {
 };
 
 type CrewMember = {
-  credit_id: string;
-  movieId: number;
   personId: number;
   department: string;
-  job: string;
+};
+
+const getDirectorNames = async (directorIds: number[]) => {
+  try {
+    const directorNameResponses = await Promise.all(
+      directorIds.map(directorId => fetch("/api/persons/" + directorId).then(response => response.json())),
+    );
+
+    const directorNames = directorNameResponses.map(response => response.name);
+
+    return directorNames;
+  } catch (error) {
+    console.error("Error fetching director names:", error);
+    return [];
+  }
+};
+
+const getMovie = async (movieId: string) => {
+  try {
+    const movieData = await fetch("/api/movies/" + movieId).then(response => response.json());
+
+    if (!movieData.error) {
+      const { title, poster_path, overview, runtime, release_date, vote_average, crew } = movieData;
+
+      const directors = crew
+        .filter((member: CrewMember) => member.department === "Directing")
+        .map((director: CrewMember) => director.personId);
+
+      const directorNames = await getDirectorNames(directors);
+
+      const movie: Movie = {
+        title: title,
+        posterPath: poster_path,
+        overview: overview,
+        runtime: runtime,
+        releaseYear: new Date(release_date).getFullYear(),
+        voteAverage: vote_average,
+        directors: directorNames,
+        // No age restriction data yet
+        ageRestrictions: "?",
+      };
+
+      return movie;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching movie data:", error);
+    return null;
+  }
 };
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
-    const getMovie = async () => {
-      try {
-        const movieData = await fetch("/api/movies/" + params.id).then(response => response.json());
-
-        if (!movieData.error) {
-          const { title, poster_path, overview, runtime, release_date, vote_average, crew } = movieData;
-
-          const directors = crew
-            .filter((member: CrewMember) => member.department === "Directing")
-            .map((director: CrewMember) => director.personId);
-
-          const directorNames = await getDirectorNames(directors);
-
-          const movie: Movie = {
-            title: title,
-            posterPath: poster_path,
-            overview: overview,
-            runtime: runtime,
-            releaseYear: new Date(release_date).getFullYear(),
-            voteAverage: vote_average,
-            directors: directorNames,
-            // No age restriction data yet
-            ageRestrictions: "?",
-          };
-
-          setMovie(movie);
-          setIsLoading(false);
-        } else {
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching movie data:", error);
-      }
-    };
-
-    getMovie();
-  }, [params.id]);
-
-  const getDirectorNames = async (directorIds: number[]) => {
-    try {
-      const directorNameResponses = await Promise.all(
-        directorIds.map(directorId => fetch("/api/persons/" + directorId).then(response => response.json())),
-      );
-
-      const directorNames = directorNameResponses.map(response => response.name);
-
-      return directorNames;
-    } catch (error) {
-      console.error("Error fetching director names:", error);
-      return [];
+    async function fetchData() {
+      const movieData = await getMovie(params.id);
+      setMovie(movieData);
+      setIsLoading(false);
     }
-  };
+
+    fetchData();
+  }, [params.id]);
 
   if (isLoading) {
     return (
@@ -91,8 +93,6 @@ export default function Movie({ params }: { params: { id: string } }) {
         <Star />
       </main>
     );
-  } else if (!isLoading && !movie) {
-    notFound();
   }
 
   if (!movie) {

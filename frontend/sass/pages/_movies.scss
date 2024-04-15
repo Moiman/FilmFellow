@@ -18,7 +18,7 @@
   flex-direction: column;
 
   @media only screen and (max-width: abstracts.$large-width) {
-    .wrapper {
+    .movie-wrapper {
       flex-direction: column;
 
       .img {
@@ -28,7 +28,7 @@
     }
   }
 
-  .wrapper {
+  .movie-wrapper {
     display: flex;
     width: 100%;
 
@@ -63,7 +63,7 @@
       }
     }
 
-    .info {
+    .movie-info {
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -75,7 +75,7 @@
         line-height: 3.4rem;
       }
 
-      .rating {
+      .movie-rating {
         display: inline-flex;
         align-items: center;
         gap: 20px;

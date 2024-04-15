@@ -53,6 +53,7 @@ export default function Movie({ params }: { params: { id: string } }) {
             releaseYear: new Date(release_date).getFullYear(),
             voteAverage: vote_average,
             directors: directorNames,
+            // No age restriction data yet
             ageRestrictions: "?",
           };
 
@@ -66,8 +67,8 @@ export default function Movie({ params }: { params: { id: string } }) {
       }
     };
 
-    getMovie(); // Call the getMovie function
-  }, [params.id]); // Dependency array with params.id
+    getMovie();
+  }, [params.id]);
 
   const getDirectorNames = async (directorIds: number[]) => {
     try {
@@ -75,7 +76,6 @@ export default function Movie({ params }: { params: { id: string } }) {
         directorIds.map(directorId => fetch("/api/persons/" + directorId).then(response => response.json())),
       );
 
-      // Extracting director names from responses
       const directorNames = directorNameResponses.map(response => response.name);
 
       return directorNames;

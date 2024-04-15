@@ -40,7 +40,7 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
 
   return (
     <div className="movie-content">
-      <div className="wrapper">
+      <div className="movie-wrapper">
         {/* Img not working until we have posters to path to, can be tested with any img url until then */}
         <div
           className="img"
@@ -53,8 +53,8 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
           <div className="gradient" />
         </div>
 
-        <div className="info">
-          <div className="rating">
+        <div className="movie-info">
+          <div className="movie-rating">
             <div className="current-rating">{movie.voteAverage ? movie.voteAverage.toFixed(1) : null}</div>
             <StarRating onChange={handleRatingChange} />
           </div>
@@ -63,10 +63,9 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
 
             <div className="data-row">
               {movie.directors.length > 0 ? <p className="yellow">Directed by {movie.directors.join(", ")}</p> : null}
-              <p className="cyan">{movie.releaseYear ? movie.releaseYear : null}</p>
-              {/* No real data for age restrictions yet */}
-              <p className="cyan">{movie.ageRestrictions}</p>
-              <p className="cyan">{movie.runtime ? minutesToHoursAndMinutesString(movie.runtime) : null}</p>
+              {movie.releaseYear ? <p className="cyan">{movie.releaseYear}</p> : null}
+              {movie.ageRestrictions ? <p className="cyan">{movie.ageRestrictions}</p> : null}
+              {movie.runtime ? <p className="cyan">{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
             </div>
             <p className="movie-description">{movie.overview}</p>
           </div>

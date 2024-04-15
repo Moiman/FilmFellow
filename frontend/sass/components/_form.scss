@@ -22,6 +22,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"] {
   padding: 5px 10px;
+  padding-right: 30px;
 }
 
 textarea {
@@ -187,13 +188,27 @@ input[type="range"]::-moz-range-thumb {
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: center;
+  a {
+    text-decoration: underline;
+  }
+  p {
+    font-family: abstracts.$default-title-font;
+    font-size: abstracts.$a-font-size;
+    font-weight: 300;
+    color: abstracts.$primary-light;
+    padding: 0.2em 0.6em;
+  }
 }
 
 .form-group-icon {
   position: absolute;
-  background-color: inherit;
   right: 0;
   top: 0;
+  height: 100%;
+
+  svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
 }
 
 .form-group-icon:hover {
@@ -206,16 +221,4 @@ input[type="range"]::-moz-range-thumb {
 
 .form-group {
   position: relative;
-}
-
-.form-route-change-link-style {
-  text-decoration: underline;
-}
-
-.form-route-change-p {
-  font-family: abstracts.$default-title-font;
-  font-size: abstracts.$a-font-size;
-  font-weight: 300;
-  color: abstracts.$primary-light;
-  padding: 0.2em 0.6em;
 }

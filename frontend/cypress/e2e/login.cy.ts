@@ -14,7 +14,7 @@ describe("Registration tests", () => {
     cy.get('input[name="username"]').type("testuser");
     cy.get('input[name="email"]').type("test@gmail.com");
     cy.get('input[name="password"]').type("Password1!");
-    cy.get('input[name="retypepassword"]').type("Password1!");
+    cy.get('input[name="confirmPassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
     cy.get("button").contains("Sign Out");
     cy.get("button").contains("Sign Out").click();
@@ -26,7 +26,7 @@ describe("Registration tests", () => {
     cy.get('input[name="username"]').type("testuser123");
     cy.get('input[name="email"]').type("test@gmail.com");
     cy.get('input[name="password"]').type("Password1!");
-    cy.get('input[name="retypepassword"]').type("Password1!");
+    cy.get('input[name="confirmPassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
     cy.contains("User already exists with that email").should("be.visible");
   });
@@ -37,7 +37,7 @@ describe("Registration tests", () => {
     cy.get('input[name="username"]').type("testuser");
     cy.get('input[name="email"]').type("testemail@gmail.com");
     cy.get('input[name="password"]').type("Password1!");
-    cy.get('input[name="retypepassword"]').type("Password1!");
+    cy.get('input[name="confirmPassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
     cy.contains("User already exists with that username").should("be.visible");
   });
@@ -136,9 +136,9 @@ describe("Login form and register form show password test", () => {
     cy.get('input[name="password"]').type("Password1!");
     cy.get('input[name="retypepassword"]').type("Password1!");
     cy.get('[data-cy="show-password"]').click();
-    cy.get('[data-cy="show-retypepassword"]').click();
+    cy.get('[data-cy="show-confirm-password"]').click();
     cy.get('input[name="password"]').should("be.visible");
-    cy.get('input[name="retypepassword"]').should("be.visible");
+    cy.get('input[name="confirmPassword"]').should("be.visible");
   });
 });
 

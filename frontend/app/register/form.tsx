@@ -66,7 +66,7 @@ export default function Register() {
 
     const response = await signIn("register", {
       ...credentials,
-       redirect: false,
+      redirect: false,
     });
     if (response?.error) {
       setError(response.error);
@@ -118,38 +118,30 @@ export default function Register() {
               />
               <button
                 data-cy="show-password"
-                className="form-group-icon"
+                className="form-group-icon button-transparent"
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                ) : (
-                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                )}
+                {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
             {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
-            <label htmlFor="retypepassword">Confirm Password</label>
+            <label htmlFor="confirmPassword">Confirm Password</label>
             <div className="form-group">
               <input
-                id="retypepassword"
+                id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 {...register("confirmPassword")}
                 required
                 autoComplete="new-password"
               />
               <button
-                data-cy="show-retypepassword"
-                className="form-group-icon"
+                data-cy="show-confirm-password"
+                className="form-group-icon button-transparent"
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                {showConfirmPassword ? (
-                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                ) : (
-                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                )}
+                {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
             {errors?.confirmPassword && <p className="error-text">{errors?.confirmPassword?.message}</p>}
@@ -167,13 +159,8 @@ export default function Register() {
               {error}
             </p>
             <div className="form-route-change">
-              <p className="form-route-change-p">Already have an account? </p>
-              <Link
-                className="form-route-change-link-style"
-                href="/login"
-              >
-                Login
-              </Link>
+              <p>Already have an account? </p>
+              <Link href="/login">Login</Link>
             </div>
           </form>
         </Section>

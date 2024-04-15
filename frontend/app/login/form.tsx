@@ -86,15 +86,11 @@ export default function Login() {
                 autoComplete="current-password"
               />
               <button
-                className="form-group-icon"
+                className="form-group-icon button-transparent"
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <Eye style={{ fill: "white", stroke: "#FFC700" }} />
-                ) : (
-                  <EyeOff style={{ fill: "white", stroke: "#FFC700" }} />
-                )}
+                {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
             {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
@@ -112,19 +108,9 @@ export default function Login() {
               {error}
             </p>
             <div className="form-route-change">
-              <Link
-                className="form-route-change-link-style"
-                href="/"
-              >
-                Cant login?
-              </Link>
-              <p className="form-route-change-p"> / </p>
-              <Link
-                className="form-route-change-link-style"
-                href="/register"
-              >
-                Register
-              </Link>
+              <Link href="/">Cant login?</Link>
+              <p> / </p>
+              <Link href="/register">Register</Link>
             </div>
           </form>
         </Section>

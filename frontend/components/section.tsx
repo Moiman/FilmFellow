@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 interface SectionProps {
   header: string | ReactElement;
-  children: ReactElement;
+  children: React.ReactNode;
 }
 
 export const Section = ({ header, children }: SectionProps) => {

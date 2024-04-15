@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
           email: credentials?.email,
           password: credentials?.password,
         };
-        const resp = await fetch(frontURL + "/api/register", {
+        const resp = await fetch(frontURL + "/api/users/register", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
           email: credentials?.email,
           password: credentials?.password,
         };
-        const resp = await fetch(frontURL + "/api/login", {
+        const resp = await fetch(frontURL + "/api/users/login", {
           method: "POST",
           headers: {
             Accept: "application/json",

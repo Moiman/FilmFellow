@@ -114,7 +114,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       return NextResponse.json(
         { error: "Cant change other user details unless admin" },
         {
-          status: 400,
+          status: 401,
         },
       );
     }

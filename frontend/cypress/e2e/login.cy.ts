@@ -3,10 +3,7 @@ describe("Registration tests", () => {
     cy.visit("/register");
     cy.url().should("eq", Cypress.env("baseUrl") + "/register");
     cy.get('button[type="submit"]').click();
-    cy.contains("Email is required").should("be.visible");
-    cy.contains("Username is required").should("be.visible");
-    cy.contains("Password is required").should("be.visible");
-    cy.contains("Confirm password is required").should("be.visible");
+    cy.get("input:invalid").should("have.length", 4);
   });
   it("Successfully register user", () => {
     cy.visit("/register");
@@ -48,8 +45,7 @@ describe("Login tests", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");
     cy.get('button[type="submit"]').click();
-    cy.contains("Email is required", { timeout: 1000 }).should("be.visible");
-    cy.contains("Password is required", { timeout: 1000 }).should("be.visible");
+    cy.get("input:invalid").should("have.length", 2);
   });
   it("Try to login with false username / password", () => {
     cy.visit("/login");
@@ -79,8 +75,6 @@ describe("Test Links in login && register", () => {
       .should("be.visible")
       .find(".form-route-change")
       .should("be.visible")
-      .find(".form-route-change-link-style")
-      .should("be.visible")
       .contains("Cant login?")
       .click();
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
@@ -93,8 +87,6 @@ describe("Test Links in login && register", () => {
       .should("be.visible")
       .find(".form-route-change")
       .should("be.visible")
-      .find(".form-route-change-link-style")
-      .should("be.visible")
       .contains("Register")
       .click();
     cy.url().should("eq", Cypress.env("baseUrl") + "/register");
@@ -106,8 +98,6 @@ describe("Test Links in login && register", () => {
       .find(".section-content")
       .should("be.visible")
       .find(".form-route-change")
-      .should("be.visible")
-      .find(".form-route-change-link-style")
       .should("be.visible")
       .contains("Login")
       .click();
@@ -134,7 +124,7 @@ describe("Login form and register form show password test", () => {
     cy.visit("/register");
     cy.url().should("eq", Cypress.env("baseUrl") + "/register");
     cy.get('input[name="password"]').type("Password1!");
-    cy.get('input[name="retypepassword"]').type("Password1!");
+    cy.get('input[name="confirmPassword"]').type("Password1!");
     cy.get('[data-cy="show-password"]').click();
     cy.get('[data-cy="show-confirm-password"]').click();
     cy.get('input[name="password"]').should("be.visible");

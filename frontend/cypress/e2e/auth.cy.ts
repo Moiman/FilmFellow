@@ -7,7 +7,7 @@ describe("Api login and register tests", () => {
     cy.login(email, password);
     cy.request({
       method: "DELETE",
-      url: "/api/delete",
+      url: "/api/users/delete",
     });
     Cypress.session.clearAllSavedSessions();
   });
@@ -15,7 +15,7 @@ describe("Api login and register tests", () => {
   it("Login without account", () => {
     cy.request({
       method: "POST",
-      url: "/api/login",
+      url: "/api/users/login",
       failOnStatusCode: false,
       body: {
         email: "mattiMuaEiOleOlemassa@matti.ei",
@@ -31,7 +31,7 @@ describe("Api login and register tests", () => {
   it("Login with invalid email", () => {
     cy.request({
       method: "POST",
-      url: "/api/login",
+      url: "/api/users/login",
       failOnStatusCode: false,
       body: {
         email: "a",
@@ -47,7 +47,7 @@ describe("Api login and register tests", () => {
   it("Register with invalid email", () => {
     cy.request({
       method: "POST",
-      url: "/api/register",
+      url: "/api/users/register",
       failOnStatusCode: false,
       body: {
         email: "a",
@@ -64,7 +64,7 @@ describe("Api login and register tests", () => {
   it("Register", () => {
     cy.request({
       method: "POST",
-      url: "/api/register",
+      url: "/api/users/register",
       body: {
         email,
         username,
@@ -90,14 +90,14 @@ const secondNewUser = {
 let secondNewUserId = "";
 describe("Register dummy users for tests", () => {
   it("Create 2 dummy users", () => {
-    cy.request({ method: "POST", url: "/api/register", body: firstNewUser, failOnStatusCode: false }).should(
+    cy.request({ method: "POST", url: "/api/users/register", body: firstNewUser, failOnStatusCode: false }).should(
       response => {
         expect(response.status).to.eq(200);
         expect(response.body.email).to.equal(firstNewUser.email);
         firstNewUserId = response.body.id;
       },
     );
-    cy.request({ method: "POST", url: "/api/register", body: secondNewUser, failOnStatusCode: false }).should(
+    cy.request({ method: "POST", url: "/api/users/register", body: secondNewUser, failOnStatusCode: false }).should(
       response => {
         expect(response.status).to.eq(200);
         expect(response.body.email).to.equal(secondNewUser.email);
@@ -115,7 +115,7 @@ describe("Api update tests", () => {
     };
     cy.request({
       method: "PUT",
-      url: `/api/update/${firstNewUserId}`,
+      url: `/api/users/update/${firstNewUserId}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(response => {
@@ -127,7 +127,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${firstNewUserId}`,
+      url: `/api/users/update/${firstNewUserId}`,
       failOnStatusCode: false,
       body: {},
     }).should(response => {
@@ -145,7 +145,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${firstNewUserId}`,
+      url: `/api/users/update/${firstNewUserId}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
@@ -160,11 +160,11 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${secondNewUserId}`,
+      url: `/api/users/update/${secondNewUserId}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
-      expect(res.status).to.eq(400);
+      expect(res.status).to.eq(401);
       expect(res.body.error).to.eq("Cant change other user details unless admin");
     });
   });
@@ -176,11 +176,11 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${secondNewUserId}`,
+      url: `/api/users/update/${secondNewUserId}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
-      expect(res.status).to.eq(400);
+      expect(res.status).to.eq(401);
       expect(res.body.error).to.eq("Cant change other user details unless admin");
     });
   });
@@ -192,11 +192,11 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${secondNewUserId}`,
+      url: `/api/users/update/${secondNewUserId}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
-      expect(res.status).to.eq(400);
+      expect(res.status).to.eq(401);
       expect(res.body.error).to.eq("Cant change other user details unless admin");
     });
   });
@@ -208,7 +208,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${123456789}`,
+      url: `/api/users/update/${123456789}`,
       failOnStatusCode: false,
       body: changeuserDetails,
     }).should(res => {
@@ -225,11 +225,11 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${firstNewUserId}`,
+      url: `/api/users/update`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
-      expect(res.status).to.eq(400);
+      expect(res.status).to.eq(401);
       expect(res.body.error).to.eq("Cant change user role unless admin");
     });
   });
@@ -242,7 +242,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${firstNewUserId}`,
+      url: `/api/users/update`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
@@ -259,7 +259,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${firstNewUserId}`,
+      url: `/api/users/update`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
@@ -276,7 +276,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${-123}`,
+      url: `/api/users/update/${-123}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
@@ -293,7 +293,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${"abcdef"}`,
+      url: `/api/users/update/${"abcdef"}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
@@ -312,7 +312,7 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/update/${firstNewUserId}`,
+      url: `/api/users/update`,
       body: changedUserDetails,
     }).should(res => {
       expect(res.status).to.eq(200);
@@ -326,7 +326,7 @@ describe("Api delete tests", () => {
   it("Try to delete user without authorization", () => {
     cy.request({
       method: "DELETE",
-      url: `/api/delete/${firstNewUserId}`,
+      url: `/api/users/delete/${firstNewUserId}`,
       failOnStatusCode: false,
     }).should(res => {
       expect(res.status).to.eq(401);
@@ -338,7 +338,7 @@ describe("Api delete tests", () => {
     cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
-      url: `/api/delete/${secondNewUserId}`,
+      url: `/api/users/delete/${secondNewUserId}`,
       failOnStatusCode: false,
     }).should(res => {
       expect(res.status).to.eq(401);
@@ -350,11 +350,11 @@ describe("Api delete tests", () => {
     cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
-      url: `/api/delete/${123456789}`,
+      url: `/api/users/delete/${123456789}`,
       failOnStatusCode: false,
     }).should(res => {
-      expect(res.status).to.eq(404);
-      expect(res.body.error).to.eq("User not found");
+      expect(res.status).to.eq(401);
+      expect(res.body.error).to.eq("Cant delete other users unless admin");
     });
   });
 
@@ -362,7 +362,7 @@ describe("Api delete tests", () => {
     cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
-      url: `/api/delete/${-123}`,
+      url: `/api/users/delete/${-123}`,
       failOnStatusCode: false,
     }).should(res => {
       expect(res.status).to.eq(400);
@@ -374,7 +374,7 @@ describe("Api delete tests", () => {
     cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
-      url: `/api/delete/${"abcdef"}`,
+      url: `/api/users/delete/${"abcdef"}`,
       failOnStatusCode: false,
     }).should(res => {
       expect(res.status).to.eq(400);
@@ -386,7 +386,7 @@ describe("Api delete tests", () => {
     cy.login(user.email, user.password);
     cy.request({
       method: "DELETE",
-      url: `/api/delete/${firstNewUserId}`,
+      url: `/api/users/delete`,
     }).should(res => {
       expect(res.status).to.eq(200);
     });
@@ -397,7 +397,7 @@ describe("Api delete tests", () => {
     cy.login(secondNewUser.email, secondNewUser.password);
     cy.request({
       method: "DELETE",
-      url: `/api/delete/${secondNewUserId}`,
+      url: `/api/users/delete`,
     }).should(res => {
       expect(res.status).to.eq(200);
     });

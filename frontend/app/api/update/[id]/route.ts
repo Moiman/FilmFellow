@@ -69,7 +69,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         },
       );
     }
-    if (session.user.id === userId || session.user.role === Role.admin) {
+    if (session.user.role === Role.admin) {
       if (email) {
         const foundEmail = await findUserByEmail(email);
         if (foundEmail) {

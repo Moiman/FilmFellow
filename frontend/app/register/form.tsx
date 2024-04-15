@@ -66,8 +66,7 @@ export default function Register() {
 
     const response = await signIn("register", {
       ...credentials,
-      redirect: true,
-      callbackUrl: "/",
+       redirect: false,
     });
     if (response?.error) {
       setError(response.error);

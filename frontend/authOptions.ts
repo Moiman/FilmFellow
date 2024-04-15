@@ -43,15 +43,11 @@ export const authOptions: NextAuthOptions = {
           body: JSON.stringify(registerCredentials),
         });
         const user = await resp.json();
-        console.log(user);
         if (user && resp.ok && !user.error) {
           return user;
         }
         if (user.error.message) {
           throw new Error(user.error.message);
-        }
-        if (user.error.name) {
-          throw new Error("Internal server error");
         } else {
           throw new Error(user.error);
         }
@@ -84,15 +80,11 @@ export const authOptions: NextAuthOptions = {
         });
 
         const user = await resp.json();
-
         if (user && resp.ok && !user.error) {
           return user;
         }
         if (user.error.message) {
           throw new Error(user.error.message);
-        }
-        if (user.error.name) {
-          throw new Error("Internal server error");
         } else {
           throw new Error(user.error);
         }

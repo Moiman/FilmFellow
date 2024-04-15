@@ -28,14 +28,8 @@ test("renders MovieInfo component with given movie data", () => {
 
 test('does not render "Directed by" when directors array is empty', () => {
   const movie = {
-    title: "Test Movie",
+    ...mockedMovie,
     directors: [],
-    releaseYear: 2022,
-    ageRestrictions: "PG-13",
-    runtime: 150,
-    overview: "This is a test movie overview",
-    posterPath: "test_poster.jpg",
-    voteAverage: 7.55,
   };
 
   const { queryByText } = render(<MovieInfo movie={movie} />);

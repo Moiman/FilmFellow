@@ -80,6 +80,10 @@
         align-items: center;
         gap: 20px;
 
+        button {
+          padding: 0;
+        }
+
         .current-rating {
           border-radius: 50%;
           background-color: abstracts.$primary-dark;
@@ -94,10 +98,6 @@
           letter-spacing: abstracts.$title-letter-spacing;
           color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
           font-size: 1.6rem;
-
-          & > * {
-            margin: auto;
-          }
         }
       }
 
@@ -165,7 +165,7 @@
             align-items: center;
             max-height: fit-content;
             min-width: fit-content;
-            gap: 10px;
+            gap: 5px;
           }
         }
 
@@ -207,7 +207,7 @@
   }
 }
 
-.websites {
+.movie-streaming-sites {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;

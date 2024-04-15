@@ -17,17 +17,21 @@ export const StarRating = ({ onChange }: StarRatingProps) => {
   };
 
   return (
-    <div>
+    <div style={{ display: "inline-flex" }}>
       {[1, 2, 3, 4, 5].map(index => (
-        <Star
-          key={index}
+        <button
           onClick={() => handleClick(index)}
-          stroke={rating >= index ? "#ffc700" : "#eff2f2"}
-          fill={rating >= index ? "#ffc700" : "#eff2f2"}
-          strokeWidth={2}
-          size={30}
-          style={{ cursor: "pointer" }}
-        />
+          className="button-transparent"
+          key={index}
+        >
+          <Star
+            stroke={rating >= index ? "#ffc700" : "#eff2f2"}
+            fill={rating >= index ? "#ffc700" : "#eff2f2"}
+            strokeWidth={2}
+            size={30}
+            style={{ cursor: "pointer" }}
+          />
+        </button>
       ))}
     </div>
   );

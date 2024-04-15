@@ -74,6 +74,7 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
             <p className="movie-description">{movie.overview}</p>
           </div>
 
+          {/* Buttons not working yet, functionality comes later */}
           <div className="all-buttons">
             <div className="buttons">
               <Dropdown
@@ -110,7 +111,7 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
           </div>
         </div>
       </div>
-      <div className="websites">
+      <div className="movie-streaming-sites">
         <h6>Watch at:</h6>
         <p style={placeholderIcon}>icon</p>
         <p style={placeholderIcon}>icon</p>

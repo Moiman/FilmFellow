@@ -89,7 +89,7 @@ $total-colors: length(abstracts.$highlight-colors);
 
   .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}) {
     &:hover,
-    &:focus {
+    &:focus-visible {
       color: $default-color;
     }
   }

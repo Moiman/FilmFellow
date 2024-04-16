@@ -11,6 +11,10 @@ body {
   text-decoration: none;
 }
 
+button:focus {
+  outline: none;
+}
+
 menu,
 ol,
 ul {

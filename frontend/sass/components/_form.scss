@@ -29,8 +29,8 @@ textarea {
   padding: 10px;
 }
 
-input:focus,
-textarea:focus {
+input:focus-visible,
+textarea:focus-visible {
   outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
 }
 

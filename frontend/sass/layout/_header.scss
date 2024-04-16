@@ -61,6 +61,15 @@ header {
     background-color: rgba(abstracts.$primary-light, 0.1);
     flex: 1;
     display: flex;
+
+    button:focus,
+    input:focus {
+      outline: 0;
+    }
+
+    button:focus-visible {
+      outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+    }
   }
 
   .searchbar-input {
@@ -70,6 +79,10 @@ header {
     border: 0;
     color: abstracts.$primary-light;
     border-radius: 20px 4px 4px 20px;
+  }
+
+  .searchbar:focus-within {
+    outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
   }
 
   .searchbar-icon {

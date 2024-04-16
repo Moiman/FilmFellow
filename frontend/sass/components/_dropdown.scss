@@ -30,7 +30,7 @@
     padding: 10px;
     border: 1px solid abstracts.$primary-dark;
 
-    &:focus {
+    &:focus-visible {
       outline: 1px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     }
   }
@@ -72,7 +72,7 @@
         background-color: rgba(abstracts.$primary-dark, 0.5);
       }
 
-      &:focus {
+      &:focus-visible {
         color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
         outline: 0;
       }

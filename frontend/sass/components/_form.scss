@@ -215,7 +215,7 @@ input[type="range"]::-moz-range-thumb {
   background-color: inherit;
 }
 
-.form-group-icon:focus {
+.form-group-icon:focus-visible {
   outline: 1px rgba(abstracts.$primary-grey, 0.5) solid;
 }
 

@@ -21,7 +21,6 @@ describe("Registration tests", () => {
       cy.get('button[type="submit"]').click();
       cy.get('[data-cy="menu-icon"]').click();
       cy.get('.dropdown a[href="/"]').contains("Logout").click();
-
     },
   );
 
@@ -154,7 +153,6 @@ describe("Protected route tests", () => {
       cy.get('.dropdown a[href="/"]').contains("Logout");
       cy.visit("/register");
       cy.url().should("eq", Cypress.env("baseUrl") + "/");
-
     },
   );
 
@@ -173,7 +171,6 @@ describe("Protected route tests", () => {
       cy.get('.dropdown a[href="/"]').contains("Logout");
       cy.visit("/login");
       cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      
     },
   );
 });

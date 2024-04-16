@@ -98,14 +98,6 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         user.username = username;
       }
       if (role) {
-        if (user.role !== Role.admin) {
-          return NextResponse.json(
-            { error: "Cant change user role unless admin" },
-            {
-              status: 400,
-            },
-          );
-        }
         user.role = role;
       }
       const updatedUser = await updateUser(userId, user);

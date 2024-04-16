@@ -70,19 +70,6 @@ describe("Login tests", () => {
 });
 
 describe("Test Links in login && register", () => {
-  it("Try Cant login link on loginpage", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get(".section-wrapper")
-      .find(".section-content")
-      .should("be.visible")
-      .find(".form-route-change")
-      .should("be.visible")
-      .contains("Cant login?")
-      .click();
-    cy.url().should("eq", Cypress.env("baseUrl") + "/");
-  });
-
   it("Try register link on loginpage", () => {
     cy.visit("/login");
     cy.url().should("eq", Cypress.env("baseUrl") + "/login");

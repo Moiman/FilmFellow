@@ -231,12 +231,12 @@ describe("Api update tests", () => {
     cy.login(firstNewUser.email, firstNewUser.password);
     cy.request({
       method: "PUT",
-      url: `/api/users/update`,
+      url: `/api/users/update/${firstNewUserId}`,
       failOnStatusCode: false,
       body: changeUserDetails,
     }).should(res => {
       expect(res.status).to.eq(401);
-      expect(res.body.error).to.eq("Cant change user role unless admin");
+      expect(res.body.error).to.eq("Cant change other user details unless admin");
     });
   });
 

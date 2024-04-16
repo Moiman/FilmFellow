@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Eye, EyeOff } from "react-feather";
 import Link from "next/link";
-import { Section } from "@/components/section";
 import { useRouter } from "next/navigation";
+import { Section } from "@/components/section";
 
 interface LoginFormData {
   email: string;
@@ -51,6 +51,7 @@ export default function Login() {
     }
     if (response.error) {
       setError(response.error);
+      return;
     }
     if (response.ok) {
       reset();
@@ -112,8 +113,6 @@ export default function Login() {
               {error}
             </p>
             <div className="form-route-change">
-              <Link href="/">Cant login?</Link>
-              <p> / </p>
               <Link href="/register">Register</Link>
             </div>
           </form>

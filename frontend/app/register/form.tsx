@@ -6,8 +6,9 @@ import * as yup from "yup";
 import { Eye, EyeOff } from "react-feather";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Section } from "@/components/section";
 import { useRouter } from "next/navigation";
+import { Section } from "@/components/section";
+
 
 interface RegisterFormData {
   username: string;
@@ -74,6 +75,7 @@ export default function Register() {
     }
     if (response.error) {
       setError(response.error);
+      return;
     }
     if (response.ok) {
       reset();

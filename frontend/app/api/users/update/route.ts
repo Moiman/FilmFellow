@@ -3,7 +3,6 @@ import argon2 from "argon2";
 import * as yup from "yup";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
-import { Role } from "@prisma/client";
 import { findUserByEmail, findUserById, findUserByUsername, updateUser } from "@/services/authService";
 
 const updateUserSchema = yup.object({
@@ -22,7 +21,6 @@ const updateUserSchema = yup.object({
     .matches(/^(?=.*[A-Z])/, "Password requires atleast 1 capital character")
     .matches(/^(?=.*[0-9])/, "Password requires atleast 1 number")
     .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
-  role: yup.string().optional().oneOf(Object.values(Role), "Role must be either admin, user or moderator"),
 });
 
 export async function PUT(req: NextRequest) {
@@ -41,10 +39,10 @@ export async function PUT(req: NextRequest) {
     const userId = Number(session.user.id);
 
     await updateUserSchema.validate(data, { abortEarly: false });
-    const { email, username, password, role } = data;
-    if (!email && !password && !username && !role) {
+    const { email, username, password } = data;
+    if (!email && !password && !username) {
       return NextResponse.json(
-        { error: "Missing email, password, username or role" },
+        { error: "Missing email, password, username" },
         {
           status: 400,
         },
@@ -87,17 +85,7 @@ export async function PUT(req: NextRequest) {
       }
       user.username = username;
     }
-    if (role) {
-      if (user.role !== Role.admin) {
-        return NextResponse.json(
-          { error: "Cant change user role unless admin" },
-          {
-            status: 401,
-          },
-        );
-      }
-      user.role = role;
-    }
+
     const updatedUser = await updateUser(userId, user);
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (err) {

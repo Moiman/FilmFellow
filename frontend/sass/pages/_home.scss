@@ -2,3 +2,20 @@
   flex: 1;
   padding: 40px 60px;
 }
+
+.poster-list {
+  display: flex;
+  flex-flow: row nowrap;
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+.poster-background {
+  width: 165px;
+  height: 225px;
+}
+
+.poster {
+  width: 100%;
+  aspect-ratio: auto 2/3;
+}

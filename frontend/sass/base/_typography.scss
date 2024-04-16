@@ -62,7 +62,7 @@ a:active {
   color: abstracts.$primary-light;
 }
 
-a:focus {
+a:focus-visible {
   color: rgba(abstracts.$primary-light, 0.75);
   outline: 0;
 }

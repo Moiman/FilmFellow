@@ -126,6 +126,7 @@ export default function Register() {
                 className="form-group-icon button-transparent"
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
               >
                 {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
@@ -145,6 +146,7 @@ export default function Register() {
                 className="form-group-icon button-transparent"
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                tabIndex={-1}
               >
                 {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>

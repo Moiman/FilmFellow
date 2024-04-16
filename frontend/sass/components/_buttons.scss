@@ -36,7 +36,7 @@ button:hover {
   background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
 }
 
-button:focus {
+button:focus-visible {
   outline: 2px rgba(abstracts.$primary-light, 0.5) solid;
 }
 
@@ -54,6 +54,6 @@ button:focus {
   background-color: transparent;
 }
 
-.button-transparent:focus {
+.button-transparent:focus-visible {
   outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
 }

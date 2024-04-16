@@ -3,12 +3,14 @@
 .section {
   width: 100%;
   margin: auto auto 20px auto;
+  overflow: hidden;
 
   box-shadow: abstracts.$default-shadow;
 
   border: 1px solid abstracts.$primary-dark;
   border-radius: abstracts.$default-border-radius;
 }
+
 .section:last-child {
   margin: auto;
 }

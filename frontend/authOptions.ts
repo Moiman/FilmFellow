@@ -73,8 +73,8 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
         const loginCredentials = {
-          email: credentials?.email,
-          password: credentials?.password,
+          email: credentials.email,
+          password: credentials.password,
         };
         const resp = await fetch(frontURL + "/api/users/login", {
           method: "POST",

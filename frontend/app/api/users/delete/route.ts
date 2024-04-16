@@ -1,7 +1,7 @@
-import { authOptions } from "@/authOptions";
-import { deleteUserById } from "@/services/authService";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { authOptions } from "@/authOptions";
+import { deleteUserById } from "@/services/authService";
 
 export async function DELETE() {
   try {

@@ -9,7 +9,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { Section } from "@/components/section";
 
-
 interface RegisterFormData {
   username: string;
   email: string;

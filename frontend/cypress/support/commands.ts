@@ -9,6 +9,20 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
+Cypress.Commands.add("login", (username, password) => {
+  cy.session([username, password], () => {
+    cy.visit("/login");
+    cy.get('input[name="email"]').type(username);
+    cy.get('input[name="password"]').type(password);
+    cy.get('button[type="submit"]').click();
+    cy.url().should("eq", Cypress.env("baseUrl") + "/");
+  });
+});
+declare namespace Cypress {
+  interface Chainable {
+    login(username: string, password: string): void;
+  }
+}
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })

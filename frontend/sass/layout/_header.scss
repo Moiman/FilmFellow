@@ -61,6 +61,15 @@ header {
     background-color: rgba(abstracts.$primary-light, 0.1);
     flex: 1;
     display: flex;
+
+    button:focus,
+    input:focus {
+      outline: 0;
+    }
+
+    button:focus-visible {
+      outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+    }
   }
 
   .searchbar-input {
@@ -70,6 +79,19 @@ header {
     border: 0;
     color: abstracts.$primary-light;
     border-radius: 20px 4px 4px 20px;
+  }
+
+  .searchbar-input::placeholder {
+    color: abstracts.$primary-light;
+    opacity: 25%;
+  }
+
+  .searchbar:focus-within {
+    outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+  }
+
+  .searchbar:has(button:focus) {
+    outline: 0;
   }
 
   .searchbar-icon {
@@ -85,15 +107,21 @@ header {
   header {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 
     .main-nav,
     .sub-nav-wide {
       display: none;
     }
 
+    .searchbar {
+      width: 100%;
+    }
+
     .sub-nav-narrow {
       display: flex;
-      align-items: center;
+      justify-content: right;
+      max-width: 50px;
     }
   }
 }

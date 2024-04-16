@@ -2,6 +2,8 @@
 @use "../abstracts" as abstracts;
 
 input[type="text"],
+input[type="password"],
+input[type="email"],
 textarea {
   width: 100%;
 
@@ -16,16 +18,30 @@ textarea {
   background-color: abstracts.$primary-light;
 }
 
-input[type="text"] {
+input::placeholder,
+textarea::placeholder {
+  font-family: abstracts.$default-text-font;
+  font-size: abstracts.$p-font-size;
+  line-height: abstracts.$default-line-height;
+  font-weight: 400;
+  letter-spacing: abstracts.$text-letter-spacing;
+  color: abstracts.$primary-dark;
+  opacity: 75%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   padding: 5px 10px;
+  padding-right: 30px;
 }
 
 textarea {
   padding: 10px;
 }
 
-input:focus,
-textarea:focus {
+input:focus-visible,
+textarea:focus-visible {
   outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
 }
 
@@ -140,4 +156,80 @@ input[type="range"]::-moz-range-thumb {
   height: 20px;
   width: 20px;
   border-radius: 50%;
+}
+
+.error-text {
+  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+}
+
+.form {
+  padding: 25px;
+  background-color: abstracts.$primary-grey;
+  display: grid;
+}
+
+.form-submit {
+  font-weight: 600;
+  font-size: 1.25rem;
+  font-family: abstracts.$default-title-font;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.form-main {
+  display: grid;
+  justify-items: center;
+}
+
+.section-wrapper {
+  margin-top: 20px;
+  min-width: 50%;
+}
+
+.form-main-text {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  margin-top: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.form-route-change {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  a {
+    text-decoration: underline;
+  }
+  p {
+    font-family: abstracts.$default-title-font;
+    font-size: abstracts.$a-font-size;
+    font-weight: 300;
+    color: abstracts.$primary-light;
+    padding: 0.2em 0.6em;
+  }
+}
+
+.form-group-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+
+  svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+}
+
+.form-group-icon:hover {
+  background-color: inherit;
+}
+
+.form-group-icon:focus-visible {
+  outline: 1px rgba(abstracts.$primary-grey, 0.5) solid;
+}
+
+.form-group {
+  position: relative;
 }

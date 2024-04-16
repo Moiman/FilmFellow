@@ -66,10 +66,10 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
             <div className="current-rating">{movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}</div>
             <StarRating onChange={handleRatingChange} />
           </div>
-          <div className="basic-data">
+          <div className="movie-basic-data">
             <h1>{movie.title}</h1>
 
-            <div className="data-row">
+            <div className="movie-data-row">
               {movie.directors.length > 0 ? <p className="yellow">Directed by {movie.directors.join(", ")}</p> : null}
               {movie.releaseYear ? <p className="cyan">{movie.releaseYear}</p> : null}
               {movie.ageRestrictions ? <p className="cyan">{movie.ageRestrictions}</p> : null}

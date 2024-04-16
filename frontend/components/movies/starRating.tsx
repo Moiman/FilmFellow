@@ -9,7 +9,7 @@ interface StarRatingProps {
 export const StarRating = ({ onChange }: StarRatingProps) => {
   const [rating, setRating] = useState(0);
 
-  const handleClick = (clickedRating: number) => {
+  const handleStarClick = (clickedRating: number) => {
     const newRating = clickedRating === rating ? 0 : clickedRating;
 
     setRating(newRating);
@@ -18,15 +18,15 @@ export const StarRating = ({ onChange }: StarRatingProps) => {
 
   return (
     <div style={{ display: "inline-flex" }}>
-      {[1, 2, 3, 4, 5].map(index => (
+      {[1, 2, 3, 4, 5].map(starRating => (
         <button
-          onClick={() => handleClick(index)}
+          onClick={() => handleStarClick(starRating)}
           className="button-transparent"
-          key={index}
+          key={starRating}
         >
           <Star
-            stroke={rating >= index ? "#ffc700" : "#eff2f2"}
-            fill={rating >= index ? "#ffc700" : "#eff2f2"}
+            stroke={rating >= starRating ? "#ffc700" : "#eff2f2"}
+            fill={rating >= starRating ? "#ffc700" : "#eff2f2"}
             strokeWidth={2}
             size={30}
             style={{ cursor: "pointer" }}

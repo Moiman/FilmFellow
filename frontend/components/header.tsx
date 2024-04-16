@@ -19,13 +19,21 @@ export const SubNavLinks = [
     href: "/admin",
   },
   { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile" },
-  { icon: <LogOut style={{ strokeWidth: 1.5 }} />, text: "Logout", href: "" },
+  {
+    icon: (
+      <LogOut
+        onClick={() => signOut()}
+        style={{ strokeWidth: 1.5 }}
+      />
+    ),
+    text: "Logout",
+    href: "/",
+  },
 ];
 
 export const Header = () => {
   // Placeholder: check if user is logged in
   const { data: session } = useSession();
-  const isLoggedIn = false;
   const currentPath = usePathname();
 
   return (
@@ -89,9 +97,10 @@ export const Header = () => {
               {link.text}
             </Link>
           ))}
-          {isLoggedIn ? (
+          {session ? (
             SubNavLinks.map(link => (
               <Link
+                onClick={link.text === "Logout" ? () => signOut() : undefined}
                 key={link.href}
                 href={link.href}
                 className="dropdown-item"
@@ -100,13 +109,21 @@ export const Header = () => {
               </Link>
             ))
           ) : (
-            <Link
-              key="login"
-              href="/login"
-              className="dropdown-item"
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                key="login"
+                href="/login"
+                className="dropdown-item"
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className="dropdown-item"
+              >
+                Register
+              </Link>
+            </>
           )}
         </Dropdown>
       </div>
@@ -114,7 +131,7 @@ export const Header = () => {
       {/* For w > 1024 sub-nav */}
       <div className="sub-nav-wide highlight-nav">
         <>
-          {isLoggedIn ? (
+          {session ? (
             <>
               {SubNavLinks.map(link => (
                 <Link
@@ -127,26 +144,23 @@ export const Header = () => {
               ))}
             </>
           ) : (
-            !session && (
-              <>
-                <Link
-                  href="/login"
-                  className={currentPath === "/login" ? "active-link" : ""}
-                  style={{ lineHeight: "1.4" }}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  className={currentPath === "/register" ? "active-link" : ""}
-                  style={{ lineHeight: "1.4" }}
-                >
-                  Register
-                </Link>
-              </>
-            )
+            <>
+              <Link
+                href="/login"
+                className={currentPath === "/login" ? "active-link" : ""}
+                style={{ lineHeight: "1.4" }}
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className={currentPath === "/register" ? "active-link" : ""}
+                style={{ lineHeight: "1.4" }}
+              >
+                Register
+              </Link>
+            </>
           )}
-          {session && <button onClick={() => signOut()}>Sign Out</button>}
         </>
       </div>
     </header>

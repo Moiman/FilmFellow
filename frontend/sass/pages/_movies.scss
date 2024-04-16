@@ -230,16 +230,7 @@
     fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
-  @-moz-keyframes spin {
-    100% {
-      -moz-transform: rotate(360deg);
-    }
-  }
-  @-webkit-keyframes spin {
-    100% {
-      -webkit-transform: rotate(360deg);
-    }
-  }
+
   @keyframes spin {
     100% {
       -webkit-transform: rotate(360deg);

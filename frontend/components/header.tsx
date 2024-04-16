@@ -20,12 +20,7 @@ export const SubNavLinks = [
   },
   { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile" },
   {
-    icon: (
-      <LogOut
-        onClick={() => signOut()}
-        style={{ strokeWidth: 1.5 }}
-      />
-    ),
+    icon: <LogOut style={{ strokeWidth: 1.5 }} />,
     text: "Logout",
     href: "/",
   },
@@ -135,6 +130,7 @@ export const Header = () => {
             <>
               {SubNavLinks.map(link => (
                 <Link
+                  onClick={link.text === "Logout" ? () => signOut() : undefined}
                   key={link.href}
                   href={link.href}
                   className={currentPath === link.href ? "active-icon" : ""}

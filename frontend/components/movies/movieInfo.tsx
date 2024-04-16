@@ -42,6 +42,10 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
     }
   };
 
+  if (!movie) {
+    return null;
+  }
+
   return (
     <div className="movie-content">
       <div className="movie-wrapper">
@@ -49,7 +53,7 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
         <div
           className="img"
           style={{
-            background: `URL(${movie.posterPath})`,
+            background: `URL(${movie.backdropPath})`,
             backgroundPosition: "center",
             backgroundSize: "cover",
           }}

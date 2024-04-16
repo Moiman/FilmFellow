@@ -7,21 +7,9 @@ import { Star } from "react-feather";
 import { MovieInfo } from "@/components/movies/movieInfo";
 import { Section } from "@/components/section";
 
-export type Movie = {
-  title: string;
-  posterPath: string;
-  overview: string;
-  runtime: number;
-  releaseYear: number;
-  voteAverage: number;
-  directors: string[];
-  ageRestrictions: string;
-};
+import type { MovieResponse } from "@/services/movieService";
 
-type CrewMember = {
-  personId: number;
-  department: string;
-};
+export type Movie = Awaited<ReturnType<typeof getMovie>>;
 
 const getDirectorNames = async (directorIds: number[]) => {
   try {
@@ -40,33 +28,27 @@ const getDirectorNames = async (directorIds: number[]) => {
 
 const getMovie = async (movieId: string) => {
   try {
-    const movieData = await fetch("/api/movies/" + movieId).then(response => response.json());
+    const res = await fetch("/api/movies/" + movieId);
+    const movieData = (await res.json()) as MovieResponse;
 
-    if (!movieData.error) {
-      const { title, poster_path, overview, runtime, release_date, vote_average, crew } = movieData;
+    const { title, backdrop_path, overview, runtime, release_date, vote_average, crew } = movieData;
 
-      const directors = crew
-        .filter((member: CrewMember) => member.department === "Directing")
-        .map((director: CrewMember) => director.personId);
+    const directors = crew.filter(member => member.job === "Director").map(director => director.personId);
+    const directorNames = await getDirectorNames(directors);
 
-      const directorNames = await getDirectorNames(directors);
+    const movie = {
+      title: title,
+      backdropPath: backdrop_path,
+      overview: overview,
+      runtime: runtime,
+      releaseYear: release_date ? new Date(release_date).getFullYear() : null,
+      voteAverage: vote_average,
+      directors: directorNames,
+      // No age restriction data yet
+      ageRestrictions: "?",
+    };
 
-      const movie: Movie = {
-        title: title,
-        posterPath: poster_path,
-        overview: overview,
-        runtime: runtime,
-        releaseYear: new Date(release_date).getFullYear(),
-        voteAverage: vote_average,
-        directors: directorNames,
-        // No age restriction data yet
-        ageRestrictions: "?",
-      };
-
-      return movie;
-    } else {
-      return null;
-    }
+    return movie;
   } catch (error) {
     console.error("Error fetching movie data:", error);
     return null;
@@ -75,7 +57,7 @@ const getMovie = async (movieId: string) => {
 
 export default function Movie({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movie, setMovie] = useState<Movie>(null);
 
   useEffect(() => {
     async function fetchData() {

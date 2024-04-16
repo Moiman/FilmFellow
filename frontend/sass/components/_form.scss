@@ -18,6 +18,17 @@ textarea {
   background-color: abstracts.$primary-light;
 }
 
+input::placeholder,
+textarea::placeholder {
+  font-family: abstracts.$default-text-font;
+  font-size: abstracts.$p-font-size;
+  line-height: abstracts.$default-line-height;
+  font-weight: 400;
+  letter-spacing: abstracts.$text-letter-spacing;
+  color: abstracts.$primary-dark;
+  opacity: 75%;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"] {

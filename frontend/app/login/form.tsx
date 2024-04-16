@@ -45,10 +45,14 @@ export default function Login() {
       ...credentials,
       redirect: false,
     });
-    if (response?.error) {
+    if (!response) {
+      setError("Login failed");
+      return;
+    }
+    if (response.error) {
       setError(response.error);
     }
-    if (response?.ok) {
+    if (response.ok) {
       reset();
       setError("");
       router.push("/");

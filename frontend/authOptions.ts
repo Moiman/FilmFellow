@@ -29,10 +29,13 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (!credentials) {
+          return null;
+        }
         const registerCredentials = {
-          username: credentials?.username,
-          email: credentials?.email,
-          password: credentials?.password,
+          username: credentials.username,
+          email: credentials.email,
+          password: credentials.password,
         };
         const resp = await fetch(frontURL + "/api/users/register", {
           method: "POST",
@@ -66,6 +69,9 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (!credentials) {
+          return null;
+        }
         const loginCredentials = {
           email: credentials?.email,
           password: credentials?.password,

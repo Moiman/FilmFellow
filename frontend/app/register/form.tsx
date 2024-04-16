@@ -68,10 +68,14 @@ export default function Register() {
       ...credentials,
       redirect: false,
     });
-    if (response?.error) {
+    if (!response) {
+      setError("Register failed");
+      return;
+    }
+    if (response.error) {
       setError(response.error);
     }
-    if (response?.ok) {
+    if (response.ok) {
       reset();
       setError("");
       router.push("/");

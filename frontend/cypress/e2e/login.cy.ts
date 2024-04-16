@@ -6,17 +6,24 @@ describe("Registration tests", () => {
     cy.get("input:invalid").should("have.length", 4);
   });
 
-  it("Successfully register user", () => {
-    cy.visit("/register");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/register");
-    cy.get('input[name="username"]').type("testuser");
-    cy.get('input[name="email"]').type("test@gmail.com");
-    cy.get('input[name="password"]').type("Password1!");
-    cy.get('input[name="confirmPassword"]').type("Password1!");
-    cy.get('button[type="submit"]').click();
-    cy.get("button").contains("Sign Out");
-    cy.get("button").contains("Sign Out").click();
-  });
+  it(
+    "Successfully register user",
+    {
+      viewportWidth: 600,
+    },
+    () => {
+      cy.visit("/register");
+      cy.url().should("eq", Cypress.env("baseUrl") + "/register");
+      cy.get('input[name="username"]').type("testuser");
+      cy.get('input[name="email"]').type("test@gmail.com");
+      cy.get('input[name="password"]').type("Password1!");
+      cy.get('input[name="confirmPassword"]').type("Password1!");
+      cy.get('button[type="submit"]').click();
+      cy.get('[data-cy="menu-icon"]').click();
+      cy.get('.dropdown a[href="/"]').contains("Logout").click();
+
+    },
+  );
 
   it("Try to register new user with email that already exists", () => {
     cy.visit("/register");
@@ -58,15 +65,21 @@ describe("Login tests", () => {
     cy.contains("Credentials doesnt match").should("be.visible");
   });
 
-  it("Successfully login user", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type("test@gmail.com");
-    cy.get('input[name="password"]').type("Password1!");
-    cy.get('button[type="submit"]').click();
-    cy.get("button").contains("Sign Out");
-    cy.get("button").contains("Sign Out").click();
-  });
+  it(
+    "Successfully login user",
+    {
+      viewportWidth: 600,
+    },
+    () => {
+      cy.visit("/login");
+      cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+      cy.get('input[name="email"]').type("test@gmail.com");
+      cy.get('input[name="password"]').type("Password1!");
+      cy.get('button[type="submit"]').click();
+      cy.get('[data-cy="menu-icon"]').click();
+      cy.get('.dropdown a[href="/"]').contains("Logout").click();
+    },
+  );
 });
 
 describe("Test Links in login && register", () => {
@@ -126,27 +139,41 @@ describe("Login form and register form show password test", () => {
 });
 
 describe("Protected route tests", () => {
-  it("Try to go to register page as logged in user", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type("test@gmail.com");
-    cy.get('input[name="password"]').type("Password1!");
-    cy.get('button[type="submit"]').click();
-    cy.get("button").contains("Sign Out");
-    cy.visit("/register");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/");
-    cy.get("button").contains("Sign Out").click();
-  });
+  it(
+    "Try to go to register page as logged in user",
+    {
+      viewportWidth: 600,
+    },
+    () => {
+      cy.visit("/login");
+      cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+      cy.get('input[name="email"]').type("test@gmail.com");
+      cy.get('input[name="password"]').type("Password1!");
+      cy.get('button[type="submit"]').click();
+      cy.get('[data-cy="menu-icon"]').click();
+      cy.get('.dropdown a[href="/"]').contains("Logout");
+      cy.visit("/register");
+      cy.url().should("eq", Cypress.env("baseUrl") + "/");
 
-  it("Try to go to login page as logged in user", () => {
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/login");
-    cy.get('input[name="email"]').type("test@gmail.com");
-    cy.get('input[name="password"]').type("Password1!");
-    cy.get('button[type="submit"]').click();
-    cy.get("button").contains("Sign Out");
-    cy.visit("/login");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/");
-    cy.get("button").contains("Sign Out").click();
-  });
+    },
+  );
+
+  it(
+    "Try to go to login page as logged in user",
+    {
+      viewportWidth: 600,
+    },
+    () => {
+      cy.visit("/login");
+      cy.url().should("eq", Cypress.env("baseUrl") + "/login");
+      cy.get('input[name="email"]').type("test@gmail.com");
+      cy.get('input[name="password"]').type("Password1!");
+      cy.get('button[type="submit"]').click();
+      cy.get('[data-cy="menu-icon"]').click();
+      cy.get('.dropdown a[href="/"]').contains("Logout");
+      cy.visit("/login");
+      cy.url().should("eq", Cypress.env("baseUrl") + "/");
+      
+    },
+  );
 });

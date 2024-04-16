@@ -85,15 +85,21 @@ header {
   header {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 
     .main-nav,
     .sub-nav-wide {
       display: none;
     }
 
+    .searchbar {
+      width: 100%;
+    }
+
     .sub-nav-narrow {
       display: flex;
-      align-items: center;
+      justify-content: right;
+      max-width: 50px;
     }
   }
 }

@@ -2,7 +2,7 @@
 @use "../abstracts" as abstracts;
 
 .section-padding {
-  padding: 60px 60px 20px 60px;
+  padding: 60px;
 }
 
 @media only screen and (max-width: abstracts.$medium-width) {

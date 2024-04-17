@@ -1,10 +1,12 @@
 "use client";
-import { Dropdown } from "@/components/dropdown";
-import { Section } from "@/components/section";
-import { Sidebar } from "@/components/sidebar";
+
 import Link from "next/link";
 import { useState } from "react";
 import { Check } from "react-feather";
+
+import { Dropdown } from "@/components/dropdown";
+import { Section } from "@/components/section";
+import { Sidebar } from "@/components/sidebar";
 
 export default function Home() {
   const [rangeValue, setRangeValue] = useState(5);

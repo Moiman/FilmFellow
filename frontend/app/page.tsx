@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Check } from "react-feather";
 
 export default function Home() {
+  const [rangeValue, setRangeValue] = useState(5);
   const exampleHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h3>Component header</h3>
@@ -110,12 +111,14 @@ export default function Home() {
               </label>
 
               <label>
-                Range (0-10):
+                Range (0-10):{rangeValue}
                 <input
                   type="range"
                   min={0}
                   max={10}
                   step={1}
+                  value={rangeValue}
+                  onChange={e => setRangeValue(e.target.valueAsNumber)}
                   list="values"
                 />
               </label>

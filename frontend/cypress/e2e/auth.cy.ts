@@ -88,8 +88,18 @@ const secondNewUser = {
   password: "Password1!",
 };
 let secondNewUserId = "";
+const thirdNewUser = {
+  email: "thirdnewuser@gmail.com",
+  username: "thirdnewuser",
+  password: "Password1!",
+};
+let thirdNewUserId = "";
+const admin = {
+  email: Cypress.env("adminEmail"),
+  password: Cypress.env("adminPassword"),
+};
 describe("Register dummy users for tests", () => {
-  it("Create 2 dummy users", () => {
+  it("Create 3 dummy users", () => {
     cy.request({ method: "POST", url: "/api/users/register", body: firstNewUser, failOnStatusCode: false }).should(
       response => {
         expect(response.status).to.eq(200);
@@ -102,6 +112,13 @@ describe("Register dummy users for tests", () => {
         expect(response.status).to.eq(200);
         expect(response.body.email).to.equal(secondNewUser.email);
         secondNewUserId = response.body.id;
+      },
+    );
+    cy.request({ method: "POST", url: "/api/users/register", body: thirdNewUser, failOnStatusCode: false }).should(
+      response => {
+        expect(response.status).to.eq(200);
+        expect(response.body.email).to.equal(thirdNewUser.email);
+        thirdNewUserId = response.body.id;
       },
     );
   });
@@ -237,6 +254,25 @@ describe("Api update tests", () => {
     }).should(res => {
       expect(res.status).to.eq(401);
       expect(res.body.error).to.eq("Cant change other user details unless admin");
+    });
+  });
+
+  it("Change user details as admin", () => {
+    const changeUserDetails = {
+      username: "newusername",
+      role: "moderator",
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${thirdNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(200);
+      expect(res.body.role).to.eq("moderator");
+      expect(res.body.username).to.eq("newusername");
     });
   });
 
@@ -386,6 +422,16 @@ describe("Api delete tests", () => {
     }).should(res => {
       expect(res.status).to.eq(400);
       expect(res.body.error).to.eq("User id not a number");
+    });
+  });
+
+  it("Delete user as admin", () => {
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "DELETE",
+      url: `/api/users/delete/${thirdNewUserId}`,
+    }).should(res => {
+      expect(res.status).to.eq(200);
     });
   });
 

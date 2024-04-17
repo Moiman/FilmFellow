@@ -39,6 +39,7 @@ jobs:
           cp .env.example .env
           npm ci
           npx prisma migrate deploy
+          npm run init-admin
           npm run build
           npm run start &
           sleep 10

@@ -32,7 +32,7 @@ export default function testing() {
           }
           _onOk={test}
           okLink={<button>test</button>}
-          openModalButtonName="Open 1"
+          openModalText="Open 1"
         />
         <Modal
           modalId={2}
@@ -44,8 +44,8 @@ export default function testing() {
           }
           _onOk={test}
           okLink={<button>test</button>}
-          openModalButtonName="Open 2"
-          openModalButtonClassName="button-cyan"
+          openModalText="Open 2"
+          openModalClass="button-cyan"
         />
         <Modal
           modalId={3}
@@ -54,8 +54,8 @@ export default function testing() {
               <p>Test3</p>
             </div>
           }
-          openModalButtonName="Open 3"
-          openModalButtonClassName="button-transparent"
+          openModalText="Open 3"
+          openModalClass="button-transparent"
         />
       </div>
     </main>

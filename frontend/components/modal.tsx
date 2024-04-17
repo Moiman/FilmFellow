@@ -9,21 +9,13 @@ interface Props {
   content: React.ReactNode;
   _footer?: React.ReactNode;
   okLink?: React.ReactNode;
-  openModalButtonName: string;
-  openModalButtonClassName?: string;
+  openModalText: string;
+  openModalClass?: string;
   //onOK needs "use server"
   _onOk?: () => Promise<void>;
 }
 
-const ModalComponent = ({
-  content,
-  _footer,
-  _onOk,
-  okLink,
-  openModalButtonName,
-  modalId,
-  openModalButtonClassName,
-}: Props) => {
+const ModalComponent = ({ content, _footer, _onOk, okLink, openModalText, modalId, openModalClass }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
@@ -91,10 +83,10 @@ const ModalComponent = ({
   return (
     <>
       <button
-        className={openModalButtonClassName ? openModalButtonClassName : ""}
+        className={openModalClass ? openModalClass : ""}
         onClick={() => router.push(link)}
       >
-        {openModalButtonName}
+        {openModalText}
       </button>
       {dialog}
     </>

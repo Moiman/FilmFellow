@@ -31,7 +31,7 @@
     border: 1px solid abstracts.$primary-dark;
 
     &:focus-visible {
-      outline: 1px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     }
   }
 

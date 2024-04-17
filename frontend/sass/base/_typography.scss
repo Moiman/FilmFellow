@@ -51,7 +51,7 @@ a {
   font-size: abstracts.$a-font-size;
   font-weight: 300;
   color: abstracts.$primary-light;
-  padding: 0.2em 0.6em;
+  padding: 0.2em;
 }
 
 a:hover {
@@ -63,8 +63,7 @@ a:active {
 }
 
 a:focus-visible {
-  color: rgba(abstracts.$primary-light, 0.75);
-  outline: 0;
+  border-bottom: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
 }
 
 // .highlight-nav: colorful hover using highlight colors for when there is more than 1 link
@@ -91,6 +90,7 @@ $total-colors: length(abstracts.$highlight-colors);
     &:hover,
     &:focus-visible {
       color: $default-color;
+      border: 0;
     }
   }
 }

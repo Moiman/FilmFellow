@@ -28,6 +28,11 @@ header {
     grid-row: 1;
   }
 
+  .logo:focus-visible {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    border: 0;
+  }
+
   .main-nav {
     display: inline-flex;
     align-items: center;
@@ -68,7 +73,8 @@ header {
     }
 
     button:focus-visible {
-      outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+      outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      outline-offset: 0;
     }
   }
 
@@ -87,7 +93,7 @@ header {
   }
 
   .searchbar:focus-within {
-    outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+    outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
 
   .searchbar:has(button:focus) {
@@ -100,6 +106,7 @@ header {
 
   .searchbar > button {
     border-radius: 4px 20px 20px 4px;
+    padding: 0 10px;
   }
 }
 

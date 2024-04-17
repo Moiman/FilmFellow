@@ -46,14 +46,10 @@ button:focus-visible {
   outline: 0;
   display: flex;
   align-items: center;
-  padding: 0 10px;
+  padding: 0;
   border-radius: abstracts.$default-border-radius;
 }
 
 .button-transparent:hover {
   background-color: transparent;
-}
-
-.button-transparent:focus-visible {
-  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
 }

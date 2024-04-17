@@ -1,3 +1,7 @@
+import { initMovieDB, initPersonDB } from "@/services/initService";
+import { fetchPersonsData } from "./fetchPersons";
+import { fetchMoviesData } from "./fetchMovies";
+
 interface MovieIdsType {
   adult: boolean;
   id: number;
@@ -20,7 +24,7 @@ const yesterdayDate =
   "_" +
   yesterday.getFullYear();
 
-export const fetchMovieIds = async () => {
+const fetchMovieIds = async () => {
   try {
     const response = await fetch(`http://files.tmdb.org/p/exports/movie_ids_${yesterdayDate}.json.gz`);
     if (!response.ok) {
@@ -44,7 +48,7 @@ export const fetchMovieIds = async () => {
   }
 };
 
-export const fetchPersonIds = async () => {
+const fetchPersonIds = async () => {
   try {
     const response = await fetch(`http://files.tmdb.org/p/exports/person_ids_${yesterdayDate}.json.gz`);
     if (!response.ok) {
@@ -67,3 +71,19 @@ export const fetchPersonIds = async () => {
     throw error;
   }
 };
+
+const fetchAllPersons = async () => {
+  const personIds = await fetchPersonIds();
+  console.log("Fetched all person ids");
+  console.log("Fetching all persons");
+
+  fetchPersonsData(personIds, initPersonDB);
+};
+
+const fetchAllMovies = async () => {
+  const movieIds = await fetchMovieIds();
+  fetchMoviesData(movieIds, initMovieDB);
+};
+
+fetchAllPersons();
+fetchAllMovies();

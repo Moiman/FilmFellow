@@ -17,11 +17,11 @@ const initAdmin = async () => {
     };
     const prisma = new PrismaClient();
 
-    const existingAdmin = await prisma.users.findFirst({
+    const existingUser = await prisma.users.findFirst({
       where: { OR: [{ email: { equals: admin.email } }, { username: { equals: admin.username } }] },
     });
 
-    if (!existingAdmin) {
+    if (!existingUser) {
       const createdAdmin = await prisma.users.create({
         data: {
           username: admin.username,
@@ -32,7 +32,7 @@ const initAdmin = async () => {
       });
       console.log("Admin account", createdAdmin.username, createdAdmin.email, "created successfully");
     } else {
-      console.error("username or email is already in use for admin", existingAdmin.username);
+      console.error("username or email is already in use for user", existingUser.username);
     }
   } catch (error) {
     console.error(error);

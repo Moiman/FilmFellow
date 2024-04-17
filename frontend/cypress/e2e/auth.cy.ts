@@ -433,7 +433,6 @@ describe("Api delete tests", () => {
     }).should(res => {
       expect(res.status).to.eq(200);
     });
-    // Cypress.session.clearAllSavedSessions();
   });
 
   it("Delete first dummy user successfully", () => {

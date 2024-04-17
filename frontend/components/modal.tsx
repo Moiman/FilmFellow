@@ -83,7 +83,7 @@ const ModalComponent = ({ content, _footer, _onOk, okLink, openModalText, modalI
   return (
     <>
       <button
-        className={openModalClass ? openModalClass : ""}
+        className={openModalClass ?? ""}
         onClick={() => router.push(link)}
       >
         {openModalText}

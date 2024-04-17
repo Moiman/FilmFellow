@@ -452,6 +452,18 @@ describe("Api delete tests", () => {
     });
   });
 
+  it("Try to delete user with false id as admin", () => {
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "DELETE",
+      url: `/api/users/delete/${123456789}`,
+      failOnStatusCode: false,
+    }).should(res => {
+      expect(res.status).to.eq(404);
+      expect(res.body.error).to.eq("User not found");
+    });
+  });
+
   it("Try to delete user with negative id", () => {
     cy.login(user.email, user.password);
     cy.request({

@@ -257,6 +257,57 @@ describe("Api update tests", () => {
     });
   });
 
+  it("Try to change user role to something that doesnt exist as admin", () => {
+    const changeUserDetails = {
+      role: "randomrole",
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${thirdNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error.message).to.eq("Role must be either admin, user or moderator");
+    });
+  });
+
+  it("Try to change user username to something that already exist as admin", () => {
+    const changeUserDetails = {
+      username: firstNewUser.username,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${thirdNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(409);
+      expect(res.body.error).to.eq("User already exists with that username");
+    });
+  });
+
+  it("Try to change user email to something that already exist as admin", () => {
+    const changeUserDetails = {
+      email: firstNewUser.email,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${thirdNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(409);
+      expect(res.body.error).to.eq("User already exists with that email");
+    });
+  });
+
   it("Change user details as admin", () => {
     const changeUserDetails = {
       username: "newusername",

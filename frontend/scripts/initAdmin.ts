@@ -1,6 +1,5 @@
 import argon2 from "argon2";
-import { PrismaClient } from "@prisma/client";
-import { Role } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 
 const initAdmin = async () => {
   try {

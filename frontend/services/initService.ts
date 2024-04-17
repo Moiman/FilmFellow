@@ -162,14 +162,13 @@ const initImagesDB = async (images: Images[]) => {
 };
 
 const initPersonDB = async (person: Persons) => {
-  const existingPerson = await prisma.persons.findUnique({
-    where: { id: person.id },
+  await prisma.persons.upsert({
+    where: {
+      id: person.id,
+    },
+    create: person,
+    update: person,
   });
-  if (!existingPerson) {
-    await prisma.persons.create({
-      data: person,
-    });
-  }
 };
 
 const initPersonsDB = async (persons: Persons[]) => {

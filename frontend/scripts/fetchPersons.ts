@@ -14,7 +14,7 @@ export interface PersonData {
   homepage: string | null;
   id: number;
   imdb_id: string;
-  known_for_department: string;
+  known_for_department: string | null;
   name: string;
   place_of_birth: string;
   popularity: number;

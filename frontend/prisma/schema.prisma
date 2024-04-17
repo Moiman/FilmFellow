@@ -186,7 +186,7 @@ model Persons {
   gender               Int
   homepage             String?
   imdb_id              String?
-  known_for_department String
+  known_for_department String?
   name                 String
   place_of_birth       String?
   popularity           Float

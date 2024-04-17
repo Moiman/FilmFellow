@@ -124,12 +124,12 @@ export default function Home() {
                 />
               </label>
 
-              <label className="label-dol">
+              <label>
                 Text
                 <input type="text" />
               </label>
 
-              <label className="label-col">
+              <label>
                 Textarea
                 <textarea rows={5} />
               </label>

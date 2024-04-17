@@ -1,9 +1,12 @@
 "use client";
+
+import Link from "next/link";
+import { useState } from "react";
+import { Check } from "react-feather";
+
 import { Dropdown } from "@/components/dropdown";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
-import { useState } from "react";
-import { Check } from "react-feather";
 
 export default function Home() {
   const [rangeValue, setRangeValue] = useState(5);
@@ -111,7 +114,7 @@ export default function Home() {
               </label>
 
               <label>
-                Range (0-10):{rangeValue}
+                Range (0-10): {rangeValue}
                 <input
                   type="range"
                   min={0}
@@ -123,10 +126,23 @@ export default function Home() {
                 />
               </label>
 
-              <label className="label-row">
+              <label>
                 Text
                 <input type="text" />
               </label>
+
+              <label>
+                Textarea
+                <textarea rows={5} />
+              </label>
+
+              <button>Yellow</button>
+              <button className="button-pink">Pink</button>
+              <button className="button-cyan">Cyan</button>
+              <button className="button-transparent">
+                <span className="button-transparent-text">Transparent</span>
+              </button>
+              <Link href="/">Link</Link>
             </form>
           </>
         </Section>

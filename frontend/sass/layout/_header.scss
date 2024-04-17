@@ -20,12 +20,13 @@ header {
     padding: 3px 0px;
   }
 
+  h4 {
+    padding-right: 5px;
+  }
+
   .logo {
     display: flex;
     align-items: center;
-    gap: 4px;
-    grid-column: 1;
-    grid-row: 1;
   }
 
   .main-nav {
@@ -68,7 +69,8 @@ header {
     }
 
     button:focus-visible {
-      outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+      outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      outline-offset: 0;
     }
   }
 
@@ -87,7 +89,7 @@ header {
   }
 
   .searchbar:focus-within {
-    outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+    outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
 
   .searchbar:has(button:focus) {
@@ -100,6 +102,7 @@ header {
 
   .searchbar > button {
     border-radius: 4px 20px 20px 4px;
+    padding: 0 10px;
   }
 }
 

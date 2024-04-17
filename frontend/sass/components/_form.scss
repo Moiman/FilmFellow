@@ -40,9 +40,19 @@ textarea {
   padding: 10px;
 }
 
-input:focus-visible,
+input:focus-visible {
+  border: 0;
+  outline: 2px solid map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
+  outline-offset: 2px;
+}
+
+input[type="text"]:focus-visible,
+input[type="password"]:focus-visible,
+input[type="email"]:focus-visible,
 textarea:focus-visible {
-  outline: 1px rgba(abstracts.$primary-light, 0.25) solid;
+  border: 1px solid map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
+  outline: 1px solid map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
+  outline-offset: 0px;
 }
 
 label {
@@ -126,6 +136,7 @@ input[type="range"] {
   cursor: pointer;
   width: 100%;
   border: 0;
+  border-radius: abstracts.$default-border-radius;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
@@ -216,6 +227,7 @@ input[type="range"]::-moz-range-thumb {
   right: 0;
   top: 0;
   height: 100%;
+  padding: 10px;
 
   svg {
     color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
@@ -224,10 +236,6 @@ input[type="range"]::-moz-range-thumb {
 
 .form-group-icon:hover {
   background-color: inherit;
-}
-
-.form-group-icon:focus-visible {
-  outline: 1px rgba(abstracts.$primary-grey, 0.5) solid;
 }
 
 .form-group {

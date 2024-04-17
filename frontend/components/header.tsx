@@ -37,8 +37,7 @@ export const Header = () => {
         href="/"
         className="logo"
       >
-        <h4>🍿</h4>
-        <h4>FilmFellow</h4>
+        <h4>🍿FilmFellow</h4>
       </Link>
 
       <nav className="main-nav highlight-nav">
@@ -77,7 +76,6 @@ export const Header = () => {
               <Menu
                 data-cy="menu-icon"
                 style={{ strokeWidth: 1.5 }}
-                color="white"
               />
             </button>
           }

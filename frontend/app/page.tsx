@@ -137,7 +137,9 @@ export default function Home() {
               <button>Yellow</button>
               <button className="button-pink">Pink</button>
               <button className="button-cyan">Cyan</button>
-              <button className="button-transparent">Transparent</button>
+              <button className="button-transparent">
+                <span className="button-transparent-text">Transparent</span>
+              </button>
               <Link href="/">Link</Link>
             </form>
           </>

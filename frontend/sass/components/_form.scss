@@ -227,6 +227,7 @@ input[type="range"]::-moz-range-thumb {
   right: 0;
   top: 0;
   height: 100%;
+  padding: 10px;
 
   svg {
     color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");

@@ -48,10 +48,7 @@ button:focus-visible {
 .button-transparent {
   display: flex;
   align-items: center;
-  flex: 0;
   background-color: transparent;
-  border: 0;
-  outline: 0;
   padding: 0;
   border-radius: abstracts.$default-border-radius;
   color: abstracts.$primary-light;

@@ -29,11 +29,6 @@ header {
     align-items: center;
   }
 
-  .logo:focus-visible {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-    border: 0;
-  }
-
   .main-nav {
     display: inline-flex;
     align-items: center;

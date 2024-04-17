@@ -20,12 +20,13 @@ header {
     padding: 3px 0px;
   }
 
+  h4 {
+    padding-right: 6px;
+  }
+
   .logo {
     display: flex;
     align-items: center;
-    gap: 4px;
-    grid-column: 1;
-    grid-row: 1;
   }
 
   .logo:focus-visible {

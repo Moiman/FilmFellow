@@ -26,15 +26,6 @@
   a {
     padding: 0;
   }
-
-  button:focus {
-    outline: 0;
-  }
-
-  button:focus-visible {
-    outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-    outline-offset: 2px;
-  }
 }
 
 .modal-title {

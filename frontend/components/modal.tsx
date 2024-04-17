@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import React, { Suspense, useEffect, useRef } from "react";
 import { X } from "react-feather";
@@ -10,12 +9,21 @@ interface Props {
   content: React.ReactNode;
   _footer?: React.ReactNode;
   okLink?: React.ReactNode;
-  openModal: React.ReactNode;
+  openModalButtonName: string;
+  openModalButtonClassName?: string;
   //onOK needs "use server"
   _onOk?: () => Promise<void>;
 }
 
-const ModalComponent = ({ content, _footer, _onOk, okLink, openModal, modalId }: Props) => {
+const ModalComponent = ({
+  content,
+  _footer,
+  _onOk,
+  okLink,
+  openModalButtonName,
+  modalId,
+  openModalButtonClassName,
+}: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
@@ -82,7 +90,12 @@ const ModalComponent = ({ content, _footer, _onOk, okLink, openModal, modalId }:
 
   return (
     <>
-      <Link href={link}>{openModal}</Link>
+      <button
+        className={openModalButtonClassName ? openModalButtonClassName : ""}
+        onClick={() => router.push(link)}
+      >
+        {openModalButtonName}
+      </button>
       {dialog}
     </>
   );

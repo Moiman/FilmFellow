@@ -49,7 +49,7 @@ h6 {
 a {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$a-font-size;
-  font-weight: 300;
+  font-weight: 400;
   color: abstracts.$primary-light;
   padding: 0.2em;
 }
@@ -63,7 +63,9 @@ a:active {
 }
 
 a:focus-visible {
-  border-bottom: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  outline-offset: 2px;
+  border-radius: abstracts.$default-border-radius;
 }
 
 // .highlight-nav: colorful hover using highlight colors for when there is more than 1 link

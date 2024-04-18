@@ -12,10 +12,6 @@ import { Section } from "@/components/section";
 type Person = Awaited<ReturnType<typeof getPerson>>;
 type Movie = Awaited<ReturnType<typeof getMoviesById>>;
 
-export type movieId = {
-  movieId: number;
-};
-
 const getPerson = async (personId: number) => {
   try {
     const response = await fetch("/api/persons/" + personId);
@@ -23,8 +19,8 @@ const getPerson = async (personId: number) => {
 
     const { name, biography, birthday, deathday, movieCast, movieCrew, profile_path, homepage } = personData;
 
-    const castMovieIds: number[] = movieCast.map((item: movieId) => item.movieId);
-    const crewMovieIds: number[] = movieCrew.map((item: movieId) => item.movieId);
+    const castMovieIds: number[] = movieCast.map((item: { movieId: number }) => item.movieId);
+    const crewMovieIds: number[] = movieCrew.map((item: { movieId: number }) => item.movieId);
     const combinedMovieIds: number[] = [...castMovieIds, ...crewMovieIds];
     const movieIds: number[] = Array.from(new Set(combinedMovieIds));
 
@@ -123,7 +119,7 @@ export default function Person({ params }: { params: { id: number } }) {
           <div
             className="img"
             style={{
-              background: `URL(${person.profile_path})`,
+              background: `URL(${person.profile_path}) grey`,
               backgroundPosition: "center center",
               backgroundSize: "cover",
             }}

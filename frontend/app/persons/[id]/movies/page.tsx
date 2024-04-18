@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { Star } from "react-feather";
 
 import type { MovieResponse } from "@/services/movieService";
-import type { movieId } from "../page";
 
 import { Section } from "@/components/section";
 
@@ -20,8 +19,8 @@ const getPerson = async (personId: number) => {
 
     const { name, movieCast, movieCrew } = personData;
 
-    const castMovieIds: number[] = movieCast.map((item: movieId) => item.movieId);
-    const crewMovieIds: number[] = movieCrew.map((item: movieId) => item.movieId);
+    const castMovieIds: number[] = movieCast.map((item: { movieId: number }) => item.movieId);
+    const crewMovieIds: number[] = movieCrew.map((item: { movieId: number }) => item.movieId);
     const combinedMovieIds: number[] = [...castMovieIds, ...crewMovieIds];
     const movieIds: number[] = Array.from(new Set(combinedMovieIds));
 

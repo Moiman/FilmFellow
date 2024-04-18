@@ -53,7 +53,7 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
         <div
           className="img"
           style={{
-            background: `URL(${movie.backdropPath})`,
+            background: `URL(${movie.backdropPath}) grey`,
             backgroundPosition: "center",
             backgroundSize: "cover",
           }}

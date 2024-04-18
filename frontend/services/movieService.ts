@@ -19,10 +19,38 @@ const getMovieById = async (movieId: number) => {
         },
       },
       cast: {
-        take: 6,
+        take: 8,
+        select: {
+          person: {
+            select: {
+              name: true,
+              profile_path: true,
+            },
+          },
+          personId: true,
+          character: true,
+        },
+        orderBy: {
+          order: "asc",
+        },
       },
       crew: {
-        take: 6,
+        select: {
+          person: {
+            select: {
+              name: true,
+              profile_path: true,
+            },
+          },
+          personId: true,
+          job: true,
+          department: true,
+        },
+        orderBy: {
+          person: {
+            popularity: "desc",
+          },
+        },
       },
       importedReviews: true,
     },
@@ -30,7 +58,27 @@ const getMovieById = async (movieId: number) => {
   if (!movie) {
     return null;
   }
-  return { ...movie, genres: movie?.genres.map(genre => genre.genre.name) };
+
+  const directors = movie.crew.filter(person => person.job === "Director").map(director => director.person.name);
+  const crew = movie.crew.slice(0, 8).map(crewMember => {
+    const {
+      person: { name, profile_path },
+      ...rest
+    } = crewMember;
+    return { ...rest, name, profile_path };
+  });
+
+  const cast = movie.cast.map(actor => {
+    const {
+      person: { name, profile_path },
+      ...rest
+    } = actor;
+    return { ...rest, name, profile_path };
+  });
+
+  const genres = movie?.genres.map(genre => genre.genre.name);
+
+  return { ...movie, genres, crew, directors, cast };
 };
 
 const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: string) => {

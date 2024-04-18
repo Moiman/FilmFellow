@@ -15,7 +15,8 @@
     "prisma:migration": "prisma migrate dev",
     "prisma:seed": "prisma db seed",
     "create-admin": "tsx ./scripts/createAdmin.ts",
-    "fetch-test-data": "tsx ./scripts/fetchTestData.ts"
+    "fetch-test-data": "tsx ./scripts/fetchTestData.ts",
+    "init-admin": "tsx ./scripts/initAdmin.ts"
   },
   "prisma": {
     "seed": "tsx ./scripts/seedTestData.ts"

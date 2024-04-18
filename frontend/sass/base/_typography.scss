@@ -49,9 +49,8 @@ h6 {
 a {
   font-family: abstracts.$default-title-font;
   font-size: abstracts.$a-font-size;
-  font-weight: 300;
+  font-weight: 400;
   color: abstracts.$primary-light;
-  padding: 0.2em 0.6em;
 }
 
 a:hover {
@@ -63,8 +62,9 @@ a:active {
 }
 
 a:focus-visible {
-  color: rgba(abstracts.$primary-light, 0.75);
-  outline: 0;
+  outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  outline-offset: 2px;
+  border-radius: abstracts.$default-border-radius;
 }
 
 // .highlight-nav: colorful hover using highlight colors for when there is more than 1 link
@@ -80,6 +80,7 @@ $total-colors: length(abstracts.$highlight-colors);
     outline: 0;
     color: $default-color;
     box-shadow: inset 0 -4px $default-color;
+    border-radius: 0;
   }
 
   .active-icon:nth-child(#{$total-colors}n + #{$i}) {
@@ -88,9 +89,17 @@ $total-colors: length(abstracts.$highlight-colors);
   }
 
   .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}) {
-    &:hover,
-    &:focus-visible {
+    &:hover {
       color: $default-color;
+      border: 0;
+    }
+
+    &:focus-visible {
+      outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      outline-offset: 2px;
+      border-radius: abstracts.$default-border-radius;
+      color: $default-color;
+      border: 0;
     }
   }
 }

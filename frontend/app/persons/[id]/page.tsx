@@ -19,6 +19,7 @@ const getPerson = async (personId: number) => {
 
     const { name, biography, birthday, deathday, movieCast, movieCrew, profile_path, homepage } = personData;
 
+    // Combine movie ids to one array
     const castMovieIds: number[] = movieCast.map((item: { movieId: number }) => item.movieId);
     const crewMovieIds: number[] = movieCrew.map((item: { movieId: number }) => item.movieId);
     const combinedMovieIds: number[] = [...castMovieIds, ...crewMovieIds];
@@ -136,7 +137,7 @@ export default function Person({ params }: { params: { id: number } }) {
             <p className="person-description">{person.biography ? person.biography : "Biography"}</p>
           </div>
         </div>
-        <div className="person-website">{person.homepage ? <Link href={person.homepage}>WWW</Link> : null}</div>
+        <div className="person-website">{person.homepage ? <Link href={person.homepage}>Homepage</Link> : null}</div>
       </div>
 
       <div className="section-padding">

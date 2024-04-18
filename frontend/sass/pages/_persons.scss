@@ -97,18 +97,18 @@
 .known-for-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 10px;
 
   .known-for-item {
     aspect-ratio: 3 / 4;
+    box-shadow: abstracts.$default-shadow;
 
-    // Remove these when we get poster pictures for movies
+    // Remove these when we get poster pictures and movie title is removed
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     border: 1px solid abstracts.$primary-darkgrey;
-    box-shadow: abstracts.$default-shadow;
     padding: 10px;
   }
 
@@ -122,5 +122,29 @@
 @media only screen and (max-width: abstracts.$large-width) {
   .known-for-wrapper {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.known-for-header {
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.all-movies-header,
+.all-movies-header a {
+  font-family: abstracts.$default-title-font;
+  line-height: abstracts.$default-line-height;
+  letter-spacing: abstracts.$title-letter-spacing;
+  font-size: abstracts.$h4-font-size;
+  font-weight: 300;
+
+  a {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+
+  a:hover {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
   }
 }

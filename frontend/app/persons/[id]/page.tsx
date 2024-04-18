@@ -1,12 +1,20 @@
 "use client";
 
-import { Section } from "@/components/section";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
+import { notFound } from "next/navigation";
 import { Star } from "react-feather";
 
+import type { MovieResponse } from "@/services/movieService";
+
+import { Section } from "@/components/section";
+
 type Person = Awaited<ReturnType<typeof getPerson>>;
+type Movie = Awaited<ReturnType<typeof getMoviesById>>;
+
+export type movieId = {
+  movieId: number;
+};
 
 const getPerson = async (personId: number) => {
   try {
@@ -15,13 +23,17 @@ const getPerson = async (personId: number) => {
 
     const { name, biography, birthday, deathday, movieCast, movieCrew, profile_path, homepage } = personData;
 
+    const castMovieIds: number[] = movieCast.map((item: movieId) => item.movieId);
+    const crewMovieIds: number[] = movieCrew.map((item: movieId) => item.movieId);
+    const combinedMovieIds: number[] = [...castMovieIds, ...crewMovieIds];
+    const movieIds: number[] = Array.from(new Set(combinedMovieIds));
+
     const person = {
       name: name,
       biography: biography,
       birthday: birthday,
       deathday: deathday,
-      movieCast: movieCast,
-      movieCrew: movieCrew,
+      movieIds: movieIds,
       profile_path: profile_path,
       homepage: homepage,
     };
@@ -33,15 +45,17 @@ const getPerson = async (personId: number) => {
   }
 };
 
-const getMoviesById = async (person: Person) => {
-  const allMovieIds = [];
+const getMoviesById = async (movieIds: number[]) => {
   const movies = [];
+  const fetchedMovieIds = new Set<number>();
 
   async function fetchMovieById(movieId: number) {
     try {
       const response = await fetch(`/api/movies/${movieId}`);
-      const movieData = await response.json();
+      const movieData = (await response.json()) as MovieResponse;
+
       const { id, title, poster_path, vote_average } = movieData;
+
       return { id, title, poster_path, vote_average };
     } catch (error) {
       console.error("Error fetching movie data:", error);
@@ -49,36 +63,36 @@ const getMoviesById = async (person: Person) => {
     }
   }
 
-  for (const cast of person.movieCast) {
-    if (!allMovieIds.includes(cast.movieId)) {
-      allMovieIds.push(cast.movieId);
+  for (const movieId of movieIds) {
+    if (!fetchedMovieIds.has(movieId)) {
+      const movie = await fetchMovieById(movieId);
+
+      if (movie) {
+        movies.push(movie);
+        fetchedMovieIds.add(movieId);
+      }
     }
   }
-  for (const crew of person.movieCrew) {
-    if (!allMovieIds.includes(crew.movieId)) {
-      allMovieIds.push(crew.movieId);
-    }
-  }
 
-  const moviePromises = allMovieIds.map(movieId => fetchMovieById(movieId));
-  const allMovies = await Promise.all(moviePromises);
+  movies.sort((a, b) => b.vote_average - a.vote_average);
 
-  allMovies.sort((a, b) => b.vote_average - a.vote_average);
-  movies.push(...allMovies.slice(0, 6));
-
-  return movies;
+  return movies.slice(0, 6);
 };
 
 export default function Person({ params }: { params: { id: number } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [person, setPerson] = useState<Person | null>(null);
-  const [movies, setMovies] = useState<any[] | null>(null);
+  const [movies, setMovies] = useState<Movie | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       const personData: Person = await getPerson(params.id);
       setPerson(personData);
-      setMovies(await getMoviesById(personData));
+
+      if (personData) {
+        setMovies(await getMoviesById(personData.movieIds));
+      }
+
       setIsLoading(false);
     }
 
@@ -99,8 +113,7 @@ export default function Person({ params }: { params: { id: number } }) {
 
   function formatDate(dateString: string) {
     const date = new Date(dateString);
-    const options = { day: "numeric", month: "long", year: "numeric" };
-    return date.toLocaleDateString("en-GB", options);
+    return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   }
 
   return (
@@ -110,7 +123,7 @@ export default function Person({ params }: { params: { id: number } }) {
           <div
             className="img"
             style={{
-              background: `URL(https://media.themoviedb.org/t/p/w500/bNc908d59Ba8VDNr4eCcm4G1cR.jpg)`,
+              background: `URL(${person.profile_path})`,
               backgroundPosition: "center center",
               backgroundSize: "cover",
             }}
@@ -131,7 +144,13 @@ export default function Person({ params }: { params: { id: number } }) {
       </div>
 
       <div className="section-padding">
-        <Section header="Known for...">
+        <Section
+          header={
+            <div className="known-for-header">
+              <h4>Known for...</h4> <Link href={"/persons/" + params.id + "/movies"}>See all</Link>
+            </div>
+          }
+        >
           <div className="known-for-wrapper">
             {movies
               ? movies.map(movie => (
@@ -147,7 +166,7 @@ export default function Person({ params }: { params: { id: number } }) {
                         backgroundSize: "cover",
                       }}
                     >
-                      {movie.title}
+                      {/* Placeholder until we get movie posters */ movie.title}
                     </div>
                   </Link>
                 ))

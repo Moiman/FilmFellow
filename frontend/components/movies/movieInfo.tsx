@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Heart, Star } from "react-feather";
 
@@ -41,10 +43,6 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
       return `${hours} h ${minutes} min`;
     }
   };
-
-  if (!movie) {
-    return null;
-  }
 
   return (
     <div className="movie-content">

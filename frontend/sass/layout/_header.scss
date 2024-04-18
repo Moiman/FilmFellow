@@ -70,7 +70,7 @@ header {
 
     button:focus-visible {
       outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-      outline-offset: 0;
+      outline-offset: 2px;
     }
   }
 

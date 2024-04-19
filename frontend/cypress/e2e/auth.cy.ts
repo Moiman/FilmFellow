@@ -4,12 +4,7 @@ describe("Api login and register tests", () => {
   const password = "Password1!";
 
   after(() => {
-    cy.login(email, password);
-    cy.request({
-      method: "DELETE",
-      url: "/api/users/delete",
-    });
-    Cypress.session.clearAllSavedSessions();
+    cy.deleteUser(email, password);
   });
 
   it("Login without account", () => {

@@ -10,17 +10,49 @@
 // ***********************************************
 //
 Cypress.Commands.add("login", (email, password) => {
-  cy.session([email, password], () => {
-    cy.visit("/login");
-    cy.get('input[name="email"]').type(email);
-    cy.get('input[name="password"]').type(password);
-    cy.get('button[type="submit"]').click();
-    cy.url().should("eq", Cypress.env("baseUrl") + "/");
-  });
+  cy.session(
+    [email, password],
+    () => {
+      cy.visit("/login");
+      cy.get('input[name="email"]').type(email, { force: true });
+      cy.get('input[name="password"]').type(password, { force: true });
+      cy.get('button[type="submit"]').click({ force: true });
+      cy.wait(1000);
+      cy.location("pathname").should("eq", "/");
+    },
+    {
+      validate() {
+        cy.request("/api/auth/session").then(res => {
+          expect(res.body.user?.email).to.eq(email);
+        });
+      },
+    },
+  );
 });
+
+Cypress.Commands.add("register", (email, password) => {
+  cy.visit("/register");
+  cy.get('input[name="email"]').type(email);
+  cy.get('input[name="username"]').type(email);
+  cy.get('input[name="password"]').type(password);
+  cy.get('input[name="confirmPassword"]').type(password);
+  cy.get('button[type="submit"]').click();
+});
+
+Cypress.Commands.add("deleteUser", (email, password) => {
+  cy.login(email, password);
+  cy.request({
+    method: "DELETE",
+    url: "/api/users/delete",
+  });
+  cy.then(Cypress.session.clearAllSavedSessions);
+});
+
 declare namespace Cypress {
   interface Chainable {
     login(email: string, password: string): void;
+    register(email: string, password: string): void;
+    deleteUser(email: string, password: string): void;
   }
 }
 //

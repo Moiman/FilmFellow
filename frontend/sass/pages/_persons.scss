@@ -99,25 +99,35 @@
   gap: 10px;
 }
 
-.known-for-wrapper {
+.known-for-movies {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 10px;
 
-  .known-for-item {
-    aspect-ratio: 3 / 4;
+  // Remove this when not needed anymore
+  .placeholder-movie-poster {
+    background-color: grey;
+    aspect-ratio: 2 / 3;
+    border: 1px solid abstracts.$primary-dark;
     box-shadow: abstracts.$default-shadow;
-
-    // Remove these when we get poster pictures and movie title is removed
     display: flex;
-    justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid abstracts.$primary-darkgrey;
     padding: 10px;
   }
 
-  .known-for-item:hover {
+  .placeholder-movie-poster:hover {
+    transform: scale(105%);
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+  }
+
+  img {
+    object-fit: cover;
+    box-shadow: abstracts.$default-shadow;
+  }
+
+  img:hover {
     transform: scale(105%);
     transition: 0.2s;
     transition-timing-function: ease-in-out;
@@ -125,7 +135,7 @@
 }
 
 @media only screen and (max-width: abstracts.$large-width) {
-  .known-for-wrapper {
+  .known-for-movies {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }

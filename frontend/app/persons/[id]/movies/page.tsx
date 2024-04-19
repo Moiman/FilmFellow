@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import { getMovieById } from "@/services/movieService";
 import { getPersonById } from "@/services/personsService";
+import { getMovieById } from "@/services/movieService";
 
 import { Section } from "@/components/section";
 
@@ -28,6 +29,7 @@ const getMovies = async (person: Person) => {
   const movieCrewIds = person?.movieCrew.map(crew => crew.movieId) || [];
 
   const movieIds = movieCastIds.concat(movieCrewIds);
+
   const uniqueIds = movieIds.filter((id, index) => {
     return movieIds.indexOf(id) === index;
   });
@@ -59,7 +61,7 @@ export default async function Movies({ params }: { params: { id: string } }) {
           </div>
         }
       >
-        <div className="known-for-wrapper">
+        <div className="known-for-movies">
           {movies
             ? movies.map(movie =>
                 movie ? (
@@ -67,16 +69,18 @@ export default async function Movies({ params }: { params: { id: string } }) {
                     key={movie.id}
                     href={"/movies/" + movie.id}
                   >
-                    <div
-                      className="known-for-item"
-                      style={{
-                        background: `URL(${movie.poster_path}) grey`,
-                        backgroundPosition: "center center",
-                        backgroundSize: "cover",
-                      }}
-                    >
-                      {movie.title}
-                    </div>
+                    {/* Remove this when we get working poster paths */}
+                    <div className="placeholder-movie-poster">{movie.title}</div>
+
+                    {/* Working image for when we have poster paths:
+                    <Image
+                      src={`${movie.poster_path}`}
+                      width={150}
+                      height={225}
+                      alt={movie.title}
+                      layout="responsive"
+                    />
+                */}
                   </Link>
                 ) : null,
               )

@@ -17,7 +17,18 @@ model Users {
   updated_at DateTime @default(now())
   created_at DateTime @default(now())
 
-  reviews Reviews[]
+  reviews   Reviews[]
+  Favorites Favorites[]
+}
+
+model Favorites {
+  userId  Int
+  movieId Int
+
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user  Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([userId, movieId])
 }
 
 model Movies {
@@ -53,6 +64,7 @@ model Movies {
   translations        Translations[]
   images              Images[]
   movieProvider       MovieProviders[]
+  Favorites           Favorites[]
 }
 
 model ImportedReviews {

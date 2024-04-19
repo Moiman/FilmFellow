@@ -9,16 +9,13 @@ import { Section } from "@/components/section";
 type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
 
 export const getPersonMovies = async (person: Person) => {
-  const movieCastIds = person?.movieCast.map(cast => cast.movieId) || [];
-  const movieCrewIds = person?.movieCrew.map(crew => crew.movieId) || [];
+  const movieCastIds = person.movieCast.map(cast => cast.movieId) || [];
+  const movieCrewIds = person.movieCrew.map(crew => crew.movieId) || [];
 
-  const movieIds = movieCastIds.concat(movieCrewIds);
-  const uniqueIds = movieIds.filter((id, index) => {
-    return movieIds.indexOf(id) === index;
-  });
+  const uniqueIds = new Set([...movieCastIds, ...movieCrewIds]);
 
   const movies = await Promise.all(
-    uniqueIds.map(async movieId => {
+    Array.from(uniqueIds).map(async movieId => {
       const movie = await getMovieById(movieId);
 
       if (!movie) {

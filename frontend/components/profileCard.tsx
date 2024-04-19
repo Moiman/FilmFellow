@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import { Facebook, Instagram, Twitter, Smile } from "react-feather";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 interface Props {
   user: User;
@@ -11,14 +14,150 @@ interface User {
   role: string;
   username: string;
 }
+interface updateUsernameFormValues {
+  username: string;
+}
+
+interface updateEmailFormValues {
+  email: string;
+}
+
+interface updatePasswordFormValues {
+  password: string;
+}
+
+const updateEmailSchema = yup.object({
+  email: yup.string().trim().required("Email is required").email("Must be a valid email"),
+});
+
+const updateUsernameSchema = yup.object({
+  username: yup
+    .string()
+    .trim()
+    .required("Username is required")
+    .min(2, "Username too short, minimum length is 2")
+    .max(50, "Username too long, max length is 50"),
+});
+
+const updatePasswordSchema = yup.object({
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters long")
+    .matches(/^(?=.*[a-z])/, "Password requires atleast 1 regural character")
+    .matches(/^(?=.*[A-Z])/, "Password requires atleast 1 capital character")
+    .matches(/^(?=.*[0-9])/, "Password requires atleast 1 number")
+    .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
+});
 
 export const ProfileCard = ({ user }: Props) => {
   const [activeUsername, setUsernameActive] = useState(false);
   const [activeEmail, setEmailActive] = useState(false);
   const [activePassword, setPasswordActive] = useState(false);
   const [radioButtonValue, setRadioButtonValue] = useState("");
-  const [checkBoxValue, setCheckBoxValue] = useState("");
+
+  const {
+    handleSubmit: handleEmailChange,
+    register: emailRegister,
+    reset: emailReset,
+    formState: { errors: errorsEmail },
+  } = useForm<updateEmailFormValues>({
+    defaultValues: {
+      email: "",
+    },
+    resolver: yupResolver(updateEmailSchema),
+  });
+
+  const {
+    handleSubmit: handleUsernameChange,
+    register: usernameRegister,
+    reset: usernameReset,
+    formState: { errors: errorsUsername },
+  } = useForm<updateUsernameFormValues>({
+    defaultValues: {
+      username: "",
+    },
+    resolver: yupResolver(updateUsernameSchema),
+  });
+
+  const {
+    handleSubmit: handlePasswordChange,
+    register: passwordRegister,
+    reset: passwordReset,
+    formState: { errors: errorsPassword },
+  } = useForm<updatePasswordFormValues>({
+    defaultValues: {
+      password: "",
+    },
+    resolver: yupResolver(updatePasswordSchema),
+  });
   console.log(user);
+  console.log(radioButtonValue);
+
+  const handleEmailSubmit = async (formData: updateEmailFormValues) => {
+    try {
+      const updatedEmail = {
+        email: formData.email
+      }
+      const response = await fetch(`/api/users/update`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedEmail),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+
+    } catch (error) {
+
+    }
+  };
+
+  const handleUsernameSubmit = async (formData: updateUsernameFormValues) => {
+    try {
+      const updatedUsername = {
+        username: formData.username,
+      };
+      const response = await fetch(`/api/users/update`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUsername),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+
+    }
+  };
+
+  const handlePasswordSubmit = async (formData: updatePasswordFormValues) => {
+    try {
+      const updatedPassword = {
+        password: formData.password,
+      };
+      const response = await fetch(`/api/users/update`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPassword),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+
+    }
+  };
+
   return (
     <div className="profile-card">
       <div className="profile-card-left">
@@ -33,16 +172,19 @@ export const ProfileCard = ({ user }: Props) => {
           <input
             type="text"
             value={"@username"}
+            readOnly
           />
           <Instagram size={20} />
           <input
             type="text"
             value={"@username"}
+            readOnly
           />
           <Facebook size={20} />
           <input
             type="text"
             value={"@username"}
+            readOnly
           />
         </div>
       </div>
@@ -52,7 +194,10 @@ export const ProfileCard = ({ user }: Props) => {
           <p>Here you can change your username, email or password </p>
 
           {activeUsername ? (
-            <form className="profile-card-forms">
+            <form
+              onSubmit={handleUsernameChange(handleUsernameSubmit)}
+              className="profile-card-forms"
+            >
               <label
                 className="profile-card-forms-first-element"
                 htmlFor="username"
@@ -62,20 +207,39 @@ export const ProfileCard = ({ user }: Props) => {
               <input
                 id="username"
                 type="text"
+                {...usernameRegister("username")}
                 required
+                placeholder="Set new username"
               />
 
-              <button onClick={() => setUsernameActive(!activeUsername)}>Edit</button>
+              <button
+                type="submit"
+                // onClick={() => setUsernameActive(!activeUsername)}
+              >
+                Save
+              </button>
+              {errorsUsername.username && <p className="error-text">{errorsUsername.username.message}</p>}
             </form>
           ) : (
-            <div>
-              <h3>Username</h3>
+            <div className="profile-card-forms">
+              <label className="profile-card-forms-first-element">Username</label>
               <p>{user.username}</p>
-              <button onClick={() => setUsernameActive(!activeUsername)}>Edit</button>
+              <button
+                onClick={() => {
+                  setUsernameActive(!activeUsername);
+                  setEmailActive(false);
+                  setPasswordActive(false);
+                }}
+              >
+                Edit
+              </button>
             </div>
           )}
           {activeEmail ? (
-            <form className="profile-card-forms">
+            <form
+              onSubmit={handleEmailChange(handleEmailSubmit)}
+              className="profile-card-forms"
+            >
               <label
                 className="profile-card-forms-first-element"
                 htmlFor="email"
@@ -85,20 +249,39 @@ export const ProfileCard = ({ user }: Props) => {
               <input
                 id="email"
                 type="email"
+                {...emailRegister("email")}
                 required
+                placeholder="Set new email"
               />
 
-              <button onClick={() => setEmailActive(!activeEmail)}>Edit</button>
+              <button
+                type="submit"
+                onClick={() => setEmailActive(!activeEmail)}
+              >
+                Save
+              </button>
+              {errorsEmail.email && <p className="error-text">{errorsEmail.email.message}</p>}
             </form>
           ) : (
-            <div>
-              <h3>Email</h3>
+            <div className="profile-card-forms">
+              <label className="profile-card-forms-first-element">Email</label>
               <p>{user.email}</p>
-              <button onClick={() => setEmailActive(!activeEmail)}>Edit</button>
+              <button
+                onClick={() => {
+                  setUsernameActive(false);
+                  setEmailActive(!activeEmail);
+                  setPasswordActive(false);
+                }}
+              >
+                Edit
+              </button>
             </div>
           )}
           {activePassword ? (
-            <form className="profile-card-forms">
+            <form
+              onSubmit={handlePasswordChange(handlePasswordSubmit)}
+              className="profile-card-forms"
+            >
               <label
                 className="profile-card-forms-first-element"
                 htmlFor="password"
@@ -108,16 +291,32 @@ export const ProfileCard = ({ user }: Props) => {
               <input
                 id="password"
                 type="password"
+                {...passwordRegister("password")}
                 required
+                placeholder="Set new password"
               />
 
-              <button onClick={() => setPasswordActive(!activePassword)}>Edit</button>
+              <button
+                type="submit"
+                onClick={() => setPasswordActive(!activePassword)}
+              >
+                Save
+              </button>
+              {errorsPassword.password && <p className="error-text">{errorsPassword.password.message}</p>}
             </form>
           ) : (
-            <div>
-              <h3>Password</h3>
+            <div className="profile-card-forms">
+              <label className="profile-card-forms-first-element">Password</label>
               <p>xxxxxxxxxxxxxxxxxxx</p>
-              <button onClick={() => setPasswordActive(!activePassword)}>Edit</button>
+              <button
+                onClick={() => {
+                  setUsernameActive(false);
+                  setEmailActive(false);
+                  setPasswordActive(!activePassword);
+                }}
+              >
+                Edit
+              </button>
             </div>
           )}
         </div>
@@ -129,6 +328,8 @@ export const ProfileCard = ({ user }: Props) => {
               <input
                 type="radio"
                 name="selectOne"
+                value={"Everyone"}
+                onChange={e => setRadioButtonValue(e.target.value)}
               />
               Everyone
             </label>
@@ -136,6 +337,8 @@ export const ProfileCard = ({ user }: Props) => {
               <input
                 type="radio"
                 name="selectOne"
+                value={"All users"}
+                onChange={e => setRadioButtonValue(e.target.value)}
               />
               All users
             </label>
@@ -143,6 +346,8 @@ export const ProfileCard = ({ user }: Props) => {
               <input
                 type="radio"
                 name="selectOne"
+                value={"Users you follow"}
+                onChange={e => setRadioButtonValue(e.target.value)}
               />
               Users you follow
             </label>
@@ -150,6 +355,8 @@ export const ProfileCard = ({ user }: Props) => {
               <input
                 type="radio"
                 name="selectOne"
+                value={"Only me"}
+                onChange={e => setRadioButtonValue(e.target.value)}
               />
               Only me
             </label>

@@ -48,7 +48,7 @@ const getMovies = async (person: Person) => {
   return movies;
 };
 
-export default async function Movies({ params }: { params: { id: string } }) {
+export default async function PersonMovies({ params }: { params: { id: string } }) {
   const person = await getPerson(params.id);
   const movies = await getMovies(person);
 

@@ -5,12 +5,13 @@ import { getPersonById } from "@/services/personsService";
 import { getMovieById } from "@/services/movieService";
 
 import { Section } from "@/components/section";
+import { MovieList, type MovieListItem } from "@/components/movieList";
 
 type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
 
-const getPersonMovies = async (person: Person) => {
-  const movieCastIds = person.movieCast.map(cast => cast.movieId) || [];
-  const movieCrewIds = person.movieCrew.map(crew => crew.movieId) || [];
+const getAllPersonMovies = async (person: Person) => {
+  const movieCastIds = person.movieCast.map(cast => cast.movieId);
+  const movieCrewIds = person.movieCrew.map(crew => crew.movieId);
 
   const uniqueIds = new Set([...movieCastIds, ...movieCrewIds]);
 
@@ -26,7 +27,7 @@ const getPersonMovies = async (person: Person) => {
     }),
   );
 
-  return movies;
+  return movies as MovieListItem[];
 };
 
 export default async function PersonMovies({ params }: { params: { id: string } }) {
@@ -36,7 +37,7 @@ export default async function PersonMovies({ params }: { params: { id: string } 
     notFound();
   }
 
-  const movies = await getPersonMovies(person);
+  const movies = await getAllPersonMovies(person);
 
   return (
     <main>
@@ -47,31 +48,7 @@ export default async function PersonMovies({ params }: { params: { id: string } 
           </div>
         }
       >
-        <div className="known-for-movies">
-          {movies
-            ? movies.map(movie =>
-                movie ? (
-                  <Link
-                    key={movie.id}
-                    href={"/movies/" + movie.id}
-                  >
-                    {/* Remove this when we get working poster paths */}
-                    <div className="placeholder-movie-poster">{movie.title}</div>
-
-                    {/* Working image for when we have poster paths:
-                    <Image
-                      src={`${movie.poster_path}`}
-                      width={150}
-                      height={225}
-                      alt={movie.title}
-                      layout="responsive"
-                    />
-                */}
-                  </Link>
-                ) : null,
-              )
-            : null}
-        </div>
+        <MovieList movies={movies} />
       </Section>
     </main>
   );

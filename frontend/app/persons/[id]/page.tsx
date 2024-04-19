@@ -5,10 +5,11 @@ import { getPersonById } from "@/services/personsService";
 import { getMovieById } from "@/services/movieService";
 
 import { Section } from "@/components/section";
+import { MovieList, type MovieListItem } from "@/components/movieList";
 
 type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
 
-const getPersonMovies = async (person: Person) => {
+const getBestRatedPersonMovies = async (person: Person) => {
   const movieCastIds = person.movieCast.map(cast => cast.movieId);
   const movieCrewIds = person.movieCrew.map(crew => crew.movieId);
 
@@ -18,15 +19,22 @@ const getPersonMovies = async (person: Person) => {
     Array.from(uniqueIds).map(async movieId => {
       const movie = await getMovieById(movieId);
 
-      if (!movie) {
-        return null;
+      if (movie) {
+        return { poster_path: movie.poster_path, title: movie.title, id: movie.id, vote_average: movie.vote_average };
       }
-
-      return { poster_path: movie.poster_path, title: movie.title, id: movie.id };
     }),
   );
 
-  return movies;
+  const filteredMovies = movies
+    .filter(movie => movie !== undefined)
+    .sort((a, b) => {
+      if (a === undefined || b === undefined) {
+        return 0;
+      }
+      return b.vote_average - a.vote_average;
+    });
+
+  return filteredMovies.slice(0, 6) as MovieListItem[];
 };
 
 export default async function Person({ params }: { params: { id: string } }) {
@@ -36,7 +44,7 @@ export default async function Person({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  const movies = await getPersonMovies(person);
+  const movies = await getBestRatedPersonMovies(person);
 
   function formatDate(dateString: Date) {
     const date = new Date(dateString);
@@ -82,31 +90,7 @@ export default async function Person({ params }: { params: { id: string } }) {
             </div>
           }
         >
-          <div className="known-for-movies">
-            {movies
-              ? movies.map(movie =>
-                  movie ? (
-                    <Link
-                      key={movie.id}
-                      href={"/movies/" + movie.id}
-                    >
-                      {/* Remove this when we get working poster paths */}
-                      <div className="placeholder-movie-poster">{movie.title}</div>
-
-                      {/* Working image for when we have poster paths:
-                      <Image
-                        src={`${movie.poster_path}`}
-                        width={150}
-                        height={225}
-                        alt={movie.title}
-                        layout="responsive"
-                      />
-                      */}
-                    </Link>
-                  ) : null,
-                )
-              : null}
-          </div>
+          <MovieList movies={movies} />
         </Section>
       </div>
     </main>

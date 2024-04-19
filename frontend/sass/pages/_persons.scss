@@ -98,48 +98,6 @@
   gap: 10px;
 }
 
-.known-for-movies {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 10px;
-
-  // Remove this when not needed anymore
-  .placeholder-movie-poster {
-    background-color: grey;
-    aspect-ratio: 2 / 3;
-    border: 1px solid abstracts.$primary-dark;
-    box-shadow: abstracts.$default-shadow;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-  }
-
-  .placeholder-movie-poster:hover {
-    transform: scale(105%);
-    transition: 0.2s;
-    transition-timing-function: ease-in-out;
-  }
-
-  img {
-    object-fit: cover;
-    box-shadow: abstracts.$default-shadow;
-  }
-
-  img:hover {
-    transform: scale(105%);
-    transition: 0.2s;
-    transition-timing-function: ease-in-out;
-  }
-}
-
-@media only screen and (max-width: abstracts.$large-width) {
-  .known-for-movies {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
 .known-for-header {
   display: inline-flex;
   width: 100%;

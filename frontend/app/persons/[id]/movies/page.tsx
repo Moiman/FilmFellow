@@ -8,7 +8,7 @@ import { Section } from "@/components/section";
 
 type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
 
-export const getPersonMovies = async (person: Person) => {
+const getPersonMovies = async (person: Person) => {
   const movieCastIds = person.movieCast.map(cast => cast.movieId) || [];
   const movieCrewIds = person.movieCrew.map(crew => crew.movieId) || [];
 

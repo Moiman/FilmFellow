@@ -48,7 +48,7 @@ export default async function Person({ params }: { params: { id: string } }) {
 
   function formatDate(dateString: Date) {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    return date.toLocaleDateString(undefined, { dateStyle: "long" });
   }
 
   return (

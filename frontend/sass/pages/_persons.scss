@@ -71,7 +71,12 @@
         line-height: 3.4rem;
       }
 
-      h5 {
+      .person-birthday {
+        font-family: abstracts.$default-title-font;
+        line-height: abstracts.$default-line-height;
+        letter-spacing: abstracts.$title-letter-spacing;
+        font-size: abstracts.$h5-font-size;
+        font-weight: 400;
         color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
         line-height: 1;
       }

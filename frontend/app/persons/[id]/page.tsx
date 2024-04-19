@@ -1,114 +1,56 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
-import { Star } from "react-feather";
 
-import type { MovieResponse } from "@/services/movieService";
+import { getPersonById } from "@/services/personsService";
+import { getMovieById } from "@/services/movieService";
 
 import { Section } from "@/components/section";
 
 type Person = Awaited<ReturnType<typeof getPerson>>;
-type Movie = Awaited<ReturnType<typeof getMoviesById>>;
 
-const getPerson = async (personId: number) => {
+const getPerson = async (personId: string) => {
   try {
-    const response = await fetch("/api/persons/" + personId);
-    const personData = await response.json();
+    const personData = getPersonById(parseInt(personId));
 
-    const { name, biography, birthday, deathday, movieCast, movieCrew, profile_path, homepage } = personData;
+    if (!personData) {
+      return null;
+    }
 
-    // Combine movie ids to one array
-    const castMovieIds: number[] = movieCast.map((item: { movieId: number }) => item.movieId);
-    const crewMovieIds: number[] = movieCrew.map((item: { movieId: number }) => item.movieId);
-    const combinedMovieIds: number[] = [...castMovieIds, ...crewMovieIds];
-    const movieIds: number[] = Array.from(new Set(combinedMovieIds));
-
-    const person = {
-      name: name,
-      biography: biography,
-      birthday: birthday,
-      deathday: deathday,
-      movieIds: movieIds,
-      profile_path: profile_path,
-      homepage: homepage,
-    };
-
-    return person;
+    return personData;
   } catch (error) {
     console.error("Error fetching movie data:", error);
     return null;
   }
 };
 
-const getMoviesById = async (movieIds: number[]) => {
-  const movies = [];
-  const fetchedMovieIds = new Set<number>();
+const getMovies = async (person: Person) => {
+  const movieCastIds = person?.movieCast.map(cast => cast.movieId) || [];
+  const movieCrewIds = person?.movieCrew.map(crew => crew.movieId) || [];
 
-  async function fetchMovieById(movieId: number) {
-    try {
-      const response = await fetch(`/api/movies/${movieId}`);
-      const movieData = (await response.json()) as MovieResponse;
+  const movieIds = movieCastIds.concat(movieCrewIds);
+  const uniqueIds = movieIds.filter((id, index) => {
+    return movieIds.indexOf(id) === index;
+  });
 
-      const { id, title, poster_path, vote_average } = movieData;
+  const movies = await Promise.all(
+    uniqueIds.map(async movieId => {
+      const movie = await getMovieById(movieId);
+      return movie;
+    }),
+  );
 
-      return { id, title, poster_path, vote_average };
-    } catch (error) {
-      console.error("Error fetching movie data:", error);
-      return null;
-    }
-  }
-
-  for (const movieId of movieIds) {
-    if (!fetchedMovieIds.has(movieId)) {
-      const movie = await fetchMovieById(movieId);
-
-      if (movie) {
-        movies.push(movie);
-        fetchedMovieIds.add(movieId);
-      }
-    }
-  }
-
-  movies.sort((a, b) => b.vote_average - a.vote_average);
-
-  return movies.slice(0, 6);
+  return movies;
 };
 
-export default function Person({ params }: { params: { id: number } }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [person, setPerson] = useState<Person | null>(null);
-  const [movies, setMovies] = useState<Movie | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const personData: Person = await getPerson(params.id);
-      setPerson(personData);
-
-      if (personData) {
-        setMovies(await getMoviesById(personData.movieIds));
-      }
-
-      setIsLoading(false);
-    }
-
-    fetchData();
-  }, [params.id]);
-
-  if (isLoading) {
-    return (
-      <main className="rotating-star">
-        <Star />
-      </main>
-    );
-  }
+export default async function Person({ params }: { params: { id: string } }) {
+  const person = await getPerson(params.id);
+  const movies = await getMovies(person);
 
   if (!person) {
     notFound();
   }
 
-  function formatDate(dateString: string) {
+  function formatDate(dateString: Date) {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   }
@@ -129,10 +71,10 @@ export default function Person({ params }: { params: { id: number } }) {
           </div>
 
           <div className="person-info">
-            <h5>
+            <span className="person-birthday">
               {person.birthday ? formatDate(person.birthday) : "Birthday"} -{" "}
               {person.deathday ? formatDate(person.deathday) : ""}
-            </h5>
+            </span>
             <h1>{person ? person.name : "Name"}</h1>
             <p className="person-description">{person.biography ? person.biography : "Biography"}</p>
           </div>
@@ -150,23 +92,25 @@ export default function Person({ params }: { params: { id: number } }) {
         >
           <div className="known-for-wrapper">
             {movies
-              ? movies.map(movie => (
-                  <Link
-                    key={movie.id}
-                    href={"/movies/" + movie.id}
-                  >
-                    <div
-                      className="known-for-item"
-                      style={{
-                        background: `URL(${movie.poster_path}) grey`,
-                        backgroundPosition: "center center",
-                        backgroundSize: "cover",
-                      }}
+              ? movies.map(movie =>
+                  movie ? (
+                    <Link
+                      key={movie.id}
+                      href={"/movies/" + movie.id}
                     >
-                      {/* Placeholder until we get movie posters */ movie.title}
-                    </div>
-                  </Link>
-                ))
+                      <div
+                        className="known-for-item"
+                        style={{
+                          background: `URL(${movie.poster_path}) grey`,
+                          backgroundPosition: "center center",
+                          backgroundSize: "cover",
+                        }}
+                      >
+                        {movie.title}
+                      </div>
+                    </Link>
+                  ) : null,
+                )
               : null}
           </div>
         </Section>

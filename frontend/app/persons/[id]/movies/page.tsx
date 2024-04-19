@@ -6,23 +6,8 @@ import { getPersonById } from "@/services/personsService";
 import { Section } from "@/components/section";
 import { getPersonMovies } from "@/app/persons/[id]/page";
 
-const getPerson = async (personId: string) => {
-  try {
-    const personData = await getPersonById(parseInt(personId));
-
-    if (!personData) {
-      return null;
-    }
-
-    return personData;
-  } catch (error) {
-    console.error("Error fetching movie data:", error);
-    return null;
-  }
-};
-
 export default async function PersonMovies({ params }: { params: { id: string } }) {
-  const person = await getPerson(params.id);
+  const person = await getPersonById(parseInt(params.id));
 
   if (!person) {
     notFound();

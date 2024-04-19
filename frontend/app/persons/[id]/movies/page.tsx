@@ -36,7 +36,12 @@ const getMovies = async (person: Person) => {
   const movies = await Promise.all(
     uniqueIds.map(async movieId => {
       const movie = await getMovieById(movieId);
-      return movie;
+
+      if (!movie) {
+        return null;
+      }
+
+      return { poster_path: movie.poster_path, title: movie.title, id: movie.id };
     }),
   );
 

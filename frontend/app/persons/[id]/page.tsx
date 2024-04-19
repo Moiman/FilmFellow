@@ -6,24 +6,9 @@ import { getMovieById } from "@/services/movieService";
 
 import { Section } from "@/components/section";
 
-type Person = Awaited<ReturnType<typeof getPerson>>;
+type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
 
-const getPerson = async (personId: string) => {
-  try {
-    const personData = getPersonById(parseInt(personId));
-
-    if (!personData) {
-      return null;
-    }
-
-    return personData;
-  } catch (error) {
-    console.error("Error fetching movie data:", error);
-    return null;
-  }
-};
-
-const getMovies = async (person: Person) => {
+export const getPersonMovies = async (person: Person) => {
   const movieCastIds = person?.movieCast.map(cast => cast.movieId) || [];
   const movieCrewIds = person?.movieCrew.map(crew => crew.movieId) || [];
 
@@ -48,12 +33,13 @@ const getMovies = async (person: Person) => {
 };
 
 export default async function Person({ params }: { params: { id: string } }) {
-  const person = await getPerson(params.id);
-  const movies = await getMovies(person);
+  const person = await getPersonById(parseInt(params.id));
 
   if (!person) {
     notFound();
   }
+
+  const movies = await getPersonMovies(person);
 
   function formatDate(dateString: Date) {
     const date = new Date(dateString);
@@ -77,14 +63,18 @@ export default async function Person({ params }: { params: { id: string } }) {
 
           <div className="person-info">
             <span className="person-birthday">
-              {person.birthday ? formatDate(person.birthday) : "Birthday"} -{" "}
+              {person.birthday ? formatDate(person.birthday) : ""} -{" "}
               {person.deathday ? formatDate(person.deathday) : ""}
             </span>
-            <h1>{person ? person.name : "Name"}</h1>
-            <p className="person-description">{person.biography ? person.biography : "Biography"}</p>
+            <h1>{person.name ? person.name : "No name"}</h1>
+            <p className="person-description">{person.biography ? person.biography : "No biography"}</p>
           </div>
         </div>
-        <div className="person-website">{person.homepage ? <Link href={person.homepage}>Homepage</Link> : null}</div>
+        {person.homepage && (
+          <div className="person-website">
+            <Link href={person.homepage}>Homepage</Link>
+          </div>
+        )}
       </div>
 
       <div className="section-padding">

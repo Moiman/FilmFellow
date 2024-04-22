@@ -1,8 +1,7 @@
 "use client";
-import * as yup from "yup";
+import { Session } from "next-auth";
 import { Section } from "@/components/section";
 import { ProfileCard } from "@/components/profileCard";
-import { Session } from "next-auth";
 
 interface Props {
   session: Session;

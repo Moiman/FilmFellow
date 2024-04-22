@@ -4,6 +4,9 @@ import { Facebook, Instagram, Twitter, Smile } from "react-feather";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Modal from "./modal";
 
 interface Props {
   user: User;
@@ -54,7 +57,32 @@ export const ProfileCard = ({ user }: Props) => {
   const [activeUsername, setUsernameActive] = useState(false);
   const [activeEmail, setEmailActive] = useState(false);
   const [activePassword, setPasswordActive] = useState(false);
+  const [error, setError] = useState("");
   const [radioButtonValue, setRadioButtonValue] = useState("");
+  const { update } = useSession();
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/users/delete`, {
+        method: "DELETE",
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        setError("");
+        signOut();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const {
     handleSubmit: handleEmailChange,
@@ -97,8 +125,8 @@ export const ProfileCard = ({ user }: Props) => {
   const handleEmailSubmit = async (formData: updateEmailFormValues) => {
     try {
       const updatedEmail = {
-        email: formData.email
-      }
+        email: formData.email,
+      };
       const response = await fetch(`/api/users/update`, {
         method: "PUT",
         headers: {
@@ -111,8 +139,19 @@ export const ProfileCard = ({ user }: Props) => {
       const data = await response.json();
       console.log(data);
 
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        await update(data);
+        setEmailActive(false);
+        emailReset();
+        setError("");
+        router.refresh();
+      }
     } catch (error) {
-
+      console.error(error);
     }
   };
 
@@ -132,8 +171,31 @@ export const ProfileCard = ({ user }: Props) => {
       console.log(response);
       const data = await response.json();
       console.log(data);
-    } catch (error) {
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        await update(data);
+        setUsernameActive(false);
+        usernameReset();
+        setError("");
+        router.refresh();
+      }
 
+      /*
+      const newSession = {
+        ...session,
+        user: {
+          ...session?.user,
+          username: data.username,
+        },
+      };
+
+      await update(newSession);
+*/
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -153,9 +215,27 @@ export const ProfileCard = ({ user }: Props) => {
       console.log(response);
       const data = await response.json();
       console.log(data);
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        await update(data);
+        setPasswordActive(false);
+        passwordReset();
+        setError("");
+        router.refresh();
+      }
     } catch (error) {
-
+      console.error(error);
     }
+  };
+
+  const resetAllFields = () => {
+    setError("");
+    passwordReset();
+    emailReset();
+    usernameReset();
   };
 
   return (
@@ -212,13 +292,11 @@ export const ProfileCard = ({ user }: Props) => {
                 placeholder="Set new username"
               />
 
-              <button
-                type="submit"
-                // onClick={() => setUsernameActive(!activeUsername)}
-              >
-                Save
-              </button>
-              {errorsUsername.username && <p className="error-text">{errorsUsername.username.message}</p>}
+              <button type="submit">Save</button>
+              <div>
+                {error && <p className="error-text">{error}</p>}
+                {errorsUsername.username && <p className="error-text">{errorsUsername.username.message}</p>}
+              </div>
             </form>
           ) : (
             <div className="profile-card-forms">
@@ -229,6 +307,7 @@ export const ProfileCard = ({ user }: Props) => {
                   setUsernameActive(!activeUsername);
                   setEmailActive(false);
                   setPasswordActive(false);
+                  resetAllFields();
                 }}
               >
                 Edit
@@ -254,13 +333,11 @@ export const ProfileCard = ({ user }: Props) => {
                 placeholder="Set new email"
               />
 
-              <button
-                type="submit"
-                onClick={() => setEmailActive(!activeEmail)}
-              >
-                Save
-              </button>
-              {errorsEmail.email && <p className="error-text">{errorsEmail.email.message}</p>}
+              <button type="submit">Save</button>
+              <div>
+                {error && <p className="error-text">{error}</p>}
+                {errorsEmail.email && <p className="error-text">{errorsEmail.email.message}</p>}
+              </div>
             </form>
           ) : (
             <div className="profile-card-forms">
@@ -271,6 +348,7 @@ export const ProfileCard = ({ user }: Props) => {
                   setUsernameActive(false);
                   setEmailActive(!activeEmail);
                   setPasswordActive(false);
+                  resetAllFields();
                 }}
               >
                 Edit
@@ -296,13 +374,11 @@ export const ProfileCard = ({ user }: Props) => {
                 placeholder="Set new password"
               />
 
-              <button
-                type="submit"
-                onClick={() => setPasswordActive(!activePassword)}
-              >
-                Save
-              </button>
-              {errorsPassword.password && <p className="error-text">{errorsPassword.password.message}</p>}
+              <button type="submit">Save</button>
+              <div>
+                {error && <p className="error-text">{error}</p>}
+                {errorsPassword.password && <p className="error-text">{errorsPassword.password.message}</p>}
+              </div>
             </form>
           ) : (
             <div className="profile-card-forms">
@@ -313,12 +389,33 @@ export const ProfileCard = ({ user }: Props) => {
                   setUsernameActive(false);
                   setEmailActive(false);
                   setPasswordActive(!activePassword);
+                  resetAllFields();
                 }}
               >
                 Edit
               </button>
             </div>
           )}
+          <div className="profile-card-forms">
+            <label className="profile-card-forms-first-element">Delete Account</label>
+            <p>Permanently delete your account</p>
+            <Modal
+              modalId={user.id as number}
+              content={
+                <div className="profile-card-modal-content">
+                  <p>Are you sure you want to delete your account ? </p>
+                </div>
+              }
+              _onOk={handleDelete}
+              okLink={
+                <div style={{ display: "grid", justifyContent: "center" }}>
+                  <button>Delete Account</button>
+                  {error && <p className="error-text" style={{padding: "5px"}}>{error}</p>}
+                </div>
+              }
+              openModalText="Delete"
+            />
+          </div>
         </div>
         <div className="profile-card-content-divider">
           <h3>Profile Privacy</h3>

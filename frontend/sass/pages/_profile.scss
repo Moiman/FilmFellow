@@ -7,6 +7,18 @@
 .profile-card-right {
   margin-left: 15%;
 }
+.profile-card-modal-content {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25%;
+  p {
+    font-size: abstracts.$h3-font-size;
+    font-weight: 300;
+    font-family: var(--font-poppins);
+    line-height: 1.6;
+    letter-spacing: -0.05rem;
+  }
+}
 
 .profile-card {
   display: grid;

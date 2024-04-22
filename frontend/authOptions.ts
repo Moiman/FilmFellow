@@ -13,6 +13,8 @@ export const authOptions: NextAuthOptions = {
     maxAge: 7 * 24 * 60 * 60, // one week
   },
 
+  secret: process.env.NEXTAUTH_SECRET,
+
   providers: [
     Credentials({
       id: "register",
@@ -119,4 +121,5 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+
 };

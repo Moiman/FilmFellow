@@ -19,16 +19,6 @@
   display: flex;
   flex-direction: column;
 
-  @media only screen and (max-width: abstracts.$medium-width) {
-    .movie-wrapper {
-      flex-direction: column;
-
-      .image-wrapper {
-        max-width: 100% !important;
-      }
-    }
-  }
-
   .movie-wrapper {
     display: inline-flex;
     width: 100%;

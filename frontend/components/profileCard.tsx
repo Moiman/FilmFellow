@@ -401,6 +401,12 @@ export const ProfileCard = ({ user }: Props) => {
             <p>Permanently delete your account</p>
             <Modal
               modalId={user.id as number}
+              modalHeaderText="Account delete verification"
+              cancelVerificationComponent={
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <button>Cancel</button>
+                </div>
+              }
               content={
                 <div className="profile-card-modal-content">
                   <p>Are you sure you want to delete your account ? </p>
@@ -408,9 +414,16 @@ export const ProfileCard = ({ user }: Props) => {
               }
               _onOk={handleDelete}
               okLink={
-                <div style={{ display: "grid", justifyContent: "center" }}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <button>Delete Account</button>
-                  {error && <p className="error-text" style={{padding: "5px"}}>{error}</p>}
+                  {error && (
+                    <p
+                      className="error-text"
+                      style={{ padding: "5px" }}
+                    >
+                      {error}
+                    </p>
+                  )}
                 </div>
               }
               openModalText="Delete"

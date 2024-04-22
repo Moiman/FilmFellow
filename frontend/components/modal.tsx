@@ -11,11 +11,23 @@ interface Props {
   okLink?: React.ReactNode;
   openModalText: string;
   openModalClass?: string;
+  modalHeaderText?: string;
+  cancelVerificationComponent?: React.ReactNode;
   //onOK needs "use server"
   _onOk?: () => Promise<void>;
 }
 
-const ModalComponent = ({ content, _footer, _onOk, okLink, openModalText, modalId, openModalClass }: Props) => {
+const ModalComponent = ({
+  content,
+  _footer,
+  _onOk,
+  okLink,
+  openModalText,
+  modalId,
+  openModalClass,
+  modalHeaderText,
+  cancelVerificationComponent,
+}: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
@@ -35,6 +47,7 @@ const ModalComponent = ({ content, _footer, _onOk, okLink, openModalText, modalI
             className="modal-box"
           >
             <div className="modal-title">
+              <h2>{modalHeaderText}</h2>
               <button
                 aria-label="close"
                 className="button-transparent"
@@ -51,6 +64,14 @@ const ModalComponent = ({ content, _footer, _onOk, okLink, openModalText, modalI
                   onClick={() => okClicked()}
                 >
                   {okLink}
+                </div>
+              ) : null}
+              {cancelVerificationComponent ? (
+                <div
+                  className="ok"
+                  onClick={() => closeModal()}
+                >
+                  {cancelVerificationComponent}
                 </div>
               ) : null}
             </div>

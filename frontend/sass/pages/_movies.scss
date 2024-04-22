@@ -228,24 +228,4 @@
     padding: 10px;
     gap: 10px;
   }
-
-  .rotating-star {
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50px;
-      height: 50px;
-      margin: -25px 0 0 -25px;
-      animation: spin 4s linear infinite;
-      fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-      color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-    }
-
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  }
 }

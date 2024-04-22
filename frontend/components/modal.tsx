@@ -13,6 +13,7 @@ interface Props {
   openModalClass?: string;
   modalHeaderText?: string;
   cancelVerificationComponent?: React.ReactNode;
+  resetErrors?: () => void;
   //onOK needs "use server"
   _onOk?: () => Promise<void>;
 }
@@ -27,6 +28,7 @@ const ModalComponent = ({
   openModalClass,
   modalHeaderText,
   cancelVerificationComponent,
+  resetErrors,
 }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,7 +41,12 @@ const ModalComponent = ({
     showModal == modalId ? (
       <dialog ref={dialogRef}>
         <div
-          onMouseDown={() => closeModal()}
+          onMouseDown={() => {
+            if (resetErrors) {
+              resetErrors();
+            }
+            closeModal();
+          }}
           className="modal-background"
         >
           <div
@@ -51,7 +58,12 @@ const ModalComponent = ({
               <button
                 aria-label="close"
                 className="button-transparent"
-                onClick={() => closeModal()}
+                onClick={() => {
+                  if (resetErrors) {
+                    resetErrors();
+                  }
+                  closeModal();
+                }}
               >
                 <X color="#eff2f2" />
               </button>
@@ -69,7 +81,12 @@ const ModalComponent = ({
               {cancelVerificationComponent ? (
                 <div
                   className="ok"
-                  onClick={() => closeModal()}
+                  onClick={() => {
+                    if (resetErrors) {
+                      resetErrors();
+                    }
+                    closeModal();
+                  }}
                 >
                   {cancelVerificationComponent}
                 </div>
@@ -92,8 +109,8 @@ const ModalComponent = ({
     });
   }, [showModal, modalId, router, pathName]);
 
-  const okClicked = () => {
-    if (_onOk) _onOk();
+  const okClicked = async () => {
+    if (_onOk) await _onOk();
     closeModal();
   };
 

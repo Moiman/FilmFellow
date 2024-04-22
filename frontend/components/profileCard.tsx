@@ -63,24 +63,20 @@ export const ProfileCard = ({ user }: Props) => {
   const router = useRouter();
 
   const handleDelete = async () => {
-    try {
-      const response = await fetch(`/api/users/delete`, {
-        method: "DELETE",
-      });
-      console.log(response);
-      const data = await response.json();
-      console.log(data);
+    const response = await fetch(`/api/users/delete`, {
+      method: "DELETE",
+    });
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
 
-      if (data.error) {
-        setError(data.error);
-        return;
-      }
-      if (response.ok && !data.error) {
-        setError("");
-        signOut();
-      }
-    } catch (error) {
-      console.error(error);
+    if (data.error) {
+      setError(data.error);
+      throw data.error;
+    }
+    if (response.ok && !data.error) {
+      setError("");
+      signOut();
     }
   };
 
@@ -400,6 +396,7 @@ export const ProfileCard = ({ user }: Props) => {
             <label className="profile-card-forms-first-element">Delete Account</label>
             <p>Permanently delete your account</p>
             <Modal
+              resetErrors={() => setError("")}
               modalId={user.id as number}
               modalHeaderText="Account delete verification"
               cancelVerificationComponent={
@@ -414,17 +411,19 @@ export const ProfileCard = ({ user }: Props) => {
               }
               _onOk={handleDelete}
               okLink={
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <button>Delete Account</button>
+                <>
                   {error && (
                     <p
                       className="error-text"
-                      style={{ padding: "5px" }}
+                      style={{ display: "flex", justifyContent: "center", padding: "5px" }}
                     >
                       {error}
                     </p>
                   )}
-                </div>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <button>Delete Account</button>
+                  </div>
+                </>
               }
               openModalText="Delete"
             />

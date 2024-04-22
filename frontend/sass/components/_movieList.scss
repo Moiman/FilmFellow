@@ -26,6 +26,8 @@
 
   img {
     object-fit: cover;
+    width: 100%;
+    height: auto;
     box-shadow: abstracts.$default-shadow;
   }
 

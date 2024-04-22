@@ -25,12 +25,11 @@ export const MovieList = ({ movies }: MovieListProps) => {
               {/* Working image for when we have poster paths:
               <Image
                 src={`${movie.poster_path}`}
-                width={150}
-                height={225}
+                width={500}
+                height={500}
                 alt={movie.title}
-                layout="responsive"
               />
-             */}
+               */}
             </Link>
           ))
         : null}

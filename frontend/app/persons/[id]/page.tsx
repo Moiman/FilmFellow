@@ -55,14 +55,15 @@ export default async function Person({ params }: { params: { id: string } }) {
     <main style={{ padding: 0 }}>
       <div className="person-content">
         <div className="person-wrapper">
-          <div
-            className="img"
-            style={{
-              background: `URL(${person.profile_path}) grey`,
-              backgroundPosition: "center center",
-              backgroundSize: "cover",
-            }}
-          >
+          <div className="image-wrapper">
+            {/* Working image for when we have profile paths:
+            <Image
+              alt={`${person.name}`}
+              src={`${person.profile_path}`}
+              width={500}
+              height={500}
+            />
+  */}
             <div className="gradient" />
           </div>
 

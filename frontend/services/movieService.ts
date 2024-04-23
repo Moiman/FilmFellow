@@ -173,6 +173,7 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
   }
 };
 
+
 const getMovieReviewsById = async (movieId: number) => {
   const movieReviews = await prisma.importedReviews.findMany({
     where: {

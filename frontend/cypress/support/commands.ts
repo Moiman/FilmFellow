@@ -14,6 +14,8 @@ Cypress.Commands.add("login", (email, password) => {
     [email, password],
     () => {
       cy.visit("/login");
+      // We must use force because if tests fail we can't type or click
+      // See https://github.com/cypress-io/cypress/issues/2831
       cy.get('input[name="email"]').type(email, { force: true });
       cy.get('input[name="password"]').type(password, { force: true });
       cy.get('button[type="submit"]').click({ force: true });

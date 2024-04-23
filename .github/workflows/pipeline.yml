@@ -39,8 +39,9 @@ jobs:
           cp .env.example .env
           npm ci
           npx prisma migrate deploy
+          npm run prisma:seed
           npm run init-admin
           npm run build
           npm run start &
-          sleep 10
+          sleep 1
           npm run cypress:run_headless

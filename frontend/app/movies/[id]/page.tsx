@@ -14,9 +14,10 @@ const getMovie = async (movieId: string) => {
       return null;
     }
 
-    const { title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating } = movieData;
+    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating } = movieData;
 
     const movie = {
+      id,
       title,
       backdropPath: backdrop_path,
       overview,

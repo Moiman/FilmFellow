@@ -1,12 +1,12 @@
-"use client";
-
-import { useState } from "react";
-import { Heart, Star } from "react-feather";
-
-import { StarRating } from "./starRating";
 import { Dropdown } from "../dropdown";
-
+import { StarRating } from "./starRating";
+import { Favorite } from "./favorite";
+import { Watched } from "./watched";
+import { Watchlist } from "./watchlist";
+import { getIsFavorite } from "@/services/favoriteService";
 import type { Movie } from "@/app/movies/[id]/page";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",
@@ -19,20 +19,8 @@ const placeholderIcon = {
   borderRadius: "50%",
 };
 
-interface MovieInfoProps {
-  movie: Movie;
-}
-
-export const MovieInfo = ({ movie }: MovieInfoProps) => {
-  const [watched, setWatched] = useState<boolean>(false);
-  const [favorite, setFavorite] = useState<boolean>(false);
-  const [watchlist, setWatchlist] = useState<boolean>(false);
-
-  const [userRating, setUserRating] = useState<number>(0);
-
-  const handleRatingChange = (rating: number) => {
-    setUserRating(rating);
-  };
+export const MovieInfo = async ({ movie }: { movie: Movie }) => {
+  const session = await getServerSession(authOptions);
 
   const minutesToHoursAndMinutesString = (totalMinutes: number): string => {
     if (totalMinutes < 60) {
@@ -62,7 +50,7 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
         <div className="movie-info">
           <div className="movie-rating">
             <div className="current-rating">{movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}</div>
-            <StarRating onChange={handleRatingChange} />
+            {session && <StarRating />}
           </div>
           <div className="movie-basic-data">
             <h1>{movie.title}</h1>
@@ -77,40 +65,28 @@ export const MovieInfo = ({ movie }: MovieInfoProps) => {
           </div>
 
           {/* Buttons not working yet, functionality comes later */}
-          <div className="all-buttons">
-            <div className="buttons">
-              <Dropdown
-                button={<button>Add to list</button>}
-                width={200}
-              >
-                <button className="dropdown-item">Example list 1</button>
-                <button className="dropdown-item">Example list 2</button>
-                <button className="dropdown-item">Example list 3</button>
-              </Dropdown>
-              <button
-                className={watched ? "button-pink" : ""}
-                onClick={() => setWatched(!watched)}
-              >
-                {watched ? "Remove from watched" : "Mark as watched"}
-              </button>
+          {session && (
+            <div className="all-buttons">
+              <div className="buttons">
+                <Dropdown
+                  button={<button>Add to list</button>}
+                  width={200}
+                >
+                  <button className="dropdown-item">Example list 1</button>
+                  <button className="dropdown-item">Example list 2</button>
+                  <button className="dropdown-item">Example list 3</button>
+                </Dropdown>
+                <Watched />
+              </div>
+              <div className="transparent-buttons">
+                <Favorite
+                  movieId={movie.id}
+                  isFavorite={await getIsFavorite(movie.id)}
+                />
+                <Watchlist />
+              </div>
             </div>
-            <div className="transparent-buttons">
-              <button
-                className={favorite ? "button-transparent pink" : "button-transparent"}
-                onClick={() => setFavorite(!favorite)}
-              >
-                <Heart size={24} />
-                {favorite ? "Remove from favorites" : "Add to favorites"}
-              </button>
-              <button
-                className={watchlist ? "button-transparent yellow" : "button-transparent"}
-                onClick={() => setWatchlist(!watchlist)}
-              >
-                <Star size={24} />
-                {watchlist ? "Remove from watchlist" : "Add to watchlist"}
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="movie-streaming-sites">

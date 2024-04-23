@@ -39,6 +39,7 @@ Cypress.Commands.add("register", (email, password) => {
   cy.get('input[name="password"]').type(password);
   cy.get('input[name="confirmPassword"]').type(password);
   cy.get('button[type="submit"]').click();
+  cy.location("pathname").should("eq", "/");
 });
 
 Cypress.Commands.add("deleteUser", (email, password) => {

@@ -110,7 +110,9 @@ const ModalComponent = ({
   }, [showModal, modalId, router, pathName]);
 
   const okClicked = async () => {
-    if (_onOk) await _onOk();
+    if (_onOk) {
+      await _onOk();
+    }
     closeModal();
   };
 

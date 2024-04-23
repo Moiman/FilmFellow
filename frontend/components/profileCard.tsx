@@ -61,22 +61,27 @@ export const ProfileCard = ({ user }: Props) => {
   const [radioButtonValue, setRadioButtonValue] = useState("");
   const { update } = useSession();
   const router = useRouter();
-
+  console.log(radioButtonValue);
   const handleDelete = async () => {
-    const response = await fetch(`/api/users/delete`, {
-      method: "DELETE",
-    });
-    console.log(response);
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await fetch(`/api/users/delete`, {
+        method: "DELETE",
+      });
 
-    if (data.error) {
-      setError(data.error);
-      throw data.error;
-    }
-    if (response.ok && !data.error) {
-      setError("");
-      signOut();
+      const data = await response.json();
+
+      if (data.error) {
+        setError(data.error);
+        throw data.error;
+      }
+
+      if (response.ok && !data.error) {
+        setError("");
+        signOut();
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
   };
 
@@ -115,8 +120,6 @@ export const ProfileCard = ({ user }: Props) => {
     },
     resolver: yupResolver(updatePasswordSchema),
   });
-  console.log(user);
-  console.log(radioButtonValue);
 
   const handleEmailSubmit = async (formData: updateEmailFormValues) => {
     try {
@@ -131,9 +134,8 @@ export const ProfileCard = ({ user }: Props) => {
         },
         body: JSON.stringify(updatedEmail),
       });
-      console.log(response);
+
       const data = await response.json();
-      console.log(data);
 
       if (data.error) {
         setError(data.error);
@@ -164,9 +166,9 @@ export const ProfileCard = ({ user }: Props) => {
         },
         body: JSON.stringify(updatedUsername),
       });
-      console.log(response);
+
       const data = await response.json();
-      console.log(data);
+
       if (data.error) {
         setError(data.error);
         return;
@@ -208,9 +210,9 @@ export const ProfileCard = ({ user }: Props) => {
         },
         body: JSON.stringify(updatedPassword),
       });
-      console.log(response);
+
       const data = await response.json();
-      console.log(data);
+
       if (data.error) {
         setError(data.error);
         return;

@@ -8,16 +8,14 @@ interface Props {
 }
 
 export default function Profile({ session }: Props) {
-  console.log(session.user);
-
   const profileHeader = (
-    <div className="">
+    <div>
       <h2>Settings</h2>
     </div>
   );
   return (
-    <main className="">
-      <div className="">
+    <main>
+      <div>
         <Section header={profileHeader}>
           <ProfileCard user={session.user} />
         </Section>

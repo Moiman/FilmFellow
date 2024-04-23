@@ -8,6 +8,6 @@ export default async function ProfilePage() {
   if (!session) {
     redirect("/");
   } else {
-    return <Profile session={session}/>;
+    return <Profile session={session} />;
   }
 }

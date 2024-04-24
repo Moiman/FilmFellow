@@ -5,7 +5,7 @@ import { getPersonById } from "@/services/personsService";
 import { getMovieById } from "@/services/movieService";
 
 import { Section } from "@/components/section";
-import { MovieList, type MovieListItem } from "@/components/movieList";
+import { MovieList } from "@/components/movieList";
 
 type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
 
@@ -27,7 +27,7 @@ const getAllPersonMovies = async (person: Person) => {
     }),
   );
 
-  return movies as MovieListItem[];
+  return movies;
 };
 
 export default async function PersonMovies({ params }: { params: { id: string } }) {

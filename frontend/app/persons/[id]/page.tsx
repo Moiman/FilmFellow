@@ -5,7 +5,7 @@ import { getPersonById } from "@/services/personsService";
 import { getMovieById } from "@/services/movieService";
 
 import { Section } from "@/components/section";
-import { MovieList, type MovieListItem } from "@/components/movieList";
+import { MovieList } from "@/components/movieList";
 
 type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
 
@@ -19,22 +19,25 @@ const getBestRatedPersonMovies = async (person: Person) => {
     Array.from(uniqueIds).map(async movieId => {
       const movie = await getMovieById(movieId);
 
-      if (movie) {
-        return { poster_path: movie.poster_path, title: movie.title, id: movie.id, vote_average: movie.vote_average };
+      if (!movie) {
+        return null;
       }
+
+      return { poster_path: movie.poster_path, title: movie.title, id: movie.id, vote_average: movie.vote_average };
     }),
   );
 
-  const filteredMovies = movies
-    .filter(movie => movie !== undefined)
+  let filteredMovies = movies
+    .filter(movie => movie !== null)
     .sort((a, b) => {
-      if (a === undefined || b === undefined) {
+      if (a === null || b === null) {
         return 0;
       }
       return b.vote_average - a.vote_average;
     });
 
-  return filteredMovies.slice(0, 6) as MovieListItem[];
+  filteredMovies = [...filteredMovies, null];
+  return filteredMovies.slice(0, 6);
 };
 
 export default async function Person({ params }: { params: { id: string } }) {

@@ -27,7 +27,7 @@ const getBestRatedPersonMovies = async (person: Person) => {
     }),
   );
 
-  let filteredMovies = movies
+  const filteredMovies = movies
     .filter(movie => movie !== null)
     .sort((a, b) => {
       if (a === null || b === null) {
@@ -36,7 +36,6 @@ const getBestRatedPersonMovies = async (person: Person) => {
       return b.vote_average - a.vote_average;
     });
 
-  filteredMovies = [...filteredMovies, null];
   return filteredMovies.slice(0, 6);
 };
 

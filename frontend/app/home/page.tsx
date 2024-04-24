@@ -1,39 +1,20 @@
-import { MovieList } from "@/components/home/homeMovieList";
-import { getMovieByLimitTypeGenre } from "@/services/movieService";
-
-//väliäikaisesti käyttää genren mukaan hakua
-const fetchNewMovies = async (limit: number, type: string, genre: string) => {
-  try {
-    const test = await getMovieByLimitTypeGenre(limit, type, genre);
-
-    const posters = test?.map(movie => {
-      return { id: movie.id, poster_path: movie.poster_path };
-    });
-    return posters;
-  } catch (error) {
-    console.error("Error fetching movie data:", error);
-    return null;
-  }
-};
+import { MovieList } from "@/app/home/homeMovieList";
+import { fetchGenres, fetchMovies } from "./movieFetches";
+import { Dropdown } from "@/components/dropdown";
 
 export default async function home() {
-  const newMovies = await fetchNewMovies(7, "new", "action");
-  const popularMovies = await fetchNewMovies(7, "popular", "action");
-  const bestRatedMovies = await fetchNewMovies(7, "bestrated", "action");
+  const newMovies = await fetchMovies(6, "new", "action");
+  const popularMovies = await fetchMovies(6, "popular", "action");
+  const bestRatedMovies = await fetchMovies(6, "bestrated", "action");
+  const genres = await fetchGenres();
 
   return (
     <main>
       <MovieList
-        movies={newMovies}
-        title="New"
-      ></MovieList>
-      <MovieList
-        movies={popularMovies}
-        title="Popular"
-      ></MovieList>
-      <MovieList
-        movies={bestRatedMovies}
-        title="Best Rated"
+        newMovies={newMovies}
+        popularMovies={popularMovies}
+        bestratedMovies={bestRatedMovies}
+        genres={genres}
       ></MovieList>
     </main>
   );

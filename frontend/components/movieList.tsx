@@ -20,7 +20,7 @@ export const MovieList = ({ movies }: MovieListProps) => {
               href={"/movies/" + movie.id}
               data-testid="movie-list-item"
             >
-              {/* Remove this when we get working poster paths */}
+              {/* Placeholder until we get working poster paths */}
               <div className="placeholder-movie-poster">{movie.title}</div>
 
               {/* Working image for when we have poster paths:

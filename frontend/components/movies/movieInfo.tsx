@@ -35,15 +35,15 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
   return (
     <div className="movie-content">
       <div className="movie-wrapper">
-        {/* Img not working until we have posters to path to, can be tested with any img url until then */}
-        <div
-          className="img"
-          style={{
-            background: `URL(${movie.backdropPath})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        >
+        <div className="image-wrapper">
+          {/* Working image for when we have backdrop paths:
+          <Image
+            alt={`${movie.title}`}
+            src={`${movie.backdropPath}`}
+            width={500}
+            height={500}
+          />
+          */}
           <div className="gradient" />
         </div>
 

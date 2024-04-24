@@ -1,0 +1,45 @@
+@use "../abstracts" as abstracts;
+
+.movie-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+
+  // Remove this when not needed anymore
+  .placeholder-movie-poster {
+    background-color: grey;
+    aspect-ratio: 2 / 3;
+    border: 1px solid abstracts.$primary-dark;
+    box-shadow: abstracts.$default-shadow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .placeholder-movie-poster:hover {
+    transform: scale(105%);
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    box-shadow: abstracts.$default-shadow;
+  }
+
+  img:hover {
+    transform: scale(105%);
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .movie-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

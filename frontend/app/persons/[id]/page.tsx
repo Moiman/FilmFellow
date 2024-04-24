@@ -29,12 +29,7 @@ const getBestRatedPersonMovies = async (person: Person) => {
 
   const filteredMovies = movies
     .filter(movie => movie !== null)
-    .sort((a, b) => {
-      if (a === null || b === null) {
-        return 0;
-      }
-      return b.vote_average - a.vote_average;
-    });
+    .sort((a, b) => (b?.vote_average ?? 0) - (a?.vote_average ?? 0));
 
   return filteredMovies.slice(0, 6);
 };

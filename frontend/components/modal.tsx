@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useCallback, useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { X } from "react-feather";
 
 interface Props {
@@ -18,9 +18,7 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
       open={true}
     >
       <div
-        onMouseDown={() => {
-          closeModal();
-        }}
+        onMouseDown={closeModal}
         className="modal-background"
       >
         <div

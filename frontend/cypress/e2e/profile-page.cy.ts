@@ -4,7 +4,6 @@ describe("Profile page tests", () => {
     username: "newuser",
     password: "Password1!",
   };
-  let newUserId = "";
 
   it("Register new user for profile page testing", () => {
     cy.request({
@@ -18,7 +17,6 @@ describe("Profile page tests", () => {
     }).then(res => {
       expect(res.status).to.eq(200);
       expect(res.body.email).to.equal(newUser.email);
-      newUserId = res.body.id;
     });
   });
 

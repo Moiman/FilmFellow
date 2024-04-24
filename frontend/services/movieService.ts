@@ -173,6 +173,12 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
   }
 };
 
+const getAllGenres = async () => {
+  const genres = await prisma.genres.findMany({
+    select: { id: true, name: true },
+  });
+  return genres;
+};
 
 const getMovieReviewsById = async (movieId: number) => {
   const movieReviews = await prisma.importedReviews.findMany({
@@ -189,4 +195,4 @@ const getMovieReviewsById = async (movieId: number) => {
   return movieReviews;
 };
 
-export { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre };
+export { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre, getAllGenres };

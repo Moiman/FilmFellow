@@ -54,4 +54,5 @@ jobs:
           node-version: "20.x"
       - name: Running cypress tests
         run: |
+          cd frontend
           npm run cypress:component

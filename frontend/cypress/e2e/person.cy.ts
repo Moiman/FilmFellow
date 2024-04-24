@@ -25,10 +25,8 @@ describe("Person Page", () => {
   });
 
   it("displays the homepage correctly", () => {
-    if (personData.homepage) {
-      cy.get(".person-website a").should("have.attr", "href", personData.homepage);
-      cy.get(".person-website a").contains("Homepage");
-    }
+    cy.get(".person-website a").should("have.attr", "href", personData.homepage);
+    cy.get(".person-website a").contains("Homepage");
   });
 
   it("navigates to See all movies page and back", () => {

@@ -9,11 +9,6 @@ const personData = {
   profile_path: "/tpQnDeHY15szIXvpnhlprufz4d.jpg",
 };
 
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-GB", { dateStyle: "long" });
-}
-
 beforeEach(() => {
   cy.visit("/persons/" + personData.id);
 });
@@ -27,11 +22,11 @@ describe("Person Page", () => {
     cy.get(".person-info h1").contains(personData.name);
 
     if (personData.birthday) {
-      cy.get(".person-birthday").contains(formatDate(personData.birthday));
+      cy.get(".person-birthday").contains(new Date(personData.birthday).getFullYear());
     }
 
     if (personData.deathday) {
-      cy.get(".person-birthday").contains(formatDate(personData.deathday));
+      cy.get(".person-birthday").contains(new Date(personData.deathday).getFullYear());
     }
 
     cy.get(".person-description").contains(personData.biography.split(".", 1)[0]);

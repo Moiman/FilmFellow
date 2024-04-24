@@ -1,19 +1,16 @@
+"use client";
+
 import { useState } from "react";
 
 import { Star } from "react-feather";
 
-interface StarRatingProps {
-  onChange: (rating: number) => void;
-}
-
-export const StarRating = ({ onChange }: StarRatingProps) => {
+export const StarRating = () => {
   const [rating, setRating] = useState(0);
 
   const handleStarClick = (clickedRating: number) => {
     const newRating = clickedRating === rating ? 0 : clickedRating;
 
     setRating(newRating);
-    onChange(newRating);
   };
 
   return (

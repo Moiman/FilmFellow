@@ -20,15 +20,7 @@ describe("Person Page", () => {
 
   it("displays person information correctly", () => {
     cy.get(".person-info h1").contains(personData.name);
-
-    if (personData.birthday) {
-      cy.get(".person-birthday").contains(new Date(personData.birthday).getFullYear());
-    }
-
-    if (personData.deathday) {
-      cy.get(".person-birthday").contains(new Date(personData.deathday).getFullYear());
-    }
-
+    cy.get(".person-birthday").contains(new Date(personData.birthday).getFullYear());
     cy.get(".person-description").contains(personData.biography.split(".", 1)[0]);
   });
 

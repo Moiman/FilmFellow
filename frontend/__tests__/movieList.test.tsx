@@ -31,7 +31,7 @@ afterEach(() => cleanup());
 
 describe("MovieList", () => {
   test("renders links with correct href", () => {
-    const linkElements = screen.getAllByTestId("movie-list-item");
+    const linkElements = screen.getAllByRole("link");
 
     expect(linkElements.length).toBe(mockMovies.length);
 

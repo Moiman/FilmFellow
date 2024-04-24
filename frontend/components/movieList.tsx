@@ -18,7 +18,6 @@ export const MovieList = ({ movies }: MovieListProps) => {
             <Link
               key={movie.id}
               href={"/movies/" + movie.id}
-              data-testid="movie-list-item"
             >
               {/* Placeholder until we get working poster paths */}
               <div className="placeholder-movie-poster">{movie.title}</div>

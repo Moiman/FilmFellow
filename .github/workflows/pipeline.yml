@@ -55,4 +55,5 @@ jobs:
       - name: Running cypress tests
         run: |
           cd frontend
+          npm ci
           npm run cypress:component

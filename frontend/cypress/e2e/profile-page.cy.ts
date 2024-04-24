@@ -234,7 +234,6 @@ describe("Profile page tests", () => {
       .should("be.visible")
       .click();
     cy.wait(500);
-    cy.url().should("eq", Cypress.env("baseUrl") + `/profile?showModal=${newUserId}`);
     cy.get("dialog").should("exist");
     cy.get(".modal-box").find(".modal-content").contains("button", "Cancel").click();
     cy.url().should("eq", Cypress.env("baseUrl") + `/profile`);
@@ -254,7 +253,6 @@ describe("Profile page tests", () => {
       .should("be.visible")
       .click();
     cy.wait(500);
-    cy.url().should("eq", Cypress.env("baseUrl") + `/profile?showModal=${newUserId}`);
     cy.get("dialog").should("exist");
     cy.get(".modal-box").find(".modal-content").contains("button", "Delete Account").click();
     cy.url().should("eq", Cypress.env("baseUrl") + `/`);

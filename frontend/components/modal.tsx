@@ -31,9 +31,7 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
             <button
               aria-label="close"
               className="button-transparent"
-              onClick={() => {
-                closeModal();
-              }}
+              onClick={closeModal}
             >
               <X color="#eff2f2" />
             </button>

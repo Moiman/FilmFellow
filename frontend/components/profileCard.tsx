@@ -59,6 +59,7 @@ export const ProfileCard = ({ user }: Props) => {
   const [activePassword, setPasswordActive] = useState(false);
   const [error, setError] = useState("");
   const [radioButtonValue, setRadioButtonValue] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const { update } = useSession();
   const router = useRouter();
   console.log(radioButtonValue);
@@ -180,18 +181,6 @@ export const ProfileCard = ({ user }: Props) => {
         setError("");
         router.refresh();
       }
-
-      /*
-      const newSession = {
-        ...session,
-        user: {
-          ...session?.user,
-          username: data.username,
-        },
-      };
-
-      await update(newSession);
-*/
     } catch (error) {
       console.error(error);
     }
@@ -236,6 +225,11 @@ export const ProfileCard = ({ user }: Props) => {
     usernameReset();
   };
 
+  const closeModal = () => {
+    setIsOpen(false);
+    setError("");
+  };
+
   return (
     <div className="profile-card">
       <div className="profile-card-left">
@@ -274,10 +268,10 @@ export const ProfileCard = ({ user }: Props) => {
           {activeUsername ? (
             <form
               onSubmit={handleUsernameChange(handleUsernameSubmit)}
-              className="profile-card-forms"
+              className="profile-card-element"
             >
               <label
-                className="profile-card-forms-first-element"
+                className="profile-card-element-inner-element"
                 htmlFor="username"
               >
                 Username
@@ -297,8 +291,8 @@ export const ProfileCard = ({ user }: Props) => {
               </div>
             </form>
           ) : (
-            <div className="profile-card-forms">
-              <label className="profile-card-forms-first-element">Username</label>
+            <div className="profile-card-element">
+              <label className="profile-card-element-inner-element">Username</label>
               <p>{user.username}</p>
               <button
                 onClick={() => {
@@ -315,10 +309,10 @@ export const ProfileCard = ({ user }: Props) => {
           {activeEmail ? (
             <form
               onSubmit={handleEmailChange(handleEmailSubmit)}
-              className="profile-card-forms"
+              className="profile-card-element"
             >
               <label
-                className="profile-card-forms-first-element"
+                className="profile-card-element-inner-element"
                 htmlFor="email"
               >
                 Email
@@ -338,8 +332,8 @@ export const ProfileCard = ({ user }: Props) => {
               </div>
             </form>
           ) : (
-            <div className="profile-card-forms">
-              <label className="profile-card-forms-first-element">Email</label>
+            <div className="profile-card-element">
+              <label className="profile-card-element-inner-element">Email</label>
               <p>{user.email}</p>
               <button
                 onClick={() => {
@@ -356,10 +350,10 @@ export const ProfileCard = ({ user }: Props) => {
           {activePassword ? (
             <form
               onSubmit={handlePasswordChange(handlePasswordSubmit)}
-              className="profile-card-forms"
+              className="profile-card-element"
             >
               <label
-                className="profile-card-forms-first-element"
+                className="profile-card-element-inner-element"
                 htmlFor="password"
               >
                 Password
@@ -379,8 +373,8 @@ export const ProfileCard = ({ user }: Props) => {
               </div>
             </form>
           ) : (
-            <div className="profile-card-forms">
-              <label className="profile-card-forms-first-element">Password</label>
+            <div className="profile-card-element">
+              <label className="profile-card-element-inner-element">Password</label>
               <p>xxxxxxxxxxxxxxxxxxx</p>
               <button
                 onClick={() => {
@@ -394,25 +388,24 @@ export const ProfileCard = ({ user }: Props) => {
               </button>
             </div>
           )}
-          <div className="profile-card-forms">
-            <label className="profile-card-forms-first-element">Delete Account</label>
+          <div className="profile-card-element">
+            <label className="profile-card-element-inner-element">Delete Account</label>
             <p>Permanently delete your account</p>
+            <button
+              onClick={() => {
+                setIsOpen(true);
+              }}
+            >
+              Delete
+            </button>
             <Modal
-              resetErrors={() => setError("")}
-              modalId={user.id as number}
-              cancelVerificationComponent={
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <button>Cancel</button>
-                </div>
-              }
+              isOpen={isOpen}
+              closeModal={closeModal}
               content={
-                <div className="profile-card-modal-content">
-                  <p>Are you sure you want to delete your account ? </p>
-                </div>
-              }
-              _onOk={handleDelete}
-              okLink={
                 <>
+                  <div className="profile-card-modal-content">
+                    <h3>Are you sure you want to delete your account ?</h3>
+                  </div>
                   {error && (
                     <p
                       className="error-text"
@@ -421,12 +414,23 @@ export const ProfileCard = ({ user }: Props) => {
                       {error}
                     </p>
                   )}
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <button>Delete Account</button>
+                  <div className="profile-card-modal-buttons">
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="button-pink"
+                      onClick={handleDelete}
+                    >
+                      Delete Account
+                    </button>
                   </div>
                 </>
               }
-              openModalText="Delete"
             />
           </div>
         </div>

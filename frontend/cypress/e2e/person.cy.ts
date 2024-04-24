@@ -33,9 +33,9 @@ describe("Person Page", () => {
     cy.contains("Known for...").should("be.visible");
 
     cy.contains("See all").click();
-    cy.url().should("eq", Cypress.env("baseUrl") + "/persons/" + personData.id + "/movies");
+    cy.location("pathname").should("eq", "/persons/" + personData.id + "/movies");
 
     cy.contains(personData.name).click();
-    cy.url().should("eq", Cypress.env("baseUrl") + "/persons/" + personData.id);
+    cy.location("pathname").should("eq", "/persons/" + personData.id);
   });
 });

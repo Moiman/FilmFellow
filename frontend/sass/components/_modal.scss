@@ -31,7 +31,7 @@
 .modal-title {
   background-color: abstracts.$primary-darkgrey;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 5px 10px;
   & > a {
     line-height: 1;

@@ -11,7 +11,6 @@ interface Props {
   okLink?: React.ReactNode;
   openModalText: string;
   openModalClass?: string;
-  modalHeaderText?: string;
   cancelVerificationComponent?: React.ReactNode;
   resetErrors?: () => void;
   //onOK needs "use server"
@@ -26,7 +25,6 @@ const ModalComponent = ({
   openModalText,
   modalId,
   openModalClass,
-  modalHeaderText,
   cancelVerificationComponent,
   resetErrors,
 }: Props) => {
@@ -54,7 +52,6 @@ const ModalComponent = ({
             className="modal-box"
           >
             <div className="modal-title">
-              <h2>{modalHeaderText}</h2>
               <button
                 aria-label="close"
                 className="button-transparent"

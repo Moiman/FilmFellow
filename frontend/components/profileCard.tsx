@@ -400,7 +400,6 @@ export const ProfileCard = ({ user }: Props) => {
             <Modal
               resetErrors={() => setError("")}
               modalId={user.id as number}
-              modalHeaderText="Account delete verification"
               cancelVerificationComponent={
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <button>Cancel</button>

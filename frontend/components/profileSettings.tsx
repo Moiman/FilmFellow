@@ -416,11 +416,9 @@ export const ProfileSettings = ({ user }: Props) => {
                   <div className="profile-card-modal-content">
                     <h3>Are you sure you want to delete your account ?</h3>
 
-                      <p>
-                        If you delete your account, all your lists, reviews and other data will be destroyed
-                        permanently.
-                      </p>
-
+                    <p>
+                      If you delete your account, all your lists, reviews and other data will be destroyed permanently.
+                    </p>
                   </div>
 
                   {error && (

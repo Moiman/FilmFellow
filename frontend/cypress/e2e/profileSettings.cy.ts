@@ -25,7 +25,7 @@ describe("Profile page tests", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -44,7 +44,7 @@ describe("Profile page tests", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -64,7 +64,7 @@ describe("Profile page tests", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -84,7 +84,7 @@ describe("Profile page tests", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -104,7 +104,7 @@ describe("Profile page tests", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -123,7 +123,7 @@ describe("Profile page tests", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -143,7 +143,7 @@ describe("Profile page tests", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -163,7 +163,7 @@ describe("Profile page tests", () => {
     cy.login("newEmail@gmail.com", newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -181,7 +181,7 @@ describe("Profile page tests", () => {
     cy.login("newEmail@gmail.com", newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -200,7 +200,7 @@ describe("Profile page tests", () => {
     cy.login("newEmail@gmail.com", newUser.password);
     cy.visit("/profile/settings");
     cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -219,7 +219,7 @@ describe("Profile page tests", () => {
     cy.visit("/profile/settings");
     cy
       .get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")
@@ -239,7 +239,7 @@ describe("Profile page tests", () => {
     cy.visit("/profile/settings");
     cy
       .get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .find(".description")
       .first()
       .should("be.visible")
       .find(".profile-card-element")

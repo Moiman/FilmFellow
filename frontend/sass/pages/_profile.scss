@@ -1,0 +1,56 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.profile-card-left {
+  margin-left: 10%;
+}
+.profile-card-right {
+  margin-left: 15%;
+}
+.profile-card-modal-content {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  margin-bottom: 25%;
+}
+.profile-card-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.profile-card {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+
+  textarea {
+    resize: none;
+  }
+}
+.profile-card-social-media {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 5px;
+  svg:nth-child(1) {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+  svg:nth-child(3) {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+  svg:nth-child(5) {
+    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  }
+}
+.profile-card-element {
+  display: grid;
+  grid-template-columns: 90% auto;
+}
+.profile-card-content-divider {
+  margin-bottom: 5%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid;
+  border-color: abstracts.$primary-darkgrey;
+}

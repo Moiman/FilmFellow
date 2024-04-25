@@ -123,3 +123,11 @@ p {
   font-style: italic;
   line-height: abstracts.$default-line-height;
 }
+.profile-card-label {
+  grid-column: auto / span 2;
+  font-size: abstracts.$h3-font-size;
+  font-weight: 300;
+  font-family: var(--font-poppins);
+  line-height: 1.6;
+  letter-spacing: -0.05rem;
+}

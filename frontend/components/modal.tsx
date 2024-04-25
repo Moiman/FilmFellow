@@ -1,33 +1,32 @@
 "use client";
-
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import React, { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect } from "react";
 import { X } from "react-feather";
 
 interface Props {
-  modalId: number | null;
   content: React.ReactNode;
-  _footer?: React.ReactNode;
-  okLink?: React.ReactNode;
-  openModalText: string;
-  openModalClass?: string;
-  //onOK needs "use server"
-  _onOk?: () => Promise<void>;
+  footer?: React.ReactNode;
+  isOpen: boolean;
+  closeModal: () => void;
 }
 
-const ModalComponent = ({ content, _footer, _onOk, okLink, openModalText, modalId, openModalClass }: Props) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const dialogRef = useRef<null | HTMLDialogElement>(null);
-  const pathName = usePathname();
-  let showModal = searchParams.get("showModal");
-  const link = `?showModal=${modalId}`;
+const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeModal]);
 
-  const dialog: JSX.Element | null =
-    showModal == modalId ? (
-      <dialog ref={dialogRef}>
+  return (
+    isOpen && (
+      <dialog open={true}>
         <div
-          onMouseDown={() => closeModal()}
+          onMouseDown={closeModal}
           className="modal-background"
         >
           <div
@@ -38,58 +37,17 @@ const ModalComponent = ({ content, _footer, _onOk, okLink, openModalText, modalI
               <button
                 aria-label="close"
                 className="button-transparent"
-                onClick={() => closeModal()}
+                onClick={closeModal}
               >
                 <X color="#eff2f2" />
               </button>
             </div>
-            <div className="modal-content">
-              {content}
-              {_onOk ? (
-                <div
-                  className="ok"
-                  onClick={() => okClicked()}
-                >
-                  {okLink}
-                </div>
-              ) : null}
-            </div>
-            <div className="modal-footer">{_footer}</div>
+            <div className="modal-content">{content}</div>
+            <div className="modal-footer">{footer}</div>
           </div>
         </div>
       </dialog>
-    ) : null;
-
-  useEffect(() => {
-    if (showModal == modalId) {
-      dialogRef.current?.showModal();
-    } else {
-      dialogRef.current?.close();
-    }
-    document.addEventListener("keydown", e => {
-      if (e.key == "Escape") router.push(pathName);
-    });
-  }, [showModal, modalId, router, pathName]);
-
-  const okClicked = () => {
-    if (_onOk) _onOk();
-    closeModal();
-  };
-
-  const closeModal = () => {
-    router.push(pathName);
-  };
-
-  return (
-    <>
-      <button
-        className={openModalClass ?? ""}
-        onClick={() => router.push(link)}
-      >
-        {openModalText}
-      </button>
-      {dialog}
-    </>
+    )
   );
 };
 

@@ -18,7 +18,7 @@ export const SubNavLinks = [
     text: "Admin",
     href: "/admin",
   },
-  { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile" },
+  { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile/settings" },
   {
     icon: <LogOut style={{ strokeWidth: 1.5 }} />,
     text: "Logout",

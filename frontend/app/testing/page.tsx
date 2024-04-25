@@ -1,19 +1,37 @@
+"use client";
+import { useState } from "react";
 import Modal from "@/components/modal";
 
-async function test() {
-  "use server";
-  console.log("test");
-}
+export default function TestingComponent() {
+  const [isOpenFirst, setIsOpenFirst] = useState(false);
+  const [isOpenSecond, setIsOpenSecond] = useState(false);
+  const [isOpenThird, setIsOpenThird] = useState(false);
 
-export default function testing() {
+  const closeFirstModal = () => {
+    setIsOpenFirst(false);
+  };
+  const closeSecondModal = () => {
+    setIsOpenSecond(false);
+  };
+  const closeThirdModal = () => {
+    setIsOpenThird(false);
+  };
   return (
     <main>
       <h2>Testing</h2>
 
       <div style={{ display: "inline-flex", gap: "10px" }}>
+        <button
+          onClick={() => {
+            setIsOpenFirst(true);
+          }}
+        >
+          Open 1
+        </button>
         <Modal
-          modalId={1}
-          _footer={
+          isOpen={isOpenFirst}
+          closeModal={closeFirstModal}
+          footer={
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
               dolore magna aliqua.
@@ -28,34 +46,49 @@ export default function testing() {
                 fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
                 deserunt mollit anim id est laborum.
               </p>
+              <button
+                className="button-pink"
+                onClick={() => setIsOpenFirst(false)}
+              >
+                Close Modal
+              </button>
             </div>
           }
-          _onOk={test}
-          okLink={<button>test</button>}
-          openModalText="Open 1"
         />
+        <button
+          className="button-transparent"
+          onClick={() => {
+            setIsOpenSecond(true);
+          }}
+        >
+          Open 2
+        </button>
         <Modal
-          modalId={2}
-          _footer={<p>Test2.</p>}
+          isOpen={isOpenSecond}
+          closeModal={closeSecondModal}
+          footer={<p>Test2.</p>}
           content={
             <div>
               <p>Test2</p>
             </div>
           }
-          _onOk={test}
-          okLink={<button>test</button>}
-          openModalText="Open 2"
-          openModalClass="button-cyan"
         />
+        <button
+          className="button-cyan"
+          onClick={() => {
+            setIsOpenThird(true);
+          }}
+        >
+          Open 3
+        </button>
         <Modal
-          modalId={3}
+          isOpen={isOpenThird}
+          closeModal={closeThirdModal}
           content={
             <div>
               <p>Test3</p>
             </div>
           }
-          openModalText="Open 3"
-          openModalClass="button-transparent"
         />
       </div>
     </main>

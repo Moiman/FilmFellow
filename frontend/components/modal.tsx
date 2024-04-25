@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect } from "react";
 import { X } from "react-feather";
 
 interface Props {
@@ -10,37 +10,6 @@ interface Props {
 }
 
 const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
-  const dialogRef = useRef<null | HTMLDialogElement>(null);
-
-  const dialog: JSX.Element | null = isOpen ? (
-    <dialog
-      ref={dialogRef}
-      open={true}
-    >
-      <div
-        onMouseDown={closeModal}
-        className="modal-background"
-      >
-        <div
-          onMouseDown={e => e.stopPropagation()}
-          className="modal-box"
-        >
-          <div className="modal-title">
-            <button
-              aria-label="close"
-              className="button-transparent"
-              onClick={closeModal}
-            >
-              <X color="#eff2f2" />
-            </button>
-          </div>
-          <div className="modal-content">{content}</div>
-          <div className="modal-footer">{footer}</div>
-        </div>
-      </div>
-    </dialog>
-  ) : null;
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -53,7 +22,33 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
     };
   }, [closeModal]);
 
-  return <>{dialog}</>;
+  return (
+    isOpen && (
+      <dialog open={true}>
+        <div
+          onMouseDown={closeModal}
+          className="modal-background"
+        >
+          <div
+            onMouseDown={e => e.stopPropagation()}
+            className="modal-box"
+          >
+            <div className="modal-title">
+              <button
+                aria-label="close"
+                className="button-transparent"
+                onClick={closeModal}
+              >
+                <X color="#eff2f2" />
+              </button>
+            </div>
+            <div className="modal-content">{content}</div>
+            <div className="modal-footer">{footer}</div>
+          </div>
+        </div>
+      </dialog>
+    )
+  );
 };
 
 const Modal = (props: Props) => {

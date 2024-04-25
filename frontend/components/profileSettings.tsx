@@ -53,16 +53,15 @@ const updatePasswordSchema = yup.object({
     .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
 });
 
-export const ProfileCard = ({ user }: Props) => {
-  const [activeUsername, setUsernameActive] = useState(false);
-  const [activeEmail, setEmailActive] = useState(false);
-  const [activePassword, setPasswordActive] = useState(false);
+export const ProfileSettings = ({ user }: Props) => {
+  const [activeUsername, setActiveUsername] = useState(false);
+  const [activeEmail, setActiveEmail] = useState(false);
+  const [activePassword, setActivePassword] = useState(false);
   const [error, setError] = useState("");
   const [radioButtonValue, setRadioButtonValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { update } = useSession();
   const router = useRouter();
-  console.log(radioButtonValue);
   const handleDelete = async () => {
     try {
       const response = await fetch(`/api/users/delete`, {
@@ -144,7 +143,7 @@ export const ProfileCard = ({ user }: Props) => {
       }
       if (response.ok && !data.error) {
         await update(data);
-        setEmailActive(false);
+        setActiveEmail(false);
         emailReset();
         setError("");
         router.refresh();
@@ -176,7 +175,7 @@ export const ProfileCard = ({ user }: Props) => {
       }
       if (response.ok && !data.error) {
         await update(data);
-        setUsernameActive(false);
+        setActiveUsername(false);
         usernameReset();
         setError("");
         router.refresh();
@@ -208,7 +207,7 @@ export const ProfileCard = ({ user }: Props) => {
       }
       if (response.ok && !data.error) {
         await update(data);
-        setPasswordActive(false);
+        setActivePassword(false);
         passwordReset();
         setError("");
         router.refresh();
@@ -296,9 +295,9 @@ export const ProfileCard = ({ user }: Props) => {
               <p>{user.username}</p>
               <button
                 onClick={() => {
-                  setUsernameActive(!activeUsername);
-                  setEmailActive(false);
-                  setPasswordActive(false);
+                  setActiveUsername(!activeUsername);
+                  setActiveEmail(false);
+                  setActivePassword(false);
                   resetAllFields();
                 }}
               >
@@ -337,9 +336,9 @@ export const ProfileCard = ({ user }: Props) => {
               <p>{user.email}</p>
               <button
                 onClick={() => {
-                  setUsernameActive(false);
-                  setEmailActive(!activeEmail);
-                  setPasswordActive(false);
+                  setActiveUsername(false);
+                  setActiveEmail(!activeEmail);
+                  setActivePassword(false);
                   resetAllFields();
                 }}
               >
@@ -378,9 +377,9 @@ export const ProfileCard = ({ user }: Props) => {
               <p>xxxxxxxxxxxxxxxxxxx</p>
               <button
                 onClick={() => {
-                  setUsernameActive(false);
-                  setEmailActive(false);
-                  setPasswordActive(!activePassword);
+                  setActiveUsername(false);
+                  setActiveEmail(false);
+                  setActivePassword(!activePassword);
                   resetAllFields();
                 }}
               >
@@ -436,7 +435,7 @@ export const ProfileCard = ({ user }: Props) => {
         </div>
         <div className="profile-card-content-divider">
           <h3>Profile Privacy</h3>
-          <p>Here you can choose who can see your profile.</p>
+          <p>Here you can choose who can see your profile.{radioButtonValue}</p>
           <form>
             <label className="label-row">
               <input

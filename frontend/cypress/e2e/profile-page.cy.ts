@@ -21,20 +21,20 @@ describe("Profile page tests", () => {
   });
 
   it("Try to go to profile page without logging in", () => {
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.url().should("eq", Cypress.env("baseUrl") + "/");
   });
 
   it("Go to profile page as logged in user", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".section-header").contains("Settings");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Try to change username in the profile page without value", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -47,12 +47,12 @@ describe("Profile page tests", () => {
       .click();
     cy.get('button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Try to change username in the profile page to something that doesnt meet the requirements", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -66,12 +66,12 @@ describe("Profile page tests", () => {
     cy.get('input[name="username"]').type("1");
     cy.get('button[type="submit"]').click();
     cy.contains("Username too short, minimum length is 2").should("be.visible");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Try to change username in the profile page as existing one", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -85,12 +85,12 @@ describe("Profile page tests", () => {
     cy.get('input[name="username"]').type(newUser.username);
     cy.get('button[type="submit"]').click();
     cy.contains("User already exists with that username").should("be.visible");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Change username successfully in the profile page", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -104,12 +104,12 @@ describe("Profile page tests", () => {
     cy.get('input[name="username"]').type("newUsername");
     cy.get('button[type="submit"]').click();
     cy.contains("newUsername").should("be.visible");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Try to change email in the profile page without value", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -122,12 +122,12 @@ describe("Profile page tests", () => {
       .click();
     cy.get('button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Try to change email in the profile page as existing one", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -141,7 +141,7 @@ describe("Profile page tests", () => {
     cy.get('input[name="email"]').type(newUser.email);
     cy.get('button[type="submit"]').click();
     cy.contains("User already exists with that email").should("be.visible");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Change email successfully in the profile page", () => {
@@ -160,12 +160,12 @@ describe("Profile page tests", () => {
     cy.get('input[name="email"]').type("newEmail@gmail.com");
     cy.get('button[type="submit"]').click();
     cy.contains("newUsername").should("be.visible");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Try to change password in the profile page without value", () => {
     cy.login("newEmail@gmail.com", newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -178,12 +178,12 @@ describe("Profile page tests", () => {
       .click();
     cy.get('button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Try to change password in the profile page to something that doesnt meet the requirements", () => {
     cy.login("newEmail@gmail.com", newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -197,12 +197,12 @@ describe("Profile page tests", () => {
     cy.get('input[name="password"]').type("newpassword");
     cy.get('button[type="submit"]').click();
     cy.contains("Password requires atleast 1 capital character").should("be.visible");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Change password succeessfully in the profile page", () => {
     cy.login("newEmail@gmail.com", newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -215,12 +215,12 @@ describe("Profile page tests", () => {
       .click();
     cy.get('input[name="password"]').type("Newpassword1!");
     cy.get('button[type="submit"]').click();
-    cy.url().should("eq", Cypress.env("baseUrl") + "/profile");
+    cy.url().should("eq", Cypress.env("baseUrl") + "/profile/settings");
   });
 
   it("Delete user confirmation modal in the profile page and press cancel", () => {
     cy.login("newEmail@gmail.com", "Newpassword1!");
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()
@@ -234,12 +234,12 @@ describe("Profile page tests", () => {
     cy.wait(500);
     cy.get("dialog").should("exist");
     cy.get(".modal-box").find(".modal-content").contains("button", "Cancel").click();
-    cy.url().should("eq", Cypress.env("baseUrl") + `/profile`);
+    cy.url().should("eq", Cypress.env("baseUrl") + `/profile/settings`);
   });
 
   it("Delete user confirmation modal in the profile page and successfully delete user", () => {
     cy.login("newEmail@gmail.com", "Newpassword1!");
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()

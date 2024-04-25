@@ -146,7 +146,7 @@ describe("Profile page tests", () => {
 
   it("Change email successfully in the profile page", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit(Cypress.env("baseUrl") + "/profile");
+    cy.visit(Cypress.env("baseUrl") + "/profile/settings");
     cy.get(".profile-card-right")
       .find(".profile-card-content-divider")
       .first()

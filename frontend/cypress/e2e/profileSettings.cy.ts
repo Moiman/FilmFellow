@@ -34,6 +34,7 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
+    cy.get('input[name="username"]').clear();
     cy.get('button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
     cy.location("pathname").should("eq", "/profile/settings");
@@ -52,6 +53,7 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
+    cy.get('input[name="username"]').clear();
     cy.get('input[name="username"]').type("1");
     cy.get('button[type="submit"]').click();
     cy.contains("Username too short, minimum length is 2").should("be.visible");
@@ -71,9 +73,10 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
-    cy.get('input[name="username"]').type(newUser.username);
+    cy.get('input[name="username"]').clear();
+    cy.get('input[name="username"]').type(newUser.email);
     cy.get('button[type="submit"]').click();
-    cy.contains("User already exists with that username").should("be.visible");
+    cy.contains("Cant change username to same as you already have").should("be.visible");
     cy.location("pathname").should("eq", "/profile/settings");
   });
 
@@ -90,6 +93,7 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
+    cy.get('input[name="username"]').clear();
     cy.get('input[name="username"]').type("newUsername");
     cy.get('button[type="submit"]').click();
     cy.contains("newUsername").should("be.visible");
@@ -109,6 +113,7 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
+    cy.get('input[name="email"]').clear();
     cy.get('button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
     cy.location("pathname").should("eq", "/profile/settings");
@@ -127,9 +132,10 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
+    cy.get('input[name="email"]').clear();
     cy.get('input[name="email"]').type(newUser.email);
     cy.get('button[type="submit"]').click();
-    cy.contains("User already exists with that email").should("be.visible");
+    cy.contains("Cant change email to same as you already have").should("be.visible");
     cy.location("pathname").should("eq", "/profile/settings");
   });
 
@@ -146,6 +152,7 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
+    cy.get('input[name="email"]').clear();
     cy.get('input[name="email"]').type("newEmail@gmail.com");
     cy.get('button[type="submit"]').click();
     cy.contains("newUsername").should("be.visible");

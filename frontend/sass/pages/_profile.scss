@@ -9,6 +9,7 @@
 }
 .profile-card-modal-content {
   display: flex;
+  flex-flow: wrap;
   justify-content: center;
   margin-bottom: 25%;
 }
@@ -30,6 +31,8 @@
 .profile-card-social-media {
   display: grid;
   grid-template-columns: auto auto;
+  align-items: center;
+  gap: 5px;
   svg:nth-child(1) {
     color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
   }

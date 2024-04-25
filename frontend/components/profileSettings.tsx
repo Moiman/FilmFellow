@@ -6,8 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import type { User } from "next-auth";
 import Modal from "./modal";
-import { User } from "@/app/profile/settings/form";
+
 interface Props {
   user: User;
 }
@@ -53,7 +54,6 @@ export const ProfileSettings = ({ user }: Props) => {
   const [activeEmail, setActiveEmail] = useState(false);
   const [activePassword, setActivePassword] = useState(false);
   const [error, setError] = useState("");
-  const [radioButtonValue, setRadioButtonValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { update } = useSession();
   const router = useRouter();
@@ -274,7 +274,7 @@ export const ProfileSettings = ({ user }: Props) => {
         </div>
       </div>
       <div className="profile-card-right">
-        <div className="profile-card-content-divider">
+        <div className="description">
           <h3>User Information</h3>
           <p>Here you can change your username, email or password </p>
 
@@ -403,9 +403,8 @@ export const ProfileSettings = ({ user }: Props) => {
             <label className="profile-card-element-inner-element">Delete Account</label>
             <p>Permanently delete your account</p>
             <button
-              onClick={() => {
-                setIsOpen(true);
-              }}
+              className="button-pink"
+              onClick={() => setIsOpen(true)}
             >
               Delete
             </button>
@@ -416,7 +415,14 @@ export const ProfileSettings = ({ user }: Props) => {
                 <>
                   <div className="profile-card-modal-content">
                     <h3>Are you sure you want to delete your account ?</h3>
+
+                      <p>
+                        If you delete your account, all your lists, reviews and other data will be destroyed
+                        permanently.
+                      </p>
+
                   </div>
+
                   {error && (
                     <p
                       className="error-text"
@@ -445,16 +451,14 @@ export const ProfileSettings = ({ user }: Props) => {
             />
           </div>
         </div>
-        <div className="profile-card-content-divider">
+        <div className="description">
           <h3>Profile Privacy</h3>
-          <p>Here you can choose who can see your profile.{radioButtonValue}</p>
+          <p>Here you can choose who can see your profile.</p>
           <form>
             <label className="label-row">
               <input
                 type="radio"
                 name="selectOne"
-                value={"Everyone"}
-                onChange={e => setRadioButtonValue(e.target.value)}
               />
               Everyone
             </label>
@@ -462,8 +466,6 @@ export const ProfileSettings = ({ user }: Props) => {
               <input
                 type="radio"
                 name="selectOne"
-                value={"All users"}
-                onChange={e => setRadioButtonValue(e.target.value)}
               />
               All users
             </label>
@@ -471,8 +473,6 @@ export const ProfileSettings = ({ user }: Props) => {
               <input
                 type="radio"
                 name="selectOne"
-                value={"Users you follow"}
-                onChange={e => setRadioButtonValue(e.target.value)}
               />
               Users you follow
             </label>
@@ -480,14 +480,12 @@ export const ProfileSettings = ({ user }: Props) => {
               <input
                 type="radio"
                 name="selectOne"
-                value={"Only me"}
-                onChange={e => setRadioButtonValue(e.target.value)}
               />
               Only me
             </label>
           </form>
         </div>
-        <div className="profile-card-content-divider">
+        <div className="description">
           <h3>Content Filter</h3>
           <p>
             Here you can choose to filter content and make your movie browsing experience more suitable for your needs

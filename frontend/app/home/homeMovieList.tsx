@@ -12,7 +12,7 @@ export const MovieList = () => {
   const [newMovieList, setNewMovieList] = useState<JSX.Element[]>();
   const [popularMovieList, setPopularMovieList] = useState<JSX.Element[]>();
   const [bestratedMovieList, setBestratedMovieList] = useState<JSX.Element[]>();
-  const [allgenres, setAllGenres] = useState<any>();
+  const [allgenres, setAllGenres] = useState<JSX.Element[]>();
   const [selectedGenre, setSelectedGenre] = useState("action");
 
   const getPosters = async (

@@ -12,12 +12,12 @@
     "coverage": "vitest run --coverage",
     "cypress:open": "cypress open",
     "cypress:run_headless": "cypress run",
+    "cypress:component": "cypress run --component",
     "prisma:migration": "prisma migrate dev",
     "prisma:seed": "prisma db seed",
     "create-admin": "tsx ./scripts/createAdmin.ts",
     "fetch-test-data": "tsx ./scripts/fetchTestData.ts",
-    "init-admin": "tsx ./scripts/initAdmin.ts",
-    "cypress:component": "cypress run --component"
+    "init-admin": "tsx ./scripts/initAdmin.ts"
   },
   "prisma": {
     "seed": "tsx ./scripts/seedTestData.ts"

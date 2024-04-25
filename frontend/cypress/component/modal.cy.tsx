@@ -2,11 +2,9 @@ import Modal from "@/components/modal";
 
 describe("Modal component testing", () => {
   it("Renders Modal component with footer and content", () => {
-    let isOpen = true;
-
     cy.mount(
       <Modal
-        isOpen={isOpen}
+        isOpen={true}
         closeModal={() => {}}
         footer={<p>Hello</p>}
         content={<h1>Hello</h1>}
@@ -17,11 +15,9 @@ describe("Modal component testing", () => {
   });
 
   it("Doesnt render modal component with footer and content when isOpen is false", () => {
-    let isOpen = false;
-
     cy.mount(
       <Modal
-        isOpen={isOpen}
+        isOpen={false}
         closeModal={() => {}}
         footer={<p>Hello</p>}
         content={<h1>Hello</h1>}

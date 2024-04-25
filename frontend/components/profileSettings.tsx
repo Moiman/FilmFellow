@@ -7,25 +7,20 @@ import { useForm } from "react-hook-form";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Modal from "./modal";
-
+import { User } from "@/app/profile/settings/form";
 interface Props {
   user: User;
 }
-interface User {
-  email: string;
-  id: number | string;
-  role: string;
-  username: string;
-}
-interface updateUsernameFormValues {
+
+interface UpdateUsernameFormValues {
   username: string;
 }
 
-interface updateEmailFormValues {
+interface UpdateEmailFormValues {
   email: string;
 }
 
-interface updatePasswordFormValues {
+interface UpdatePasswordFormValues {
   password: string;
 }
 
@@ -68,6 +63,11 @@ export const ProfileSettings = ({ user }: Props) => {
         method: "DELETE",
       });
 
+      if (!response.ok) {
+        setError(response.statusText);
+        throw response.status;
+      }
+
       const data = await response.json();
 
       if (data.error) {
@@ -75,10 +75,8 @@ export const ProfileSettings = ({ user }: Props) => {
         throw data.error;
       }
 
-      if (response.ok && !data.error) {
-        setError("");
-        signOut();
-      }
+      setError("");
+      signOut();
     } catch (error) {
       console.error(error);
       throw error;
@@ -89,10 +87,11 @@ export const ProfileSettings = ({ user }: Props) => {
     handleSubmit: handleEmailChange,
     register: emailRegister,
     reset: emailReset,
+    setError: setEmailError,
     formState: { errors: errorsEmail },
-  } = useForm<updateEmailFormValues>({
+  } = useForm<UpdateEmailFormValues>({
     defaultValues: {
-      email: "",
+      email: user.email,
     },
     resolver: yupResolver(updateEmailSchema),
   });
@@ -101,10 +100,11 @@ export const ProfileSettings = ({ user }: Props) => {
     handleSubmit: handleUsernameChange,
     register: usernameRegister,
     reset: usernameReset,
+    setError: setUsernameError,
     formState: { errors: errorsUsername },
-  } = useForm<updateUsernameFormValues>({
+  } = useForm<UpdateUsernameFormValues>({
     defaultValues: {
-      username: "",
+      username: user.username,
     },
     resolver: yupResolver(updateUsernameSchema),
   });
@@ -114,18 +114,25 @@ export const ProfileSettings = ({ user }: Props) => {
     register: passwordRegister,
     reset: passwordReset,
     formState: { errors: errorsPassword },
-  } = useForm<updatePasswordFormValues>({
+  } = useForm<UpdatePasswordFormValues>({
     defaultValues: {
       password: "",
     },
     resolver: yupResolver(updatePasswordSchema),
   });
 
-  const handleEmailSubmit = async (formData: updateEmailFormValues) => {
+  const handleEmailSubmit = async (formData: UpdateEmailFormValues) => {
     try {
       const updatedEmail = {
         email: formData.email,
       };
+      if (updatedEmail.email === user.email) {
+        setEmailError("email", {
+          type: "manual",
+          message: "Cant change email to same as you already have",
+        });
+        return;
+      }
       const response = await fetch(`/api/users/update`, {
         method: "PUT",
         headers: {
@@ -153,11 +160,18 @@ export const ProfileSettings = ({ user }: Props) => {
     }
   };
 
-  const handleUsernameSubmit = async (formData: updateUsernameFormValues) => {
+  const handleUsernameSubmit = async (formData: UpdateUsernameFormValues) => {
     try {
       const updatedUsername = {
         username: formData.username,
       };
+      if (updatedUsername.username === user.username) {
+        setUsernameError("username", {
+          type: "manual",
+          message: "Cant change username to same as you already have",
+        });
+        return;
+      }
       const response = await fetch(`/api/users/update`, {
         method: "PUT",
         headers: {
@@ -185,7 +199,7 @@ export const ProfileSettings = ({ user }: Props) => {
     }
   };
 
-  const handlePasswordSubmit = async (formData: updatePasswordFormValues) => {
+  const handlePasswordSubmit = async (formData: UpdatePasswordFormValues) => {
     try {
       const updatedPassword = {
         password: formData.password,
@@ -280,7 +294,6 @@ export const ProfileSettings = ({ user }: Props) => {
                 type="text"
                 {...usernameRegister("username")}
                 required
-                placeholder="Set new username"
               />
 
               <button type="submit">Save</button>
@@ -321,7 +334,6 @@ export const ProfileSettings = ({ user }: Props) => {
                 type="email"
                 {...emailRegister("email")}
                 required
-                placeholder="Set new email"
               />
 
               <button type="submit">Save</button>

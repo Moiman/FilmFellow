@@ -4,7 +4,7 @@ import { ProfileSettings } from "@/components/profileSettings";
 interface Props {
   sessionUser: User;
 }
-interface User {
+export interface User {
   email: string;
   id: string | number;
   role: string;

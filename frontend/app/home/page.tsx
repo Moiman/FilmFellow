@@ -10,12 +10,7 @@ export default async function home() {
 
   return (
     <main>
-      <MovieList
-        newMovies={newMovies}
-        popularMovies={popularMovies}
-        bestratedMovies={bestRatedMovies}
-        genres={genres}
-      ></MovieList>
+      <MovieList />
     </main>
   );
 }

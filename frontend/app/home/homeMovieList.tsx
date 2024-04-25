@@ -5,7 +5,15 @@ import { Section } from "@/components/section";
 import Image from "next/image";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {
+  AwaitedReactNode,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 import { fetchGenres, fetchMovies } from "./movieFetches";
 
 export const MovieList = () => {
@@ -41,14 +49,27 @@ export const MovieList = () => {
   };
 
   const getGenres = async () => {
-    setAllGenres(await fetchGenres());
+    const tempgenres = await fetchGenres();
+
+    const temp = tempgenres?.map(genre => {
+      return (
+        <p
+          key={genre.id}
+          onClick={() => setSelectedGenre(genre.name)}
+        >
+          {genre.name}
+        </p>
+      );
+    });
+    setAllGenres(temp);
   };
 
   useEffect(() => {
+    getGenres();
     getPosters(setNewMovieList, "new", selectedGenre);
     getPosters(setPopularMovieList, "popular", selectedGenre);
     getPosters(setBestratedMovieList, "bestrated", selectedGenre);
-  }, [selectedGenre]);
+  }, [allgenres, selectedGenre]);
 
   return (
     <div>

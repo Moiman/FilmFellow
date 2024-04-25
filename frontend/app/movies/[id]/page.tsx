@@ -8,15 +8,16 @@ export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
 const getMovie = async (movieId: string) => {
   try {
-    const movieData = await getMovieById(parseInt(movieId));
+    const movieData = await getMovieById(parseInt(movieId), "US");
 
     if (!movieData) {
       return null;
     }
 
-    const { title, backdrop_path, overview, runtime, release_date, vote_average, directors } = movieData;
+    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating } = movieData;
 
     const movie = {
+      id,
       title,
       backdropPath: backdrop_path,
       overview,
@@ -25,7 +26,7 @@ const getMovie = async (movieId: string) => {
       voteAverage: vote_average,
       directors,
       // No age restriction data yet
-      ageRestrictions: "?",
+      ageRestrictions: rating ? rating : "?",
     };
 
     return movie;

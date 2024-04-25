@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export type MovieResponse = NonNullable<Awaited<ReturnType<typeof getMovieById>>>;
-const getMovieById = async (movieId: number) => {
-  const movie = await prisma.movies.findUnique({
+const getMovieById = async (movieId: number, iso_3166_1 = "FI") => {
+  const movieResult = await prisma.movies.findUnique({
     where: {
       id: movieId,
     },
@@ -52,12 +52,26 @@ const getMovieById = async (movieId: number) => {
           },
         },
       },
+      release_dates: {
+        where: {
+          iso_3166_1: {
+            equals: iso_3166_1,
+          },
+        },
+        select: {
+          certification: true,
+        },
+      },
       importedReviews: true,
     },
   });
-  if (!movie) {
+  if (!movieResult) {
     return null;
   }
+
+  const { release_dates, ...movie } = movieResult;
+
+  const rating = release_dates[0]?.certification;
 
   const directors = movie.crew.filter(person => person.job === "Director").map(director => director.person.name);
   const crew = movie.crew.slice(0, 8).map(crewMember => {
@@ -78,7 +92,7 @@ const getMovieById = async (movieId: number) => {
 
   const genres = movie?.genres.map(genre => genre.genre.name);
 
-  return { ...movie, genres, crew, directors, cast };
+  return { ...movie, genres, crew, directors, cast, rating };
 };
 
 const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: string) => {

@@ -274,9 +274,9 @@ export const ProfileSettings = ({ user }: Props) => {
         </div>
       </div>
       <div className="profile-card-right">
-        <div className="description">
+        <div className="profile-card-content-divider">
           <h3>User Information</h3>
-          <p>Here you can change your username, email or password </p>
+          <p className="description">Here you can change your username, email or password </p>
 
           {activeUsername ? (
             <form
@@ -284,7 +284,7 @@ export const ProfileSettings = ({ user }: Props) => {
               className="profile-card-element"
             >
               <label
-                className="profile-card-element-inner-element"
+                className="profile-card-label"
                 htmlFor="username"
               >
                 Username
@@ -304,7 +304,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </form>
           ) : (
             <div className="profile-card-element">
-              <label className="profile-card-element-inner-element">Username</label>
+              <label className="profile-card-label">Username</label>
               <p>{user.username}</p>
               <button
                 onClick={() => {
@@ -324,7 +324,7 @@ export const ProfileSettings = ({ user }: Props) => {
               className="profile-card-element"
             >
               <label
-                className="profile-card-element-inner-element"
+                className="profile-card-label"
                 htmlFor="email"
               >
                 Email
@@ -344,7 +344,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </form>
           ) : (
             <div className="profile-card-element">
-              <label className="profile-card-element-inner-element">Email</label>
+              <label className="profile-card-label">Email</label>
               <p>{user.email}</p>
               <button
                 onClick={() => {
@@ -364,7 +364,7 @@ export const ProfileSettings = ({ user }: Props) => {
               className="profile-card-element"
             >
               <label
-                className="profile-card-element-inner-element"
+                className="profile-card-label"
                 htmlFor="password"
               >
                 Password
@@ -385,7 +385,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </form>
           ) : (
             <div className="profile-card-element">
-              <label className="profile-card-element-inner-element">Password</label>
+              <label className="profile-card-label">Password</label>
               <p>xxxxxxxxxxxxxxxxxxx</p>
               <button
                 onClick={() => {
@@ -400,8 +400,8 @@ export const ProfileSettings = ({ user }: Props) => {
             </div>
           )}
           <div className="profile-card-element">
-            <label className="profile-card-element-inner-element">Delete Account</label>
-            <p>Permanently delete your account</p>
+            <label className="profile-card-label">Delete Account</label>
+            <p className="description">Permanently delete your account</p>
             <button
               className="button-pink"
               onClick={() => setIsOpen(true)}
@@ -416,7 +416,7 @@ export const ProfileSettings = ({ user }: Props) => {
                   <div className="profile-card-modal-content">
                     <h3>Are you sure you want to delete your account ?</h3>
 
-                    <p>
+                    <p className="description">
                       If you delete your account, all your lists, reviews and other data will be destroyed permanently.
                     </p>
                   </div>
@@ -449,9 +449,9 @@ export const ProfileSettings = ({ user }: Props) => {
             />
           </div>
         </div>
-        <div className="description">
+        <div className="profile-card-content-divider">
           <h3>Profile Privacy</h3>
-          <p>Here you can choose who can see your profile.</p>
+          <p className="description">Here you can choose who can see your profile.</p>
           <form>
             <label className="label-row">
               <input
@@ -483,9 +483,9 @@ export const ProfileSettings = ({ user }: Props) => {
             </label>
           </form>
         </div>
-        <div className="description">
+        <div className="profile-card-content-divider">
           <h3>Content Filter</h3>
-          <p>
+          <p className="description">
             Here you can choose to filter content and make your movie browsing experience more suitable for your needs
           </p>
           <form>

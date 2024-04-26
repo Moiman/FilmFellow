@@ -1,0 +1,95 @@
+@use "../abstracts/" as abstracts;
+
+.profile-page-basic-data {
+  padding: 20px 40px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  .profile-description {
+    margin: 10px 0;
+  }
+
+  .profile-social-media {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+
+    div {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+
+      svg {
+        width: 28px;
+        height: auto;
+      }
+    }
+  }
+
+  .profile-friend-list {
+    width: 100%;
+
+    .friends {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+
+      button {
+        background-color: grey;
+        padding: 0;
+        margin: 2px;
+        aspect-ratio: 1;
+        border-radius: 50px;
+      }
+
+      button:hover {
+        background-color: rgb(105, 105, 105);
+        transform: scale(105%);
+      }
+    }
+  }
+}
+
+.list-style {
+  padding: 0;
+  border-radius: 0;
+  border: 1px solid rgb(53, 53, 53);
+  background: grey;
+  display: inline-flex;
+  height: fit-content;
+
+  .list-name {
+    width: 100%;
+    padding: 10px;
+    display: inline-flex;
+    justify-content: space-between;
+  }
+}
+
+.list-style:hover {
+  background-color: rgb(105, 105, 105);
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .profile-page-basic-data {
+    width: 100%;
+
+    .profile-social-media {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .profile-friend-list {
+      .friends {
+        grid-template-columns: repeat(8, 1fr);
+
+        svg {
+          size: 10%;
+          height: auto;
+        }
+      }
+    }
+  }
+}

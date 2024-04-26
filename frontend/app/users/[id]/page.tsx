@@ -4,6 +4,7 @@ import { Twitter, Instagram, Facebook } from "react-feather";
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
+import { ReviewThumbnail } from "@/components/users/reviewThumbnail";
 
 const exampleFavorites = [
   { id: 278, title: "The Shawshank Redemption", poster_path: "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg" },
@@ -28,7 +29,7 @@ export function shuffleExampleMovies() {
   return exampleFavorites.sort(() => Math.random() - 0.5);
 }
 
-export default function userProfile() {
+export default function userProfile({ params }: { params: { id: string } }) {
   return (
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
@@ -96,8 +97,8 @@ export default function userProfile() {
             <div
               style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}
             >
-              <h5>User's favorites</h5>
-              <Link href="/">See all</Link>
+              <h5>User favorites</h5>
+              <Link href={`/users/${params.id}/favorites`}>See all</Link>
             </div>
           }
         >
@@ -110,7 +111,7 @@ export default function userProfile() {
               style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}
             >
               <h5>Latest reviews</h5>
-              <Link href="/">See all</Link>
+              <Link href={`/users/${params.id}/reviews`}>See all</Link>
             </div>
           }
         >
@@ -122,7 +123,8 @@ export default function userProfile() {
               alignContent: "start",
             }}
           >
-            123
+            <ReviewThumbnail />
+            <ReviewThumbnail />
           </div>
         </Section>
 

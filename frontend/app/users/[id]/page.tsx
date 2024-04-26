@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { findUserById } from "@/services/authService";
+import { notFound } from "next/navigation";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
@@ -31,10 +33,16 @@ export function shuffleExampleMovies() {
   return exampleFavorites.sort(() => Math.random() - 0.5);
 }
 
-export default function userProfile({ params }: { params: { id: string } }) {
+export default async function userProfile({ params }: { params: { id: number } }) {
+  const user = await findUserById(Number(params.id));
+
+  if (!user) {
+    notFound();
+  }
+
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-      <h5>Username&rsquo;s favorites</h5>
+      <h5>{user.username}&rsquo;s favorites</h5>
       <Link href={`/users/${params.id}/favorites`}>See all</Link>
     </div>
   );

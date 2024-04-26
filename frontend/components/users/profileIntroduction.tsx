@@ -1,15 +1,21 @@
+import { authOptions } from "@/authOptions";
+import { findUserById } from "@/services/authService";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Twitter, Instagram, Facebook, Flag } from "react-feather";
 
 interface ProfileIntroductionProps {
-  userId: string;
+  userId: number;
 }
 
-export const ProfileIntroduction = ({ userId }: ProfileIntroductionProps) => {
+export const ProfileIntroduction = async ({ userId }: ProfileIntroductionProps) => {
+  const session = await getServerSession(authOptions);
+  const user = await findUserById(Number(userId));
+
   return (
     <div className="profile-page-basic-data">
       <>
-        <h5>Username</h5>
+        <h5>{user?.username}</h5>
         <div style={{ backgroundColor: "grey", width: "150px", height: "150px", borderRadius: "50%" }} />
       </>
 
@@ -28,7 +34,7 @@ export const ProfileIntroduction = ({ userId }: ProfileIntroductionProps) => {
           <h6>Social media</h6>
         </div>
         <div className="profile-social-media">
-          <div style={{}}>
+          <div>
             <Twitter color="#d75eb5" />
             <p>@username</p>
           </div>
@@ -67,19 +73,21 @@ export const ProfileIntroduction = ({ userId }: ProfileIntroductionProps) => {
       </div>
 
       <div style={{ display: "inline-flex", marginTop: "40px" }}>
-        <button className="button-cyan">Add to friends</button>
-
-        <button
-          className="button-pink"
-          style={{ display: "inline-flex", gap: "2px", alignContent: "center" }}
-        >
-          <Flag size={16} />
-          Report
-        </button>
-
-        {/* Show this button instead if own profile
+        {session && Number(userId) === session?.user.id ? (
           <button>Go to settings</button>
-        */}
+        ) : (
+          <>
+            <button className="button-cyan">Add to friends</button>
+
+            <button
+              className="button-pink"
+              style={{ display: "inline-flex", gap: "2px", alignContent: "center" }}
+            >
+              <Flag size={16} />
+              Report
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

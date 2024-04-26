@@ -8,14 +8,14 @@
   // Remove this when not needed anymore
   .placeholder-movie-poster {
     background-color: grey;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 2 / 3 !important;
     border: 1px solid abstracts.$primary-dark;
     box-shadow: abstracts.$default-shadow;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 10px;
+    height: 100%;
   }
 
   .placeholder-movie-poster:hover {

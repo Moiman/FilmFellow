@@ -125,18 +125,33 @@ export const Header = () => {
       <div className="sub-nav-wide highlight-nav">
         <>
           {session ? (
-            <>
-              {SubNavLinks.map(link => (
-                <Link
-                  onClick={link.text === "Logout" ? () => signOut() : undefined}
-                  key={link.href}
-                  href={link.href}
-                  className={currentPath === link.href ? "active-icon" : ""}
-                >
-                  {link.icon}
-                </Link>
-              ))}
-            </>
+            session.user.role === "admin" ? (
+              <>
+                {SubNavLinks.map(link => (
+                  <Link
+                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    key={link.href}
+                    href={link.href}
+                    className={currentPath === link.href ? "active-icon" : ""}
+                  >
+                    {link.icon}
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <>
+                {SubNavLinks.filter(navlinks => navlinks.href !== "/admin").map(link => (
+                  <Link
+                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    key={link.href}
+                    href={link.href}
+                    className={currentPath === link.href ? "active-icon" : ""}
+                  >
+                    {link.icon}
+                  </Link>
+                ))}
+              </>
+            )
           ) : (
             <>
               <Link

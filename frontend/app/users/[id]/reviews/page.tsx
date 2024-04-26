@@ -13,7 +13,7 @@ export default function userReviews({ params }: { params: { id: string } }) {
           </h3>
         }
       >
-        <div style={{ gap: "5px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", alignContent: "start" }}>
+        <div className="review-thumbnail-wrapper">
           <ReviewThumbnail /> <ReviewThumbnail /> <ReviewThumbnail /> <ReviewThumbnail /> <ReviewThumbnail />
         </div>
       </Section>

@@ -7,7 +7,7 @@ const exampleReviewHeader = () => {
   return (
     <div className="review-thumbnail-header">
       <h6>{shuffleExampleMovies()[0].title}</h6>
-      <>
+      <div className="stars">
         <Star
           color="#ffc700"
           fill="#ffc700"
@@ -28,7 +28,7 @@ const exampleReviewHeader = () => {
           color="#eff2f2"
           fill="#eff2f2"
         />
-      </>
+      </div>
     </div>
   );
 };

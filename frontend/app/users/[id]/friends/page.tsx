@@ -12,16 +12,7 @@ export default function userFriends({ params }: { params: { id: string } }) {
           </h3>
         }
       >
-        <div className="friends">
-          <button className="button-friend" />
-          <button className="button-friend" />
-          <button className="button-friend" />
-          <button className="button-friend" />
-          <button className="button-friend" />
-          <button className="button-friend" />
-          <button className="button-friend" />
-          <button className="button-friend" />
-        </div>
+        <></>
       </Section>
     </main>
   );

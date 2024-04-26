@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Twitter, Instagram, Facebook } from "react-feather";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
 import { ReviewThumbnail } from "@/components/users/reviewThumbnail";
+import { ProfileIntroduction } from "@/components/users/profileIntroduction";
+import { ListButton } from "@/components/users/listButton";
 
 const exampleFavorites = [
   { id: 278, title: "The Shawshank Redemption", poster_path: "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg" },
@@ -19,10 +20,10 @@ const exampleFavorites = [
 ];
 
 const exampleLists = [
-  { id: 1, name: "List 1", thumbnail_path: "/", movieAmount: "6" },
-  { id: 2, name: "List 2", thumbnail_path: "/", movieAmount: "13" },
-  { id: 3, name: "List 3", thumbnail_path: "/", movieAmount: "29" },
-  { id: 4, name: "List 4", thumbnail_path: "/", movieAmount: "8" },
+  { id: 1, name: "List 1", thumbnail_path: "/", movieAmount: 6 },
+  { id: 2, name: "List 2", thumbnail_path: "/", movieAmount: 13 },
+  { id: 3, name: "List 3", thumbnail_path: "/", movieAmount: 29 },
+  { id: 4, name: "List 4", thumbnail_path: "/", movieAmount: 8 },
 ];
 
 export function shuffleExampleMovies() {
@@ -30,117 +31,51 @@ export function shuffleExampleMovies() {
 }
 
 export default function userProfile({ params }: { params: { id: string } }) {
+  const userFavoriteHeader = (
+    <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+      <h5>User favorites</h5>
+      <Link href={`/users/${params.id}/favorites`}>See all</Link>
+    </div>
+  );
+
+  const userReviewsHeader = (
+    <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+      <h5>Latest reviews</h5>
+      <Link href={`/users/${params.id}/reviews`}>See all</Link>
+    </div>
+  );
+
   return (
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
       <Sidebar iconPosition="right">
-        <div className="profile-page-basic-data">
-          <h5>Username</h5>
-          <div style={{ backgroundColor: "grey", width: "150px", height: "150px", borderRadius: "50%" }} />
-          <p className="profile-description">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum, amet. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Quia, esse?
-          </p>
-
-          <div className="profile-social-media">
-            <div style={{}}>
-              <Twitter color="#d75eb5" />
-              <p>@username</p>
-            </div>
-
-            <div>
-              <Instagram color="#ffc700" />
-              <p>@username</p>
-            </div>
-
-            <div>
-              <Facebook color="#74ccca" />
-              <p>@username</p>
-            </div>
-          </div>
-
-          <div className="profile-friend-list">
-            <div
-              style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}
-            >
-              <h5>Friends</h5>
-              <Link href="/friends">See all</Link>
-            </div>
-
-            <div className="friends">
-              <button className="button-friend" />
-              <button className="button-friend" />
-              <button className="button-friend" />
-              <button className="button-friend" />
-              <button className="button-friend" />
-              <button className="button-friend" />
-              <button className="button-friend" />
-              <button className="button-friend" />
-            </div>
-          </div>
-
-          <button className="button-cyan">Add to friends</button>
-        </div>
+        <ProfileIntroduction userId={params.id} />
       </Sidebar>
 
-      <div
-        style={{
-          padding: "40px",
-          margin: "0 auto",
-          display: "grid",
-          alignContent: "flex-start",
-          gap: "40px",
-        }}
-      >
-        <Section
-          header={
-            <div
-              style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}
-            >
-              <h5>User favorites</h5>
-              <Link href={`/users/${params.id}/favorites`}>See all</Link>
-            </div>
-          }
-        >
+      <div className="profile-section-wrapper">
+        {/* Random assortment of user's favorite movies and link to all favorites */}
+        <Section header={userFavoriteHeader}>
           <MovieList movies={shuffleExampleMovies().slice(0, 6)} />
         </Section>
 
-        <Section
-          header={
-            <div
-              style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}
-            >
-              <h5>Latest reviews</h5>
-              <Link href={`/users/${params.id}/reviews`}>See all</Link>
-            </div>
-          }
-        >
-          <div
-            style={{
-              gap: "5px",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              alignContent: "start",
-            }}
-          >
+        {/* Thumbnails of user's latest reviews and link to all reviews */}
+        <Section header={userReviewsHeader}>
+          <div className="review-wrapper">
             <ReviewThumbnail />
             <ReviewThumbnail />
           </div>
         </Section>
 
+        {/* Random assortment of user's favorite movies and link to all favorites */}
         <Section header={<h5>Lists</h5>}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <div className="list-wrapper">
             {exampleLists.map(list => (
-              <button
-                className="list-style"
+              <ListButton
                 key={list.id}
-              >
-                <div style={{ height: "40px", aspectRatio: "1", backgroundColor: "darkgrey" }} />
-                <div className="list-name">
-                  <p>{list.name}</p>
-                  <p>{list.movieAmount}</p>
-                </div>
-              </button>
+                listId={list.id}
+                name={list.name}
+                movieAmount={list.movieAmount}
+              />
             ))}
           </div>
         </Section>

@@ -1,0 +1,17 @@
+@use "../abstracts/" as abstracts;
+
+.review-thumbnail-header {
+  display: inline-flex;
+  align-content: space-between;
+  width: 100%;
+
+  h6 {
+    flex: 1;
+  }
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .review-thumbnail-header {
+    display: block;
+  }
+}

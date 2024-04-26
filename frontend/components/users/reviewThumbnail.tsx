@@ -5,14 +5,8 @@ import { Section } from "../section";
 
 const exampleReviewHeader = () => {
   return (
-    <div
-      style={{
-        display: "inline-flex",
-        alignContent: "space-between",
-        width: "100%",
-      }}
-    >
-      <h6 style={{ flex: 1 }}>{shuffleExampleMovies()[0].title}</h6>{" "}
+    <div className="review-thumbnail-header">
+      <h6>{shuffleExampleMovies()[0].title}</h6>
       <>
         <Star
           color="#ffc700"
@@ -41,6 +35,9 @@ const exampleReviewHeader = () => {
 
 const exampleReview =
   "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidem aspernatur placeat reiciendis remiure eius explicabo repellendus est! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidemaspernatur placeat reiciendis rem iure eius explicabo repellendus est! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidem aspernatur placeat reiciendis remiure eius explicabo repellendus est! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidemaspernatur placeat reiciendis rem iure eius explicabo repellendus est!";
+
+/* Currently purely cosmetic placeholder. 
+  In the future should be clickable and open the full review. */
 
 export const ReviewThumbnail = () => {
   return (

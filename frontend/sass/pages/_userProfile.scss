@@ -33,11 +33,18 @@
   .profile-friend-list {
     width: 100%;
 
-    .friends {
+    .friends-title {
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .friends-wrapper {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
 
-      button {
+      .button-friend {
         background-color: grey;
         padding: 0;
         margin: 2px;
@@ -45,7 +52,7 @@
         border-radius: 50px;
       }
 
-      button:hover {
+      .button-friend:hover {
         background-color: rgb(105, 105, 105);
         transform: scale(105%);
       }
@@ -53,24 +60,51 @@
   }
 }
 
-.list-style {
-  padding: 0;
-  border-radius: 0;
-  border: 1px solid rgb(53, 53, 53);
-  background: grey;
-  display: inline-flex;
-  height: fit-content;
+.profile-section-wrapper {
+  padding: 40px;
+  margin: 0 auto;
+  display: grid;
+  align-content: flex-start;
+  gap: 40px;
 
-  .list-name {
-    width: 100%;
-    padding: 10px;
-    display: inline-flex;
-    justify-content: space-between;
+  .review-wrapper {
+    gap: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: start;
   }
-}
 
-.list-style:hover {
-  background-color: rgb(105, 105, 105);
+  .list-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .list-style {
+      padding: 0;
+      border-radius: 0;
+      border: 1px solid rgb(53, 53, 53);
+      background: grey;
+      display: inline-flex;
+      height: fit-content;
+
+      .list-name {
+        width: 100%;
+        padding: 10px;
+        display: inline-flex;
+        justify-content: space-between;
+      }
+    }
+
+    .list-style:hover {
+      background-color: rgb(105, 105, 105);
+    }
+  }
+
+  @media only screen and (max-width: abstracts.$large-width) {
+    .list-wrapper,
+    .review-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 @media only screen and (max-width: abstracts.$medium-width) {
@@ -82,13 +116,8 @@
     }
 
     .profile-friend-list {
-      .friends {
+      .friends-wrapper {
         grid-template-columns: repeat(8, 1fr);
-
-        svg {
-          size: 10%;
-          height: auto;
-        }
       }
     }
   }

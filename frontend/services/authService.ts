@@ -1,5 +1,7 @@
+import { authOptions } from "@/authOptions";
 import { PrismaClient } from "@prisma/client";
 import { Role } from "@prisma/client";
+import { getServerSession } from "next-auth/next";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +17,15 @@ const selectUserFields = {
   email: true,
   username: true,
   role: true,
+};
+
+const selectUserFieldsForAdmin = {
+  id: true,
+  email: true,
+  username: true,
+  role: true,
+  created_at: true,
+  updated_at:true
 };
 
 const createUser = async (email: string, username: string, password: string) => {
@@ -82,4 +93,16 @@ const deleteUserById = async (id: number) => {
   return user;
 };
 
-export { createUser, findUserByEmail, deleteUserById, findUserById, findUserByUsername, updateUser };
+const getAllUsers = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session || session.user.role !== Role.admin) {
+    return;
+  }
+  const users = await prisma.users.findMany({
+    select: selectUserFieldsForAdmin
+  });
+
+  return users;
+};
+
+export { createUser, findUserByEmail, deleteUserById, findUserById, findUserByUsername, updateUser, getAllUsers };

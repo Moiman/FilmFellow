@@ -16,7 +16,7 @@ export const SubNavLinks = [
   {
     icon: <Tool style={{ strokeWidth: 1.5 }} />,
     text: "Admin",
-    href: "/admin",
+    href: "/admin/users",
   },
   { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile/settings" },
   {
@@ -91,16 +91,29 @@ export const Header = () => {
             </Link>
           ))}
           {session ? (
-            SubNavLinks.map(link => (
-              <Link
-                onClick={link.text === "Logout" ? () => signOut() : undefined}
-                key={link.href}
-                href={link.href}
-                className="dropdown-item"
-              >
-                {link.text}
-              </Link>
-            ))
+            session.user.role === "admin" ? (
+              SubNavLinks.map(link => (
+                <Link
+                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  key={link.href}
+                  href={link.href}
+                  className="dropdown-item"
+                >
+                  {link.text}
+                </Link>
+              ))
+            ) : (
+              SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
+                <Link
+                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  key={link.href}
+                  href={link.href}
+                  className="dropdown-item"
+                >
+                  {link.text}
+                </Link>
+              ))
+            )
           ) : (
             <>
               <Link
@@ -140,7 +153,7 @@ export const Header = () => {
               </>
             ) : (
               <>
-                {SubNavLinks.filter(navlinks => navlinks.href !== "/admin").map(link => (
+                {SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
                   <Link
                     onClick={link.text === "Logout" ? () => signOut() : undefined}
                     key={link.href}

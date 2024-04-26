@@ -1,0 +1,30 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.admin-panel-left-side {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  margin-left: 5%;
+}
+.admin-panel-user-list {
+  background-color: abstracts.$primary-grey;
+  display: flex;
+  justify-content: space-between;
+
+  gap: 10px;
+  border-bottom: 1px solid;
+  border-color: abstracts.$primary-darkgrey;
+}
+.admin-panel-side-bar {
+  display: grid;
+  grid-template-rows: auto;
+}
+.admin-panel-active-link {
+  border-left: 5px solid map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+}
+
+.admin-panel-home-content {
+  flex: 1;
+  padding: 40px 60px;
+}

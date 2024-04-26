@@ -10,10 +10,10 @@ export const ListButton = ({ listId, name, movieAmount }: ListButtonProps) => {
       className="list-style"
       key={listId}
     >
-      <div style={{ height: "40px", aspectRatio: "1", backgroundColor: "darkgrey" }} />
+      <div style={{ height: "45px", aspectRatio: "3/2", backgroundColor: "darkgrey" }} />
       <div className="list-name">
         <p>{name}</p>
-        <p>{movieAmount}</p>
+        <p className="list-movie-amount">{movieAmount}</p>
       </div>
     </button>
   );

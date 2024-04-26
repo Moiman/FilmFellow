@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../abstracts/" as abstracts;
 
 .profile-page-basic-data {
@@ -6,17 +7,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+
+  h6 {
+    padding: 4px 0;
+  }
+
+  hr {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid abstracts.$primary-dark;
+  }
 
   .profile-description {
-    margin: 10px 0;
+    margin: 0;
   }
 
   .profile-social-media {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    gap: 10px;
     width: 100%;
+    margin-top: 5px;
 
     div {
       display: inline-flex;
@@ -24,7 +36,7 @@
       align-items: center;
 
       svg {
-        width: 28px;
+        width: 24px;
         height: auto;
       }
     }
@@ -32,17 +44,19 @@
 
   .profile-friend-list {
     width: 100%;
+    margin-top: 20px;
 
     .friends-title {
       display: inline-flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      margin-bottom: 10px;
     }
 
     .friends-wrapper {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
 
       .button-friend {
         background-color: grey;
@@ -66,6 +80,7 @@
   display: grid;
   align-content: flex-start;
   gap: 40px;
+  max-width: 1800px;
 
   .review-wrapper {
     gap: 5px;
@@ -74,28 +89,42 @@
     align-content: start;
   }
 
+  .list-header {
+    background-color: abstracts.$primary-darkgrey;
+    padding: 10px;
+  }
+
   .list-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    background: abstracts.$primary-dark;
 
     .list-style {
       padding: 0;
+      margin: 0;
+      margin-bottom: 1px;
+      padding: 0;
       border-radius: 0;
-      border: 1px solid rgb(53, 53, 53);
-      background: grey;
+      color: abstracts.$primary-light;
+      background: abstracts.$primary-grey;
       display: inline-flex;
       height: fit-content;
 
       .list-name {
         width: 100%;
-        padding: 10px;
+        padding: 0 10px;
+        margin: auto;
         display: inline-flex;
         justify-content: space-between;
+      }
+
+      .list-movie-amount {
+        color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
       }
     }
 
     .list-style:hover {
-      background-color: rgb(105, 105, 105);
+      background-color: abstracts.$primary-darkgrey;
     }
   }
 
@@ -110,6 +139,7 @@
 @media only screen and (max-width: abstracts.$medium-width) {
   .profile-page-basic-data {
     width: 100%;
+    gap: 10px;
 
     .profile-social-media {
       grid-template-columns: repeat(3, 1fr);

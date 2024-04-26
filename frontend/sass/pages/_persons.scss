@@ -103,20 +103,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-.all-movies-header,
-.all-movies-header a {
-  font-family: abstracts.$default-title-font;
-  line-height: abstracts.$default-line-height;
-  letter-spacing: abstracts.$title-letter-spacing;
-  font-size: abstracts.$h4-font-size;
-  font-weight: 300;
-
-  a {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-  }
-
-  a:hover {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
-  }
-}

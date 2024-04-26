@@ -3,10 +3,11 @@ import Link from "next/link";
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
-import { ReviewThumbnail } from "@/components/users/reviewThumbnail";
+import { ReviewThumbnail } from "@/components/reviewThumbnail";
 import { ProfileIntroduction } from "@/components/users/profileIntroduction";
 import { ListButton } from "@/components/users/listButton";
 
+/* For placeholder purposes */
 const exampleFavorites = [
   { id: 278, title: "The Shawshank Redemption", poster_path: "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg" },
   { id: 238, title: "The Godfather", poster_path: "/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" },
@@ -33,7 +34,7 @@ export function shuffleExampleMovies() {
 export default function userProfile({ params }: { params: { id: string } }) {
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-      <h5>User favorites</h5>
+      <h5>Username&rsquo;s favorites</h5>
       <Link href={`/users/${params.id}/favorites`}>See all</Link>
     </div>
   );
@@ -67,7 +68,10 @@ export default function userProfile({ params }: { params: { id: string } }) {
         </Section>
 
         {/* Random assortment of user's favorite movies and link to all favorites */}
-        <Section header={<h5>Lists</h5>}>
+        <div className="section">
+          <div className="list-header">
+            <h5>Lists</h5>
+          </div>
           <div className="list-wrapper">
             {exampleLists.map(list => (
               <ListButton
@@ -78,7 +82,7 @@ export default function userProfile({ params }: { params: { id: string } }) {
               />
             ))}
           </div>
-        </Section>
+        </div>
       </div>
     </main>
   );

@@ -43,7 +43,7 @@ export default async function PersonMovies({ params }: { params: { id: string } 
     <main>
       <Section
         header={
-          <div className="all-movies-header">
+          <div className="yellow-name-header">
             Movies of <Link href={"/persons/" + params.id}>{person.name}</Link>
           </div>
         }

@@ -1,7 +1,7 @@
 import { Star } from "react-feather";
 
 import { shuffleExampleMovies } from "@/app/users/[id]/page";
-import { Section } from "../section";
+import { Section } from "./section";
 
 const exampleReviewHeader = () => {
   return (
@@ -37,7 +37,8 @@ const exampleReview =
   "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidem aspernatur placeat reiciendis remiure eius explicabo repellendus est! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidemaspernatur placeat reiciendis rem iure eius explicabo repellendus est! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidem aspernatur placeat reiciendis remiure eius explicabo repellendus est! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint amet quidemaspernatur placeat reiciendis rem iure eius explicabo repellendus est!";
 
 /* Currently purely cosmetic placeholder. 
-  In the future should be clickable and open the full review. */
+  In the future should be clickable and open the full review. 
+  Used in user profile and movie pages? */
 
 export const ReviewThumbnail = () => {
   return (

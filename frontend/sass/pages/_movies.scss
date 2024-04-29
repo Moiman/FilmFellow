@@ -128,7 +128,10 @@
         flex-direction: row;
         gap: 20px;
 
-        p {
+        p,
+        a {
+          font-family: abstracts.$default-text-font;
+          font-weight: 100;
           font-size: 1rem;
           letter-spacing: normal;
         }

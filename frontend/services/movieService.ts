@@ -73,7 +73,12 @@ const getMovieById = async (movieId: number, iso_3166_1 = "FI") => {
 
   const rating = release_dates[0]?.certification;
 
-  const directors = movie.crew.filter(person => person.job === "Director").map(director => director.person.name);
+  const directors = movie.crew
+    .filter(person => person.job === "Director")
+    .map(director => {
+      return { personId: director.personId, name: director.person.name };
+    });
+
   const crew = movie.crew.slice(0, 8).map(crewMember => {
     const {
       person: { name, profile_path },

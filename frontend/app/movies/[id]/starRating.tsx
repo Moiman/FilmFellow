@@ -1,29 +1,28 @@
 "use client";
 
 import { useState } from "react";
-
 import { Star } from "react-feather";
 
-export const StarRating = () => {
-  const [rating, setRating] = useState(0);
+import { setMovieRating } from "@/services/watchedService";
+import { useRouter } from "next/navigation";
 
-  const handleStarClick = (clickedRating: number) => {
-    const newRating = clickedRating === rating ? 0 : clickedRating;
+interface Props {
+  rating: number | null;
+  setRating: (stars: number) => Promise<void>;
+}
 
-    setRating(newRating);
-  };
-
+export const StarRating = ({ rating, setRating }: Props) => {
   return (
     <div style={{ display: "inline-flex" }}>
       {[1, 2, 3, 4, 5].map(starRating => (
         <button
-          onClick={() => handleStarClick(starRating)}
-          className="button-transparent"
           key={starRating}
+          onClick={() => setRating(starRating)}
+          className="button-transparent"
         >
           <Star
-            stroke={rating >= starRating ? "#ffc700" : "#eff2f2"}
-            fill={rating >= starRating ? "#ffc700" : "#eff2f2"}
+            stroke={rating && rating >= starRating ? "#ffc700" : "#eff2f2"}
+            fill={rating && rating >= starRating ? "#ffc700" : "#eff2f2"}
             strokeWidth={2}
             size={30}
             style={{ cursor: "pointer" }}

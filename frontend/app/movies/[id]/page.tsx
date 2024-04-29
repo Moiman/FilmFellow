@@ -3,12 +3,17 @@ import { notFound } from "next/navigation";
 import { Section } from "@/components/section";
 import { getMovieById } from "@/services/movieService";
 import { MovieInfo } from "./movieInfo";
+import { getIsWatched, getMovieRating } from "@/services/watchedService";
+import { getIsFavorite } from "@/services/favoriteService";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
 const getMovie = async (movieId: string) => {
   try {
     const movieData = await getMovieById(parseInt(movieId), "US");
+    const userRating = await getMovieRating(Number(movieId));
+    const isWatched = await getIsWatched(Number(movieId));
+    const isFavorite = await getIsFavorite(Number(movieId));
 
     if (!movieData) {
       return null;
@@ -27,6 +32,9 @@ const getMovie = async (movieId: string) => {
       directors,
       // No age restriction data yet
       ageRestrictions: rating ? rating : "?",
+      isFavorite,
+      isWatched,
+      userRating,
     };
 
     return movie;

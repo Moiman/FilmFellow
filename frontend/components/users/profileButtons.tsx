@@ -21,10 +21,7 @@ export const ProfileButtons = ({ userId, activeSession, ownProfile }: ProfileBut
           <>
             <button className="button-cyan">Add to friends</button>
 
-            <button
-              className="button-pink"
-              style={{ display: "inline-flex", gap: "2px", alignContent: "center" }}
-            >
+            <button className="button-pink button-icon-text">
               <Flag size={16} />
               Report
             </button>

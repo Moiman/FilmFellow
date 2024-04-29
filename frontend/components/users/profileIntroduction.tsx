@@ -3,6 +3,7 @@ import { findUserById } from "@/services/authService";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Twitter, Instagram, Facebook, Flag } from "react-feather";
+import { ProfileButtons } from "./profileButtons";
 
 interface ProfileIntroductionProps {
   userId: number;
@@ -58,7 +59,6 @@ export const ProfileIntroduction = async ({ userId }: ProfileIntroductionProps) 
             <Link href={`/users/${userId}/friends`}>See all</Link>
           </div>
 
-          {/* Show max. 10 friends? */}
           <div className="friends-wrapper">
             <button className="button-friend" />
             <button className="button-friend" />
@@ -72,23 +72,11 @@ export const ProfileIntroduction = async ({ userId }: ProfileIntroductionProps) 
         </div>
       </div>
 
-      <div style={{ display: "inline-flex", marginTop: "40px" }}>
-        {session && Number(userId) === session?.user.id ? (
-          <button>Go to settings</button>
-        ) : (
-          <>
-            <button className="button-cyan">Add to friends</button>
-
-            <button
-              className="button-pink"
-              style={{ display: "inline-flex", gap: "2px", alignContent: "center" }}
-            >
-              <Flag size={16} />
-              Report
-            </button>
-          </>
-        )}
-      </div>
+      <ProfileButtons
+        userId={userId}
+        activeSession={session ? true : false}
+        ownProfile={Number(userId) === session?.user.id ? true : false}
+      />
     </div>
   );
 };

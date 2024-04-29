@@ -23,6 +23,7 @@ const { useRouter, mockedRouterPush } = vi.hoisted(() => {
 
 vi.mock("next/navigation", async () => {
   const actual = await vi.importActual("next/navigation");
+
   return {
     ...actual,
     useRouter,

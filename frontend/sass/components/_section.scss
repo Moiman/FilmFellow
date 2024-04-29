@@ -4,12 +4,16 @@
   width: 100%;
   margin: auto;
   overflow: hidden;
-  height: fit-content;
+  min-height: fit-content;
 
   box-shadow: abstracts.$default-shadow;
 
   border: 1px solid abstracts.$primary-dark;
   border-radius: abstracts.$default-border-radius;
+
+  .section {
+    height: 100%;
+  }
 }
 
 .section-header {

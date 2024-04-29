@@ -1,19 +1,26 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 interface ListButtonProps {
-  listId: number;
-  name: string;
-  movieAmount: number;
+  userId: number;
+  list: { id: number; name: string; movies: any[] };
 }
 
-export const ListButton = ({ listId, name, movieAmount }: ListButtonProps) => {
+export const ListButton = ({ userId, list }: ListButtonProps) => {
+  const router = useRouter();
+
   return (
     <button
       className="list-style"
-      key={listId}
+      key={list.id}
+      onClick={() => router.push(`/users/${userId}/lists/${list.id}`)}
     >
+      {/* Placeholder for list thumbnail */}
       <div style={{ height: "45px", aspectRatio: "3/2", backgroundColor: "darkgrey" }} />
       <div className="list-name">
-        <p>{name}</p>
-        <p className="list-movie-amount">{movieAmount}</p>
+        <p>{list.name}</p>
+        <p className="list-movie-amount">{list.movies.length}</p>
       </div>
     </button>
   );

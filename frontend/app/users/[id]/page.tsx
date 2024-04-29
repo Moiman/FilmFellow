@@ -23,10 +23,11 @@ const exampleFavorites = [
 ];
 
 const exampleLists = [
-  { id: 1, name: "List 1", thumbnail_path: "/", movieAmount: 6 },
-  { id: 2, name: "List 2", thumbnail_path: "/", movieAmount: 13 },
-  { id: 3, name: "List 3", thumbnail_path: "/", movieAmount: 29 },
-  { id: 4, name: "List 4", thumbnail_path: "/", movieAmount: 8 },
+  { id: 1, name: "Favorite horror movies", thumbnail_path: "/", movies: [278, 238, 497] },
+  { id: 2, name: "Worst movies ever", thumbnail_path: "/", movies: [278, 155] },
+  { id: 3, name: "Movies for Christmas", thumbnail_path: "/", movies: [278, 496243, 769] },
+  { id: 4, name: "Best friend's favorites", thumbnail_path: "/", movies: [278, 424, 155] },
+  { id: 4, name: "Aliens", thumbnail_path: "/", movies: [389, 238, 155] },
 ];
 
 export function shuffleExampleMovies() {
@@ -83,10 +84,9 @@ export default async function userProfile({ params }: { params: { id: number } }
           <div className="list-wrapper">
             {exampleLists.map(list => (
               <ListButton
+                userId={user.id}
                 key={list.id}
-                listId={list.id}
-                name={list.name}
-                movieAmount={list.movieAmount}
+                list={{ id: list.id, name: list.name, movies: list.movies }}
               />
             ))}
           </div>

@@ -16,7 +16,7 @@ export default async function userFriends({ params }: { params: { id: string; li
       <Section
         header={
           <h3 className="yellow-name-header">
-            <Link href={"/users/" + params.id}>{user.username}</Link>&rsquo;s (list name here) (id {params.listId})
+            <Link href={"/users/" + params.id}>{user.username}</Link>&rsquo;s list name
           </h3>
         }
       >

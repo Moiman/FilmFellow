@@ -72,7 +72,7 @@ export const MovieList = () => {
 
   return (
     <div>
-      <Dropdown>
+      <Dropdown selected={selectedGenre}>
         <div>{allgenres}</div>
       </Dropdown>
       <Section

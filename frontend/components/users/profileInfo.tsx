@@ -2,19 +2,19 @@ import { authOptions } from "@/authOptions";
 import { findUserById } from "@/services/authService";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { Twitter, Instagram, Facebook, Flag } from "react-feather";
+import { Twitter, Instagram, Facebook } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
 
-interface ProfileIntroductionProps {
+interface ProfileInfoProps {
   userId: number;
 }
 
-export const ProfileIntroduction = async ({ userId }: ProfileIntroductionProps) => {
+export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
   const session = await getServerSession(authOptions);
   const user = await findUserById(Number(userId));
 
   return (
-    <div className="profile-page-basic-data">
+    <div className="profile-info">
       <>
         <h5>{user?.username}</h5>
         <div style={{ backgroundColor: "grey", width: "150px", height: "150px", borderRadius: "50%" }} />

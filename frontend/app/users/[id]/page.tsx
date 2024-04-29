@@ -6,7 +6,7 @@ import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
-import { ProfileIntroduction } from "@/components/users/profileIntroduction";
+import { ProfileInfo } from "@/components/users/profileInfo";
 import { ListButton } from "@/components/users/listButton";
 
 /* For placeholder purposes */
@@ -26,8 +26,7 @@ const exampleLists = [
   { id: 1, name: "Favorite horror movies", thumbnail_path: "/", movies: [278, 238, 497] },
   { id: 2, name: "Worst movies ever", thumbnail_path: "/", movies: [278, 155] },
   { id: 3, name: "Movies for Christmas", thumbnail_path: "/", movies: [278, 496243, 769] },
-  { id: 4, name: "Best friend's favorites", thumbnail_path: "/", movies: [278, 424, 155] },
-  { id: 4, name: "Aliens", thumbnail_path: "/", movies: [389, 238, 155] },
+  { id: 4, name: "I'm Batman", thumbnail_path: "/", movies: [155] },
 ];
 
 export function shuffleExampleMovies() {
@@ -59,7 +58,7 @@ export default async function userProfile({ params }: { params: { id: number } }
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
       <Sidebar iconPosition="right">
-        <ProfileIntroduction userId={params.id} />
+        <ProfileInfo userId={params.id} />
       </Sidebar>
 
       <div className="profile-section-wrapper">

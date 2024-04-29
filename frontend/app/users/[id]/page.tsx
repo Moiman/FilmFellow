@@ -75,7 +75,7 @@ export default async function userProfile({ params }: { params: { id: number } }
           </div>
         </Section>
 
-        {/* Random assortment of user's favorite movies and link to all favorites */}
+        {/* User-made lists */}
         <div className="section">
           <div className="list-header">
             <h5>Lists</h5>

@@ -24,8 +24,8 @@ export const ProfileIntroduction = async ({ userId }: ProfileIntroductionProps) 
           <h6>Description</h6>
         </div>
         <p className="profile-description">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum, amet. Lorem ipsum dolor sit amet consectetur,
-          adipisicing elit. Quia, esse?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque maxime repudiandae quasi sunt delectus
+          perferendis, provident pariatur reprehenderit iure quas officia mollitia, corporis ipsa.
         </p>
       </div>
 

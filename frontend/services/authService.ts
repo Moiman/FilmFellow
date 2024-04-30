@@ -76,35 +76,20 @@ const findUserByUsername = async (username: string) => {
   return user;
 };
 
-const updateUser = async (userId: number, user: User, last_visited?: Date) => {
-  if (last_visited) {
-    const updatedUser = await prisma.users.update({
-      where: { id: userId },
-      data: {
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        role: user.role,
-        last_visited: last_visited,
-      },
-      select: selectUserFieldsForAdmin,
-    });
-    return updatedUser;
-  } else {
-    const updatedUser = await prisma.users.update({
-      where: { id: userId },
-      data: {
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        role: user.role,
-        updated_at: new Date(),
-      },
-      select: selectUserFieldsForAdmin,
-    });
+const updateUser = async (userId: number, user: User) => {
+  const updatedUser = await prisma.users.update({
+    where: { id: userId },
+    data: {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      updated_at: new Date(),
+    },
+    select: selectUserFieldsForAdmin,
+  });
 
-    return updatedUser;
-  }
+  return updatedUser;
 };
 
 const deleteUserById = async (id: number) => {
@@ -130,11 +115,21 @@ const getAllUsers = async () => {
   return users;
 };
 
+const updateUserLastVisited = async (id: number, last_visited: Date) => {
+  await prisma.users.update({
+    where: { id: id },
+    data: {
+      last_visited: last_visited,
+    },
+    select: selectUserFieldsForAdmin,
+  });
+};
+
 const changeUserStatusById = async (id: number, status: boolean, banDuration?: number | null) => {
   const user = await findUserById(id);
   if (user) {
     if (banDuration) {
-      const banEndDateInMS = new Date().getTime() + (banDuration * 1000);
+      const banEndDateInMS = new Date().getTime() + banDuration * 1000;
       const banEndDate = new Date(banEndDateInMS);
       await prisma.users.update({
         where: {
@@ -167,5 +162,6 @@ export {
   findUserByUsername,
   updateUser,
   getAllUsers,
+  updateUserLastVisited,
   changeUserStatusById,
 };

@@ -1,56 +1,93 @@
 @use "sass:map";
 @use "../abstracts" as abstracts;
 
-.profile-card-left {
-  margin-left: 10%;
-}
-.profile-card-right {
-  margin-left: 15%;
-}
-.profile-card-modal-content {
-  display: flex;
-  flex-flow: wrap;
+.profile-settings {
+  display: inline-flex;
   justify-content: center;
-  margin-bottom: 25%;
-}
-.profile-card-modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.profile-card {
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: center;
+  gap: 40px;
+  width: 100%;
 
   textarea {
     resize: none;
   }
 }
-.profile-card-social-media {
+
+.profile-settings-social-media {
   display: grid;
-  grid-template-columns: auto auto;
   align-items: center;
   gap: 5px;
-  svg:nth-child(1) {
+
+  .social-media-row {
+    display: inline-flex;
+    gap: 10px;
+  }
+
+  .pink > svg {
     color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
   }
-  svg:nth-child(3) {
+
+  .yellow > svg {
     color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
-  svg:nth-child(5) {
+
+  .cyan > svg {
     color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
   }
 }
-.profile-card-element {
-  display: grid;
-  grid-template-columns: 90% auto;
+
+.profile-settings-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    min-width: 100%;
+    font-size: abstracts.$h5-font-size;
+    font-family: abstracts.$default-title-font;
+    font-weight: 400;
+    letter-spacing: -0.025rem;
+  }
+
+  .profile-settings-input {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    input,
+    p {
+      width: 100%;
+    }
+
+    button {
+      max-width: fit-content;
+    }
+  }
 }
-.profile-card-content-divider {
-  margin-bottom: 5%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid;
-  border-color: abstracts.$primary-darkgrey;
+
+.profile-settings-divider {
+  padding: 20px 0;
+}
+
+.profile-settings-divider:not(:last-child) {
+  border-bottom: 1px solid abstracts.$primary-darkgrey;
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .profile-settings {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.profile-settings-modal-content {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  min-height: 100%;
+  margin-bottom: 25%;
+}
+
+.profile-settings-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

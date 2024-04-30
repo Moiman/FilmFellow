@@ -254,7 +254,7 @@ export const ProfileSettings = ({ user }: Props) => {
           color={"grey"}
         />
 
-        <div>
+        <div style={{ marginBottom: "20px" }}>
           <h3 className="h5">Description</h3>
           <textarea rows={5} />
         </div>
@@ -290,6 +290,7 @@ export const ProfileSettings = ({ user }: Props) => {
       <div className="profile-settings-right">
         <div className="profile-settings-divider">
           <h3>User Information</h3>
+
           <p className="description">Here you can change your username, email or password.</p>
 
           {activeUsername ? (
@@ -415,7 +416,7 @@ export const ProfileSettings = ({ user }: Props) => {
           <div className="profile-settings-wrapper">
             <label>Delete Account</label>
             <div className="profile-settings-input">
-              <p className="description">Permanently delete your account.</p>
+              <p>Permanently delete your account.</p>
               <button
                 className="button-pink"
                 onClick={() => setIsOpen(true)}

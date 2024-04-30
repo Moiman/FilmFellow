@@ -62,6 +62,9 @@
     font-family: abstracts.$default-title-font;
     font-weight: 400;
     letter-spacing: -0.025rem;
+    padding: 5px 10px;
+    background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+    border-radius: abstracts.$default-border-radius;
   }
 
   .profile-settings-input {
@@ -72,6 +75,10 @@
     input,
     p {
       width: 100%;
+    }
+
+    p {
+      padding: 5px 10px;
     }
 
     button {

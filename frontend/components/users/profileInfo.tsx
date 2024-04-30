@@ -6,7 +6,7 @@ import { Twitter, Instagram, Facebook } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
 
 interface ProfileInfoProps {
-  userId: number;
+  userId: string;
 }
 
 export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
@@ -15,10 +15,8 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
 
   return (
     <div className="profile-info">
-      <>
-        <h5>{user?.username}</h5>
-        <div style={{ backgroundColor: "grey", width: "150px", height: "150px", borderRadius: "50%" }} />
-      </>
+      <h5>{user?.username}</h5>
+      <div style={{ backgroundColor: "grey", width: "150px", height: "150px", borderRadius: "50%" }} />
 
       <div>
         <h6>Description</h6>
@@ -70,8 +68,8 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
 
       <ProfileButtons
         userId={userId}
-        activeSession={session ? true : false}
-        ownProfile={Number(userId) === session?.user.id ? true : false}
+        activeSession={!!session}
+        ownProfile={userId === session?.user.id}
       />
     </div>
   );

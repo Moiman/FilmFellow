@@ -22,7 +22,7 @@ export function shuffleMoviesArray(array: any[]) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-export default async function userProfile({ params }: { params: { id: number } }) {
+export default async function userProfile({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));
 
   if (!user) {

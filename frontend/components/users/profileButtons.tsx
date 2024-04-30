@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Flag } from "react-feather";
 
 interface ProfileButtonsProps {
-  userId: number;
+  userId: string;
   activeSession: boolean;
   ownProfile: boolean;
 }

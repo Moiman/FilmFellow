@@ -1,7 +1,7 @@
 describe("Movie page tests", () => {
   it("Basic movie page test", () => {
     cy.visit("/movies/278");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/movies/278");
+    cy.location("pathname").should("eq", "/movies/278");
     cy.get("h1").contains("The Shawshank Redemption").should("be.visible");
     cy.get(".movie-data-row>p").first().contains("Frank Darabont").should("be.visible");
     cy.get(".movie-data-row>p").eq(1).contains("1994").should("be.visible");
@@ -47,7 +47,7 @@ describe("Movie page tests", () => {
       return false;
     });
     cy.visit("/movies/27832131", { failOnStatusCode: false });
-    cy.url().should("eq", Cypress.env("baseUrl") + "/movies/27832131");
+    cy.location("pathname").should("eq", "/movies/27832131");
     cy.get("h2").contains("404").should("be.visible");
   });
 });

@@ -1,8 +1,8 @@
 describe("Routes tests", () => {
   it("Visit default page", () => {
     cy.visit("/");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/");
-    cy.get("h1").contains("FilmFellow");
+    cy.location("pathname").should("eq", "/");
+    cy.get("main").contains("New Movies");
   });
 
   it("Try to visit 404 page", () => {

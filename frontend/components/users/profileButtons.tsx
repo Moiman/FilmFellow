@@ -4,12 +4,11 @@ import { useRouter } from "next/navigation";
 import { Flag } from "react-feather";
 
 interface ProfileButtonsProps {
-  userId: number;
   activeSession: boolean;
   ownProfile: boolean;
 }
 
-export const ProfileButtons = ({ userId, activeSession, ownProfile }: ProfileButtonsProps) => {
+export const ProfileButtons = ({ activeSession, ownProfile }: ProfileButtonsProps) => {
   const router = useRouter();
 
   return (

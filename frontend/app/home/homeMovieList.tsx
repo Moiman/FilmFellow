@@ -19,10 +19,10 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
               key={movie.id}
               className="poster"
               //muuta pathi postereille omaan storageen jahka sellannen on
-              src={"https://image.tmdb.org/t/p/w154" + movie.poster_path}
+              src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
               alt="picture of the movie poster"
-              width={150}
-              height={225}
+              width={500}
+              height={750}
             />
           </Link>
         );

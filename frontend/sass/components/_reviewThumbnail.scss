@@ -1,0 +1,38 @@
+@use "../abstracts/" as abstracts;
+
+.review-thumbnail-header {
+  display: inline-flex;
+  align-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+
+  h6 {
+    flex: 1;
+    min-width: fit-content;
+  }
+
+  .stars {
+    display: inline-flex;
+    align-items: flex-end;
+    min-width: fit-content;
+  }
+}
+
+.review-thumbnail-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: start;
+  gap: 5px;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .review-thumbnail-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .review-thumbnail-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

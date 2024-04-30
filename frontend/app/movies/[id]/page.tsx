@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 
-import { MovieInfo } from "@/components/movies/movieInfo";
 import { Section } from "@/components/section";
 import { getMovieById } from "@/services/movieService";
+import { MovieInfo } from "./movieInfo";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 

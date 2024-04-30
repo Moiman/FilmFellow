@@ -5,11 +5,14 @@
   padding: 60px;
   max-width: 2000px;
   margin: auto;
+  display: grid;
+  gap: 40px;
 }
 
 @media only screen and (max-width: abstracts.$medium-width) {
   .section-padding {
-    padding: 0;
+    padding: 20px;
+    gap: 20px;
   }
 }
 

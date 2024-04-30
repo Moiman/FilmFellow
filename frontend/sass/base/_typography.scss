@@ -131,3 +131,20 @@ p {
   line-height: 1.6;
   letter-spacing: -0.05rem;
 }
+
+.yellow-name-header {
+  font-family: abstracts.$default-title-font;
+  line-height: abstracts.$default-line-height;
+  letter-spacing: abstracts.$title-letter-spacing;
+  font-size: abstracts.$h4-font-size;
+  font-weight: 300;
+
+  a {
+    font-size: abstracts.$h4-font-size;
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+
+  a:hover {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+  }
+}

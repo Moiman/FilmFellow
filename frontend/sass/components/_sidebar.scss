@@ -21,3 +21,15 @@
     justify-content: flex-end;
   }
 }
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .sidebar {
+    width: 100%;
+
+    .sidebar-header {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

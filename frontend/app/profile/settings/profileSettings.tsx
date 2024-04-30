@@ -255,11 +255,11 @@ export const ProfileSettings = ({ user }: Props) => {
         />
 
         <div>
-          <h3>Description</h3>
+          <h3 className="h5">Description</h3>
           <textarea rows={5} />
         </div>
 
-        <h3>Social Media</h3>
+        <h3 className="h5">Social Media</h3>
         <div className="profile-settings-social-media">
           <div className="social-media-row pink">
             <Twitter />

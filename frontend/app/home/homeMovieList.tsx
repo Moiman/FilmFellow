@@ -34,7 +34,7 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
   const getGenres = async () => {
     const fetchedGenres = await fetchGenres();
 
-    const genres = fetchedGenres?.map(genre => {
+    const genres = fetchedGenres.map(genre => {
       return (
         <Link
           key={genre.id}
@@ -45,6 +45,14 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
         </Link>
       );
     });
+    genres.unshift(
+      <Link
+        className="dropdown-item"
+        href={"/home"}
+      >
+        All
+      </Link>,
+    );
     return genres;
   };
 
@@ -52,7 +60,7 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
     <div>
       <div className="dropdown-button">
         <p>Genre</p>
-        <Dropdown selected={genre}>
+        <Dropdown selected={genre ?? "All"}>
           <>{await getGenres()}</>
         </Dropdown>
       </div>

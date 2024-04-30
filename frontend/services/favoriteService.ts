@@ -63,22 +63,5 @@ export const findUserFavoritesById = async (userId: number) => {
     },
   });
 
-  /*
-  const user = await prisma.users.findUnique({
-    where: {
-      id: userId,
-    },
-    include: {
-      favorites: {
-        include: {
-          movie: true,
-        },
-      },
-    },
-  });
-
-  return user ? user.favorites.map(favorite => favorite.movie) : [];
-  */
-
   return movies;
 };

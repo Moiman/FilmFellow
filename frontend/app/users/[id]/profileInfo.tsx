@@ -66,10 +66,7 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
         </div>
       </div>
 
-      <ProfileButtons
-        activeSession={!!session}
-        ownProfile={userId === session?.user.id}
-      />
+      {session && <ProfileButtons ownProfile={userId === session?.user.id} />}
     </div>
   );
 };

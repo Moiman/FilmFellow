@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
-import { shuffleMoviesArray } from "@/app/users/[id]/page";
+import { shuffleArray } from "@/app/users/[id]/page";
 
 export default async function userFavorites({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));
@@ -26,7 +26,7 @@ export default async function userFavorites({ params }: { params: { id: string }
           </h3>
         }
       >
-        {favorites.length > 0 ? <MovieList movies={shuffleMoviesArray(favorites)} /> : <p>No favorite movies yet.</p>}
+        {favorites.length > 0 ? <MovieList movies={shuffleArray(favorites)} /> : <p>No favorite movies yet.</p>}
       </Section>
     </main>
   );

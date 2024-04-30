@@ -18,8 +18,8 @@ const exampleLists = [
   { id: 4, name: "I'm Batman", thumbnail_path: "/", movies: [155] },
 ];
 
-export function shuffleMoviesArray(array: any[]) {
-  return array.sort(() => Math.random() - 0.5);
+export function shuffleArray(array: any[]) {
+  return array.slice().sort(() => Math.random() - 0.5);
 }
 
 export default async function userProfile({ params }: { params: { id: string } }) {
@@ -55,7 +55,7 @@ export default async function userProfile({ params }: { params: { id: string } }
         {/* Random assortment of user's favorite movies and link to all favorites */}
         <Section header={userFavoriteHeader}>
           {favorites.length > 0 ? (
-            <MovieList movies={favorites.length > 0 ? shuffleMoviesArray(favorites).slice(0, 6) : favorites} />
+            <MovieList movies={favorites.length > 0 ? shuffleArray(favorites).slice(0, 6) : favorites} />
           ) : (
             <p>No favorite movies yet.</p>
           )}

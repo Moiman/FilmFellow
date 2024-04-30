@@ -8,7 +8,7 @@ export default async function Profile() {
   const session = await getServerSession(authOptions);
   const profileHeader = (
     <div>
-      <h2>Settings</h2>
+      <h2 className="h3">Settings</h2>
     </div>
   );
   if (!session) {

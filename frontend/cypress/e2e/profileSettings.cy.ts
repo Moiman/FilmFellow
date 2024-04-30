@@ -6,6 +6,7 @@ describe("Profile page tests", () => {
   };
 
   const newEmail = "newMail@gmail.com";
+  const newPassword = "Newpassword1!";
 
   before("Register new user for profile page testing", () => {
     cy.register(newUser.email, newUser.password);
@@ -211,13 +212,13 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
-    cy.get('input[name="password"]').type("Newpassword1!");
+    cy.get('input[name="password"]').type(newPassword);
     cy.get('button[type="submit"]').click();
     cy.location("pathname").should("eq", "/profile/settings");
   });
 
   it("Delete user confirmation modal in the profile page and press cancel", () => {
-    cy.login(newEmail, "Newpassword1!");
+    cy.login(newEmail, newPassword);
     cy.visit("/profile/settings");
     cy
       .get(".profile-settings-right")
@@ -237,7 +238,7 @@ describe("Profile page tests", () => {
   });
 
   it("Delete user confirmation modal in the profile page and successfully delete user", () => {
-    cy.login(newEmail, "Newpassword1!");
+    cy.login(newEmail, newPassword);
     cy.visit("/profile/settings");
     cy
       .get(".profile-settings-right")

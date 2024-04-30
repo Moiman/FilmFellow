@@ -7,8 +7,8 @@ import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
-import { ProfileInfo } from "@/components/users/profileInfo";
-import { ListButton } from "@/components/users/listButton";
+import { ProfileInfo } from "./profileInfo";
+import { ListButton } from "./listButton";
 
 /* For placeholder purposes */
 const exampleLists = [

@@ -1,13 +1,15 @@
 import Link from "next/link";
-import { Dropdown } from "../dropdown";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
+
+import { getIsFavorite } from "@/services/favoriteService";
+
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
 import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
-import { getIsFavorite } from "@/services/favoriteService";
+import { Dropdown } from "@/components/dropdown";
 import type { Movie } from "@/app/movies/[id]/page";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/authOptions";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",

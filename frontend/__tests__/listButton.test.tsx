@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { expect, test, describe, beforeEach, afterEach } from "vitest";
 
-import { ListButton } from "@/components/users/listButton";
+import { ListButton } from "@/app/users/[id]/listButton";
 
 const userId = 1;
 const list = {

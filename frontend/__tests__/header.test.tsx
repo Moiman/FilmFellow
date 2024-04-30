@@ -1,7 +1,13 @@
 import { describe, test, expect, beforeAll, afterAll } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
-import { Header, Links } from "@/components/header";
+import { Header } from "@/components/header";
+
+const Links = [
+  { text: "New", href: "/new" },
+  { text: "Popular", href: "/popular" },
+  { text: "Best Rated", href: "/bestrated" },
+];
 
 beforeAll(() => {
   render(

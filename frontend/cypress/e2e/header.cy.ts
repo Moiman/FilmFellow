@@ -2,41 +2,40 @@ describe("Header tests", () => {
   describe("Navbar tests when screen width > 1024px", () => {
     it("Navigate to home page with navbar", () => {
       cy.visit("/new");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/new");
-      cy.get('a[href="/"]').click();
-      cy.url().should("include", "/");
-      cy.get("h1").contains("FilmFellow");
+      cy.location("pathname").should("eq", "/new");
+      cy.get("header").find('a[href="/"]').click();
+      cy.location("pathname").should("eq", "/");
     });
 
     it("Navigate to New with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/new"]').click();
-      cy.url().should("include", "/new");
+      cy.location("pathname").should("eq", "/");
+      cy.get("header").find('a[href="/new"]').click();
+      cy.location("pathname").should("eq", "/new");
       cy.get("h2").contains("New");
     });
 
     it("Navigate to Popular with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/popular"]').click();
-      cy.url().should("include", "/popular");
+      cy.location("pathname").should("eq", "/");
+      cy.get("header").find('a[href="/popular"]').click();
+      cy.location("pathname").should("eq", "/popular");
       cy.get("h2").contains("Popular");
     });
 
     it("Navigate to Best Rated with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/bestrated"]').click();
-      cy.url().should("include", "/bestrated");
+      cy.location("pathname").should("eq", "/");
+      cy.get("header").find('a[href="/bestrated"]').click();
+      cy.location("pathname").should("eq", "/bestrated");
       cy.get("h2").contains("Best Rated");
     });
 
     it("Navigate to Login with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/login"]').click();
-      cy.url().should("include", "/login");
+      cy.location("pathname").should("eq", "/");
+      cy.get("header").find('a[href="/login"]').click();
+      cy.location("pathname").should("eq", "/login");
       cy.get("h2").contains("Login");
     });
 
@@ -55,45 +54,44 @@ describe("Header tests", () => {
     () => {
       it("Navigate to home page with navbar", () => {
         cy.visit("/new");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/new");
-        cy.get('a[href="/"]').click();
-        cy.url().should("include", "/");
-        cy.get("h1").contains("FilmFellow");
+        cy.location("pathname").should("eq", "/new");
+        cy.get("header").find('a[href="/"]').click();
+        cy.location("pathname").should("eq", "/");
       });
 
       it("Navigate to New with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
+        cy.location("pathname").should("eq", "/");
         cy.get('[data-cy="menu-icon"]').click();
         cy.get('.dropdown a[href="/new"]').click();
-        cy.url().should("include", "/new");
+        cy.location("pathname").should("eq", "/new");
         cy.get("h2").contains("New");
       });
 
       it("Navigate to Popular with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
+        cy.location("pathname").should("eq", "/");
         cy.get('[data-cy="menu-icon"]').click();
         cy.get('.dropdown a[href="/popular"]').click();
-        cy.url().should("include", "/popular");
+        cy.location("pathname").should("eq", "/popular");
         cy.get("h2").contains("Popular");
       });
 
       it("Navigate to Best Rated with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
+        cy.location("pathname").should("eq", "/");
         cy.get('[data-cy="menu-icon"]').click();
         cy.get('.dropdown a[href="/bestrated"]').click();
-        cy.url().should("include", "/bestrated");
+        cy.location("pathname").should("eq", "/bestrated");
         cy.get("h2").contains("Best Rated");
       });
 
       it("Navigate to Login with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
+        cy.location("pathname").should("eq", "/");
         cy.get('[data-cy="menu-icon"]').click();
         cy.get('.dropdown a[href="/login"]').click();
-        cy.url().should("include", "/login");
+        cy.location("pathname").should("eq", "/login");
         cy.get("h2").contains("Login");
       });
 

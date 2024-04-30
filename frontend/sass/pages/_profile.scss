@@ -16,6 +16,7 @@
 .profile-settings-left {
   flex: 1;
   max-width: 400px;
+  padding: 0 20px;
 
   & > svg {
     width: 100%;
@@ -99,6 +100,7 @@
     max-width: 500px;
     margin: auto;
     flex: 0;
+    padding: 0;
   }
 }
 

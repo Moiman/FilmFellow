@@ -9,27 +9,25 @@ import { fetchGenres, fetchMovies } from "./movieFetches";
 export const MovieList = async ({ selectedGenre }: { selectedGenre: string | undefined }) => {
   const getPosters = async (type: string, genre: string | undefined) => {
     const moviesArr = await fetchMovies(6, type, genre);
-    if (moviesArr) {
-      const movieList = moviesArr.map((movie: { id: number; poster_path: string }) => {
-        return (
-          <Link
+    const movieList = moviesArr.map((movie: { id: number; poster_path: string }) => {
+      return (
+        <Link
+          key={movie.id}
+          href={"/movies/" + movie.id}
+        >
+          <Image
             key={movie.id}
-            href={"/movies/" + movie.id}
-          >
-            <Image
-              key={movie.id}
-              className="poster"
-              //muuta pathi postereille omaan storageen jahka sellannen on
-              src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
-              alt="picture of the movie poster"
-              width={500}
-              height={750}
-            />
-          </Link>
-        );
-      });
-      return movieList;
-    }
+            className="poster"
+            //muuta pathi postereille omaan storageen jahka sellannen on
+            src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
+            alt="picture of the movie poster"
+            width={500}
+            height={750}
+          />
+        </Link>
+      );
+    });
+    return movieList;
   };
 
   const getGenres = async () => {

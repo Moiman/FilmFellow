@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Dropdown } from "../dropdown";
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
@@ -56,7 +57,21 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
             <h1>{movie.title}</h1>
 
             <div className="movie-data-row">
-              {movie.directors.length > 0 ? <p className="yellow">Directed by {movie.directors.join(", ")}</p> : null}
+              {movie.directors.length > 0 ? (
+                <p className="yellow">
+                  Directed by{" "}
+                  {movie.directors
+                    .map<React.ReactNode>(director => (
+                      <Link
+                        href={"/persons/" + director.personId}
+                        key={director.personId}
+                      >
+                        {director.name}
+                      </Link>
+                    ))
+                    .reduce((links, directorLink) => [links, ", ", directorLink])}
+                </p>
+              ) : null}
               {movie.releaseYear ? <p className="cyan">{movie.releaseYear}</p> : null}
               {movie.ageRestrictions ? <p className="cyan">{movie.ageRestrictions}</p> : null}
               {movie.runtime ? <p className="cyan">{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}

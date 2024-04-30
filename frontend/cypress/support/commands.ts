@@ -33,13 +33,18 @@ Cypress.Commands.add("login", (email, password) => {
 });
 
 Cypress.Commands.add("register", (email, password) => {
-  cy.visit("/register");
-  cy.get('input[name="email"]').type(email);
-  cy.get('input[name="username"]').type(email);
-  cy.get('input[name="password"]').type(password);
-  cy.get('input[name="confirmPassword"]').type(password);
-  cy.get('button[type="submit"]').click();
-  cy.location("pathname").should("eq", "/");
+  cy.request({
+    method: "POST",
+    url: "/api/users/register",
+    body: {
+      email,
+      username: email,
+      password,
+    },
+  }).then(res => {
+    expect(res.status).to.eq(200);
+    expect(res.body.email).to.equal(email);
+  });
 });
 
 Cypress.Commands.add("deleteUser", (email, password) => {

@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Check } from "react-feather";
 
 import { Dropdown } from "@/components/dropdown";
 import { Section } from "@/components/section";
 import { fetchGenres, fetchMovies } from "./movieFetches";
 
-export const MovieList = async ({ genre }: { genre: string | undefined }) => {
+export const MovieList = async ({ selectedGenre }: { selectedGenre: string | undefined }) => {
   const getPosters = async (type: string, genre: string | undefined) => {
     const moviesArr = await fetchMovies(6, type, genre);
     if (moviesArr) {
@@ -42,6 +43,12 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
           href={"/home?genre=" + genre.name}
         >
           {genre.name}
+          {genre.name === selectedGenre && (
+            <Check
+              size={20}
+              color="#ffc700"
+            />
+          )}
         </Link>
       );
     });
@@ -51,6 +58,12 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
         href={"/home"}
       >
         All
+        {!selectedGenre && (
+          <Check
+            size={20}
+            color="#ffc700"
+          />
+        )}
       </Link>,
     );
     return genres;
@@ -60,7 +73,7 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
     <div>
       <div className="dropdown-button">
         <p>Genre</p>
-        <Dropdown selected={genre ?? "All"}>
+        <Dropdown selected={selectedGenre ?? "All"}>
           <>{await getGenres()}</>
         </Dropdown>
       </div>
@@ -73,7 +86,7 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
           </div>
         }
       >
-        <div className="poster-list">{await getPosters("new", genre)}</div>
+        <div className="poster-list">{await getPosters("new", selectedGenre)}</div>
       </Section>
       <Section
         header={
@@ -83,7 +96,7 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
           </div>
         }
       >
-        <div className="poster-list">{await getPosters("popular", genre)}</div>
+        <div className="poster-list">{await getPosters("popular", selectedGenre)}</div>
       </Section>
       <Section
         header={
@@ -93,7 +106,7 @@ export const MovieList = async ({ genre }: { genre: string | undefined }) => {
           </div>
         }
       >
-        <div className="poster-list">{await getPosters("bestrated", genre)}</div>
+        <div className="poster-list">{await getPosters("bestrated", selectedGenre)}</div>
       </Section>
     </div>
   );

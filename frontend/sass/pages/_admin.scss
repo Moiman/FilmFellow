@@ -15,6 +15,14 @@
   grid-template-columns: auto auto auto;
   align-items: center;
   min-width: 50%;
+  // justify-content: space-evenly;
+  justify-items: center;
+}
+.admin-panel-right-side {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  min-width: 25%;
   justify-content: space-evenly;
 }
 .admin-panel-user-list {
@@ -33,7 +41,7 @@
   border-left: 5px solid map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
 
-.admin-panel-home-content {
+.admin-panel-content {
   flex: 1;
   padding: 40px 60px;
 }

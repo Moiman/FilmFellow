@@ -2,6 +2,7 @@
 import { Smile } from "react-feather";
 import { Dropdown } from "../dropdown";
 import { useRouter } from "next/navigation";
+import { Role } from "@prisma/client";
 
 interface User {
   email: string;
@@ -92,6 +93,71 @@ export const UserDetails = ({ user }: Props) => {
     }
   };
 
+  const handleRoleChange = async () => {
+    try {
+      const roleChange = {
+        role: Role.admin,
+      };
+
+      const response = await fetch(`/api/users/update/${user.id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(roleChange),
+      });
+
+      const data = await response.json();
+      router.refresh();
+      /*
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        await update(data);
+        setActivePassword(false);
+        passwordReset();
+        setError("");
+        router.refresh();
+      }
+      */
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUserDelete = async () => {
+    try {
+      const response = await fetch(`/api/users/delete/${user.id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      router.refresh();
+      /*
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        await update(data);
+        setActivePassword(false);
+        passwordReset();
+        setError("");
+        router.refresh();
+      }
+      */
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const showDate = (date: Date) => {
     const dateFormatted = date.toISOString().slice(0, 10).split("-").reverse().join(".");
     return dateFormatted;
@@ -119,7 +185,10 @@ export const UserDetails = ({ user }: Props) => {
             </div>
           </div>
         </div>
-        <div style={{ padding: "20px" }}>
+        <div
+          className="admin-panel-right-side"
+          style={{ padding: "20px" }}
+        >
           {user.isActive === true ? (
             <Dropdown
               zIndex={5}
@@ -161,8 +230,18 @@ export const UserDetails = ({ user }: Props) => {
           ) : (
             <button onClick={() => handleUnBanSubmit()}>Lift Ban</button>
           )}
-          <button className="button-pink">Delete</button>
-          <button className="button-cyan">Make admin</button>
+          <button
+            onClick={() => handleUserDelete()}
+            className="button-pink"
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => handleRoleChange()}
+            className="button-cyan"
+          >
+            Make admin
+          </button>
         </div>
       </div>
     </>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "../sidebar";
 import { Search } from "react-feather";
+import { useState } from "react";
 interface User {
   email: string;
   id: number | string;
@@ -20,6 +21,7 @@ interface Props {
 
 export const AdminPanelUsers = ({ users }: Props) => {
   const currentPath = usePathname();
+  const [allUsers, setAllUsers] = useState(users);
   return (
     <main className="sidebar-main">
       <Sidebar iconPosition="right">
@@ -45,7 +47,7 @@ export const AdminPanelUsers = ({ users }: Props) => {
           </Link>
         </div>
       </Sidebar>
-      <div className="admin-panel-home-content">
+      <div className="admin-panel-content">
         <div className="searchbar">
           <input
             data-cy="search-input"

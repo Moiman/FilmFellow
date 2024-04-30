@@ -59,7 +59,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
     if (isNaN(userId)) {
       return NextResponse.json({ error: "User id not a number" }, { status: 400 });
     }
-    if (userId <= 1) {
+    if (userId < 1) {
       return NextResponse.json({ error: "User id cant be under 1" }, { status: 400 });
     }
     await updateUserSchema.validate(data, { abortEarly: false });

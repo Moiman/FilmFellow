@@ -1,6 +1,3 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import { Flag } from "react-feather";
 
 interface ProfileButtonsProps {
@@ -8,12 +5,12 @@ interface ProfileButtonsProps {
 }
 
 export const ProfileButtons = ({ ownProfile }: ProfileButtonsProps) => {
-  const router = useRouter();
-
   return (
     <div style={{ display: "inline-flex", marginTop: "40px" }}>
       {ownProfile ? (
-        <button onClick={() => router.push("/profile/settings")}>Go to settings</button>
+        <form action="/profile/settings">
+          <button type="submit">Go to settings</button>
+        </form>
       ) : (
         <>
           <button className="button-cyan">Add to friends</button>

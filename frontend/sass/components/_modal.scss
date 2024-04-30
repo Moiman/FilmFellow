@@ -4,7 +4,7 @@
 .modal-background {
   display: flex;
   position: fixed;
-  background-color: rgba(abstracts.$primary-dark, 0.5);
+  background-color: rgba(abstracts.$primary-dark, 0.75);
   justify-content: center;
   align-items: center;
   left: 0;
@@ -21,7 +21,7 @@
   overflow: hidden;
   color: white;
   width: 700px;
-  min-height: 400px;
+  min-height: fit-content;
   box-shadow: abstracts.$default-shadow;
 
   a {
@@ -30,7 +30,7 @@
 }
 
 .modal-title {
-  background-color: abstracts.$primary-dark;
+  background-color: abstracts.$primary-darkgrey;
   display: flex;
   justify-content: flex-end;
   padding: 5px 10px;
@@ -51,7 +51,7 @@
 }
 
 .modal-footer {
-  background-color: abstracts.$primary-dark;
+  background-color: abstracts.$primary-darkgrey;
   display: flex;
   justify-self: flex-end;
   padding: 10px;

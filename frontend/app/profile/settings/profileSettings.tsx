@@ -429,35 +429,38 @@ export const ProfileSettings = ({ user }: Props) => {
               content={
                 <>
                   <div className="profile-settings-modal-content">
-                    <h3>Are you sure you want to delete your account?</h3>
+                    <div>
+                      <h3>Are you sure you want to delete your account?</h3>
 
-                    <p className="description">
-                      If you delete your account, all your lists, reviews and other data will be destroyed permanently.
-                    </p>
-                  </div>
+                      <p className="description">
+                        If you delete your account, all your lists, reviews and other data will be destroyed
+                        permanently.
+                      </p>
 
-                  {error && (
-                    <p
-                      className="error-text"
-                      style={{ display: "flex", justifyContent: "center", padding: "5px" }}
-                    >
-                      {error}
-                    </p>
-                  )}
-                  <div className="profile-settings-modal-buttons">
-                    <button
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="button-pink"
-                      onClick={handleDelete}
-                    >
-                      Delete Account
-                    </button>
+                      {error && (
+                        <p
+                          className="error-text"
+                          style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+                        >
+                          {error}
+                        </p>
+                      )}
+                    </div>
+                    <div className="profile-settings-modal-buttons">
+                      <button
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="button-pink"
+                        onClick={handleDelete}
+                      >
+                        Delete Account
+                      </button>
+                    </div>
                   </div>
                 </>
               }

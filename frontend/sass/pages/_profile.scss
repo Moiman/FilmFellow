@@ -102,15 +102,16 @@
 }
 
 .profile-settings-modal-content {
-  display: flex;
+  display: grid;
   flex-flow: wrap;
-  justify-content: center;
-  min-height: 100%;
-  margin-bottom: 25%;
+  text-align: center;
+  gap: 40px;
+  margin: auto auto;
 }
 
 .profile-settings-modal-buttons {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   gap: 10px;
 }

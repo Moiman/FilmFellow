@@ -1,7 +1,6 @@
 // import { User } from "next-auth";
 import { Smile } from "react-feather";
 import { Dropdown } from "../dropdown";
-import { useRouter } from "next/navigation";
 import { Role } from "@prisma/client";
 
 interface User {
@@ -16,10 +15,10 @@ interface User {
 interface Props {
   user: User;
   key: number;
+  setAllUsers: React.Dispatch<React.SetStateAction<User[] | undefined>>;
 }
 
-export const UserDetails = ({ user }: Props) => {
-  const router = useRouter();
+export const UserDetails = ({ user, setAllUsers }: Props) => {
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
       const banDetails = {
@@ -38,7 +37,17 @@ export const UserDetails = ({ user }: Props) => {
       console.log(response);
       const data = await response.json();
       console.log(data);
-      router.refresh();
+
+      setAllUsers(prev =>
+        prev?.map(User => {
+          if (User.id === user.id) {
+            return { ...User, isActive: data.isActive  };
+          }
+          return User;
+        }),
+      );
+
+      // router.refresh();
       /*
       if (data.error) {
         setError(data.error);
@@ -74,7 +83,15 @@ export const UserDetails = ({ user }: Props) => {
       });
 
       const data = await response.json();
-      router.refresh();
+      setAllUsers(prev =>
+        prev?.map(User => {
+          if (User.id === user.id) {
+            return { ...User, isActive: data.isActive };
+          }
+          return User;
+        }),
+      );
+      // router.refresh();
       /*
       if (data.error) {
         setError(data.error);
@@ -109,7 +126,15 @@ export const UserDetails = ({ user }: Props) => {
       });
 
       const data = await response.json();
-      router.refresh();
+      setAllUsers(prev =>
+        prev?.map(User => {
+          if (User.id === user.id) {
+            return { ...User, role: data.role };
+          }
+          return User;
+        }),
+      );
+      // router.refresh();
       /*
       if (data.error) {
         setError(data.error);
@@ -139,7 +164,8 @@ export const UserDetails = ({ user }: Props) => {
       });
 
       const data = await response.json();
-      router.refresh();
+      setAllUsers(prev => prev?.filter(User => User.id !== data.id));
+      // router.refresh();
       /*
       if (data.error) {
         setError(data.error);
@@ -185,6 +211,7 @@ export const UserDetails = ({ user }: Props) => {
             </div>
           </div>
         </div>
+        {user.role !== Role.admin && (
         <div
           className="admin-panel-right-side"
           style={{ padding: "20px" }}
@@ -242,7 +269,7 @@ export const UserDetails = ({ user }: Props) => {
           >
             Make admin
           </button>
-        </div>
+        </div>)}
       </div>
     </>
   );

@@ -87,7 +87,7 @@ const updateUser = async (userId: number, user: User, last_visited?: Date) => {
         role: user.role,
         last_visited: last_visited,
       },
-      select: selectUserFields,
+      select: selectUserFieldsForAdmin,
     });
     return updatedUser;
   } else {
@@ -100,7 +100,7 @@ const updateUser = async (userId: number, user: User, last_visited?: Date) => {
         role: user.role,
         updated_at: new Date(),
       },
-      select: selectUserFields,
+      select: selectUserFieldsForAdmin,
     });
 
     return updatedUser;

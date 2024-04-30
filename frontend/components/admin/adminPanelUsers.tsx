@@ -22,6 +22,9 @@ interface Props {
 export const AdminPanelUsers = ({ users }: Props) => {
   const currentPath = usePathname();
   const [allUsers, setAllUsers] = useState(users);
+  const [searchText, setSearchText] = useState("");
+  console.log(searchText);
+  const filteredResults = searchText ? allUsers?.filter(user => user.username.startsWith(searchText)) : allUsers;
   return (
     <main className="sidebar-main">
       <Sidebar iconPosition="right">
@@ -53,6 +56,8 @@ export const AdminPanelUsers = ({ users }: Props) => {
             data-cy="search-input"
             className="searchbar-input"
             placeholder="Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
           <button className="button-transparent">
             <Search
@@ -61,10 +66,11 @@ export const AdminPanelUsers = ({ users }: Props) => {
             />
           </button>
         </div>
-        {users?.map(user => (
+        {filteredResults?.map(user => (
           <UserDetails
             key={user.id as number}
             user={user}
+            setAllUsers={setAllUsers}
           />
         ))}
       </div>

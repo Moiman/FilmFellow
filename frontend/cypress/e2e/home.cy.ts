@@ -26,6 +26,6 @@ describe("home page tests", () => {
     cy.url().should("eq", Cypress.env("baseUrl") + "/home");
     cy.wait(1000);
     cy.get("a").contains("See all").click();
-    cy.url().should("eq", Cypress.env("baseUrl") + "/new")
-  })
+    cy.url().should("eq", Cypress.env("baseUrl") + "/new");
+  });
 });

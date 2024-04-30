@@ -1,22 +1,44 @@
+@use "../abstracts" as abstracts;
+
 .home-content {
-  flex: 1;
   padding: 10px 20px;
+  display: grid;
 }
 
 .poster-list {
   display: flex;
   flex-flow: row nowrap;
-  overflow: hidden;
+
   justify-content: space-between;
 }
 
-.poster-background {
-  width: 165px;
+.poster {
   height: 225px;
+  width: 100%;
+  padding: 0px 15px;
+  height: auto;
 }
 
-.poster {
-  width: 100%;
-  height: auto;
-  padding: 0px 15px;
+image {
+  box-shadow: abstracts.$default-shadow;
+}
+
+.poster:hover {
+  transform: scale(105%);
+  transition: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+.dropdown-button {
+  display: flex;
+  align-items: center;
+  float: right;
+  padding-bottom: 10px;
+  justify-content: space-between;
+  width: 150px;
+  margin-right: 30px;
+}
+
+.dropdown-item {
+  cursor: pointer;
 }

@@ -3,9 +3,9 @@ import { getAllGenres, getMovieByLimitTypeGenre } from "@/services/movieService"
 
 export const fetchMovies = async (limit: number, type: string, genre: string) => {
   try {
-    const test = await getMovieByLimitTypeGenre(limit, type, genre);
+    const movies = await getMovieByLimitTypeGenre(limit, type, genre);
 
-    const posters = test?.map(movie => {
+    const posters = movies?.map(movie => {
       return { id: movie.id, poster_path: movie.poster_path };
     });
     return posters;

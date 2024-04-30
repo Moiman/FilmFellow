@@ -23,9 +23,9 @@ export const MovieList = () => {
     type: string,
     genre: string,
   ) => {
-    const moviesArr = await fetchMovies(7, type, genre);
+    const moviesArr = await fetchMovies(6, type, genre);
     if (moviesArr) {
-      const test = moviesArr.map((movie: { id: number; poster_path: string }) => {
+      const movieList = moviesArr.map((movie: { id: number; poster_path: string }) => {
         return (
           <Link
             key={movie.id}
@@ -43,16 +43,17 @@ export const MovieList = () => {
           </Link>
         );
       });
-      setMovieList(test);
+      setMovieList(movieList);
     }
   };
 
   const getGenres = async () => {
-    const tempgenres = await fetchGenres();
+    const fetchedGenres = await fetchGenres();
 
-    const temp = tempgenres?.map(genre => {
+    const genres = fetchedGenres?.map(genre => {
       return (
         <p
+          className="dropdown-item"
           key={genre.id}
           onClick={() => setSelectedGenre(genre.name)}
         >
@@ -60,7 +61,7 @@ export const MovieList = () => {
         </p>
       );
     });
-    setAllGenres(temp);
+    setAllGenres(genres);
   };
 
   useEffect(() => {
@@ -72,9 +73,13 @@ export const MovieList = () => {
 
   return (
     <div>
-      <Dropdown selected={selectedGenre}>
-        <div>{allgenres}</div>
-      </Dropdown>
+      <div className="dropdown-button">
+        <p>Genre</p>
+        <Dropdown selected={selectedGenre}>
+          <div>{allgenres}</div>
+        </Dropdown>
+      </div>
+
       <Section
         header={
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

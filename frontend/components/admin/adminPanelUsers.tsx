@@ -59,12 +59,6 @@ export const AdminPanelUsers = ({ users }: Props) => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button className="button-transparent">
-            <Search
-              className="searchbar-icon"
-              size={20}
-            />
-          </button>
         </div>
         {filteredResults?.map(user => (
           <UserDetails

@@ -1,6 +1,46 @@
 @use "sass:map";
 @use "../abstracts" as abstracts;
 
+.searchbar {
+  max-width: 200px;
+  position: relative;
+  border-radius: 40px;
+  flex: 1;
+  display: flex;
+  margin-bottom: 10px;
+
+  button:focus,
+  input:focus {
+    outline: 0;
+  }
+}
+
+.searchbar-input {
+  width: 100%;
+  padding: 0px 20px;
+  background-color: abstracts.$primary-grey;
+  border: 0;
+  color: abstracts.$primary-light;
+  border-radius: 20px;
+}
+
+.searchbar-input::placeholder {
+  color: abstracts.$primary-light;
+  opacity: 25%;
+}
+
+.searchbar:focus-within {
+  outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
+.searchbar:has(button:focus) {
+  outline: 0;
+}
+
+.searchbar-icon {
+  color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
 .admin-panel-status-suspended {
   color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
   margin-left: 5px;

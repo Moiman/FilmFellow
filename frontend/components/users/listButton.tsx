@@ -1,5 +1,4 @@
-"use client";
-
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface ListButtonProps {
@@ -8,13 +7,10 @@ interface ListButtonProps {
 }
 
 export const ListButton = ({ userId, list }: ListButtonProps) => {
-  const router = useRouter();
-
   return (
-    <button
+    <Link
       className="list-button-style"
-      key={list.id}
-      onClick={() => router.push(`/users/${userId}/lists/${list.id}`)}
+      href={`/users/${userId}/lists/${list.id}`}
     >
       {/* Placeholder for list thumbnail */}
       <div style={{ height: "45px", aspectRatio: "3/2", backgroundColor: "darkgrey" }} />
@@ -23,6 +19,6 @@ export const ListButton = ({ userId, list }: ListButtonProps) => {
         <p>{list.name}</p>
         <p className="list-movie-amount">{list.movies.length}</p>
       </div>
-    </button>
+    </Link>
   );
 };

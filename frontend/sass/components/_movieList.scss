@@ -8,7 +8,7 @@
   // Remove this when not needed anymore
   .placeholder-movie-poster {
     background-color: grey;
-    aspect-ratio: 2 / 3 !important;
+    aspect-ratio: 2 / 3;
     border: 1px solid abstracts.$primary-dark;
     box-shadow: abstracts.$default-shadow;
     display: flex;

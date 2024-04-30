@@ -6,30 +6,29 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { Dropdown } from "./dropdown";
 
-export const Links = [
-  { text: "New", href: "/new" },
-  { text: "Popular", href: "/popular" },
-  { text: "Best Rated", href: "/bestrated" },
-];
-
-export const SubNavLinks = [
-  {
-    icon: <Tool style={{ strokeWidth: 1.5 }} />,
-    text: "Admin",
-    href: "/admin/users",
-  },
-  { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: "/profile/settings" },
-  {
-    icon: <LogOut style={{ strokeWidth: 1.5 }} />,
-    text: "Logout",
-    href: "/",
-  },
-];
-
 export const Header = () => {
-  // Placeholder: check if user is logged in
   const { data: session } = useSession();
   const currentPath = usePathname();
+
+  const Links = [
+    { text: "New", href: "/new" },
+    { text: "Popular", href: "/popular" },
+    { text: "Best Rated", href: "/bestrated" },
+  ];
+
+  const SubNavLinks = [
+    {
+      icon: <Tool style={{ strokeWidth: 1.5 }} />,
+      text: "Admin",
+      href: "/admin/users",
+    },
+    { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: `/users/${session?.user.id}` },
+    {
+      icon: <LogOut style={{ strokeWidth: 1.5 }} />,
+      text: "Logout",
+      href: "/",
+    },
+  ];
 
   return (
     <header>

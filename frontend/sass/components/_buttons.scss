@@ -62,3 +62,9 @@ button:focus-visible {
     opacity: 50%;
   }
 }
+
+.button-icon-text {
+  display: inline-flex;
+  gap: 2px;
+  align-content: center;
+}

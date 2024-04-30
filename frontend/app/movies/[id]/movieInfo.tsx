@@ -1,12 +1,15 @@
-import { Dropdown } from "../dropdown";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
+
+import { getIsFavorite } from "@/services/favoriteService";
+
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
 import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
-import { getIsFavorite } from "@/services/favoriteService";
+import { Dropdown } from "@/components/dropdown";
 import type { Movie } from "@/app/movies/[id]/page";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/authOptions";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",
@@ -56,7 +59,21 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
             <h1>{movie.title}</h1>
 
             <div className="movie-data-row">
-              {movie.directors.length > 0 ? <p className="yellow">Directed by {movie.directors.join(", ")}</p> : null}
+              {movie.directors.length > 0 ? (
+                <p className="yellow">
+                  Directed by{" "}
+                  {movie.directors
+                    .map<React.ReactNode>(director => (
+                      <Link
+                        href={"/persons/" + director.personId}
+                        key={director.personId}
+                      >
+                        {director.name}
+                      </Link>
+                    ))
+                    .reduce((links, directorLink) => [links, ", ", directorLink])}
+                </p>
+              ) : null}
               {movie.releaseYear ? <p className="cyan">{movie.releaseYear}</p> : null}
               {movie.ageRestrictions ? <p className="cyan">{movie.ageRestrictions}</p> : null}
               {movie.runtime ? <p className="cyan">{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}

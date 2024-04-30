@@ -50,3 +50,18 @@ export const toggleIsFavorite = async (movieId: number) => {
     });
   }
 };
+
+export const findUserFavoritesById = async (userId: number) => {
+  const movies = await prisma.movies.findMany({
+    where: {
+      favorites: { some: { userId: userId } },
+    },
+    select: {
+      id: true,
+      title: true,
+      poster_path: true,
+    },
+  });
+
+  return movies;
+};

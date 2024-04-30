@@ -22,6 +22,7 @@
   color: white;
   width: 700px;
   min-height: 400px;
+  box-shadow: abstracts.$default-shadow;
 
   a {
     padding: 0;
@@ -29,7 +30,7 @@
 }
 
 .modal-title {
-  background-color: abstracts.$primary-darkgrey;
+  background-color: abstracts.$primary-dark;
   display: flex;
   justify-content: flex-end;
   padding: 5px 10px;
@@ -50,7 +51,7 @@
 }
 
 .modal-footer {
-  background-color: abstracts.$primary-darkgrey;
+  background-color: abstracts.$primary-dark;
   display: flex;
   justify-self: flex-end;
   padding: 10px;

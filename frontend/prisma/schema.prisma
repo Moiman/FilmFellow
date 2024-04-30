@@ -9,13 +9,16 @@ generator client {
 }
 
 model Users {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
-  email      String   @unique
-  password   String
-  role       Role
-  updated_at DateTime @default(now())
-  created_at DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  password     String
+  role         Role
+  updated_at   DateTime @default(now())
+  created_at   DateTime @default(now())
+  last_visited DateTime
+  isActive     Boolean
+  banDuration  DateTime?
 
   reviews   Reviews[]
   favorites Favorites[]

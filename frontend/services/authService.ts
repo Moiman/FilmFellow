@@ -25,7 +25,9 @@ const selectUserFieldsForAdmin = {
   username: true,
   role: true,
   created_at: true,
-  updated_at:true
+  updated_at: true,
+  last_visited: true,
+  isActive: true,
 };
 
 const createUser = async (email: string, username: string, password: string) => {
@@ -35,6 +37,8 @@ const createUser = async (email: string, username: string, password: string) => 
       email,
       password,
       role: Role.user,
+      last_visited: new Date(),
+      isActive: true,
     },
     select: selectUserFields,
   });
@@ -72,14 +76,35 @@ const findUserByUsername = async (username: string) => {
   return user;
 };
 
-const updateUser = async (userId: number, user: User) => {
-  const updatedUser = await prisma.users.update({
-    where: { id: userId },
-    data: user,
-    select: selectUserFields,
-  });
+const updateUser = async (userId: number, user: User, last_visited?: Date) => {
+  if (last_visited) {
+    const updatedUser = await prisma.users.update({
+      where: { id: userId },
+      data: {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        role: user.role,
+        last_visited: last_visited,
+      },
+      select: selectUserFields,
+    });
+    return updatedUser;
+  } else {
+    const updatedUser = await prisma.users.update({
+      where: { id: userId },
+      data: {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        role: user.role,
+        updated_at: new Date(),
+      },
+      select: selectUserFields,
+    });
 
-  return updatedUser;
+    return updatedUser;
+  }
 };
 
 const deleteUserById = async (id: number) => {
@@ -99,10 +124,48 @@ const getAllUsers = async () => {
     return;
   }
   const users = await prisma.users.findMany({
-    select: selectUserFieldsForAdmin
+    select: selectUserFieldsForAdmin,
   });
 
   return users;
 };
 
-export { createUser, findUserByEmail, deleteUserById, findUserById, findUserByUsername, updateUser, getAllUsers };
+const changeUserStatusById = async (id: number, status: boolean, banDuration?: number | null) => {
+  const user = await findUserById(id);
+  if (user) {
+    if (banDuration) {
+      const banEndDateInMS = new Date().getTime() + (banDuration * 1000);
+      const banEndDate = new Date(banEndDateInMS);
+      await prisma.users.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          banDuration: banEndDate,
+          isActive: status,
+        },
+      });
+    } else {
+      await prisma.users.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          banDuration: null,
+          isActive: status,
+        },
+      });
+    }
+  }
+};
+
+export {
+  createUser,
+  findUserByEmail,
+  deleteUserById,
+  findUserById,
+  findUserByUsername,
+  updateUser,
+  getAllUsers,
+  changeUserStatusById,
+};

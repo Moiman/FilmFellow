@@ -1,32 +1,166 @@
-import { User } from "next-auth";
+// import { User } from "next-auth";
 import { Smile } from "react-feather";
+import { Dropdown } from "../dropdown";
+import { useRouter } from "next/navigation";
 
+interface User {
+  email: string;
+  id: number | string;
+  role: string;
+  username: string;
+  created_at: Date;
+  last_visited: Date;
+  isActive: boolean;
+}
 interface Props {
   user: User;
   key: number;
 }
 
 export const UserDetails = ({ user }: Props) => {
+  const router = useRouter();
+  const handleBanSubmit = async (banDuration: number | null) => {
+    try {
+      const banDetails = {
+        isActive: false,
+        banDuration: banDuration,
+      };
+
+      const response = await fetch(`/api/users/update/${user.id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(banDetails),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+      router.refresh();
+      /*
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        await update(data);
+        setActivePassword(false);
+        passwordReset();
+        setError("");
+        router.refresh();
+      }
+      */
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnBanSubmit = async () => {
+    try {
+      const banDetails = {
+        isActive: true,
+        banDuration: null,
+      };
+
+      const response = await fetch(`/api/users/update/${user.id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(banDetails),
+      });
+
+      const data = await response.json();
+      router.refresh();
+      /*
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (response.ok && !data.error) {
+        await update(data);
+        setActivePassword(false);
+        passwordReset();
+        setError("");
+        router.refresh();
+      }
+      */
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const showDate = (date: Date) => {
+    const dateFormatted = date.toISOString().slice(0, 10).split("-").reverse().join(".");
+    return dateFormatted;
+  };
   return (
     <>
       <div className="admin-panel-user-list">
         <div className="admin-panel-left-side">
-          <div style={{marginInline: "10px"}}>
+          <div style={{ padding: "10px" }}>
             <Smile size={90} />
           </div>
-          <div style={{marginInline: "10px"}}>
+          <div style={{ padding: "10px" }}>
             <p>{user.username}</p>
             <p>{user.email}</p>
+            <p>online / offline</p>
           </div>
-          <div style={{marginInline: "10px"}}>
-            <p>Last visited</p>
-            <p>User since</p>
+          <div style={{ padding: "10px" }}>
+            <p>Last visited: {showDate(user.last_visited)}</p>
+            <p>User since: {showDate(user.created_at)}</p>
+            <div style={{ display: "inline-flex" }}>
+              Status:
+              <p className={user.isActive === true ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
+                {user.isActive === true ? "Active" : "On Suspension"}
+              </p>
+            </div>
           </div>
         </div>
-        <div
-          style={{ padding: "20px" }}
-        >
-          <button className="button-yellow">Block user</button>
+        <div style={{ padding: "20px" }}>
+          {user.isActive === true ? (
+            <Dropdown
+              zIndex={5}
+              button={<button className="button-yellow">Block user</button>}
+            >
+              <button
+                onClick={() => {
+                  handleBanSubmit(86400);
+                }}
+                className="dropdown-item"
+              >
+                1 Day
+              </button>
+              <button
+                onClick={() => {
+                  handleBanSubmit(604800);
+                }}
+                className="dropdown-item"
+              >
+                7 Days
+              </button>
+              <button
+                onClick={() => {
+                  handleBanSubmit(2592000);
+                }}
+                className="dropdown-item"
+              >
+                30 Days
+              </button>
+              <button
+                onClick={() => {
+                  handleBanSubmit(null);
+                }}
+                className="dropdown-item"
+              >
+                Forever
+              </button>
+            </Dropdown>
+          ) : (
+            <button onClick={() => handleUnBanSubmit()}>Lift Ban</button>
+          )}
           <button className="button-pink">Delete</button>
           <button className="button-cyan">Make admin</button>
         </div>

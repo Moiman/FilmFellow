@@ -27,6 +27,8 @@ const createAdmin = async () => {
           email,
           password: await argon2.hash(password),
           role: Role.admin,
+          last_visited: new Date(),
+          isActive: true,
         },
       });
       console.log("Admin account", createdAdmin.username, createdAdmin.email, "created successfully");

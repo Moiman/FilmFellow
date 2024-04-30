@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import * as yup from "yup";
 import argon2 from "argon2";
-import { findUserByEmail } from "@/services/authService";
+import { findUserByEmail, updateUser } from "@/services/authService";
 
 const loginUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),
@@ -21,6 +21,13 @@ export async function POST(req: NextRequest) {
         id: existingUser.id,
         role: existingUser.role,
       };
+      if(existingUser.isActive === false && !existingUser.banDuration){
+        return NextResponse.json({ error: "You are banned forever" }, { status: 401 });
+      }
+      if (existingUser.isActive === false && existingUser.banDuration) {
+        return NextResponse.json({ error: `You are banned until ${existingUser.banDuration}` }, { status: 401 });
+      }
+      await updateUser(existingUser.id, existingUser, new Date());
       return NextResponse.json(loggedInUser, { status: 200 });
     } else {
       return NextResponse.json({ error: "Credentials doesnt match" }, { status: 400 });

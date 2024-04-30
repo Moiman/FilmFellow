@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { findUserById } from "@/services/authService";
+import { findUserFavoritesById } from "@/services/favoriteService";
 import { notFound } from "next/navigation";
 
 import { MovieList } from "@/components/movieList";
@@ -10,18 +11,6 @@ import { ProfileInfo } from "@/components/users/profileInfo";
 import { ListButton } from "@/components/users/listButton";
 
 /* For placeholder purposes */
-const exampleFavorites = [
-  { id: 278, title: "The Shawshank Redemption", poster_path: "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg" },
-  { id: 238, title: "The Godfather", poster_path: "/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" },
-  { id: 240, title: "The Godfather Part II", poster_path: "/hek3koDUyRQk7FIhPXsa6mT2Zc3.jpg" },
-  { id: 424, title: "Schindler's List", poster_path: "/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg" },
-  { id: 389, title: "12 Angry Men", poster_path: "/qqHQsStV6exghCM7zbObuYBiYxw.jpg" },
-  { id: 155, title: "The Dark Knight", poster_path: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg" },
-  { id: 496243, title: "Parasite", poster_path: "/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" },
-  { id: 497, title: "The Green Mile", poster_path: "/8VG8fDNiy50h5FedGwdSVUPoaJe.jpg" },
-  { id: 769, title: "GoodFellas", poster_path: "/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg" },
-];
-
 const exampleLists = [
   { id: 1, name: "Favorite horror movies", thumbnail_path: "/", movies: [278, 238, 497] },
   { id: 2, name: "Worst movies ever", thumbnail_path: "/", movies: [278, 155] },
@@ -29,8 +18,8 @@ const exampleLists = [
   { id: 4, name: "I'm Batman", thumbnail_path: "/", movies: [155] },
 ];
 
-export function shuffleExampleMovies() {
-  return exampleFavorites.sort(() => Math.random() - 0.5);
+export function shuffleMoviesArray(array: any[]) {
+  return array.sort(() => Math.random() - 0.5);
 }
 
 export default async function userProfile({ params }: { params: { id: number } }) {
@@ -39,6 +28,12 @@ export default async function userProfile({ params }: { params: { id: number } }
   if (!user) {
     notFound();
   }
+  const favorites = await findUserFavoritesById(Number(params.id));
+  const movieListItems = favorites
+    ? favorites.map(movie => {
+        return { id: movie.id, title: movie.title, poster_path: movie.poster_path };
+      })
+    : [];
 
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
@@ -64,7 +59,13 @@ export default async function userProfile({ params }: { params: { id: number } }
       <div className="profile-section-wrapper">
         {/* Random assortment of user's favorite movies and link to all favorites */}
         <Section header={userFavoriteHeader}>
-          <MovieList movies={shuffleExampleMovies().slice(0, 6)} />
+          {movieListItems.length > 0 ? (
+            <MovieList
+              movies={movieListItems.length > 0 ? shuffleMoviesArray(movieListItems).slice(0, 6) : movieListItems}
+            />
+          ) : (
+            <p>No favorite movies yet.</p>
+          )}
         </Section>
 
         {/* Thumbnails of user's latest reviews and link to all reviews */}

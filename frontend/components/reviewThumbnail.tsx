@@ -1,12 +1,11 @@
 import { Star } from "react-feather";
 
-import { shuffleExampleMovies } from "@/app/users/[id]/page";
 import { Section } from "./section";
 
 const exampleReviewHeader = () => {
   return (
     <div className="review-thumbnail-header">
-      <h6>{shuffleExampleMovies()[0].title}</h6>
+      <h6>Movie title</h6>
       <div className="stars">
         <Star
           color="#ffc700"

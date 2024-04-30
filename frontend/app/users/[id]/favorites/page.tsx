@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { findUserById } from "@/services/authService";
+import { findUserFavoritesById } from "@/services/favoriteService";
+
 import { notFound } from "next/navigation";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
-import { shuffleExampleMovies } from "@/app/users/[id]/page";
+import { shuffleMoviesArray } from "@/app/users/[id]/page";
 
 export default async function userFavorites({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));
@@ -12,6 +14,13 @@ export default async function userFavorites({ params }: { params: { id: string }
   if (!user) {
     notFound();
   }
+
+  const favorites = await findUserFavoritesById(Number(params.id));
+  const movieListItems = favorites
+    ? favorites.map(movie => {
+        return { id: movie.id, title: movie.title, poster_path: movie.poster_path };
+      })
+    : [];
 
   return (
     <main>
@@ -22,7 +31,11 @@ export default async function userFavorites({ params }: { params: { id: string }
           </h3>
         }
       >
-        <MovieList movies={shuffleExampleMovies()} />
+        {movieListItems.length > 0 ? (
+          <MovieList movies={shuffleMoviesArray(movieListItems)} />
+        ) : (
+          <p>No favorite movies yet.</p>
+        )}
       </Section>
     </main>
   );

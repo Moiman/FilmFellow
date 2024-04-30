@@ -3,13 +3,28 @@
 
 .profile-settings {
   display: inline-flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 40px;
+  padding: 20px 40px;
   width: 100%;
 
   textarea {
     resize: none;
   }
+}
+
+.profile-settings-left {
+  flex: 1;
+  max-width: 400px;
+
+  & > svg {
+    width: 100%;
+  }
+}
+
+.profile-settings-right {
+  flex: 1;
+  max-width: 800px;
 }
 
 .profile-settings-social-media {
@@ -19,6 +34,7 @@
 
   .social-media-row {
     display: inline-flex;
+    align-items: center;
     gap: 10px;
   }
 
@@ -71,10 +87,17 @@
   border-bottom: 1px solid abstracts.$primary-darkgrey;
 }
 
-@media only screen and (max-width: abstracts.$medium-width) {
+@media only screen and (max-width: abstracts.$large-width) {
   .profile-settings {
     display: flex;
     flex-direction: column;
+  }
+
+  .profile-settings-left {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    flex: 0;
   }
 }
 

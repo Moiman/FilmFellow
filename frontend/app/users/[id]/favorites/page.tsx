@@ -16,11 +16,6 @@ export default async function userFavorites({ params }: { params: { id: string }
   }
 
   const favorites = await findUserFavoritesById(Number(params.id));
-  const movieListItems = favorites
-    ? favorites.map(movie => {
-        return { id: movie.id, title: movie.title, poster_path: movie.poster_path };
-      })
-    : [];
 
   return (
     <main>
@@ -31,11 +26,7 @@ export default async function userFavorites({ params }: { params: { id: string }
           </h3>
         }
       >
-        {movieListItems.length > 0 ? (
-          <MovieList movies={shuffleMoviesArray(movieListItems)} />
-        ) : (
-          <p>No favorite movies yet.</p>
-        )}
+        {favorites.length > 0 ? <MovieList movies={shuffleMoviesArray(favorites)} /> : <p>No favorite movies yet.</p>}
       </Section>
     </main>
   );

@@ -29,11 +29,6 @@ export default async function userProfile({ params }: { params: { id: string } }
     notFound();
   }
   const favorites = await findUserFavoritesById(Number(params.id));
-  const movieListItems = favorites
-    ? favorites.map(movie => {
-        return { id: movie.id, title: movie.title, poster_path: movie.poster_path };
-      })
-    : [];
 
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
@@ -53,16 +48,14 @@ export default async function userProfile({ params }: { params: { id: string } }
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
       <Sidebar iconPosition="right">
-        <ProfileInfo userId={params.id} />
+        <ProfileInfo userId={Number(params.id)} />
       </Sidebar>
 
       <div className="profile-section-wrapper">
         {/* Random assortment of user's favorite movies and link to all favorites */}
         <Section header={userFavoriteHeader}>
-          {movieListItems.length > 0 ? (
-            <MovieList
-              movies={movieListItems.length > 0 ? shuffleMoviesArray(movieListItems).slice(0, 6) : movieListItems}
-            />
+          {favorites.length > 0 ? (
+            <MovieList movies={favorites.length > 0 ? shuffleMoviesArray(favorites).slice(0, 6) : favorites} />
           ) : (
             <p>No favorite movies yet.</p>
           )}
@@ -84,7 +77,7 @@ export default async function userProfile({ params }: { params: { id: string } }
           <div className="list-wrapper">
             {exampleLists.map(list => (
               <ListButton
-                userId={user.id}
+                userId={Number(params.id)}
                 key={list.id}
                 list={{ id: list.id, name: list.name, movies: list.movies }}
               />

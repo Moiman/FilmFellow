@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { expect, test, describe, vi, beforeEach, afterEach } from "vitest";
+import { expect, test, describe, beforeEach, afterEach } from "vitest";
 
 import { ListButton } from "@/components/users/listButton";
 
@@ -12,22 +12,6 @@ const list = {
     { id: 2, title: "Movie 2" },
   ],
 };
-
-const { useRouter, mockedRouterPush } = vi.hoisted(() => {
-  const mockedRouterPush = vi.fn();
-  return {
-    useRouter: () => ({ push: mockedRouterPush }),
-    mockedRouterPush,
-  };
-});
-
-vi.mock("next/navigation", async () => {
-  const actual = await vi.importActual("next/navigation");
-  return {
-    ...actual,
-    useRouter,
-  };
-});
 
 beforeEach(() =>
   render(
@@ -46,8 +30,10 @@ describe("ListButton", () => {
     expect(screen.getByText(list.movies.length.toString())).toBeDefined();
   });
 
-  test("navigates to list page when clicked", () => {
-    screen.getByText(list.name).click();
-    expect(mockedRouterPush).toHaveBeenCalledWith(`/users/${userId}/lists/${list.id}`);
+  test("list have right href", () => {
+    const linkElement = screen.getByRole("link");
+    const expectedHref = `/users/${userId}/lists/${list.id}`;
+    const href = linkElement.getAttribute("href");
+    expect(href).toBe(expectedHref);
   });
 });

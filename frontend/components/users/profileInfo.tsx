@@ -6,7 +6,7 @@ import { Twitter, Instagram, Facebook } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
 
 interface ProfileInfoProps {
-  userId: string;
+  userId: number;
 }
 
 export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {

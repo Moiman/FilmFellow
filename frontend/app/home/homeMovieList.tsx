@@ -1,28 +1,12 @@
-"use client";
+import Image from "next/image";
+import Link from "next/link";
 
 import { Dropdown } from "@/components/dropdown";
 import { Section } from "@/components/section";
-import Image from "next/image";
-
-import Link from "next/link";
-import { JSX, SetStateAction, useEffect, useState } from "react";
 import { fetchGenres, fetchMovies } from "./movieFetches";
 
-export const MovieList = () => {
-  const [newMovieList, setNewMovieList] = useState<JSX.Element[]>();
-  const [popularMovieList, setPopularMovieList] = useState<JSX.Element[]>();
-  const [bestratedMovieList, setBestratedMovieList] = useState<JSX.Element[]>();
-  const [allgenres, setAllGenres] = useState<JSX.Element[]>();
-  const [selectedGenre, setSelectedGenre] = useState("action");
-
-  const getPosters = async (
-    setMovieList: {
-      (value: SetStateAction<JSX.Element[] | undefined>): void;
-      (arg0: JSX.Element[]): void;
-    },
-    type: string,
-    genre: string,
-  ) => {
+export const MovieList = async ({ genre }: { genre: string | undefined }) => {
+  const getPosters = async (type: string, genre: string | undefined) => {
     const moviesArr = await fetchMovies(6, type, genre);
     if (moviesArr) {
       const movieList = moviesArr.map((movie: { id: number; poster_path: string }) => {
@@ -43,7 +27,7 @@ export const MovieList = () => {
           </Link>
         );
       });
-      setMovieList(movieList);
+      return movieList;
     }
   };
 
@@ -52,31 +36,24 @@ export const MovieList = () => {
 
     const genres = fetchedGenres?.map(genre => {
       return (
-        <button
-          className="dropdown-item"
+        <Link
           key={genre.id}
-          onClick={() => setSelectedGenre(genre.name)}
+          className="dropdown-item"
+          href={"/home?genre=" + genre.name}
         >
           {genre.name}
-        </button>
+        </Link>
       );
     });
-    setAllGenres(genres);
+    return genres;
   };
-
-  useEffect(() => {
-    getGenres();
-    getPosters(setNewMovieList, "new", selectedGenre);
-    getPosters(setPopularMovieList, "popular", selectedGenre);
-    getPosters(setBestratedMovieList, "bestrated", selectedGenre);
-  }, [selectedGenre]);
 
   return (
     <div>
       <div className="dropdown-button">
         <p>Genre</p>
-        <Dropdown selected={selectedGenre}>
-          <div>{allgenres}</div>
+        <Dropdown selected={genre}>
+          <>{await getGenres()}</>
         </Dropdown>
       </div>
 
@@ -88,27 +65,27 @@ export const MovieList = () => {
           </div>
         }
       >
-        <div className="poster-list">{newMovieList}</div>
+        <div className="poster-list">{await getPosters("new", genre)}</div>
       </Section>
       <Section
         header={
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h3>{"Popular Movies"}</h3>
-            <Link href={"/new"}>See all</Link>
+            <Link href={"/popular"}>See all</Link>
           </div>
         }
       >
-        <div className="poster-list">{popularMovieList}</div>
+        <div className="poster-list">{await getPosters("popular", genre)}</div>
       </Section>
       <Section
         header={
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h3>{"Best Rated Movies"}</h3>
-            <Link href={"/new"}>See all</Link>
+            <Link href={"/bestrated"}>See all</Link>
           </div>
         }
       >
-        <div className="poster-list">{bestratedMovieList}</div>
+        <div className="poster-list">{await getPosters("bestrated", genre)}</div>
       </Section>
     </div>
   );

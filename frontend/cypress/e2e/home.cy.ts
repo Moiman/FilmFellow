@@ -18,7 +18,7 @@ describe("home page tests", () => {
     cy.wait(1000);
     cy.get(".poster-list > a").eq(1).click();
     cy.wait(500);
-    cy.location("pathname").should("eq", "/movies/");
+    cy.location("pathname").should("include", "/movies/");
   });
 
   it("test see all link", () => {

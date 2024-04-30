@@ -35,7 +35,7 @@ export const MovieList = () => {
               key={movie.id}
               className="poster"
               //muuta pathi postereille omaan storageen jahka sellannen on
-              src={`https://image.tmdb.org/t/p/original` + movie.poster_path}
+              src={"https://image.tmdb.org/t/p/w154" + movie.poster_path}
               alt="picture of the movie poster"
               width={150}
               height={225}
@@ -52,13 +52,13 @@ export const MovieList = () => {
 
     const genres = fetchedGenres?.map(genre => {
       return (
-        <p
+        <button
           className="dropdown-item"
           key={genre.id}
           onClick={() => setSelectedGenre(genre.name)}
         >
           {genre.name}
-        </p>
+        </button>
       );
     });
     setAllGenres(genres);

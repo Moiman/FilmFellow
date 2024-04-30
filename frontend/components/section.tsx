@@ -1,7 +1,5 @@
-import { ReactElement } from "react";
-
 interface SectionProps {
-  header: string | ReactElement;
+  header: string | React.ReactNode;
   children: React.ReactNode;
 }
 

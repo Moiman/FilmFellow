@@ -6,10 +6,15 @@
 }
 
 .poster-list {
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
-  justify-content: space-between;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .poster-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .poster {

@@ -42,9 +42,10 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
         <div className="image-wrapper">
           <Image
             alt={`${movie.title}`}
-            src={`https://image.tmdb.org/t/p/w780/${movie.backdropPath}`}
-            width={500}
-            height={500}
+            src={`https://image.tmdb.org/t/p/w1280/${movie.backdropPath}`}
+            width={1280}
+            height={800}
+            priority={true}
           />
           <div className="gradient" />
         </div>

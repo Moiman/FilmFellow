@@ -188,8 +188,9 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
           >
             {user.isActive === true ? (
               <Dropdown
+                buttonAlign="right"
                 zIndex={5}
-                button={<button className="button-yellow">Block user</button>}
+                button={<button>Block user</button>}
               >
                 <button
                   onClick={() => {

@@ -1,10 +1,5 @@
 @use "../abstracts" as abstracts;
 
-.home-content {
-  padding: 10px 20px;
-  display: grid;
-}
-
 .poster-list {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -21,6 +16,7 @@
   height: auto;
   width: 100%;
   box-shadow: abstracts.$default-shadow;
+  border: abstracts.$default-border;
 }
 
 .poster:hover {
@@ -32,17 +28,15 @@
 .dropdown-button {
   display: flex;
   align-items: center;
-  float: right;
-  padding-bottom: 10px;
-  justify-content: space-between;
-  width: 200px;
+  justify-content: flex-end;
   gap: 5px;
-  margin-right: 4px;
+  width: 100%;
 }
 
 .dropdown-menu {
   z-index: 100;
 }
+
 .dropdown-item {
   cursor: pointer;
 }

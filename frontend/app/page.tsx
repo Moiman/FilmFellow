@@ -72,39 +72,46 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
     <main>
       <div className="dropdown-button">
         <p>Genre</p>
-        <Dropdown selected={selectedGenre ?? "All"}>{await getGenres()}</Dropdown>
+        <Dropdown
+          width={200}
+          selected={selectedGenre ?? "All"}
+        >
+          {await getGenres()}
+        </Dropdown>
       </div>
 
-      <Section
-        header={
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h3>{"New Movies"}</h3>
-            <Link href={"/new"}>See all</Link>
-          </div>
-        }
-      >
-        <div className="poster-list">{await getPosters("new", selectedGenre)}</div>
-      </Section>
-      <Section
-        header={
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h3>{"Popular Movies"}</h3>
-            <Link href={"/popular"}>See all</Link>
-          </div>
-        }
-      >
-        <div className="poster-list">{await getPosters("popular", selectedGenre)}</div>
-      </Section>
-      <Section
-        header={
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h3>{"Best Rated Movies"}</h3>
-            <Link href={"/bestrated"}>See all</Link>
-          </div>
-        }
-      >
-        <div className="poster-list">{await getPosters("bestrated", selectedGenre)}</div>
-      </Section>
+      <div className="section-wrapper">
+        <Section
+          header={
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h2 className="h3">New Movies</h2>
+              <Link href="/new">See all</Link>
+            </div>
+          }
+        >
+          <div className="poster-list">{await getPosters("new", selectedGenre)}</div>
+        </Section>
+        <Section
+          header={
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h2 className="h3">Popular Movies</h2>
+              <Link href="/popular">See all</Link>
+            </div>
+          }
+        >
+          <div className="poster-list">{await getPosters("popular", selectedGenre)}</div>
+        </Section>
+        <Section
+          header={
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h2 className="h3">Best Rated Movies</h2>
+              <Link href="/bestrated">See all</Link>
+            </div>
+          }
+        >
+          <div className="poster-list">{await getPosters("bestrated", selectedGenre)}</div>
+        </Section>
+      </div>
     </main>
   );
 }

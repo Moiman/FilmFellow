@@ -5,7 +5,8 @@
   display: flex;
   gap: 40px;
   padding: 20px 40px;
-  width: 100%;
+  width: fit-content;
+  margin: auto;
 
   textarea {
     resize: none;
@@ -13,9 +14,9 @@
 }
 
 .profile-settings-left {
-  flex: 1;
+  width: 100%;
   max-width: 300px;
-  padding: 0 20px;
+  min-width: 200px;
 
   & > svg {
     width: 100%;
@@ -23,8 +24,8 @@
 }
 
 .profile-settings-right {
-  flex: 1;
   width: 100%;
+  min-width: 300px;
 }
 
 .profile-settings-social-media {
@@ -66,16 +67,19 @@
   .profile-settings-input {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 
     .password-input-wrapper {
       position: relative;
-      max-width: 600px;
-      width: 100%;
+
+      input {
+        padding-right: 40px;
+      }
     }
 
     p,
-    input {
+    input,
+    .password-input-wrapper {
       max-width: 700px;
       width: 100%;
     }

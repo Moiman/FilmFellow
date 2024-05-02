@@ -1,0 +1,130 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.profile-settings {
+  display: flex;
+  gap: 40px;
+  padding: 20px 40px;
+  width: fit-content;
+  margin: auto;
+
+  textarea {
+    resize: none;
+  }
+}
+
+.profile-settings-left {
+  width: 100%;
+  max-width: 300px;
+  min-width: 200px;
+
+  & > svg {
+    width: 100%;
+  }
+}
+
+.profile-settings-right {
+  width: 100%;
+  min-width: 300px;
+}
+
+.profile-settings-social-media {
+  display: grid;
+  align-items: center;
+  gap: 5px;
+
+  .social-media-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pink > svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+
+  .yellow > svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+
+  .cyan > svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  }
+}
+
+.profile-settings-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    min-width: 100%;
+    font-size: abstracts.$h5-font-size;
+    font-family: abstracts.$default-title-font;
+    font-weight: 400;
+    letter-spacing: -0.025rem;
+  }
+
+  .profile-settings-input {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    .password-input-wrapper {
+      position: relative;
+
+      input {
+        padding-right: 40px;
+      }
+    }
+
+    p,
+    input,
+    .password-input-wrapper {
+      max-width: 700px;
+      width: 100%;
+    }
+
+    button {
+      max-width: fit-content;
+      margin: 0;
+    }
+  }
+}
+
+.profile-settings-divider {
+  padding: 20px 0;
+}
+
+.profile-settings-divider:not(:last-child) {
+  border-bottom: 1px solid abstracts.$primary-darkgrey;
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .profile-settings {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .profile-settings-left {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    padding: 0;
+  }
+}
+
+.profile-settings-modal-content {
+  display: grid;
+  flex-flow: wrap;
+  text-align: center;
+  gap: 40px;
+  margin: auto auto;
+}
+
+.profile-settings-modal-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}

@@ -55,7 +55,7 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
             {session && <StarRating />}
           </div>
           <div className="movie-basic-data">
-            <h1>{movie.title}</h1>
+            <h2 className="h1">{movie.title}</h2>
 
             <div className="movie-data-row">
               {movie.directors.length > 0 ? (

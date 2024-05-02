@@ -64,10 +64,12 @@ export default async function Person({ params }: { params: { id: string } }) {
           </div>
 
           <div className="person-info">
-            <span className="person-birthday">
-              {person.birthday ? formatDate(person.birthday) : ""} -{" "}
-              {person.deathday ? formatDate(person.deathday) : ""}
-            </span>
+            {(person.birthday || person.deathday) && (
+              <span className="person-birthday">
+                {person.birthday ? formatDate(person.birthday) : ""} -{" "}
+                {person.deathday ? formatDate(person.deathday) : ""}
+              </span>
+            )}
             <h1>{person.name ? person.name : "No name"}</h1>
             <p className="person-description">{person.biography ? person.biography : "No biography"}</p>
           </div>

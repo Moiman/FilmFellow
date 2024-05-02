@@ -36,7 +36,7 @@ export const Header = () => {
         href="/"
         className="logo"
       >
-        <h4>🍿FilmFellow</h4>
+        <h1 className="h4">🍿FilmFellow</h1>
       </Link>
 
       <nav className="main-nav highlight-nav">

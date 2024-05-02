@@ -1,4 +1,48 @@
+@use "../abstracts" as abstracts;
+
 .home-content {
-  flex: 1;
-  padding: 40px 60px;
+  padding: 10px 20px;
+  display: grid;
+}
+
+.poster-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .poster-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.poster {
+  height: auto;
+  width: 100%;
+  box-shadow: abstracts.$default-shadow;
+}
+
+.poster:hover {
+  transform: scale(105%);
+  transition: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+.dropdown-button {
+  display: flex;
+  align-items: center;
+  float: right;
+  padding-bottom: 10px;
+  justify-content: space-between;
+  width: 200px;
+  gap: 5px;
+  margin-right: 4px;
+}
+
+.dropdown-menu {
+  z-index: 100;
+}
+.dropdown-item {
+  cursor: pointer;
 }

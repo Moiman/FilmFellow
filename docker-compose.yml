@@ -20,6 +20,8 @@ services:
   frontend:
     build: ./frontend
     restart: always
+    environment:
+      NEXTAUTH_SECRET: generatesecretkey
     ports:
       - $FRONTEND_PORT:$FRONTEND_PORT
 

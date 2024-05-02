@@ -15,7 +15,7 @@
 
 .profile-settings-left {
   flex: 1;
-  max-width: 400px;
+  max-width: 300px;
   padding: 0 20px;
 
   & > svg {
@@ -62,9 +62,6 @@
     font-family: abstracts.$default-title-font;
     font-weight: 400;
     letter-spacing: -0.025rem;
-    padding: 5px 10px;
-    background-color: rgba(abstracts.$primary-darkgrey, 0.5);
-    border-radius: abstracts.$default-border-radius;
   }
 
   .profile-settings-input {
@@ -77,12 +74,9 @@
       width: 100%;
     }
 
-    p {
-      padding: 5px 10px;
-    }
-
     button {
       max-width: fit-content;
+      margin: 0;
     }
   }
 }
@@ -95,7 +89,7 @@
   border-bottom: 1px solid abstracts.$primary-darkgrey;
 }
 
-@media only screen and (max-width: abstracts.$large-width) {
+@media only screen and (max-width: abstracts.$medium-width) {
   .profile-settings {
     display: flex;
     flex-direction: column;
@@ -104,7 +98,7 @@
 
   .profile-settings-left {
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     margin: auto;
     flex: 0;
     padding: 0;

@@ -17,13 +17,6 @@ const selectUserFields = {
   email: true,
   username: true,
   role: true,
-};
-
-const selectUserFieldsForAdmin = {
-  id: true,
-  email: true,
-  username: true,
-  role: true,
   created_at: true,
   updated_at: true,
   last_visited: true,
@@ -86,7 +79,7 @@ const updateUser = async (userId: number, user: User) => {
       role: user.role,
       updated_at: new Date(),
     },
-    select: selectUserFieldsForAdmin,
+    select: selectUserFields,
   });
 
   return updatedUser;
@@ -109,7 +102,7 @@ const getAllUsers = async () => {
     return;
   }
   const users = await prisma.users.findMany({
-    select: selectUserFieldsForAdmin,
+    select: selectUserFields,
   });
 
   return users;
@@ -121,36 +114,33 @@ const updateUserLastVisited = async (id: number, last_visited: Date) => {
     data: {
       last_visited: last_visited,
     },
-    select: selectUserFieldsForAdmin,
+    select: selectUserFields,
   });
 };
 
 const changeUserStatusById = async (id: number, status: boolean, banDuration?: number | null) => {
-  const user = await findUserById(id);
-  if (user) {
-    if (banDuration) {
-      const banEndDateInMS = new Date().getTime() + banDuration * 1000;
-      const banEndDate = new Date(banEndDateInMS);
-      await prisma.users.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          banDuration: banEndDate,
-          isActive: status,
-        },
-      });
-    } else {
-      await prisma.users.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          banDuration: null,
-          isActive: status,
-        },
-      });
-    }
+  if (banDuration) {
+    const banEndDateInMS = new Date().getTime() + banDuration * 1000;
+    const banEndDate = new Date(banEndDateInMS);
+    await prisma.users.update({
+      where: {
+        id: id,
+      },
+      data: {
+        banDuration: banEndDate,
+        isActive: status,
+      },
+    });
+  } else {
+    await prisma.users.update({
+      where: {
+        id: id,
+      },
+      data: {
+        banDuration: null,
+        isActive: status,
+      },
+    });
   }
 };
 

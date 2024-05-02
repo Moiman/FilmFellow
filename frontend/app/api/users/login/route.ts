@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import * as yup from "yup";
 import argon2 from "argon2";
-import { findUserByEmail, updateUser, updateUserLastVisited } from "@/services/authService";
+import { findUserByEmail, updateUserLastVisited } from "@/services/authService";
 
 const loginUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),

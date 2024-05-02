@@ -1,10 +1,8 @@
 "use client";
-// import { User } from "next-auth";
 import { UserDetails } from "./userDetails";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "../sidebar";
-import { Search } from "react-feather";
 import { useState } from "react";
 interface User {
   email: string;
@@ -22,9 +20,8 @@ interface Props {
 export const AdminPanelUsers = ({ users }: Props) => {
   const currentPath = usePathname();
   const [allUsers, setAllUsers] = useState(users);
-  const [searchText, setSearchText] = useState("");
-  console.log(searchText);
-  const filteredResults = searchText ? allUsers?.filter(user => user.username.startsWith(searchText)) : allUsers;
+  const [searchInput, setSearchInput] = useState("");
+  const filteredResults = searchInput ? allUsers?.filter(user => user.username.startsWith(searchInput)) : allUsers;
   return (
     <main className="sidebar-main">
       <Sidebar iconPosition="right">
@@ -53,11 +50,11 @@ export const AdminPanelUsers = ({ users }: Props) => {
       <div className="admin-panel-content">
         <div className="searchbar">
           <input
-            data-cy="search-input"
+            data-cy="admin-search-input"
             className="searchbar-input"
             placeholder="Search..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
           />
         </div>
         {filteredResults?.map(user => (

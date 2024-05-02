@@ -1,7 +1,7 @@
-// import { User } from "next-auth";
 import { Smile } from "react-feather";
 import { Dropdown } from "../dropdown";
 import { Role } from "@prisma/client";
+import { useState } from "react";
 
 interface User {
   email: string;
@@ -19,6 +19,7 @@ interface Props {
 }
 
 export const UserDetails = ({ user, setAllUsers }: Props) => {
+  const [error, setError] = useState("");
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
       const banDetails = {
@@ -37,30 +38,21 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
       console.log(response);
       const data = await response.json();
       console.log(data);
-
-      setAllUsers(prev =>
-        prev?.map(User => {
-          if (User.id === user.id) {
-            return { ...User, isActive: data.isActive  };
-          }
-          return User;
-        }),
-      );
-
-      // router.refresh();
-      /*
-      if (data.error) {
+      if (!response.ok) {
         setError(data.error);
         return;
       }
       if (response.ok && !data.error) {
-        await update(data);
-        setActivePassword(false);
-        passwordReset();
+        setAllUsers(prev =>
+          prev?.map(User => {
+            if (User.id === user.id) {
+              return { ...User, isActive: data.isActive };
+            }
+            return User;
+          }),
+        );
         setError("");
-        router.refresh();
       }
-      */
     } catch (error) {
       console.error(error);
     }
@@ -83,28 +75,21 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
       });
 
       const data = await response.json();
-      setAllUsers(prev =>
-        prev?.map(User => {
-          if (User.id === user.id) {
-            return { ...User, isActive: data.isActive };
-          }
-          return User;
-        }),
-      );
-      // router.refresh();
-      /*
-      if (data.error) {
+      if (!response.ok) {
         setError(data.error);
         return;
       }
       if (response.ok && !data.error) {
-        await update(data);
-        setActivePassword(false);
-        passwordReset();
+        setAllUsers(prev =>
+          prev?.map(User => {
+            if (User.id === user.id) {
+              return { ...User, isActive: data.isActive };
+            }
+            return User;
+          }),
+        );
         setError("");
-        router.refresh();
       }
-      */
     } catch (error) {
       console.error(error);
     }
@@ -126,28 +111,21 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
       });
 
       const data = await response.json();
-      setAllUsers(prev =>
-        prev?.map(User => {
-          if (User.id === user.id) {
-            return { ...User, role: data.role };
-          }
-          return User;
-        }),
-      );
-      // router.refresh();
-      /*
-      if (data.error) {
+      if (!response.ok) {
         setError(data.error);
         return;
       }
       if (response.ok && !data.error) {
-        await update(data);
-        setActivePassword(false);
-        passwordReset();
+        setAllUsers(prev =>
+          prev?.map(User => {
+            if (User.id === user.id) {
+              return { ...User, role: data.role };
+            }
+            return User;
+          }),
+        );
         setError("");
-        router.refresh();
       }
-      */
     } catch (error) {
       console.error(error);
     }
@@ -164,21 +142,14 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
       });
 
       const data = await response.json();
-      setAllUsers(prev => prev?.filter(User => User.id !== data.id));
-      // router.refresh();
-      /*
-      if (data.error) {
+      if (!response.ok) {
         setError(data.error);
         return;
       }
       if (response.ok && !data.error) {
-        await update(data);
-        setActivePassword(false);
-        passwordReset();
+        setAllUsers(prev => prev?.filter(User => User.id !== data.id));
         setError("");
-        router.refresh();
       }
-      */
     } catch (error) {
       console.error(error);
     }
@@ -198,7 +169,6 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
           <div style={{ padding: "10px" }}>
             <p>{user.username}</p>
             <p>{user.email}</p>
-            <p>online / offline</p>
           </div>
           <div style={{ padding: "10px" }}>
             <p>Last visited: {showDate(user.last_visited)}</p>
@@ -212,64 +182,70 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
           </div>
         </div>
         {user.role !== Role.admin && (
-        <div
-          className="admin-panel-right-side"
-          style={{ padding: "20px" }}
-        >
-          {user.isActive === true ? (
-            <Dropdown
-              zIndex={5}
-              button={<button className="button-yellow">Block user</button>}
+          <div
+            className="admin-panel-right-side"
+            style={{ padding: "20px" }}
+          >
+            {user.isActive === true ? (
+              <Dropdown
+                zIndex={5}
+                button={<button className="button-yellow">Block user</button>}
+              >
+                <button
+                  onClick={() => {
+                    handleBanSubmit(86400);
+                  }}
+                  className="dropdown-item"
+                >
+                  1 Day
+                </button>
+                <button
+                  onClick={() => {
+                    handleBanSubmit(604800);
+                  }}
+                  className="dropdown-item"
+                >
+                  7 Days
+                </button>
+                <button
+                  onClick={() => {
+                    handleBanSubmit(2592000);
+                  }}
+                  className="dropdown-item"
+                >
+                  30 Days
+                </button>
+                <button
+                  onClick={() => {
+                    handleBanSubmit(null);
+                  }}
+                  className="dropdown-item"
+                >
+                  Forever
+                </button>
+              </Dropdown>
+            ) : (
+              <button onClick={() => handleUnBanSubmit()}>Lift Ban</button>
+            )}
+            <button
+              onClick={() => handleUserDelete()}
+              className="button-pink"
             >
-              <button
-                onClick={() => {
-                  handleBanSubmit(86400);
-                }}
-                className="dropdown-item"
-              >
-                1 Day
-              </button>
-              <button
-                onClick={() => {
-                  handleBanSubmit(604800);
-                }}
-                className="dropdown-item"
-              >
-                7 Days
-              </button>
-              <button
-                onClick={() => {
-                  handleBanSubmit(2592000);
-                }}
-                className="dropdown-item"
-              >
-                30 Days
-              </button>
-              <button
-                onClick={() => {
-                  handleBanSubmit(null);
-                }}
-                className="dropdown-item"
-              >
-                Forever
-              </button>
-            </Dropdown>
-          ) : (
-            <button onClick={() => handleUnBanSubmit()}>Lift Ban</button>
-          )}
-          <button
-            onClick={() => handleUserDelete()}
-            className="button-pink"
-          >
-            Delete
-          </button>
-          <button
-            onClick={() => handleRoleChange()}
-            className="button-cyan"
-          >
-            Make admin
-          </button>
-        </div>)}
+              Delete
+            </button>
+            <button
+              onClick={() => handleRoleChange()}
+              className="button-cyan"
+            >
+              Make admin
+            </button>
+            {error && (
+              <div>
+                <p className="error-text">{error}</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

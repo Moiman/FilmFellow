@@ -33,7 +33,10 @@ input[type="text"],
 input[type="password"],
 input[type="email"] {
   padding: 5px 10px;
-  padding-right: 30px;
+}
+
+input[type="password"] {
+  padding-right: 40px;
 }
 
 textarea {

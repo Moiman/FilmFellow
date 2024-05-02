@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Facebook, Instagram, Twitter, Smile } from "react-feather";
+import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff } from "react-feather";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -53,6 +53,7 @@ export const ProfileSettings = ({ user }: Props) => {
   const [activeUsername, setActiveUsername] = useState(false);
   const [activeEmail, setActiveEmail] = useState(false);
   const [activePassword, setActivePassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { update } = useSession();
@@ -379,14 +380,23 @@ export const ProfileSettings = ({ user }: Props) => {
             >
               <label htmlFor="password">Password</label>
               <div className="profile-settings-input">
-                <input
-                  id="password"
-                  type="password"
-                  {...passwordRegister("password")}
-                  required
-                  placeholder="Set new password"
-                />
-
+                <div className="password-input-wrapper">
+                  <input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    {...passwordRegister("password")}
+                    required
+                    placeholder="Set new password"
+                  />
+                  <button
+                    className="form-group-icon button-transparent"
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                  </button>
+                </div>
                 <button type="submit">Save</button>
               </div>
               <div>

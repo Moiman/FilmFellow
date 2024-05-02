@@ -5,8 +5,7 @@
   display: flex;
   gap: 40px;
   padding: 20px 40px;
-  width: fit-content;
-  margin: auto;
+  width: 100%;
 
   textarea {
     resize: none;
@@ -25,7 +24,8 @@
 
 .profile-settings-right {
   flex: 1;
-  max-width: 800px;
+  width: 100%;
+  margin: auto;
 }
 
 .profile-settings-social-media {
@@ -69,8 +69,15 @@
     align-items: center;
     gap: 10px;
 
-    input,
-    p {
+    .password-input-wrapper {
+      position: relative;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    p,
+    input {
+      max-width: 600px;
       width: 100%;
     }
 

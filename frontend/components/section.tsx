@@ -1,8 +1,6 @@
-import { ReactElement } from "react";
-
 interface SectionProps {
-  header: string | ReactElement;
-  children: ReactElement;
+  header: string | React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const Section = ({ header, children }: SectionProps) => {

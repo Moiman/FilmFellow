@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import { Section } from "@/components/section";
-import { ProfileSettings } from "@/app/profile/settings/profileSettings";
+import { ProfileSettings } from "./profileSettings";
 
 export default async function Profile() {
   const session = await getServerSession(authOptions);

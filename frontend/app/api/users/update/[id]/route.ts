@@ -121,6 +121,16 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       if (role) {
         user.role = role;
       }
+
+      if ((isActive === undefined && banDuration) || (isActive && banDuration)) {
+        return NextResponse.json(
+          { error: "Faulty values on ban" },
+          {
+            status: 400,
+          },
+        );
+      }
+
       if (banDuration || isActive !== undefined) {
         await changeUserStatusById(user.id, isActive, banDuration);
       }

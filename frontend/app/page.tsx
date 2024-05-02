@@ -10,7 +10,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
   const selectedGenre = searchParams?.genre;
   const getPosters = async (type: string, genre: string | undefined) => {
     const moviesArr = await fetchMovies(6, type, genre);
-    const movieList = moviesArr.map((movie: { id: number; poster_path: string }) => {
+    const movieList = moviesArr.map((movie: { id: number; poster_path: string; title: string }) => {
       return (
         <Link
           key={movie.id}
@@ -21,7 +21,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
             className="poster"
             //muuta pathi postereille omaan storageen jahka sellannen on
             src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
-            alt="picture of the movie poster"
+            alt={movie.title}
             width={500}
             height={750}
           />

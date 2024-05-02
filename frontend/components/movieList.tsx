@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 type MovieListItem = {
   id: number;
@@ -21,17 +22,12 @@ export const MovieList = ({ movies }: MovieListProps) => {
                   key={movie.id}
                   href={"/movies/" + movie.id}
                 >
-                  {/* Placeholder until we get working poster paths */}
-                  <div className="placeholder-movie-poster">{movie.title}</div>
-
-                  {/* Working image for when we have poster paths:
                   <Image
-                    src={`${movie.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                     width={500}
                     height={500}
                     alt={movie.title}
                   />
-                  */}
                 </Link>
               ),
           )

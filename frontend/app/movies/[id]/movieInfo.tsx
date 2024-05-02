@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 
@@ -39,14 +40,12 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
     <div className="movie-content">
       <div className="movie-wrapper">
         <div className="image-wrapper">
-          {/* Working image for when we have backdrop paths:
           <Image
             alt={`${movie.title}`}
-            src={`${movie.backdropPath}`}
+            src={`https://image.tmdb.org/t/p/w780/${movie.backdropPath}`}
             width={500}
             height={500}
           />
-          */}
           <div className="gradient" />
         </div>
 

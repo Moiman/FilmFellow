@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { getPersonById } from "@/services/personsService";
@@ -53,14 +54,12 @@ export default async function Person({ params }: { params: { id: string } }) {
       <div className="person-content">
         <div className="person-wrapper">
           <div className="image-wrapper">
-            {/* Working image for when we have profile paths:
             <Image
               alt={`${person.name}`}
-              src={`${person.profile_path}`}
+              src={`https://image.tmdb.org/t/p/h632/${person.profile_path}`}
               width={500}
               height={500}
             />
-  */}
             <div className="gradient" />
           </div>
 

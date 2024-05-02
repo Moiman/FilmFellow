@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import { Facebook, Instagram, Twitter, Smile } from "react-feather";
+import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff } from "react-feather";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
-import Modal from "./modal";
+import Modal from "@/components/modal";
 
 interface Props {
   user: User;
@@ -53,10 +53,13 @@ export const ProfileSettings = ({ user }: Props) => {
   const [activeUsername, setActiveUsername] = useState(false);
   const [activeEmail, setActiveEmail] = useState(false);
   const [activePassword, setActivePassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { update } = useSession();
+
   const router = useRouter();
+
   const handleDelete = async () => {
     try {
       const response = await fetch(`/api/users/delete`, {
@@ -244,192 +247,215 @@ export const ProfileSettings = ({ user }: Props) => {
   };
 
   return (
-    <div className="profile-card">
-      <div className="profile-card-left">
-        <Smile size={200} />
-        <div>
-          <h3>Description</h3>
+    <div className="profile-settings">
+      <div className="profile-settings-left">
+        <Smile
+          size={200}
+          strokeWidth={1}
+          color={"grey"}
+        />
+
+        <div style={{ marginBottom: "20px" }}>
+          <h3 className="h5">Description</h3>
           <textarea rows={5} />
         </div>
-        <h3>Social Media</h3>
-        <div className="profile-card-social-media">
-          <Twitter size={20} />
-          <input
-            type="text"
-            value={"@username"}
-            readOnly
-          />
-          <Instagram size={20} />
-          <input
-            type="text"
-            value={"@username"}
-            readOnly
-          />
-          <Facebook size={20} />
-          <input
-            type="text"
-            value={"@username"}
-            readOnly
-          />
+
+        <h3 className="h5">Social Media</h3>
+        <div className="profile-settings-social-media">
+          <div className="social-media-row pink">
+            <Twitter />
+            <input
+              type="text"
+              value={"@username"}
+              readOnly
+            />
+          </div>
+          <div className="social-media-row yellow">
+            <Instagram />
+            <input
+              type="text"
+              value={"@username"}
+              readOnly
+            />
+          </div>
+          <div className="social-media-row cyan">
+            <Facebook />
+            <input
+              type="text"
+              value={"@username"}
+              readOnly
+            />
+          </div>
         </div>
       </div>
-      <div className="profile-card-right">
-        <div className="profile-card-content-divider">
+      <div className="profile-settings-right">
+        <div className="profile-settings-divider">
           <h3>User Information</h3>
-          <p className="description">Here you can change your username, email or password </p>
+
+          <p className="description">Here you can change your username, email or password.</p>
 
           {activeUsername ? (
             <form
               onSubmit={handleUsernameChange(handleUsernameSubmit)}
-              className="profile-card-element"
+              className="profile-settings-wrapper"
             >
-              <label
-                className="profile-card-label"
-                htmlFor="username"
-              >
-                Username
-              </label>
-              <input
-                id="username"
-                type="text"
-                {...usernameRegister("username")}
-                required
-              />
+              <label htmlFor="username">Username</label>
+              <div className="profile-settings-input">
+                <input
+                  id="username"
+                  type="text"
+                  {...usernameRegister("username")}
+                  required
+                />
 
-              <button type="submit">Save</button>
+                <button type="submit">Save</button>
+              </div>
               <div>
                 {error && <p className="error-text">{error}</p>}
                 {errorsUsername.username && <p className="error-text">{errorsUsername.username.message}</p>}
               </div>
             </form>
           ) : (
-            <div className="profile-card-element">
-              <label className="profile-card-label">Username</label>
-              <p>{user.username}</p>
-              <button
-                onClick={() => {
-                  setActiveUsername(!activeUsername);
-                  setActiveEmail(false);
-                  setActivePassword(false);
-                  resetAllFields();
-                }}
-              >
-                Edit
-              </button>
+            <div className="profile-settings-wrapper">
+              <label>Username</label>
+              <div className="profile-settings-input">
+                <p>{user.username}</p>
+                <button
+                  onClick={() => {
+                    setActiveUsername(!activeUsername);
+                    setActiveEmail(false);
+                    setActivePassword(false);
+                    resetAllFields();
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
             </div>
           )}
           {activeEmail ? (
             <form
               onSubmit={handleEmailChange(handleEmailSubmit)}
-              className="profile-card-element"
+              className="profile-settings-wrapper"
             >
-              <label
-                className="profile-card-label"
-                htmlFor="email"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                {...emailRegister("email")}
-                required
-              />
+              <label htmlFor="email">Email</label>
+              <div className="profile-settings-input">
+                <input
+                  id="email"
+                  type="email"
+                  {...emailRegister("email")}
+                  required
+                />
 
-              <button type="submit">Save</button>
+                <button type="submit">Save</button>
+              </div>
               <div>
                 {error && <p className="error-text">{error}</p>}
                 {errorsEmail.email && <p className="error-text">{errorsEmail.email.message}</p>}
               </div>
             </form>
           ) : (
-            <div className="profile-card-element">
-              <label className="profile-card-label">Email</label>
-              <p>{user.email}</p>
-              <button
-                onClick={() => {
-                  setActiveUsername(false);
-                  setActiveEmail(!activeEmail);
-                  setActivePassword(false);
-                  resetAllFields();
-                }}
-              >
-                Edit
-              </button>
+            <div className="profile-settings-wrapper">
+              <label>Email</label>
+
+              <div className="profile-settings-input">
+                <p>{user.email}</p>
+                <button
+                  onClick={() => {
+                    setActiveUsername(false);
+                    setActiveEmail(!activeEmail);
+                    setActivePassword(false);
+                    resetAllFields();
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
             </div>
           )}
           {activePassword ? (
             <form
               onSubmit={handlePasswordChange(handlePasswordSubmit)}
-              className="profile-card-element"
+              className="profile-settings-wrapper"
             >
-              <label
-                className="profile-card-label"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                {...passwordRegister("password")}
-                required
-                placeholder="Set new password"
-              />
-
-              <button type="submit">Save</button>
+              <label htmlFor="password">Password</label>
+              <div className="profile-settings-input">
+                <div className="password-input-wrapper">
+                  <input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    {...passwordRegister("password")}
+                    required
+                    placeholder="Set new password"
+                  />
+                  <button
+                    className="form-group-icon button-transparent"
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                  </button>
+                </div>
+                <button type="submit">Save</button>
+              </div>
               <div>
                 {error && <p className="error-text">{error}</p>}
                 {errorsPassword.password && <p className="error-text">{errorsPassword.password.message}</p>}
               </div>
             </form>
           ) : (
-            <div className="profile-card-element">
-              <label className="profile-card-label">Password</label>
-              <p>xxxxxxxxxxxxxxxxxxx</p>
-              <button
-                onClick={() => {
-                  setActiveUsername(false);
-                  setActiveEmail(false);
-                  setActivePassword(!activePassword);
-                  resetAllFields();
-                }}
-              >
-                Edit
-              </button>
+            <div className="profile-settings-wrapper">
+              <label>Password</label>
+
+              <div className="profile-settings-input">
+                <p>************</p>
+                <button
+                  onClick={() => {
+                    setActiveUsername(false);
+                    setActiveEmail(false);
+                    setActivePassword(!activePassword);
+                    resetAllFields();
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
             </div>
           )}
-          <div className="profile-card-element">
-            <label className="profile-card-label">Delete Account</label>
-            <p className="description">Permanently delete your account</p>
-            <button
-              className="button-pink"
-              onClick={() => setIsOpen(true)}
-            >
-              Delete
-            </button>
+          <div className="profile-settings-wrapper">
+            <label>Delete Account</label>
+            <div className="profile-settings-input">
+              <p>Permanently delete your account.</p>
+              <button
+                className="button-pink"
+                onClick={() => setIsOpen(true)}
+              >
+                Delete
+              </button>
+            </div>
             <Modal
               isOpen={isOpen}
               closeModal={closeModal}
               content={
-                <>
-                  <div className="profile-card-modal-content">
-                    <h3>Are you sure you want to delete your account ?</h3>
+                <div className="profile-settings-modal-content">
+                  <div>
+                    <h3>Are you sure you want to delete your account?</h3>
 
                     <p className="description">
                       If you delete your account, all your lists, reviews and other data will be destroyed permanently.
                     </p>
-                  </div>
 
-                  {error && (
-                    <p
-                      className="error-text"
-                      style={{ display: "flex", justifyContent: "center", padding: "5px" }}
-                    >
-                      {error}
-                    </p>
-                  )}
-                  <div className="profile-card-modal-buttons">
+                    {error && (
+                      <p
+                        className="error-text"
+                        style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+                      >
+                        {error}
+                      </p>
+                    )}
+                  </div>
+                  <div className="profile-settings-modal-buttons">
                     <button
                       onClick={() => {
                         setIsOpen(false);
@@ -444,12 +470,12 @@ export const ProfileSettings = ({ user }: Props) => {
                       Delete Account
                     </button>
                   </div>
-                </>
+                </div>
               }
             />
           </div>
         </div>
-        <div className="profile-card-content-divider">
+        <div className="profile-settings-divider">
           <h3>Profile Privacy</h3>
           <p className="description">Here you can choose who can see your profile.</p>
           <form>
@@ -483,10 +509,10 @@ export const ProfileSettings = ({ user }: Props) => {
             </label>
           </form>
         </div>
-        <div className="profile-card-content-divider">
+        <div className="profile-settings-divider">
           <h3>Content Filter</h3>
           <p className="description">
-            Here you can choose to filter content and make your movie browsing experience more suitable for your needs
+            Here you can choose to filter content and make your movie browsing experience more suitable for your needs.
           </p>
           <form>
             <label className="label-row">

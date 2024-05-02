@@ -14,32 +14,38 @@ h6 {
   letter-spacing: abstracts.$title-letter-spacing;
 }
 
-h1 {
+h1,
+.h1 {
   font-size: abstracts.$h1-font-size;
   font-weight: 400;
 }
 
-h2 {
+h2,
+.h2 {
   font-size: abstracts.$h2-font-size;
   font-weight: 400;
 }
 
-h3 {
+h3,
+.h3 {
   font-size: abstracts.$h3-font-size;
-  font-weight: 300;
+  font-weight: 400;
 }
 
-h4 {
+h4,
+.h4 {
   font-size: abstracts.$h4-font-size;
   font-weight: 300;
 }
 
-h5 {
+h5,
+.h5 {
   font-size: abstracts.$h5-font-size;
   font-weight: 400;
 }
 
-h6 {
+h6,
+.h6 {
   letter-spacing: 0;
   font-size: abstracts.$h6-font-size;
   font-weight: 300;
@@ -122,16 +128,8 @@ p {
   font-weight: 300;
   font-style: italic;
   line-height: abstracts.$default-line-height;
+  margin-bottom: 10px;
 }
-.profile-card-label {
-  grid-column: auto / span 2;
-  font-size: abstracts.$h3-font-size;
-  font-weight: 300;
-  font-family: var(--font-poppins);
-  line-height: 1.6;
-  letter-spacing: -0.05rem;
-}
-
 .yellow-name-header {
   font-family: abstracts.$default-title-font;
   line-height: abstracts.$default-line-height;

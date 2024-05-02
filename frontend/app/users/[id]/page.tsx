@@ -32,14 +32,14 @@ export default async function userProfile({ params }: { params: { id: string } }
 
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-      <h5>{user.username}&rsquo;s favorites</h5>
+      <h3 className="h5">{user.username}&rsquo;s favorites</h3>
       <Link href={`/users/${params.id}/favorites`}>See all</Link>
     </div>
   );
 
   const userReviewsHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-      <h5>Latest reviews</h5>
+      <h3 className="h5">Latest reviews</h3>
       <Link href={`/users/${params.id}/reviews`}>See all</Link>
     </div>
   );
@@ -72,7 +72,7 @@ export default async function userProfile({ params }: { params: { id: string } }
         {/* User-made lists */}
         <div className="section">
           <div className="list-header">
-            <h5>Lists</h5>
+            <h3 className="h5">Lists</h3>
           </div>
           <div className="list-wrapper">
             {exampleLists.map(list => (

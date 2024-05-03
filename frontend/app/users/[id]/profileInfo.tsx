@@ -15,11 +15,11 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
 
   return (
     <div className="profile-info">
-      <h5>{user?.username}</h5>
+      <h2 className="h4">{user?.username}</h2>
       <div style={{ backgroundColor: "grey", width: "150px", height: "150px", borderRadius: "50%" }} />
 
       <div>
-        <h6>Description</h6>
+        <h3 className="h5">Description</h3>
         <p className="profile-description">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque maxime repudiandae quasi sunt delectus
           perferendis, provident pariatur reprehenderit iure quas officia mollitia, corporis ipsa.
@@ -27,7 +27,7 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
       </div>
 
       <div className="full-width">
-        <h6>Social media</h6>
+        <h3 className="h5">Social media</h3>
         <div className="profile-social-media">
           <div>
             <Twitter color="#d75eb5" />
@@ -49,7 +49,7 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
       <div className="full-width">
         <div className="profile-friend-list">
           <div className="friends-title">
-            <h5>Friends</h5>
+            <h3 className="h5">Friends</h3>
             <Link href={`/users/${userId}/friends`}>See all</Link>
           </div>
 

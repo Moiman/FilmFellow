@@ -21,9 +21,9 @@ export default async function userFavorites({ params }: { params: { id: string }
     <main>
       <Section
         header={
-          <h3 className="yellow-name-header">
+          <h2 className="yellow-name-header h3">
             <Link href={"/users/" + params.id}>{user.username}</Link>&rsquo;s favorites
-          </h3>
+          </h2>
         }
       >
         {favorites.length > 0 ? <MovieList movies={shuffleArray(favorites)} /> : <p>No favorite movies yet.</p>}

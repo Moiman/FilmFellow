@@ -4,7 +4,7 @@
 .modal-background {
   display: flex;
   position: fixed;
-  background-color: rgba(abstracts.$primary-dark, 0.5);
+  background-color: rgba(abstracts.$primary-dark, 0.75);
   justify-content: center;
   align-items: center;
   left: 0;
@@ -21,7 +21,8 @@
   overflow: hidden;
   color: white;
   width: 700px;
-  min-height: 400px;
+  min-height: fit-content;
+  box-shadow: abstracts.$default-shadow;
 
   a {
     padding: 0;

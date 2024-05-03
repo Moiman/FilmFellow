@@ -21,3 +21,8 @@
   background-color: abstracts.$primary-grey;
   padding: 15px;
 }
+
+.section-wrapper {
+  display: grid;
+  gap: 40px;
+}

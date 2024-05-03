@@ -2,48 +2,47 @@ describe("Header tests", () => {
   describe("Navbar tests when screen width > 1024px", () => {
     it("Navigate to home page with navbar", () => {
       cy.visit("/new");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/new");
-      cy.get('a[href="/"]').click();
-      cy.url().should("include", "/");
-      cy.get("h1").contains("FilmFellow");
+      cy.location("pathname").should("eq", "/new");
+      cy.get('header a[href="/"]').click();
+      cy.location("pathname").should("eq", "/");
     });
 
     it("Navigate to New with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/new"]').click();
-      cy.url().should("include", "/new");
-      cy.get("h2").contains("New");
+      cy.location("pathname").should("eq", "/");
+      cy.get('header a[href="/new"]').click();
+      cy.location("pathname").should("eq", "/new");
+      cy.get("main h2").contains("New");
     });
 
     it("Navigate to Popular with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/popular"]').click();
-      cy.url().should("include", "/popular");
-      cy.get("h2").contains("Popular");
+      cy.location("pathname").should("eq", "/");
+      cy.get('header a[href="/popular"]').click();
+      cy.location("pathname").should("eq", "/popular");
+      cy.get("main h2").contains("Popular");
     });
 
     it("Navigate to Best Rated with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/bestrated"]').click();
-      cy.url().should("include", "/bestrated");
-      cy.get("h2").contains("Best Rated");
+      cy.location("pathname").should("eq", "/");
+      cy.get('header a[href="/bestrated"]').click();
+      cy.location("pathname").should("eq", "/bestrated");
+      cy.get("main h2").contains("Best Rated");
     });
 
     it("Navigate to Login with navbar", () => {
       cy.visit("/");
-      cy.url().should("eq", Cypress.env("baseUrl") + "/");
-      cy.get('a[href="/login"]').click();
-      cy.url().should("include", "/login");
-      cy.get("h2").contains("Login");
+      cy.location("pathname").should("eq", "/");
+      cy.get('header a[href="/login"]').click();
+      cy.location("pathname").should("eq", "/login");
+      cy.get("main h2").contains("Login");
     });
 
     it("Test navbar input field", () => {
       cy.visit("/");
-      cy.get('input[placeholder="Search..."]').type("Jaws");
-      cy.get('[data-cy="search-input"]').should("have.value", "Jaws");
+      cy.get('header input[placeholder="Search..."]').type("Jaws");
+      cy.get('header [data-cy="search-input"]').should("have.value", "Jaws");
     });
   });
 
@@ -55,52 +54,51 @@ describe("Header tests", () => {
     () => {
       it("Navigate to home page with navbar", () => {
         cy.visit("/new");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/new");
-        cy.get('a[href="/"]').click();
-        cy.url().should("include", "/");
-        cy.get("h1").contains("FilmFellow");
+        cy.location("pathname").should("eq", "/new");
+        cy.get('header a[href="/"]').click();
+        cy.location("pathname").should("eq", "/");
       });
 
       it("Navigate to New with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
-        cy.get('[data-cy="menu-icon"]').click();
-        cy.get('.dropdown a[href="/new"]').click();
-        cy.url().should("include", "/new");
-        cy.get("h2").contains("New");
+        cy.location("pathname").should("eq", "/");
+        cy.get('header [data-cy="menu-icon"]').click();
+        cy.get('header .dropdown a[href="/new"]').click();
+        cy.location("pathname").should("eq", "/new");
+        cy.get("main h2").contains("New");
       });
 
       it("Navigate to Popular with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
-        cy.get('[data-cy="menu-icon"]').click();
-        cy.get('.dropdown a[href="/popular"]').click();
-        cy.url().should("include", "/popular");
-        cy.get("h2").contains("Popular");
+        cy.location("pathname").should("eq", "/");
+        cy.get('header [data-cy="menu-icon"]').click();
+        cy.get('header .dropdown a[href="/popular"]').click();
+        cy.location("pathname").should("eq", "/popular");
+        cy.get("main h2").contains("Popular");
       });
 
       it("Navigate to Best Rated with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
-        cy.get('[data-cy="menu-icon"]').click();
-        cy.get('.dropdown a[href="/bestrated"]').click();
-        cy.url().should("include", "/bestrated");
-        cy.get("h2").contains("Best Rated");
+        cy.location("pathname").should("eq", "/");
+        cy.get('header [data-cy="menu-icon"]').click();
+        cy.get('header .dropdown a[href="/bestrated"]').click();
+        cy.location("pathname").should("eq", "/bestrated");
+        cy.get("main h2").contains("Best Rated");
       });
 
       it("Navigate to Login with navbar", () => {
         cy.visit("/");
-        cy.url().should("eq", Cypress.env("baseUrl") + "/");
-        cy.get('[data-cy="menu-icon"]').click();
-        cy.get('.dropdown a[href="/login"]').click();
-        cy.url().should("include", "/login");
-        cy.get("h2").contains("Login");
+        cy.location("pathname").should("eq", "/");
+        cy.get('header [data-cy="menu-icon"]').click();
+        cy.get('header .dropdown a[href="/login"]').click();
+        cy.location("pathname").should("eq", "/login");
+        cy.get("main h2").contains("Login");
       });
 
       it("Test navbar input field", () => {
         cy.visit("/");
-        cy.get('input[placeholder="Search..."]').type("Jaws");
-        cy.get('[data-cy="search-input"]').should("have.value", "Jaws");
+        cy.get('header input[placeholder="Search..."]').type("Jaws");
+        cy.get('header [data-cy="search-input"]').should("have.value", "Jaws");
       });
     },
   );

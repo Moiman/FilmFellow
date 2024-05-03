@@ -1,8 +1,8 @@
 describe("Movie page tests", () => {
   it("Basic movie page test", () => {
     cy.visit("/movies/278");
-    cy.url().should("eq", Cypress.env("baseUrl") + "/movies/278");
-    cy.get("h1").contains("The Shawshank Redemption").should("be.visible");
+    cy.location("pathname").should("eq", "/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption").should("be.visible");
     cy.get(".movie-data-row>p").first().contains("Frank Darabont").should("be.visible");
     cy.get(".movie-data-row>p").eq(1).contains("1994").should("be.visible");
     cy.get(".movie-data-row>p").eq(2).contains("R").should("be.visible");
@@ -19,7 +19,7 @@ describe("Movie page tests", () => {
 
   it("Second Basic movie page test", () => {
     cy.visit("/movies/13");
-    cy.get("h1").contains("Forrest Gump");
+    cy.get("h2").contains("Forrest Gump");
     cy.get(".movie-data-row>p").first().contains("Zemeckis").should("be.visible");
     cy.get(".movie-data-row>p").eq(1).contains("1994").should("be.visible");
     cy.get(".movie-data-row>p").eq(2).contains("PG-13").should("be.visible");
@@ -47,7 +47,7 @@ describe("Movie page tests", () => {
       return false;
     });
     cy.visit("/movies/27832131", { failOnStatusCode: false });
-    cy.url().should("eq", Cypress.env("baseUrl") + "/movies/27832131");
+    cy.location("pathname").should("eq", "/movies/27832131");
     cy.get("h2").contains("404").should("be.visible");
   });
 });
@@ -67,7 +67,7 @@ describe("Logged in movie page tests", () => {
   it("Logged movie page test", () => {
     cy.login(email, password);
     cy.visit("/movies/13");
-    cy.get("h1").contains("Forrest Gump");
+    cy.get("h2").contains("Forrest Gump");
     cy.get(".movie-data-row>p").first().contains("Zemeckis").should("be.visible");
     cy.get(".movie-data-row>p").eq(1).contains("1994").should("be.visible");
     cy.get(".movie-data-row>p").eq(2).contains("PG-13").should("be.visible");

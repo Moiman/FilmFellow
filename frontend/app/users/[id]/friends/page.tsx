@@ -15,9 +15,9 @@ export default async function userFriends({ params }: { params: { id: string } }
     <main>
       <Section
         header={
-          <h3 className="yellow-name-header">
+          <h2 className="yellow-name-header h3">
             <Link href={"/users/" + params.id}>{user.username}</Link>&rsquo;s friends
-          </h3>
+          </h2>
         }
       >
         <></>

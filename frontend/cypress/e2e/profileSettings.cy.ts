@@ -5,6 +5,9 @@ describe("Profile page tests", () => {
     password: "Password1!",
   };
 
+  const newEmail = "newMail@gmail.com";
+  const newPassword = "Newpassword1!";
+
   before("Register new user for profile page testing", () => {
     cy.register(newUser.email, newUser.password);
   });
@@ -24,11 +27,11 @@ describe("Profile page tests", () => {
   it("Try to change username in the profile page without value", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .first()
       .should("be.visible")
       .find("button")
@@ -43,11 +46,11 @@ describe("Profile page tests", () => {
   it("Try to change username in the profile page to something that doesnt meet the requirements", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .first()
       .should("be.visible")
       .find("button")
@@ -63,11 +66,11 @@ describe("Profile page tests", () => {
   it("Try to change username in the profile page as existing one", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .first()
       .should("be.visible")
       .find("button")
@@ -83,31 +86,31 @@ describe("Profile page tests", () => {
   it("Change username successfully in the profile page", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .first()
       .should("be.visible")
       .find("button")
       .should("be.visible")
       .click();
     cy.get('input[name="username"]').clear();
-    cy.get('input[name="username"]').type("newUsername");
+    cy.get('input[name="username"]').type(newUser.username);
     cy.get('button[type="submit"]').click();
-    cy.contains("newUsername").should("be.visible");
+    cy.contains(newUser.username).should("be.visible");
     cy.location("pathname").should("eq", "/profile/settings");
   });
 
   it("Try to change email in the profile page without value", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(1)
       .should("be.visible")
       .find("button")
@@ -122,11 +125,11 @@ describe("Profile page tests", () => {
   it("Try to change email in the profile page as existing one", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(1)
       .should("be.visible")
       .find("button")
@@ -142,31 +145,31 @@ describe("Profile page tests", () => {
   it("Change email successfully in the profile page", () => {
     cy.login(newUser.email, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(1)
       .should("be.visible")
       .find("button")
       .should("be.visible")
       .click();
     cy.get('input[name="email"]').clear();
-    cy.get('input[name="email"]').type("newEmail@gmail.com");
+    cy.get('input[name="email"]').type(newEmail);
     cy.get('button[type="submit"]').click();
-    cy.contains("newUsername").should("be.visible");
+    cy.contains(newEmail).should("be.visible");
     cy.location("pathname").should("eq", "/profile/settings");
   });
 
   it("Try to change password in the profile page without value", () => {
-    cy.login("newEmail@gmail.com", newUser.password);
+    cy.login(newEmail, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(2)
       .should("be.visible")
       .find("button")
@@ -178,13 +181,13 @@ describe("Profile page tests", () => {
   });
 
   it("Try to change password in the profile page to something that doesnt meet the requirements", () => {
-    cy.login("newEmail@gmail.com", newUser.password);
+    cy.login(newEmail, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(2)
       .should("be.visible")
       .find("button")
@@ -197,32 +200,32 @@ describe("Profile page tests", () => {
   });
 
   it("Change password succeessfully in the profile page", () => {
-    cy.login("newEmail@gmail.com", newUser.password);
+    cy.login(newEmail, newUser.password);
     cy.visit("/profile/settings");
-    cy.get(".profile-card-right")
-      .find(".profile-card-content-divider")
+    cy.get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(2)
       .should("be.visible")
       .find("button")
       .should("be.visible")
       .click();
-    cy.get('input[name="password"]').type("Newpassword1!");
+    cy.get('input[name="password"]').type(newPassword);
     cy.get('button[type="submit"]').click();
     cy.location("pathname").should("eq", "/profile/settings");
   });
 
   it("Delete user confirmation modal in the profile page and press cancel", () => {
-    cy.login("newEmail@gmail.com", "Newpassword1!");
+    cy.login(newEmail, newPassword);
     cy.visit("/profile/settings");
     cy
-      .get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(3)
       .should("be.visible")
       .find("button")
@@ -235,14 +238,14 @@ describe("Profile page tests", () => {
   });
 
   it("Delete user confirmation modal in the profile page and successfully delete user", () => {
-    cy.login("newEmail@gmail.com", "Newpassword1!");
+    cy.login(newEmail, newPassword);
     cy.visit("/profile/settings");
     cy
-      .get(".profile-card-right")
-      .find(".profile-card-content-divider")
+      .get(".profile-settings-right")
+      .find(".profile-settings-divider")
       .first()
       .should("be.visible")
-      .find(".profile-card-element")
+      .find(".profile-settings-wrapper")
       .eq(3)
       .should("be.visible")
       .find("button")

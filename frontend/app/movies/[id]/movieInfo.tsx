@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -57,14 +58,13 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
     <div className="movie-content">
       <div className="movie-wrapper">
         <div className="image-wrapper">
-          {/* Working image for when we have backdrop paths:
           <Image
             alt={`${movie.title}`}
-            src={`${movie.backdropPath}`}
-            width={500}
-            height={500}
+            src={`https://image.tmdb.org/t/p/w780/${movie.backdropPath}`}
+            fill={true}
+            sizes="100%"
+            priority={true}
           />
-          */}
           <div className="gradient" />
         </div>
 

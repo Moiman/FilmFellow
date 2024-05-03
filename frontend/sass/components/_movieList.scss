@@ -3,31 +3,13 @@
 .movie-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 10px;
-
-  // Remove this when not needed anymore
-  .placeholder-movie-poster {
-    background-color: grey;
-    aspect-ratio: 2 / 3;
-    border: 1px solid abstracts.$primary-dark;
-    box-shadow: abstracts.$default-shadow;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
-  }
-
-  .placeholder-movie-poster:hover {
-    transform: scale(105%);
-    transition: 0.2s;
-    transition-timing-function: ease-in-out;
-  }
+  gap: 20px;
 
   img {
     object-fit: cover;
     width: 100%;
     height: auto;
+    border: 1px solid abstracts.$primary-dark;
     box-shadow: abstracts.$default-shadow;
   }
 

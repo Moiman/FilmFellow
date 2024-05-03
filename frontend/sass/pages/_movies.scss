@@ -28,11 +28,9 @@
 
     .image-wrapper {
       display: flex;
-      aspect-ratio: 2 / 1;
       min-width: 400px;
       max-width: 800px;
       flex: 1;
-      overflow: hidden;
       position: relative;
 
       img {

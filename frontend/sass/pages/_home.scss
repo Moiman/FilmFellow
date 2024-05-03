@@ -1,17 +1,9 @@
 @use "../abstracts" as abstracts;
 
-.dropdown-button {
+.genre-dropdown {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
   width: 100%;
-}
-
-.dropdown-menu {
-  z-index: 100;
-}
-
-.dropdown-item {
-  cursor: pointer;
 }

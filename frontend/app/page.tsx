@@ -1,34 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Check } from "react-feather";
 
 import { Dropdown } from "@/components/dropdown";
 import { Section } from "@/components/section";
 import { fetchGenres, fetchMovies } from "./movieFetches";
+import { MovieList } from "@/components/movieList";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
   const getPosters = async (type: string, genre: string | undefined) => {
     const moviesArr = await fetchMovies(6, type, genre);
-    const movieList = moviesArr.map(movie => {
-      return (
-        <Link
-          key={movie.id}
-          href={"/movies/" + movie.id}
-        >
-          <Image
-            key={movie.id}
-            className="poster"
-            //muuta pathi postereille omaan storageen jahka sellannen on
-            src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
-            alt={movie.title}
-            width={500}
-            height={750}
-          />
-        </Link>
-      );
-    });
-    return movieList;
+    return moviesArr;
   };
 
   const getGenres = async () => {
@@ -70,9 +52,10 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
 
   return (
     <main>
-      <div className="dropdown-button">
+      <div className="genre-dropdown">
         <p>Genre</p>
         <Dropdown
+          zIndex={10}
           width={200}
           selected={selectedGenre ?? "All"}
         >
@@ -89,7 +72,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
             </div>
           }
         >
-          <div className="poster-list">{await getPosters("new", selectedGenre)}</div>
+          <MovieList movies={await getPosters("new", selectedGenre)} />
         </Section>
         <Section
           header={
@@ -99,7 +82,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
             </div>
           }
         >
-          <div className="poster-list">{await getPosters("popular", selectedGenre)}</div>
+          <MovieList movies={await getPosters("popular", selectedGenre)} />
         </Section>
         <Section
           header={
@@ -109,7 +92,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
             </div>
           }
         >
-          <div className="poster-list">{await getPosters("bestrated", selectedGenre)}</div>
+          <MovieList movies={await getPosters("bestrated", selectedGenre)} />
         </Section>
       </div>
     </main>

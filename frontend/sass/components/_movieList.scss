@@ -2,15 +2,16 @@
 
 .movie-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
 
   img {
     object-fit: cover;
     width: 100%;
-    height: auto;
+    height: 100%;
     border: 1px solid abstracts.$primary-dark;
     box-shadow: abstracts.$default-shadow;
+    background-color: abstracts.$primary-darkgrey;
   }
 
   img:hover {
@@ -22,6 +23,7 @@
 
 @media only screen and (max-width: abstracts.$large-width) {
   .movie-list {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 }

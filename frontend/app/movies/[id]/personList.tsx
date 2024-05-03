@@ -55,7 +55,6 @@ export const PersonList = ({ persons }: personListProps) => {
                 alt={person.name}
                 width={250}
                 height={250}
-                quality={100}
               />
             ) : (
               <div className="profile-path-placeholder" />

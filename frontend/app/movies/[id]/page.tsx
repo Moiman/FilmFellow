@@ -4,12 +4,11 @@ import { getMovieById } from "@/services/movieService";
 import { Section } from "@/components/section";
 import { MovieInfo } from "./movieInfo";
 import { PersonList } from "./personList";
-import { Fleur_De_Leah } from "next/font/google";
 import Link from "next/link";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
-const getMovie = async (movieId: string) => {
+export const getMovie = async (movieId: string) => {
   try {
     const movieData = await getMovieById(parseInt(movieId), "US");
 
@@ -56,7 +55,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <Section
           header={
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <h3>Cast</h3> <Link href="cast">See all</Link>
+              <h3>Cast</h3> <Link href={`${params.id}/cast`}>See all</Link>
             </div>
           }
         >
@@ -75,7 +74,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <Section
           header={
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <h3>Crew</h3> <Link href="cast">See all</Link>
+              <h3>Crew</h3> <Link href={`${params.id}/crew`}>See all</Link>
             </div>
           }
         >

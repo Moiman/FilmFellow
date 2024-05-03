@@ -56,9 +56,11 @@ export default async function Person({ params }: { params: { id: string } }) {
           <div className="image-wrapper">
             <Image
               alt={`${person.name}`}
-              src={`https://image.tmdb.org/t/p/original/${person.profile_path}`}
-              width={1000}
-              height={1000}
+              src={`https://image.tmdb.org/t/p/h632/${person.profile_path}`}
+              fill={true}
+              sizes="100%"
+              priority={true}
+              quality={100}
             />
             <div className="gradient" />
           </div>

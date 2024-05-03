@@ -34,12 +34,9 @@
       flex: 1;
       overflow: hidden;
       position: relative;
-      background-color: grey;
 
       img {
         object-fit: cover;
-        width: 100%;
-        height: auto;
       }
 
       .gradient {
@@ -122,6 +119,7 @@
       .movie-data-row {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         gap: 20px;
 
         p,
@@ -143,7 +141,6 @@
 
       @media only screen and (max-width: abstracts.$medium-width) {
         .movie-data-row {
-          flex-wrap: wrap;
           gap: 10px;
         }
       }

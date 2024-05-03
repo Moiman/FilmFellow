@@ -10,7 +10,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
   const selectedGenre = searchParams?.genre;
   const getPosters = async (type: string, genre: string | undefined) => {
     const moviesArr = await fetchMovies(6, type, genre);
-    const movieList = moviesArr.map((movie: { id: number; poster_path: string; title: string }) => {
+    const movieList = moviesArr.map(movie => {
       return (
         <Link
           key={movie.id}

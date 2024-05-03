@@ -46,7 +46,6 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
             fill={true}
             sizes="100%"
             priority={true}
-            quality={100}
           />
           <div className="gradient" />
         </div>

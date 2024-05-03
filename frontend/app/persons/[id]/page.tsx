@@ -60,7 +60,6 @@ export default async function Person({ params }: { params: { id: string } }) {
               fill={true}
               sizes="100%"
               priority={true}
-              quality={100}
             />
             <div className="gradient" />
           </div>

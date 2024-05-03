@@ -1,10 +1,4 @@
-"use client";
-
-import { useState } from "react";
 import { Star } from "react-feather";
-
-import { setMovieRating } from "@/services/watchedService";
-import { useRouter } from "next/navigation";
 
 interface Props {
   rating: number | null;

@@ -1,9 +1,8 @@
 "use client";
 
-import Modal from "@/components/modal";
 import { useState } from "react";
+import Modal from "@/components/modal";
 import { StarRating } from "./starRating";
-import { toggleIsWatched } from "@/services/watchedService";
 
 interface Props {
   watched: boolean;

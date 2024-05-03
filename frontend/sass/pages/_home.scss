@@ -1,42 +1,9 @@
 @use "../abstracts" as abstracts;
 
-.poster-list {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-}
-
-@media only screen and (max-width: abstracts.$large-width) {
-  .poster-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.poster {
-  height: auto;
-  width: 100%;
-  box-shadow: abstracts.$default-shadow;
-  border: abstracts.$default-border;
-}
-
-.poster:hover {
-  transform: scale(105%);
-  transition: 0.2s;
-  transition-timing-function: ease-in-out;
-}
-
-.dropdown-button {
+.genre-dropdown {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
   width: 100%;
-}
-
-.dropdown-menu {
-  z-index: 100;
-}
-
-.dropdown-item {
-  cursor: pointer;
 }

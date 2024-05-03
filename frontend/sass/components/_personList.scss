@@ -3,30 +3,26 @@
 .person-list {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
+  gap: 20px;
 
   .person-wrapper {
     display: grid;
     text-align: center;
     height: fit-content;
 
-    img {
+    img,
+    .profile-path-placeholder {
       border-radius: 50%;
       aspect-ratio: 1;
       object-fit: cover;
       width: 100%;
-      max-width: 250px;
+      max-width: 200px;
       height: auto;
       box-shadow: abstracts.$default-shadow;
     }
 
     .profile-path-placeholder {
       display: inline-block;
-      border-radius: 50%;
-      aspect-ratio: 1;
-      width: 100%;
-      height: auto;
-      box-shadow: abstracts.$default-shadow;
       background-color: grey;
     }
 

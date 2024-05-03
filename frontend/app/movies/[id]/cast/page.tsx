@@ -1,5 +1,7 @@
-import { getMovieById } from "@/services/movieService";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+
+import { getMovieById } from "@/services/movieService";
 import { PersonList } from "../personList";
 import { Section } from "@/components/section";
 
@@ -11,9 +13,9 @@ export const getMovie = async (movieId: string) => {
       return null;
     }
 
-    const { cast } = movieData;
+    const { title, cast } = movieData;
 
-    return cast;
+    return { title, cast };
   } catch (error) {
     console.error("Error fetching movie data:", error);
     return null;
@@ -21,18 +23,23 @@ export const getMovie = async (movieId: string) => {
 };
 
 export default async function Movie({ params }: { params: { id: string } }) {
-  const movieCast = await getMovie(params.id);
-  console.log(movieCast);
+  const movie = await getMovie(params.id);
 
-  if (!movieCast) {
+  if (!movie) {
     notFound();
   }
 
   return (
     <main>
-      <Section header="Crew">
+      <Section
+        header={
+          <div className="yellow-name-header">
+            <Link href={`/movies/${params.id}`}>{movie.title}</Link> Cast
+          </div>
+        }
+      >
         <PersonList
-          persons={movieCast.map(castMember => {
+          persons={movie.cast.map(castMember => {
             return {
               id: castMember.personId,
               name: castMember.name,

@@ -146,3 +146,12 @@ p {
     color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
   }
 }
+
+// Colors
+.yellow {
+  color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
+.cyan {
+  color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+}

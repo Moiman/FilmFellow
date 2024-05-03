@@ -1,7 +1,8 @@
 import { Smile } from "react-feather";
-import { Dropdown } from "../dropdown";
-import { Role } from "@prisma/client";
 import { useState } from "react";
+import { Role } from "@prisma/client";
+import Modal from "../modal";
+import { Dropdown } from "../dropdown";
 
 interface User {
   email: string;
@@ -19,7 +20,11 @@ interface Props {
 }
 
 export const UserDetails = ({ user, setAllUsers }: Props) => {
+  const [modalError, setModalError] = useState("");
   const [error, setError] = useState("");
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isRoleChangeOpen, setIsRoleChangeOpen] = useState(false);
+
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
       const banDetails = {
@@ -35,9 +40,8 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
         },
         body: JSON.stringify(banDetails),
       });
-      console.log(response);
       const data = await response.json();
-      console.log(data);
+
       if (!response.ok) {
         setError(data.error);
         return;
@@ -112,7 +116,7 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
 
       const data = await response.json();
       if (!response.ok) {
-        setError(data.error);
+        setModalError(data.error);
         return;
       }
       if (response.ok && !data.error) {
@@ -124,7 +128,7 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
             return User;
           }),
         );
-        setError("");
+        setModalError("");
       }
     } catch (error) {
       console.error(error);
@@ -143,12 +147,12 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
 
       const data = await response.json();
       if (!response.ok) {
-        setError(data.error);
+        setModalError(data.error);
         return;
       }
       if (response.ok && !data.error) {
         setAllUsers(prev => prev?.filter(User => User.id !== data.id));
-        setError("");
+        setModalError("");
       }
     } catch (error) {
       console.error(error);
@@ -159,6 +163,27 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
     const dateFormatted = date.toISOString().slice(0, 10).split("-").reverse().join(".");
     return dateFormatted;
   };
+
+  const closeDeleteModal = () => {
+    setIsDeleteOpen(false);
+    setModalError("");
+  };
+
+  const closeRoleChangeModal = () => {
+    setIsRoleChangeOpen(false);
+    setModalError("");
+  };
+
+  const openDeleteModal = () => {
+    setIsDeleteOpen(true);
+    setError("");
+  };
+
+  const openRoleChangeModal = () => {
+    setIsRoleChangeOpen(true);
+    setError("");
+  };
+
   return (
     <>
       <div className="admin-panel-user-list">
@@ -229,17 +254,92 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
               <button onClick={() => handleUnBanSubmit()}>Lift Ban</button>
             )}
             <button
-              onClick={() => handleUserDelete()}
+              onClick={() => openDeleteModal()}
               className="button-pink"
             >
               Delete
             </button>
+            <Modal
+              isOpen={isDeleteOpen}
+              closeModal={closeDeleteModal}
+              content={
+                <>
+                  <div className="profile-card-modal-content">
+                    <h4>Are you sure you want to delete this account ?</h4>
+
+                    <p className="description">
+                      If you delete this account, all of the user lists, reviews and other data will be destroyed
+                      permanently.
+                    </p>
+                  </div>
+
+                  {modalError && (
+                    <p
+                      className="error-text"
+                      style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+                    >
+                      {modalError}
+                    </p>
+                  )}
+                  <div className="profile-card-modal-buttons">
+                    <button
+                      onClick={() => {
+                        closeDeleteModal();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="button-pink"
+                      onClick={handleUserDelete}
+                    >
+                      Delete Account
+                    </button>
+                  </div>
+                </>
+              }
+            />
             <button
-              onClick={() => handleRoleChange()}
+              onClick={() => openRoleChangeModal()}
               className="button-cyan"
             >
               Make admin
             </button>
+            <Modal
+              isOpen={isRoleChangeOpen}
+              closeModal={closeRoleChangeModal}
+              content={
+                <>
+                  <div className="profile-card-modal-content">
+                    <h4>Are you sure you want to change this user to admin ?</h4>
+                  </div>
+
+                  {modalError && (
+                    <p
+                      className="error-text"
+                      style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+                    >
+                      {modalError}
+                    </p>
+                  )}
+                  <div className="profile-card-modal-buttons">
+                    <button
+                      onClick={() => {
+                        closeRoleChangeModal();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="button-pink"
+                      onClick={handleRoleChange}
+                    >
+                      Make Admin
+                    </button>
+                  </div>
+                </>
+              }
+            />
             {error && (
               <div>
                 <p className="error-text">{error}</p>

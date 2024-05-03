@@ -1,9 +1,10 @@
 "use client";
-import { UserDetails } from "./userDetails";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sidebar } from "../sidebar";
 import { useState } from "react";
+import { UserDetails } from "./userDetails";
+import { Sidebar } from "../sidebar";
+
 interface User {
   email: string;
   id: number | string;

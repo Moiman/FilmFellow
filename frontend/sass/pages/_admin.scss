@@ -52,10 +52,9 @@
 
 .admin-panel-left-side {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   min-width: 50%;
-  justify-items: center;
 }
 .admin-panel-right-side {
   display: grid;

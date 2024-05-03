@@ -3,7 +3,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "../sidebar";
 
-
 export const AdminPanelStatistics = () => {
   const currentPath = usePathname();
   return (

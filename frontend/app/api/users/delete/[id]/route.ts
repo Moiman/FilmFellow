@@ -32,7 +32,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Params }) {
       if (!existingUser) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
       }
-      if(existingUser.role === Role.admin){
+      if (existingUser.role === Role.admin) {
         return NextResponse.json({ error: "Cant delete other admins" }, { status: 403 });
       }
 

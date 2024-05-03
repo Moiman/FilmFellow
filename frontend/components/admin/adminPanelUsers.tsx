@@ -55,7 +55,7 @@ export const AdminPanelUsers = ({ users }: Props) => {
             className="searchbar-input"
             placeholder="Search..."
             value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
+            onChange={e => setSearchInput(e.target.value)}
           />
         </div>
         {filteredResults?.map(user => (

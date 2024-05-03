@@ -41,7 +41,7 @@ export const Watched = ({ watched, toggleWatched, setUserRating, movieTitle }: P
             style={{ alignItems: "center", gap: "20px" }}
           >
             <h5>
-              Do you want to rate <span className="yellow">{movieTitle}</span>
+              Do you want to rate <span className="yellow">{movieTitle}</span> ?
             </h5>
             <StarRating
               rating={null}

@@ -264,10 +264,13 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
               closeModal={closeDeleteModal}
               content={
                 <>
-                  <div className="profile-card-modal-content">
-                    <h4>Are you sure you want to delete this account ?</h4>
+                  <div style={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
+                    <h3>Are you sure you want to delete this account ?</h3>
 
-                    <p className="description">
+                    <p
+                      className="description"
+                      style={{ marginBottom: "25%" }}
+                    >
                       If you delete this account, all of the user lists, reviews and other data will be destroyed
                       permanently.
                     </p>
@@ -281,7 +284,7 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
                       {modalError}
                     </p>
                   )}
-                  <div className="profile-card-modal-buttons">
+                  <div className="profile-settings-modal-buttons">
                     <button
                       onClick={() => {
                         closeDeleteModal();
@@ -310,8 +313,11 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
               closeModal={closeRoleChangeModal}
               content={
                 <>
-                  <div className="profile-card-modal-content">
-                    <h4>Are you sure you want to change this user to admin ?</h4>
+                  <div
+                    className="profile-settings-modal-content"
+                    style={{ marginBottom: "25%" }}
+                  >
+                    <h3>Are you sure you want to change this user to admin ?</h3>
                   </div>
 
                   {modalError && (
@@ -322,7 +328,7 @@ export const UserDetails = ({ user, setAllUsers }: Props) => {
                       {modalError}
                     </p>
                   )}
-                  <div className="profile-card-modal-buttons">
+                  <div className="profile-settings-modal-buttons">
                     <button
                       onClick={() => {
                         closeRoleChangeModal();

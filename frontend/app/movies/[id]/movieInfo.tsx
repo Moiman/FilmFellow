@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/authOptions";
+"use client";
 
-import { getIsFavorite } from "@/services/favoriteService";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
@@ -10,6 +10,7 @@ import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
 import { Dropdown } from "@/components/dropdown";
 import type { Movie } from "@/app/movies/[id]/page";
+import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",
@@ -22,8 +23,25 @@ const placeholderIcon = {
   borderRadius: "50%",
 };
 
-export const MovieInfo = async ({ movie }: { movie: Movie }) => {
-  const session = await getServerSession(authOptions);
+export const MovieInfo = ({ movie }: { movie: Movie }) => {
+  const { data: session } = useSession();
+  const [rating, setRating] = useState<number | null>(movie.userRating);
+  const [watched, setWatched] = useState<boolean>(movie.isWatched);
+
+  const setUserRating = async (stars: number | null) => {
+    const newRating = stars === rating ? null : stars;
+    setRating(newRating);
+    await setMovieRating(movie.id, newRating);
+    setWatched(true);
+  };
+
+  const toggleWatched = async () => {
+    await toggleIsWatched(movie.id);
+    if (watched) {
+      setRating(null);
+    }
+    setWatched(!watched);
+  };
 
   const minutesToHoursAndMinutesString = (totalMinutes: number): string => {
     if (totalMinutes < 60) {
@@ -53,7 +71,12 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
         <div className="movie-info">
           <div className="movie-rating">
             <div className="current-rating">{movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}</div>
-            {session && <StarRating />}
+            {session && (
+              <StarRating
+                rating={rating}
+                setRating={setUserRating}
+              />
+            )}
           </div>
           <div className="movie-basic-data">
             <h2 className="h1">{movie.title}</h2>
@@ -93,12 +116,17 @@ export const MovieInfo = async ({ movie }: { movie: Movie }) => {
                   <button className="dropdown-item">Example list 2</button>
                   <button className="dropdown-item">Example list 3</button>
                 </Dropdown>
-                <Watched />
+                <Watched
+                  watched={watched}
+                  toggleWatched={toggleWatched}
+                  setUserRating={setUserRating}
+                  movieTitle={movie.title}
+                />
               </div>
               <div className="transparent-buttons">
                 <Favorite
                   movieId={movie.id}
-                  isFavorite={await getIsFavorite(movie.id)}
+                  isFavorite={movie.isFavorite}
                 />
                 <Watchlist />
               </div>

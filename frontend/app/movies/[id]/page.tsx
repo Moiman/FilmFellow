@@ -1,22 +1,27 @@
 import { notFound } from "next/navigation";
 
-import { getMovieById } from "@/services/movieService";
 import { Section } from "@/components/section";
+import { getMovieById } from "@/services/movieService";
 import { MovieInfo } from "./movieInfo";
+import { getIsWatched, getMovieRating } from "@/services/watchedService";
+import { getIsFavorite } from "@/services/favoriteService";
 import { PersonList } from "./personList";
 import Link from "next/link";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
-export const getMovie = async (movieId: string) => {
+const getMovie = async (movieId: string) => {
   try {
     const movieData = await getMovieById(parseInt(movieId), "US");
+    const userRating = await getMovieRating(Number(movieId));
+    const isWatched = await getIsWatched(Number(movieId));
+    const isFavorite = await getIsFavorite(Number(movieId));
 
     if (!movieData) {
       return null;
     }
 
-    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating, crew, cast } =
+    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating, cast, crew } =
       movieData;
 
     const movie = {
@@ -29,8 +34,11 @@ export const getMovie = async (movieId: string) => {
       voteAverage: vote_average,
       directors,
       ageRestrictions: rating ? rating : "?",
-      crew,
       cast,
+      crew,
+      isFavorite,
+      isWatched,
+      userRating,
     };
 
     return movie;
@@ -42,7 +50,6 @@ export const getMovie = async (movieId: string) => {
 
 export default async function Movie({ params }: { params: { id: string } }) {
   const movie = await getMovie(params.id);
-
   if (!movie) {
     notFound();
   }

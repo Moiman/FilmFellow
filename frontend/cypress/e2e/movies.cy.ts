@@ -100,11 +100,49 @@ describe("Logged in movie page tests", () => {
     cy.contains("Add to watchlist", { timeout: 1000 }).should("be.visible");
   });
 
-  it("Logged movie page favorite", () => {
+  it("Mark as watched", () => {
     cy.login(email, password);
     cy.visit("/movies/13");
     cy.contains("Mark as watched").click();
+    cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("be.visible");
+    cy.contains("No thanks").click();
+    cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("not.exist");
     cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
-    cy.contains("Mark as watched", { timeout: 1000 }).should("be.visible");
+    cy.contains("Mark as watched").should("be.visible");
+  });
+
+  it("Mark as watched and click modal X", () => {
+    cy.login(email, password);
+    cy.visit("/movies/13");
+    cy.contains("Mark as watched").click();
+    cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("be.visible");
+    cy.get(".modal-title svg").click();
+    cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("not.exist");
+    cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
+    cy.contains("Mark as watched").should("be.visible");
+  });
+
+  it("Mark as watched and give stars", () => {
+    cy.login(email, password);
+    cy.visit("/movies/13");
+    cy.contains("Mark as watched").click();
+    cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("be.visible");
+    cy.get(".modal-content svg").eq(1).click();
+    cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("not.exist");
+    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#ffc700");
+    cy.get(".movie-rating svg").eq(2).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
+    cy.contains("Mark as watched").should("be.visible");
+  });
+
+  it("Give stars", () => {
+    cy.login(email, password);
+    cy.visit("/movies/13");
+    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.get(".movie-rating svg").eq(1).click();
+    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#ffc700");
+    cy.get(".movie-rating svg").eq(2).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
+    cy.contains("Mark as watched").should("be.visible");
   });
 });

@@ -48,6 +48,7 @@ export const Watched = ({ watched, toggleWatched, setUserRating, movieTitle }: P
                 await setUserRating(stars);
                 closeModal();
               }}
+              size={45}
             />
             <button
               onClick={closeModal}

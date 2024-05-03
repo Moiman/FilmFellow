@@ -55,7 +55,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
       <div className="genre-dropdown">
         <p>Genre</p>
         <Dropdown
-          zIndex={100}
+          zIndex={10}
           width={200}
           selected={selectedGenre ?? "All"}
         >

@@ -43,7 +43,7 @@ export const PersonList = ({ persons }: personListProps) => {
 
   return (
     <div className="person-list">
-      {combinedList.slice(0, 8).map(person => (
+      {combinedList.map(person => (
         <div
           key={person.id}
           className="person-wrapper"
@@ -51,7 +51,7 @@ export const PersonList = ({ persons }: personListProps) => {
           <Link href={`/persons/${person.id}`}>
             {person.profile_path ? (
               <Image
-                src={`https://image.tmdb.org/t/p/w185/${person.profile_path}`}
+                src={`https://image.tmdb.org/t/p/h632/${person.profile_path}`}
                 alt={person.name}
                 width={250}
                 height={250}

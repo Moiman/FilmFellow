@@ -2,9 +2,8 @@
 
 .person-list {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
-  padding: 10px 0;
 
   .person-wrapper {
     display: grid;
@@ -16,6 +15,7 @@
       aspect-ratio: 1;
       object-fit: cover;
       width: 100%;
+      max-width: 250px;
       height: auto;
       box-shadow: abstracts.$default-shadow;
     }
@@ -51,6 +51,6 @@
 
 @media only screen and (max-width: abstracts.$large-width) {
   .person-list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }

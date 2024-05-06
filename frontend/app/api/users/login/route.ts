@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
       if (existingUser.banDuration !== null) {
         if (existingUser.isActive === false && existingUser.banDuration < new Date()) {
           await changeUserStatusById(existingUser.id, true, null);
+          await updateUserLastVisited(existingUser.id, new Date());
+          return NextResponse.json(loggedInUser, { status: 200 });
         }
       }
       if (existingUser.isActive === false && !existingUser.banDuration) {

@@ -29,9 +29,6 @@ const createUser = async (email: string, username: string, password: string) => 
       username,
       email,
       password,
-      role: Role.user,
-      last_visited: new Date(),
-      isActive: true,
     },
     select: selectUserFields,
   });

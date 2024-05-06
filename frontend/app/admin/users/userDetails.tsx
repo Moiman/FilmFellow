@@ -1,8 +1,8 @@
 import { Smile } from "react-feather";
 import { useState } from "react";
 import { Role } from "@prisma/client";
-import Modal from "../../../components/modal";
 import { Dropdown } from "../../../components/dropdown";
+import Modal from "@/components/modal";
 
 interface User {
   email: string;

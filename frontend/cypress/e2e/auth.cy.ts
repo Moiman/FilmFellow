@@ -145,7 +145,7 @@ describe("Api update tests", () => {
       body: {},
     }).should(response => {
       expect(response.status).to.eq(400);
-      expect(response.body.error).to.eq("Missing email, password, username or role");
+      expect(response.body.error).to.eq("Missing email, password, username, role, banDuration or isActive");
     });
   });
 
@@ -300,6 +300,161 @@ describe("Api update tests", () => {
     }).should(res => {
       expect(res.status).to.eq(409);
       expect(res.body.error).to.eq("User already exists with that email");
+    });
+  });
+
+  it("Change other user to admin successfully", () => {
+    const changeUserDetails = {
+      role: "admin",
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${secondNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(200);
+      expect(res.body.role).to.eq("admin");
+    });
+  });
+
+  it("Try to change another admin details as admin", () => {
+    const changeAdminDetails = {
+      username: "newusername",
+    };
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${secondNewUserId}`,
+      failOnStatusCode: false,
+      body: changeAdminDetails,
+    }).should(res => {
+      expect(res.status).to.eq(403);
+      expect(res.body.error).to.eq("Cant change other admin details");
+    });
+  });
+
+  it("Try to ban user without isActive status value", () => {
+    const changeUserDetails = {
+      banDuration: 90000,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Faulty values on ban");
+    });
+  });
+
+  it("Try to ban user with isActive true and banDuration", () => {
+    const changeUserDetails = {
+      banDuration: 90000,
+      isActive: true,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq("Faulty values on ban");
+    });
+  });
+
+  it("Try to ban user with too small time value", () => {
+    const changeUserDetails = {
+      banDuration: -1000,
+      isActive: false,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.exist;
+    });
+  });
+
+  it("Try to ban user with too high time value", () => {
+    const changeUserDetails = {
+      banDuration: 10000000,
+      isActive: false,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.exist;
+    });
+  });
+
+  it("Give user a ban as admin", () => {
+    const changeUserDetails = {
+      isActive: false,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(200);
+      expect(res.body.isActive).to.eq(false);
+    });
+  });
+
+  it("Try to login as banned user", () => {
+    const loginCredentials = {
+      email: firstNewUser.email,
+      password: firstNewUser.password,
+    };
+
+    cy.request({
+      method: "POST",
+      url: `/api/users/login`,
+      failOnStatusCode: false,
+      body: loginCredentials,
+    }).should(res => {
+      expect(res.status).to.eq(401);
+      expect(res.body.error).to.eq("You are banned forever");
+    });
+  });
+
+  it("Unban user", () => {
+    const changeUserDetails = {
+      isActive: true,
+    };
+
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "PUT",
+      url: `/api/users/update/${firstNewUserId}`,
+      failOnStatusCode: false,
+      body: changeUserDetails,
+    }).should(res => {
+      expect(res.status).to.eq(200);
+      expect(res.body.isActive).to.eq(true);
     });
   });
 
@@ -502,6 +657,18 @@ describe("Api delete tests", () => {
       expect(res.status).to.eq(200);
     });
     Cypress.session.clearAllSavedSessions();
+  });
+
+  it("Try to delete another admin as admin", () => {
+    cy.login(admin.email, admin.password);
+    cy.request({
+      method: "DELETE",
+      url: `/api/users/delete/${secondNewUserId}`,
+      failOnStatusCode: false,
+    }).should(res => {
+      expect(res.status).to.eq(403);
+      expect(res.body.error).to.eq("Cant delete other admins");
+    });
   });
 
   it("Delete second dummy user successfully", () => {

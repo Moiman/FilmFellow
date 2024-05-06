@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/authOptions";
-import { deleteUserById } from "@/services/authService";
+import { deleteUserById } from "@/services/userService";
 
 export async function DELETE() {
   try {

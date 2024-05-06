@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Users" ALTER COLUMN "role" SET DEFAULT 'user',
+ALTER COLUMN "isActive" SET DEFAULT true,
+ALTER COLUMN "last_visited" SET DEFAULT CURRENT_TIMESTAMP;

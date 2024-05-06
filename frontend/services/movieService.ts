@@ -190,5 +190,4 @@ const getMovieByLimitType = async (limit: number, type: string) => {
   return moviesPopularOrder;
 };
 
-
 export { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre, getAllGenres, getMovieByLimitType };

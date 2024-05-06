@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { findUserById } from "@/services/authService";
+import { findUserById } from "@/services/userService";
 import { notFound } from "next/navigation";
 
 import { Section } from "@/components/section";

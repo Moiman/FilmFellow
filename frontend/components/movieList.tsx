@@ -22,15 +22,12 @@ export const MovieList = ({ movies }: MovieListProps) => {
                   key={movie.id}
                   href={"/movies/" + movie.id}
                 >
-                  {
-                    /* Replace with proper path when available:*/
-                    <Image
-                      src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
-                      width={500}
-                      height={750}
-                      alt={movie.title}
-                    />
-                  }
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                    width={500}
+                    height={500}
+                    alt={movie.title}
+                  />
                 </Link>
               ),
           )

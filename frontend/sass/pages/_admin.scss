@@ -1,0 +1,85 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.admin-searchbar {
+  max-width: 200px;
+  position: relative;
+  border-radius: 40px;
+  flex: 1;
+  display: flex;
+  margin-bottom: 10px;
+
+  button:focus,
+  input:focus {
+    outline: 0;
+  }
+}
+
+.admin-searchbar-input {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: abstracts.$primary-grey;
+  border: 0;
+  color: abstracts.$primary-light;
+  border-radius: 20px;
+}
+
+.admin-searchbar-input::placeholder {
+  color: abstracts.$primary-light;
+  opacity: 25%;
+}
+
+.admin-searchbar:focus-within {
+  outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
+.admin-searchbar:has(button:focus) {
+  outline: 0;
+}
+
+.admin-panel-status-suspended {
+  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  margin-left: 5px;
+}
+.admin-panel-status-active {
+  color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  margin-left: 5px;
+}
+
+.admin-panel-left-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  min-width: 50%;
+  & > * {
+    padding: 10px;
+  }
+}
+.admin-panel-right-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  min-width: 25%;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+.admin-panel-user-list {
+  background-color: abstracts.$primary-grey;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid;
+  border-color: abstracts.$primary-darkgrey;
+}
+.admin-panel-side-bar {
+  display: grid;
+  grid-template-rows: auto;
+}
+.admin-panel-active-link {
+  border-left: 5px solid map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+}
+
+.admin-panel-content {
+  flex: 1;
+  padding: 40px 60px;
+}

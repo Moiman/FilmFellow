@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import * as yup from "yup";
 import argon2 from "argon2";
-import { findUserByEmail, updateUserLastVisited } from "@/services/userService";
+import { changeUserStatusById, findUserByEmail, updateUserLastVisited } from "@/services/userService";
 
 const loginUserSchema = yup.object({
   email: yup.string().trim().required("email is required").email("Must be a valid email"),
@@ -21,6 +21,11 @@ export async function POST(req: NextRequest) {
         id: existingUser.id,
         role: existingUser.role,
       };
+      if (existingUser.banDuration !== null) {
+        if (existingUser.isActive === false && existingUser.banDuration < new Date()) {
+          await changeUserStatusById(existingUser.id, true, null);
+        }
+      }
       if (existingUser.isActive === false && !existingUser.banDuration) {
         return NextResponse.json({ error: "You are banned forever" }, { status: 401 });
       }

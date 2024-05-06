@@ -2,8 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getMovieById } from "@/services/movieService";
-import { PersonList } from "../personList";
 import { Section } from "@/components/section";
+import { PersonList } from "../personList";
 
 const getMovieCast = async (movieId: string) => {
   try {
@@ -14,7 +14,6 @@ const getMovieCast = async (movieId: string) => {
     }
 
     const { title, cast } = movieData;
-
     return { title, cast };
   } catch (error) {
     console.error("Error fetching movie data:", error);

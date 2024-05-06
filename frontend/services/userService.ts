@@ -21,6 +21,7 @@ const selectUserFields = {
   updated_at: true,
   last_visited: true,
   isActive: true,
+  banDuration: true
 };
 
 const createUser = async (email: string, username: string, password: string) => {

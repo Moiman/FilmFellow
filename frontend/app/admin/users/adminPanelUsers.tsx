@@ -10,6 +10,7 @@ interface User {
   created_at: Date;
   last_visited: Date;
   isActive: boolean;
+  banDuration: Date | null;
 }
 interface Props {
   users: User[];

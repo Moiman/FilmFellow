@@ -1,5 +1,5 @@
 import { Smile } from "react-feather";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Role } from "@prisma/client";
 import { Dropdown } from "../../../components/dropdown";
 import Modal from "@/components/modal";
@@ -12,6 +12,7 @@ interface User {
   created_at: Date;
   last_visited: Date;
   isActive: boolean;
+  banDuration: Date | null;
 }
 interface Props {
   selectedUser: User;
@@ -73,7 +74,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
     }
   };
 
-  const handleUnBanSubmit = async () => {
+  const handleUnBanSubmit = useCallback(async () => {
     try {
       const banDetails = {
         isActive: true,
@@ -113,7 +114,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [selectedUser, setAllUsers]);
 
   const handleRoleChange = async () => {
     try {
@@ -208,6 +209,12 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
     setIsRoleChangeOpen(true);
     setError("");
   };
+
+  useEffect(() => {
+    if (selectedUser.banDuration !== null && selectedUser.banDuration < new Date()) {
+      handleUnBanSubmit();
+    }
+  }, [selectedUser, handleUnBanSubmit]);
 
   return (
     <div className="admin-panel-user-list">

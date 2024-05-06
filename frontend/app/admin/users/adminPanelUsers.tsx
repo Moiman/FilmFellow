@@ -21,10 +21,10 @@ export const AdminPanelUsers = ({ users }: Props) => {
   const filteredResults = searchInput ? allUsers?.filter(user => user.username.startsWith(searchInput)) : allUsers;
   return (
     <div className="admin-panel-content">
-      <div className="searchbar">
+      <div className="admin-searchbar">
         <input
           data-cy="admin-search-input"
-          className="searchbar-input"
+          className="admin-searchbar-input"
           placeholder="Search..."
           value={searchInput}
           onChange={e => setSearchInput(e.target.value)}

@@ -25,10 +25,10 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   const [isRoleChangeOpen, setIsRoleChangeOpen] = useState(false);
 
   const banOptions = [
-    { banDuration: 86400, text: "1 Day" },
-    { banDuration: 604800, text: "7 Days" },
-    { banDuration: 2592000, text: "30 Days" },
-    { banDuration: null, text: "Forever" },
+    { id: 0, banDuration: 86400, text: "1 Day" },
+    { id: 1, banDuration: 604800, text: "7 Days" },
+    { id: 2, banDuration: 2592000, text: "30 Days" },
+    { id: 3, banDuration: null, text: "Forever" },
   ];
 
   const handleBanSubmit = async (banDuration: number | null) => {
@@ -223,7 +223,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
           <p>Last visited: {showDate(selectedUser.last_visited)}</p>
           <p>User since: {showDate(selectedUser.created_at)}</p>
           <div style={{ display: "inline-flex" }}>
-            Status:
+            <p>Status: </p>
             <p className={selectedUser.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
               {selectedUser.isActive ? "Active" : "On Suspension"}
             </p>
@@ -235,44 +235,21 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
           className="admin-panel-right-side"
           style={{ padding: "20px" }}
         >
-          {selectedUser.isActive === true ? (
+          {selectedUser.isActive ? (
             <Dropdown
               buttonAlign="right"
               zIndex={5}
               button={<button>Block user</button>}
             >
-              <button
-                onClick={() => {
-                  handleBanSubmit(86400);
-                }}
-                className="dropdown-item"
-              >
-                1 Day
-              </button>
-              <button
-                onClick={() => {
-                  handleBanSubmit(604800);
-                }}
-                className="dropdown-item"
-              >
-                7 Days
-              </button>
-              <button
-                onClick={() => {
-                  handleBanSubmit(2592000);
-                }}
-                className="dropdown-item"
-              >
-                30 Days
-              </button>
-              <button
-                onClick={() => {
-                  handleBanSubmit(null);
-                }}
-                className="dropdown-item"
-              >
-                Forever
-              </button>
+              {banOptions.map(option => (
+                <button
+                  key={option.id}
+                  className="dropdown-item"
+                  onClick={() => handleBanSubmit(option.banDuration)}
+                >
+                  {option.text}
+                </button>
+              ))}
             </Dropdown>
           ) : (
             <button onClick={handleUnBanSubmit}>Lift Ban</button>

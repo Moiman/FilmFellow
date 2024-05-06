@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
-import { AdminPanelUsers } from "@/app/admin/users/adminPanelUsers";
 import { getAllUsers } from "@/services/userService";
+import { AdminPanelUsers } from "./adminPanelUsers";
 
 export default async function AdminPanelUsersPage() {
   const session = await getServerSession(authOptions);

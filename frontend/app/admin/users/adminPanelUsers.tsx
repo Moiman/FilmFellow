@@ -10,7 +10,6 @@ interface User {
   created_at: Date;
   last_visited: Date;
   isActive: boolean;
-  banDuration: Date | null;
 }
 interface Props {
   users: User[];
@@ -19,7 +18,7 @@ interface Props {
 export const AdminPanelUsers = ({ users }: Props) => {
   const [allUsers, setAllUsers] = useState(users);
   const [searchInput, setSearchInput] = useState("");
-  const filteredResults = searchInput ? allUsers?.filter(user => user.username.startsWith(searchInput)) : allUsers;
+  const filteredResults = searchInput ? allUsers.filter(user => user.username.startsWith(searchInput)) : allUsers;
   return (
     <div className="admin-panel-content">
       <div className="admin-searchbar">
@@ -31,7 +30,7 @@ export const AdminPanelUsers = ({ users }: Props) => {
           onChange={e => setSearchInput(e.target.value)}
         />
       </div>
-      {filteredResults?.map(user => (
+      {filteredResults.map(user => (
         <UserDetails
           key={user.id}
           selectedUser={user}

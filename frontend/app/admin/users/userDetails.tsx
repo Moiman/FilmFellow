@@ -1,8 +1,8 @@
 import { Smile } from "react-feather";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Role } from "@prisma/client";
-import { Dropdown } from "../../../components/dropdown";
 import Modal from "@/components/modal";
+import { Dropdown } from "@/components/dropdown";
 
 interface User {
   email: string;
@@ -12,25 +12,24 @@ interface User {
   created_at: Date;
   last_visited: Date;
   isActive: boolean;
-  banDuration: Date | null;
 }
 interface Props {
   selectedUser: User;
   setAllUsers: React.Dispatch<React.SetStateAction<User[]>>;
 }
 
+const banOptions = [
+  { id: 0, banDuration: 86400, text: "1 Day" },
+  { id: 1, banDuration: 604800, text: "7 Days" },
+  { id: 2, banDuration: 2592000, text: "30 Days" },
+  { id: 3, banDuration: null, text: "Forever" },
+];
+
 export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   const [modalError, setModalError] = useState("");
   const [error, setError] = useState("");
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isRoleChangeOpen, setIsRoleChangeOpen] = useState(false);
-
-  const banOptions = [
-    { id: 0, banDuration: 86400, text: "1 Day" },
-    { id: 1, banDuration: 604800, text: "7 Days" },
-    { id: 2, banDuration: 2592000, text: "30 Days" },
-    { id: 3, banDuration: null, text: "Forever" },
-  ];
 
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
@@ -74,7 +73,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
     }
   };
 
-  const handleUnBanSubmit = useCallback(async () => {
+  const handleUnBanSubmit = async () => {
     try {
       const banDetails = {
         isActive: true,
@@ -114,7 +113,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
     } catch (error) {
       console.error(error);
     }
-  }, [selectedUser, setAllUsers]);
+  };
 
   const handleRoleChange = async () => {
     try {
@@ -209,12 +208,6 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
     setIsRoleChangeOpen(true);
     setError("");
   };
-
-  useEffect(() => {
-    if (selectedUser.banDuration !== null && selectedUser.banDuration < new Date()) {
-      handleUnBanSubmit();
-    }
-  }, [selectedUser, handleUnBanSubmit]);
 
   return (
     <div className="admin-panel-user-list">

@@ -167,4 +167,81 @@ const getMovieReviewsById = async (movieId: number) => {
   return movieReviews;
 };
 
-export { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre, getAllGenres };
+const getMovieCrewById = async (movieId: number) => {
+  const movieCrew = await prisma.movieCrew.findMany({
+    where: {
+      movieId: movieId,
+    },
+    select: {
+      person: {
+        select: {
+          id: true,
+          name: true,
+          profile_path: true,
+        },
+      },
+      job: true,
+    },
+  });
+
+  const movie = await prisma.movies.findUnique({
+    where: {
+      id: movieId,
+    },
+    select: {
+      title: true,
+    },
+  });
+
+  return {
+    title: movie?.title,
+    crew: movieCrew.map(crewMember => ({
+      person: crewMember.person,
+      job: crewMember.job,
+    })),
+  };
+};
+
+const getMovieCastById = async (movieId: number) => {
+  const movieCast = await prisma.movieCast.findMany({
+    where: {
+      movieId: movieId,
+    },
+    select: {
+      person: {
+        select: {
+          id: true,
+          name: true,
+          profile_path: true,
+        },
+      },
+      character: true,
+    },
+  });
+
+  const movie = await prisma.movies.findUnique({
+    where: {
+      id: movieId,
+    },
+    select: {
+      title: true,
+    },
+  });
+
+  return {
+    title: movie?.title,
+    cast: movieCast.map(castMember => ({
+      person: castMember.person,
+      character: castMember.character,
+    })),
+  };
+};
+
+export {
+  getMovieById,
+  getMovieReviewsById,
+  getMovieByLimitTypeGenre,
+  getAllGenres,
+  getMovieCrewById,
+  getMovieCastById,
+};

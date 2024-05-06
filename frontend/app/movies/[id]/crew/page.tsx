@@ -1,20 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { getMovieById } from "@/services/movieService";
+import { getMovieCrewById } from "@/services/movieService";
 import { Section } from "@/components/section";
 import { PersonList } from "../personList";
 
 const getMovieCrew = async (movieId: string) => {
   try {
-    const movieData = await getMovieById(parseInt(movieId), "US");
+    const movieData = await getMovieCrewById(parseInt(movieId));
 
     if (!movieData) {
       return null;
     }
 
-    const { title, crew } = movieData;
-    return { title, crew };
+    return movieData;
   } catch (error) {
     console.error("Error fetching movie data:", error);
     return null;
@@ -40,9 +39,9 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <PersonList
           persons={movie.crew.map(crewMember => {
             return {
-              id: crewMember.personId,
-              name: crewMember.name,
-              profile_path: crewMember.profile_path,
+              id: crewMember.person.id,
+              name: crewMember.person.name,
+              profile_path: crewMember.person.profile_path,
               job: crewMember.job,
             };
           })}

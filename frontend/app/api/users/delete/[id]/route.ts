@@ -2,7 +2,7 @@ import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { type NextRequest, NextResponse } from "next/server";
 import { authOptions } from "@/authOptions";
-import { deleteUserById, findUserById } from "@/services/authService";
+import { deleteUserById, findUserById } from "@/services/userService";
 
 interface Params {
   id: string;

@@ -10,7 +10,7 @@ import {
   findUserById,
   findUserByUsername,
   updateUser,
-} from "@/services/authService";
+} from "@/services/userService";
 
 interface Params {
   id: string;

@@ -99,7 +99,7 @@ const deleteUserById = async (id: number) => {
 const getAllUsers = async () => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    return;
+    return [];
   }
   const users = await prisma.users.findMany({
     select: selectUserFields,

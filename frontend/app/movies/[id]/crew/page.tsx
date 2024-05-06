@@ -33,9 +33,9 @@ export default async function Movie({ params }: { params: { id: string } }) {
     <main>
       <Section
         header={
-          <div className="yellow-name-header">
-            <Link href={`/movies/${params.id}`}>{movie.title}</Link> Crew
-          </div>
+          <h2 className="yellow-name-header">
+            Crew of <Link href={`/movies/${params.id}`}>{movie.title}</Link>
+          </h2>
         }
       >
         <PersonList

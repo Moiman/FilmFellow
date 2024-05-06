@@ -185,7 +185,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   };
 
   const showDate = (date: Date) => {
-    const dateFormatted = date.toLocaleDateString().slice(0, 10).split("-").reverse().join(".");
+    const dateFormatted = date.toISOString().slice(0, 10).split("-").reverse().join(".");
     return dateFormatted;
   };
 
@@ -212,14 +212,14 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   return (
     <div className="admin-panel-user-list">
       <div className="admin-panel-left-side">
-        <div style={{ padding: "10px" }}>
+        <div>
           <Smile size={90} />
         </div>
-        <div style={{ padding: "10px" }}>
+        <div>
           <p>{selectedUser.username}</p>
           <p>{selectedUser.email}</p>
         </div>
-        <div style={{ padding: "10px" }}>
+        <div>
           <p>Last visited: {showDate(selectedUser.last_visited)}</p>
           <p>User since: {showDate(selectedUser.created_at)}</p>
           <div style={{ display: "inline-flex" }}>
@@ -231,10 +231,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         </div>
       </div>
       {selectedUser.role !== Role.admin && (
-        <div
-          className="admin-panel-right-side"
-          style={{ padding: "20px" }}
-        >
+        <div className="admin-panel-right-side">
           {selectedUser.isActive ? (
             <Dropdown
               buttonAlign="right"

@@ -51,6 +51,9 @@
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   min-width: 50%;
+  & > * {
+    padding: 10px;
+  }
 }
 .admin-panel-right-side {
   display: grid;
@@ -58,6 +61,7 @@
   align-items: center;
   min-width: 25%;
   justify-content: space-evenly;
+  padding: 20px;
 }
 .admin-panel-user-list {
   background-color: abstracts.$primary-grey;

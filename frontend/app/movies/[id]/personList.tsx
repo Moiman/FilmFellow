@@ -13,28 +13,28 @@ interface personListProps {
   persons: personListItem[];
 }
 
-export const combinePersonData = (persons: personListItem[]): personListItem[] => {
-  const combinedPersonsMap: Map<number, personListItem> = new Map();
+const combinePersonData = (persons: personListItem[]): personListItem[] => {
+  const combinedPersons: personListItem[] = [];
 
   persons.forEach(person => {
-    if (combinedPersonsMap.has(person.id)) {
-      const existingPerson = combinedPersonsMap.get(person.id);
-      if (existingPerson) {
-        const combinedValue = person.character ?? person.job;
-        const existingValue = existingPerson.character ?? existingPerson.job;
-        const newValue = existingValue ? `${existingValue}, ${combinedValue}` : combinedValue;
+    const existingIndex = combinedPersons.findIndex(p => p.id === person.id);
 
-        combinedPersonsMap.set(person.id, {
-          ...existingPerson,
-          [person.character ? "character" : "job"]: newValue,
-        });
-      }
+    if (existingIndex !== -1) {
+      const existingPerson = combinedPersons[existingIndex];
+      const combinedValue = person.character ?? person.job;
+      const existingValue = existingPerson.character ?? existingPerson.job;
+      const newValue = existingValue ? `${existingValue}, ${combinedValue}` : combinedValue;
+
+      combinedPersons[existingIndex] = {
+        ...existingPerson,
+        [person.character ? "character" : "job"]: newValue,
+      };
     } else {
-      combinedPersonsMap.set(person.id, person);
+      combinedPersons.push(person);
     }
   });
 
-  return Array.from(combinedPersonsMap.values());
+  return combinedPersons;
 };
 
 export const PersonList = ({ persons }: personListProps) => {

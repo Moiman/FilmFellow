@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { findUserById } from "@/services/authService";
+import { findUserById } from "@/services/userService";
 import { findUserFavoritesById } from "@/services/favoriteService";
 
 import { notFound } from "next/navigation";

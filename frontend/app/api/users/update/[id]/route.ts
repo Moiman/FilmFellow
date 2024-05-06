@@ -4,7 +4,13 @@ import * as yup from "yup";
 import { getServerSession } from "next-auth";
 import { Role } from "@prisma/client";
 import { authOptions } from "@/authOptions";
-import { findUserByEmail, findUserById, findUserByUsername, updateUser } from "@/services/authService";
+import {
+  changeUserStatusById,
+  findUserByEmail,
+  findUserById,
+  findUserByUsername,
+  updateUser,
+} from "@/services/userService";
 
 interface Params {
   id: string;
@@ -27,6 +33,13 @@ const updateUserSchema = yup.object({
     .matches(/^(?=.*[0-9])/, "Password requires atleast 1 number")
     .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
   role: yup.string().optional().oneOf(Object.values(Role), "Role must be either admin, user or moderator"),
+  isActive: yup.boolean().optional(),
+  banDuration: yup
+    .number()
+    .nullable()
+    .optional()
+    .min(86400, "Smallest ban duration is 1 day (86400 seconds)")
+    .max(2592000, "Highest ban duration is 30 days (2592000 seconds"),
 });
 
 export async function PUT(req: NextRequest, { params }: { params: Params }) {
@@ -46,14 +59,14 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
     if (isNaN(userId)) {
       return NextResponse.json({ error: "User id not a number" }, { status: 400 });
     }
-    if (userId <= 1) {
+    if (userId < 1) {
       return NextResponse.json({ error: "User id cant be under 1" }, { status: 400 });
     }
     await updateUserSchema.validate(data, { abortEarly: false });
-    const { email, username, password, role } = data;
-    if (!email && !password && !username && !role) {
+    const { email, username, password, role, banDuration, isActive } = data;
+    if (!email && !password && !username && !role && !banDuration && isActive === undefined) {
       return NextResponse.json(
-        { error: "Missing email, password, username or role" },
+        { error: "Missing email, password, username, role, banDuration or isActive" },
         {
           status: 400,
         },
@@ -66,6 +79,14 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         { error: `Coundnt find user with id ${userId}` },
         {
           status: 404,
+        },
+      );
+    }
+    if (user.role === Role.admin) {
+      return NextResponse.json(
+        { error: `Cant change other admin details` },
+        {
+          status: 403,
         },
       );
     }
@@ -99,6 +120,19 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
       }
       if (role) {
         user.role = role;
+      }
+
+      if ((isActive === undefined && banDuration) || (isActive && banDuration)) {
+        return NextResponse.json(
+          { error: "Faulty values on ban" },
+          {
+            status: 400,
+          },
+        );
+      }
+
+      if (banDuration || isActive !== undefined) {
+        await changeUserStatusById(user.id, isActive, banDuration);
       }
       const updatedUser = await updateUser(userId, user);
       return NextResponse.json(updatedUser, { status: 200 });

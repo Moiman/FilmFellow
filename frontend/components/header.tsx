@@ -20,7 +20,7 @@ export const Header = () => {
     {
       icon: <Tool style={{ strokeWidth: 1.5 }} />,
       text: "Admin",
-      href: "/admin",
+      href: "/admin/users",
     },
     { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: `/users/${session?.user.id}` },
     {
@@ -90,16 +90,29 @@ export const Header = () => {
             </Link>
           ))}
           {session ? (
-            SubNavLinks.map(link => (
-              <Link
-                onClick={link.text === "Logout" ? () => signOut() : undefined}
-                key={link.href}
-                href={link.href}
-                className="dropdown-item"
-              >
-                {link.text}
-              </Link>
-            ))
+            session.user.role === "admin" ? (
+              SubNavLinks.map(link => (
+                <Link
+                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  key={link.href}
+                  href={link.href}
+                  className="dropdown-item"
+                >
+                  {link.text}
+                </Link>
+              ))
+            ) : (
+              SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
+                <Link
+                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  key={link.href}
+                  href={link.href}
+                  className="dropdown-item"
+                >
+                  {link.text}
+                </Link>
+              ))
+            )
           ) : (
             <>
               <Link
@@ -124,18 +137,33 @@ export const Header = () => {
       <div className="sub-nav-wide highlight-nav">
         <>
           {session ? (
-            <>
-              {SubNavLinks.map(link => (
-                <Link
-                  onClick={link.text === "Logout" ? () => signOut() : undefined}
-                  key={link.href}
-                  href={link.href}
-                  className={currentPath === link.href ? "active-icon" : ""}
-                >
-                  {link.icon}
-                </Link>
-              ))}
-            </>
+            session.user.role === "admin" ? (
+              <>
+                {SubNavLinks.map(link => (
+                  <Link
+                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    key={link.href}
+                    href={link.href}
+                    className={currentPath === link.href ? "active-icon" : ""}
+                  >
+                    {link.icon}
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <>
+                {SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
+                  <Link
+                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    key={link.href}
+                    href={link.href}
+                    className={currentPath === link.href ? "active-icon" : ""}
+                  >
+                    {link.icon}
+                  </Link>
+                ))}
+              </>
+            )
           ) : (
             <>
               <Link

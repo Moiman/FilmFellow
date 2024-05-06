@@ -1,5 +1,5 @@
 import { authOptions } from "@/authOptions";
-import { findUserById } from "@/services/authService";
+import { findUserById } from "@/services/userService";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Twitter, Instagram, Facebook } from "react-feather";

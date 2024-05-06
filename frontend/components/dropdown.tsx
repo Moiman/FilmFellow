@@ -55,7 +55,6 @@ export const Dropdown = ({ children, selected, button, buttonAlign, width, maxHe
       ref={dropdownRef}
       className="dropdown"
       style={{
-        zIndex: zIndex,
         justifyContent: buttonAlign ? buttonAlign : "left",
         width: width ? width + "px" : "100%",
       }}
@@ -87,6 +86,7 @@ export const Dropdown = ({ children, selected, button, buttonAlign, width, maxHe
           className="dropdown-menu"
           onClick={() => setIsOpen(!isOpen)}
           style={{
+            zIndex: zIndex,
             maxHeight: maxHeight ? maxHeight + "px" : "fit-content",
             minWidth: width ? width + "px" : "fit-content",
           }}

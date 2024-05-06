@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { findUserById } from "@/services/authService";
+import { findUserById } from "@/services/userService";
 
 import { Section } from "@/components/section";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";

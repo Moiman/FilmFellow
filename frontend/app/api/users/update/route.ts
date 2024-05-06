@@ -3,7 +3,7 @@ import argon2 from "argon2";
 import * as yup from "yup";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
-import { findUserByEmail, findUserById, findUserByUsername, updateUser } from "@/services/authService";
+import { findUserByEmail, findUserById, findUserByUsername, updateUser } from "@/services/userService";
 
 const updateUserSchema = yup.object({
   email: yup.string().trim().optional().email("Must be a valid email"),

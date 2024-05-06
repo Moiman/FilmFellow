@@ -14,7 +14,7 @@ interface personListProps {
   amount?: number;
 }
 
-const combinePersonData = (persons: personListItem[]): personListItem[] => {
+const combinePersonData = (persons: personListItem[]) => {
   const combinedPersons: personListItem[] = [];
 
   persons.forEach(person => {

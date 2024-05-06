@@ -1,7 +1,13 @@
-export default function New() {
+import { MovieList } from "@/components/movieList";
+import { fetchAllMovies } from "../movieFetches";
+import { Section } from "@/components/section";
+
+export default async function New() {
   return (
     <main>
-      <h2>New</h2>
+      <Section header={"New"}>
+        <MovieList movies={await fetchAllMovies(18, "new")}></MovieList>
+      </Section>
     </main>
   );
 }

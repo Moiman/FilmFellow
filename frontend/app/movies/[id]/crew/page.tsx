@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { PersonList } from "../personList";
 import { Section } from "@/components/section";
 
-export const getMovie = async (movieId: string) => {
+const getMovieCrew = async (movieId: string) => {
   try {
     const movieData = await getMovieById(parseInt(movieId), "US");
 
@@ -23,7 +23,7 @@ export const getMovie = async (movieId: string) => {
 };
 
 export default async function Movie({ params }: { params: { id: string } }) {
-  const movie = await getMovie(params.id);
+  const movie = await getMovieCrew(params.id);
 
   if (!movie) {
     notFound();

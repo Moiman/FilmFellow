@@ -1,9 +1,7 @@
 import { authOptions } from "@/authOptions";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/db";
 import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
-
-const prisma = new PrismaClient();
 
 export interface User {
   username: string;

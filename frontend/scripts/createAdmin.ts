@@ -1,7 +1,7 @@
 import * as readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import argon2 from "argon2";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/db";
 import { Role } from "@prisma/client";
 
 const createAdmin = async () => {
@@ -13,8 +13,6 @@ const createAdmin = async () => {
     const password = await rl.question("password: ");
 
     rl.close();
-
-    const prisma = new PrismaClient();
 
     const existingUser = await prisma.users.findFirst({
       where: { OR: [{ email: { equals: email } }, { username: { equals: username } }] },

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/db";
 import type {
   Countries,
   Genres,
@@ -10,8 +10,6 @@ import type {
   WatchProviders,
 } from "@prisma/client";
 import type { MovieDataType } from "../scripts/fetchMovies.js";
-
-const prisma = new PrismaClient();
 
 const initMovieDB = async (movie: MovieDataType) => {
   const existingMovie = await prisma.movies.findUnique({

@@ -145,8 +145,15 @@ input[type="text"]:focus-within {
     border-bottom: 1px solid abstracts.$primary-darkgrey;
   }
 
-  .active-link {
-    border-left: 5px solid map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  $total-colors: length(abstracts.$highlight-colors);
+
+  @for $i from 1 through $total-colors {
+    $color: nth(map-keys(abstracts.$highlight-colors), $i);
+    $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
+
+    .active-admin-link:nth-child(#{$total-colors}n + #{$i}) {
+      border-left: 5px solid $default-color;
+    }
   }
 }
 

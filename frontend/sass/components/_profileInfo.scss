@@ -8,6 +8,13 @@
   align-items: center;
   gap: 20px;
 
+  .profile-picture {
+    min-width: 150px;
+    height: auto;
+    stroke-width: 1.5px;
+    color: grey;
+  }
+
   h6 {
     padding: 4px 0;
   }

@@ -7,14 +7,16 @@ import { getServerSession } from "next-auth/next";
 const prisma = new PrismaClient();
 
 const createReport = async (
-  userId: number,
+  creatorId: number,
+  targetUserId: number,
   content: string,
   reviewId: number | null,
   importedReviewId: string | null,
 ) => {
   const newReport = await prisma.reports.create({
     data: {
-      userId,
+      creatorId,
+      targetUserId,
       content,
       reviewId,
       importedReviewId,
@@ -52,11 +54,17 @@ const getAllReports = async () => {
   }
   const reports = await prisma.reports.findMany({
     include: {
-      user: {
+      creator: {
         select: {
           username: true,
-          id: true,
+          id: true
         },
+      },
+      targetUser: {
+        select: {
+          username: true,
+          id:true
+        }
       },
       review: {
         select: {

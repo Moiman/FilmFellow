@@ -4,10 +4,11 @@ import { createReport } from "@/services/reportService";
 import { useState } from "react";
 
 interface Props {
-  userId: string;
+  targetUserId: string;
+  creator: number | string;
 }
 
-export default function ReportForm({userId}: Props) {
+export default function ReportForm({targetUserId, creator}: Props) {
 
   const [reportInput, setReportInput] = useState("");
   const sectionHeader = (
@@ -18,7 +19,7 @@ export default function ReportForm({userId}: Props) {
 
   const handleReportSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createReport(parseInt(userId), reportInput, null, null);
+    await createReport(creator as number, parseInt(targetUserId), reportInput, null, null);
     setReportInput("");
   };
 

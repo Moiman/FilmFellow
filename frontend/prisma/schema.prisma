@@ -23,7 +23,8 @@ model Users {
   reviews        Reviews[]
   favorites      Favorites[]
   watchedRatings WatchedRatings[]
-  reports        Reports[]
+  reporters      Reports[]        @relation("Creator")
+  reportTargets  Reports[]        @relation("TargetUser")
 }
 
 model Favorites {
@@ -309,14 +310,16 @@ model Reports {
   id               Int      @id @default(autoincrement())
   content          String
   created_at       DateTime @default(now())
-  userId           Int
+  targetUserId     Int?
+  creatorId        Int
   // lists will be added later
   // listId    Int
   reviewId         Int?
   importedReviewId String?
   done             Boolean  @default(false)
 
-  user           Users           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  creator        Users?           @relation("Creator", fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  targetUser     Users?           @relation("TargetUser", fields: [targetUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   review         Reviews?         @relation(fields: [reviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   importedReview ImportedReviews? @relation(fields: [importedReviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

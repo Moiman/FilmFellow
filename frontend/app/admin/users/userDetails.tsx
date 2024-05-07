@@ -240,7 +240,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
             <Dropdown
               buttonAlign="right"
               zIndex={5}
-              button={<button>Block user</button>}
+              button={<button className="block-button">Block user</button>}
             >
               {banOptions.map(option => (
                 <button

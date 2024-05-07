@@ -20,24 +20,24 @@
     outline: 0;
     border: 0;
   }
-}
 
-input[type="text"] {
-  width: 100%;
-  padding: 10px 20px;
-  background-color: abstracts.$primary-grey;
-  border: 0;
-  color: abstracts.$primary-light;
-  border-radius: 20px;
-}
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: abstracts.$primary-grey;
+    border: 0;
+    color: abstracts.$primary-light;
+    border-radius: 20px;
+  }
 
-input[type="text"]::placeholder {
-  color: abstracts.$primary-light;
-  opacity: 25%;
-}
+  input[type="text"]::placeholder {
+    color: abstracts.$primary-light;
+    opacity: 25%;
+  }
 
-input[type="text"]:focus-within {
-  outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  input[type="text"]:focus-within {
+    outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
 }
 
 // List of users
@@ -94,7 +94,6 @@ input[type="text"]:focus-within {
   display: flex;
   align-items: center;
   justify-content: right;
-  margin: 10px;
 
   * {
     min-width: fit-content;
@@ -103,7 +102,7 @@ input[type="text"]:focus-within {
   }
 
   div {
-    margin-right: 5px;
+    margin-right: 4px;
   }
 }
 
@@ -116,7 +115,6 @@ input[type="text"]:focus-within {
     margin: auto;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0px;
 
     div {
       margin: 0;

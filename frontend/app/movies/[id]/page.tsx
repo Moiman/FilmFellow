@@ -14,8 +14,6 @@ export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 const getMovie = async (movieId: string) => {
   try {
     const movieData = await getMovieById(parseInt(movieId), "US");
-    const movieCrew = await getMovieCrewById(parseInt(movieId));
-    const movieCast = await getMovieCastById(parseInt(movieId));
     const userRating = await getMovieRating(Number(movieId));
     const isWatched = await getIsWatched(Number(movieId));
     const isFavorite = await getIsFavorite(Number(movieId));
@@ -24,19 +22,20 @@ const getMovie = async (movieId: string) => {
       return null;
     }
 
-    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating } = movieData;
+    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating, cast, crew } =
+      movieData;
 
-    const cast = movieCast.cast.map(castMember => ({
-      id: castMember.person.id,
-      name: castMember.person.name,
-      profilePath: castMember.person.profile_path,
+    const movieCast = cast.map(castMember => ({
+      id: castMember.personId,
+      name: castMember.name,
+      profilePath: castMember.profile_path,
       character: castMember.character,
     }));
 
-    const crew = movieCrew.crew.map(crewMember => ({
-      id: crewMember.person.id,
-      name: crewMember.person.name,
-      profilePath: crewMember.person.profile_path,
+    const movieCrew = crew.map(crewMember => ({
+      id: crewMember.personId,
+      name: crewMember.name,
+      profilePath: crewMember.profile_path,
       job: crewMember.job,
     }));
 
@@ -53,8 +52,8 @@ const getMovie = async (movieId: string) => {
       isFavorite,
       isWatched,
       userRating,
-      crew: crew,
-      cast: cast,
+      crew: movieCrew,
+      cast: movieCast,
     };
 
     return movie;

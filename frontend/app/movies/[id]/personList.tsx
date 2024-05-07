@@ -18,7 +18,7 @@ export const PersonList = ({ persons }: personListProps) => {
     <div className="person-list">
       {persons.map(person => (
         <div
-          key={person.job ? person.id + "-" + person.job : person.id}
+          key={person.job ? person.id + person.job : person.id}
           className="person-wrapper"
         >
           <Link href={`/persons/${person.id}`}>

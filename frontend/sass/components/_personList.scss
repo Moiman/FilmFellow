@@ -16,9 +16,8 @@
       border-radius: 50%;
       aspect-ratio: 1;
       object-fit: cover;
-      width: 100%;
-      max-width: 200px;
       height: auto;
+      width: 100%;
       box-shadow: abstracts.$default-shadow;
     }
 
@@ -38,11 +37,16 @@
     .person-name {
       font-size: 1.2rem;
       font-weight: 600;
+      line-height: 1.6rem;
+      white-space: wrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .person-title {
       font-size: 0.9rem;
       font-weight: 100;
+      line-height: 1.2rem;
     }
   }
 }

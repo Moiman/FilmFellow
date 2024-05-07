@@ -141,11 +141,12 @@
   grid-template-columns: 1fr;
 
   *:not(.active-admin-link) {
-    margin-left: 5px;
+    padding-left: 15px;
   }
 
   & > * {
     border-bottom: 1px solid abstracts.$primary-darkgrey;
+    padding: 10px;
   }
 
   $total-colors: length(abstracts.$highlight-colors);

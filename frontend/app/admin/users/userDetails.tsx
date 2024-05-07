@@ -14,7 +14,7 @@ interface User {
   created_at: Date;
   last_visited: Date;
   isActive: boolean;
-  banDuration: Date;
+  banDuration?: Date;
 }
 interface Props {
   selectedUser: User;

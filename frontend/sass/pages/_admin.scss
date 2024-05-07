@@ -140,6 +140,10 @@
   display: grid;
   grid-template-columns: 1fr;
 
+  *:not(.active-admin-link) {
+    margin-left: 5px;
+  }
+
   & > * {
     border-bottom: 1px solid abstracts.$primary-darkgrey;
   }

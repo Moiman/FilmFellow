@@ -35,6 +35,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
     });
     genres.unshift(
       <Link
+        key={-1}
         className="dropdown-item"
         href={"/"}
       >

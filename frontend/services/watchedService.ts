@@ -1,10 +1,8 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/db";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
-
-const prisma = new PrismaClient();
 
 export const getIsWatched = async (movieId: number) => {
   const session = await getServerSession(authOptions);

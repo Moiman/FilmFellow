@@ -71,7 +71,7 @@ export default async function Person({ params }: { params: { id: string } }) {
                 {person.deathday ? formatDate(person.deathday) : ""}
               </span>
             )}
-            <h1>{person.name ? person.name : "No name"}</h1>
+            <h2 className="h1">{person.name ? person.name : "No name"}</h2>
             <p className="person-description">{person.biography ? person.biography : "No biography"}</p>
           </div>
         </div>

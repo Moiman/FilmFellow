@@ -218,7 +218,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
           <Smile />
         </Link>
         <div>
-          <p>{selectedUser.username}</p>
+          <p className="username">{selectedUser.username}</p>
           <p>{selectedUser.email}</p>
         </div>
         <div>
@@ -261,81 +261,14 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
           >
             Delete
           </button>
-          <Modal
-            isOpen={isDeleteOpen}
-            closeModal={closeDeleteModal}
-            content={
-              <>
-                <div style={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
-                  <h3>Are you sure you want to delete this account ?</h3>
 
-                  <p
-                    className="description"
-                    style={{ marginBottom: "25%" }}
-                  >
-                    If you delete this account, all of the user lists, reviews and other data will be destroyed
-                    permanently.
-                  </p>
-                </div>
-
-                {modalError && (
-                  <p
-                    className="error-text"
-                    style={{ display: "flex", justifyContent: "center", padding: "5px" }}
-                  >
-                    {modalError}
-                  </p>
-                )}
-                <div className="profile-settings-modal-buttons">
-                  <button onClick={closeDeleteModal}>Cancel</button>
-                  <button
-                    className="button-pink"
-                    onClick={handleUserDelete}
-                  >
-                    Delete Account
-                  </button>
-                </div>
-              </>
-            }
-          />
           <button
             onClick={openRoleChangeModal}
             className="button-cyan"
           >
             Make admin
           </button>
-          <Modal
-            isOpen={isRoleChangeOpen}
-            closeModal={closeRoleChangeModal}
-            content={
-              <>
-                <div
-                  className="profile-settings-modal-content"
-                  style={{ marginBottom: "25%" }}
-                >
-                  <h3>Are you sure you want to change this user to admin ?</h3>
-                </div>
 
-                {modalError && (
-                  <p
-                    className="error-text"
-                    style={{ display: "flex", justifyContent: "center", padding: "5px" }}
-                  >
-                    {modalError}
-                  </p>
-                )}
-                <div className="profile-settings-modal-buttons">
-                  <button onClick={closeRoleChangeModal}>Cancel</button>
-                  <button
-                    className="button-pink"
-                    onClick={handleRoleChange}
-                  >
-                    Make Admin
-                  </button>
-                </div>
-              </>
-            }
-          />
           {error && (
             <div>
               <p className="error-text">{error}</p>
@@ -343,6 +276,71 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
           )}
         </div>
       )}
+
+      <Modal
+        isOpen={isRoleChangeOpen}
+        closeModal={closeRoleChangeModal}
+        content={
+          <>
+            <div style={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
+              <h3>Are you sure you want to make this user an admin?</h3>
+              <p className="description">You can&lsquo;t demote, block or delete another admin.</p>
+            </div>
+
+            {modalError && (
+              <p
+                className="error-text"
+                style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+              >
+                {modalError}
+              </p>
+            )}
+            <div className="profile-settings-modal-buttons">
+              <button onClick={closeRoleChangeModal}>Cancel</button>
+              <button
+                className="button-pink"
+                onClick={handleRoleChange}
+              >
+                Make admin
+              </button>
+            </div>
+          </>
+        }
+      />
+
+      <Modal
+        isOpen={isDeleteOpen}
+        closeModal={closeDeleteModal}
+        content={
+          <>
+            <div style={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
+              <h3>Are you sure you want to delete this account?</h3>
+
+              <p className="description">
+                If you delete this account, all of the user lists, reviews and other data will be destroyed permanently.
+              </p>
+            </div>
+
+            {modalError && (
+              <p
+                className="error-text"
+                style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+              >
+                {modalError}
+              </p>
+            )}
+            <div className="profile-settings-modal-buttons">
+              <button onClick={closeDeleteModal}>Cancel</button>
+              <button
+                className="button-pink"
+                onClick={handleUserDelete}
+              >
+                Delete account
+              </button>
+            </div>
+          </>
+        }
+      />
     </div>
   );
 };

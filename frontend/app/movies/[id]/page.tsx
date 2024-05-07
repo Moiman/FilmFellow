@@ -1,10 +1,13 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
-import { Section } from "@/components/section";
-import { getMovieById } from "@/services/movieService";
-import { MovieInfo } from "./movieInfo";
+import { getMovieById, getMovieCastById, getMovieCrewById } from "@/services/movieService";
 import { getIsWatched, getMovieRating } from "@/services/watchedService";
 import { getIsFavorite } from "@/services/favoriteService";
+
+import { Section } from "@/components/section";
+import { MovieInfo } from "./movieInfo";
+import { PersonList } from "./personList";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
@@ -19,7 +22,22 @@ const getMovie = async (movieId: string) => {
       return null;
     }
 
-    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating } = movieData;
+    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating, cast, crew } =
+      movieData;
+
+    const movieCast = cast.map(castMember => ({
+      id: castMember.personId,
+      name: castMember.name,
+      profilePath: castMember.profile_path,
+      character: castMember.character,
+    }));
+
+    const movieCrew = crew.map(crewMember => ({
+      id: crewMember.personId,
+      name: crewMember.name,
+      profilePath: crewMember.profile_path,
+      job: crewMember.job,
+    }));
 
     const movie = {
       id,
@@ -30,11 +48,12 @@ const getMovie = async (movieId: string) => {
       releaseYear: release_date ? new Date(release_date).getFullYear() : null,
       voteAverage: vote_average,
       directors,
-      // No age restriction data yet
       ageRestrictions: rating ? rating : "?",
       isFavorite,
       isWatched,
       userRating,
+      crew: movieCrew,
+      cast: movieCast,
     };
 
     return movie;
@@ -55,12 +74,24 @@ export default async function Movie({ params }: { params: { id: string } }) {
       <MovieInfo movie={movie} />
 
       <div className="section-padding">
-        <Section header="Cast">
-          <p>Coming soon</p>
+        <Section
+          header={
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h3>Cast</h3> <Link href={`${params.id}/cast`}>See all</Link>
+            </div>
+          }
+        >
+          <PersonList persons={movie.cast.slice(0, 6)} />
         </Section>
 
-        <Section header="Crew">
-          <p>Coming soon</p>
+        <Section
+          header={
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h3>Crew</h3> <Link href={`${params.id}/crew`}>See all</Link>
+            </div>
+          }
+        >
+          <PersonList persons={movie.crew.slice(0, 6)} />
         </Section>
 
         <Section header="Reviews">

@@ -146,3 +146,38 @@ describe("Logged in movie page tests", () => {
     cy.contains("Mark as watched").should("be.visible");
   });
 });
+
+describe("Movie crew and cast tests", () => {
+  const castMember = { id: 31, name: "Tom Hanks" };
+  const crewMember = { id: 24, name: "Robert Zemeckis" };
+
+  it("Movie cast exists and can be navigated to", () => {
+    cy.visit("/movies/13");
+    cy.get("h2").contains("Forrest Gump");
+
+    cy.contains("h3", "Cast").then($h3 => {
+      const $nearestLink = $h3.nextAll("a").first();
+      cy.wrap($nearestLink).click();
+    });
+    cy.location("pathname").should("eq", "/movies/13/cast");
+
+    cy.get(`img[alt="${castMember.name}"]`).click();
+    cy.location("pathname").should("eq", `/persons/${castMember.id}`);
+    cy.get("h2").contains(`${castMember.name}`);
+  });
+
+  it("Movie crew exists and can be navigated to", () => {
+    cy.visit("/movies/13");
+    cy.get("h2").contains("Forrest Gump");
+
+    cy.contains("h3", "Crew").then($h3 => {
+      const $nearestLink = $h3.nextAll("a").first();
+      cy.wrap($nearestLink).click();
+    });
+    cy.location("pathname").should("eq", "/movies/13/crew");
+
+    cy.get(`img[alt="${crewMember.name}"]`).click();
+    cy.location("pathname").should("eq", `/persons/${crewMember.id}`);
+    cy.get("h2").contains(`${crewMember.name}`);
+  });
+});

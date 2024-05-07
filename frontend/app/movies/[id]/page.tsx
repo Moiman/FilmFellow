@@ -26,6 +26,20 @@ const getMovie = async (movieId: string) => {
 
     const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating } = movieData;
 
+    const cast = movieCast.cast.map(castMember => ({
+      id: castMember.person.id,
+      name: castMember.person.name,
+      profilePath: castMember.person.profile_path,
+      character: castMember.character,
+    }));
+
+    const crew = movieCrew.crew.map(crewMember => ({
+      id: crewMember.person.id,
+      name: crewMember.person.name,
+      profilePath: crewMember.person.profile_path,
+      job: crewMember.job,
+    }));
+
     const movie = {
       id,
       title,
@@ -39,8 +53,8 @@ const getMovie = async (movieId: string) => {
       isFavorite,
       isWatched,
       userRating,
-      crew: movieCrew.crew,
-      cast: movieCast.cast,
+      crew: crew,
+      cast: cast,
     };
 
     return movie;
@@ -68,16 +82,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
             </div>
           }
         >
-          <PersonList
-            persons={movie.cast.slice(0, 6).map(castMember => {
-              return {
-                id: castMember.person.id,
-                name: castMember.person.name,
-                profile_path: castMember.person.profile_path,
-                character: castMember.character,
-              };
-            })}
-          />
+          <PersonList persons={movie.cast.slice(0, 6)} />
         </Section>
 
         <Section
@@ -87,16 +92,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
             </div>
           }
         >
-          <PersonList
-            persons={movie.crew.slice(0, 6).map(crewMember => {
-              return {
-                id: crewMember.person.id,
-                name: crewMember.person.name,
-                profile_path: crewMember.person.profile_path,
-                job: crewMember.job,
-              };
-            })}
-          />
+          <PersonList persons={movie.crew.slice(0, 6)} />
         </Section>
 
         <Section header="Reviews">

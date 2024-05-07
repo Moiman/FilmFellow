@@ -41,7 +41,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
             return {
               id: crewMember.person.id,
               name: crewMember.person.name,
-              profile_path: crewMember.person.profile_path,
+              profilePath: crewMember.person.profile_path,
               job: crewMember.job,
             };
           })}

@@ -4,7 +4,7 @@ import Image from "next/image";
 type personListItem = {
   id: number;
   name: string;
-  profile_path: string | null;
+  profilePath: string | null;
   character?: string;
   job?: string;
 };
@@ -22,9 +22,9 @@ export const PersonList = ({ persons }: personListProps) => {
           className="person-wrapper"
         >
           <Link href={`/persons/${person.id}`}>
-            {person.profile_path ? (
+            {person.profilePath ? (
               <Image
-                src={`https://image.tmdb.org/t/p/h632/${person.profile_path}`}
+                src={`https://image.tmdb.org/t/p/h632/${person.profilePath}`}
                 alt={person.name}
                 width={250}
                 height={250}

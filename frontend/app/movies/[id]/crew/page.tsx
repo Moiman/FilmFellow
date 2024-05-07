@@ -5,12 +5,10 @@ import { getMovieCrewById } from "@/services/movieService";
 import { Section } from "@/components/section";
 import { PersonList } from "../personList";
 
-export default async function Movie({ params }: { params: { id: string } }) {
+export default async function MovieCrew({ params }: { params: { id: string } }) {
   const movie = await getMovieCrewById(parseInt(params.id));
 
-  if (!movie) {
-    notFound();
-  }
+  !movie.title && notFound();
 
   return (
     <main>

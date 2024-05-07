@@ -1,5 +1,6 @@
 import argon2 from "argon2";
-import { PrismaClient, Role } from "@prisma/client";
+import prisma from "@/db";
+import { Role } from "@prisma/client";
 
 const initAdmin = async () => {
   try {
@@ -14,7 +15,6 @@ const initAdmin = async () => {
       password: ADMIN_PASSWORD,
       role: Role.admin,
     };
-    const prisma = new PrismaClient();
 
     const existingUser = await prisma.users.findFirst({
       where: { OR: [{ email: { equals: admin.email } }, { username: { equals: admin.username } }] },

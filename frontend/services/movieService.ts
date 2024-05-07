@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/db";
 
 export type MovieResponse = NonNullable<Awaited<ReturnType<typeof getMovieById>>>;
 const getMovieById = async (movieId: number, iso_3166_1 = "FI") => {

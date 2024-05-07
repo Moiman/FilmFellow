@@ -167,27 +167,4 @@ const getMovieReviewsById = async (movieId: number) => {
   return movieReviews;
 };
 
-const getMovieByLimitType = async (limit: number, type: string) => {
-  const movieIds = await prisma.movies.findMany();
-
-  const orderBy = {} as Record<string, string>;
-  if (type === "new") {
-    orderBy.release_date = "desc";
-  } else if (type === "popular") {
-    orderBy.popularity = "desc";
-  } else if (type === "bestrated") {
-    orderBy.vote_average = "desc";
-  } else {
-    return [];
-  }
-  const moviesPopularOrder = await prisma.movies.findMany({
-    where: {
-      id: { in: movieIds.map(movie => movie.id) },
-    },
-    take: limit,
-    orderBy: orderBy,
-  });
-  return moviesPopularOrder;
-};
-
-export { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre, getAllGenres, getMovieByLimitType };
+export { getMovieById, getMovieReviewsById, getMovieByLimitTypeGenre, getAllGenres };

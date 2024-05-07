@@ -1,13 +1,21 @@
 import { MovieList } from "@/components/movieList";
-import { fetchAllMovies } from "../movieFetches";
+import { fetchMovies } from "../movieFetches";
 import { Section } from "@/components/section";
+import GenreSelector from "@/components/genreSelector";
 
-export default async function New() {
+export default async function New({ searchParams }: { searchParams?: { genre: string } }) {
+  const selectedGenre = searchParams?.genre;
+
   return (
     <main>
-      <Section header={"New"}>
-        <MovieList movies={await fetchAllMovies(18, "new")}></MovieList>
-      </Section>
+      <div>
+        <GenreSelector genre={selectedGenre} />
+      </div>
+      <div className="section-wrapper">
+        <Section header={"New"}>
+          <MovieList movies={await fetchMovies(18, "new", selectedGenre)} />
+        </Section>
+      </div>
     </main>
   );
 }

@@ -23,6 +23,7 @@ export const AdminPanelUsers = ({ users }: Props) => {
     <div className="admin-panel-content">
       <div className="admin-searchbar">
         <input
+          type="text"
           data-cy="admin-search-input"
           className="admin-searchbar-input"
           placeholder="Search..."
@@ -30,13 +31,15 @@ export const AdminPanelUsers = ({ users }: Props) => {
           onChange={e => setSearchInput(e.target.value)}
         />
       </div>
-      {filteredResults.map(user => (
-        <UserDetails
-          key={user.id}
-          selectedUser={user}
-          setAllUsers={setAllUsers}
-        />
-      ))}
+      <div className="admin-panel-user-wrapper">
+        {filteredResults.map(user => (
+          <UserDetails
+            key={user.id}
+            selectedUser={user}
+            setAllUsers={setAllUsers}
+          />
+        ))}
+      </div>
     </div>
   );
 };

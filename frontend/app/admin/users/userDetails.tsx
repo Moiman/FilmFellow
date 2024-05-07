@@ -212,9 +212,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   return (
     <div className="admin-panel-user-list">
       <div className="admin-panel-left-side">
-        <div>
-          <Smile size={90} />
-        </div>
+        <Smile />
         <div>
           <p>{selectedUser.username}</p>
           <p>{selectedUser.email}</p>
@@ -222,10 +220,12 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         <div>
           <p>Last visited: {showDate(selectedUser.last_visited)}</p>
           <p>User since: {showDate(selectedUser.created_at)}</p>
-          <div style={{ display: "inline-flex" }}>
-            <p>Status: </p>
-            <p className={selectedUser.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
-              {selectedUser.isActive ? "Active" : "On Suspension"}
+          <div>
+            <p>
+              Status:{" "}
+              <span className={selectedUser.isActive ? "active" : "suspended"}>
+                {selectedUser.isActive ? "Active" : "On Suspension"}
+              </span>
             </p>
           </div>
         </div>

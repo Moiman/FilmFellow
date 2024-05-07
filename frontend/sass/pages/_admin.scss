@@ -1,6 +1,12 @@
 @use "sass:map";
 @use "../abstracts" as abstracts;
 
+.admin-panel-content {
+  flex: 1;
+  padding: 40px 60px;
+}
+
+// Searchbar
 .admin-searchbar {
   max-width: 200px;
   position: relative;
@@ -12,10 +18,11 @@
   button:focus,
   input:focus {
     outline: 0;
+    border: 0;
   }
 }
 
-.admin-searchbar-input {
+input[type="text"] {
   width: 100%;
   padding: 10px 20px;
   background-color: abstracts.$primary-grey;
@@ -24,62 +31,126 @@
   border-radius: 20px;
 }
 
-.admin-searchbar-input::placeholder {
+input[type="text"]::placeholder {
   color: abstracts.$primary-light;
   opacity: 25%;
 }
 
-.admin-searchbar:focus-within {
+input[type="text"]:focus-within {
   outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
 }
 
-.admin-searchbar:has(button:focus) {
-  outline: 0;
+// List of users
+.admin-panel-user-wrapper {
+  background-color: abstracts.$primary-grey;
+  border-radius: abstracts.$default-border-radius;
+  box-shadow: abstracts.$default-shadow;
+  padding: 10px;
 }
 
-.admin-panel-status-suspended {
-  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
-  margin-left: 5px;
-}
-.admin-panel-status-active {
-  color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
-  margin-left: 5px;
+.admin-panel-user-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-bottom: 1px solid;
+  border-color: abstracts.$primary-darkgrey;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid red;
+
+  & > * {
+    border: 1px solid yellow;
+  }
 }
 
 .admin-panel-left-side {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  min-width: 50%;
+  grid-template-columns: 100px 1fr 1fr;
+  gap: 20px;
+  min-width: 100%;
+
   & > * {
-    padding: 10px;
+    align-content: center;
+    min-width: fit-content;
+  }
+
+  & > svg {
+    width: 100px;
+    height: auto;
+    margin: auto;
+  }
+
+  .suspended {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+
+  .active {
+    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
   }
 }
+
 .admin-panel-right-side {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  min-width: 25%;
-  justify-content: space-evenly;
-  padding: 20px;
-}
-.admin-panel-user-list {
-  background-color: abstracts.$primary-grey;
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  border-bottom: 1px solid;
-  border-color: abstracts.$primary-darkgrey;
-}
-.admin-panel-side-bar {
-  display: grid;
-  grid-template-rows: auto;
-}
-.admin-panel-active-link {
-  border-left: 5px solid map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  align-items: center;
+  justify-content: flex-end;
+  padding: 20px;
+  max-width: 100%;
+  min-width: fit-content;
+
+  * {
+    min-width: fit-content;
+  }
 }
 
-.admin-panel-content {
-  flex: 1;
-  padding: 40px 60px;
+@media only screen and (max-width: abstracts.$large-width) {
+  .admin-panel-content {
+    padding: 20px;
+  }
+
+  .admin-panel-user-list {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-panel-right-side {
+    width: fit-content;
+    margin: auto;
+    padding: 0;
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .admin-panel-left-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+}
+
+// Sidebar
+.admin-panel-side-bar {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  & > * {
+    border-bottom: 1px solid abstracts.$primary-darkgrey;
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .admin-panel-side-bar {
+    display: flex;
+    width: 100%;
+
+    & > * {
+      flex: 1;
+      border-bottom: 0;
+      border-right: 1px solid abstracts.$primary-darkgrey;
+    }
+  }
+}
+
+.admin-panel-active-link {
+  border-left: 5px solid map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }

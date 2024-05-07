@@ -1,0 +1,64 @@
+@use "../abstracts" as abstracts;
+
+.person-list {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
+  padding: 10px 0;
+
+  .person-wrapper {
+    display: grid;
+    text-align: center;
+    height: fit-content;
+
+    img,
+    .profile-path-placeholder {
+      border-radius: 50%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      height: auto;
+      width: 100%;
+      box-shadow: abstracts.$default-shadow;
+    }
+
+    .profile-path-placeholder {
+      display: inline-block;
+      background-color: rgba(abstracts.$primary-light, 0.1);
+    }
+
+    img:hover,
+    .profile-path-placeholder:hover {
+      transform: scale(105%);
+      border-radius: 40%;
+      transition: 0.2s;
+      transition-timing-function: ease-in-out;
+    }
+
+    .person-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.6rem;
+      white-space: wrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .person-title {
+      font-size: 0.9rem;
+      font-weight: 100;
+      line-height: 1.2rem;
+    }
+  }
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .person-list {
+    grid-template-columns: repeat(3, 1fr);
+
+    .person-wrapper {
+      .person-name {
+        font-size: 1rem;
+      }
+    }
+  }
+}

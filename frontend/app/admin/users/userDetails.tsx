@@ -1,4 +1,4 @@
-import { Smile } from "react-feather";
+import { Frown, Smile } from "react-feather";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -14,6 +14,7 @@ interface User {
   created_at: Date;
   last_visited: Date;
   isActive: boolean;
+  banDuration: Date;
 }
 interface Props {
   selectedUser: User;
@@ -214,9 +215,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   return (
     <div className="admin-panel-user-list">
       <div className="admin-panel-left-side">
-        <Link href={`/users/${selectedUser.id}`}>
-          <Smile />
-        </Link>
+        <Link href={`/users/${selectedUser.id}`}>{selectedUser.isActive ? <Smile /> : <Frown />}</Link>
         <div>
           <p className="username">{selectedUser.username}</p>
           <p>{selectedUser.email}</p>
@@ -228,7 +227,10 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
             <p>
               Status:{" "}
               <span className={selectedUser.isActive ? "active" : "suspended"}>
-                {selectedUser.isActive ? "Active" : "On Suspension"}
+                {selectedUser.isActive
+                  ? "Active"
+                  : "On suspension " +
+                    (selectedUser.banDuration ? "until " + selectedUser.banDuration.toDateString() : "forever")}
               </span>
             </p>
           </div>

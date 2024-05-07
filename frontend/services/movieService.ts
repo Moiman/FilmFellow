@@ -196,7 +196,9 @@ const getMovieCrewById = async (movieId: number) => {
   return {
     title: movie?.title,
     crew: movieCrew.map(crewMember => ({
-      person: crewMember.person,
+      id: crewMember.person.id,
+      name: crewMember.person.name,
+      profilePath: crewMember.person.profile_path,
       job: crewMember.job,
     })),
   };
@@ -231,7 +233,9 @@ const getMovieCastById = async (movieId: number) => {
   return {
     title: movie?.title,
     cast: movieCast.map(castMember => ({
-      person: castMember.person,
+      id: castMember.person.id,
+      name: castMember.person.name,
+      profilePath: castMember.person.profile_path,
       character: castMember.character,
     })),
   };

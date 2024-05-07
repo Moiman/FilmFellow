@@ -36,16 +36,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
           </h2>
         }
       >
-        <PersonList
-          persons={movie.crew.map(crewMember => {
-            return {
-              id: crewMember.person.id,
-              name: crewMember.person.name,
-              profilePath: crewMember.person.profile_path,
-              job: crewMember.job,
-            };
-          })}
-        />
+        <PersonList persons={movie.crew} />
       </Section>
     </main>
   );

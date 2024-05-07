@@ -1,5 +1,7 @@
 import { Smile } from "react-feather";
 import { useState } from "react";
+import Link from "next/link";
+
 import { Role } from "@prisma/client";
 import Modal from "@/components/modal";
 import { Dropdown } from "@/components/dropdown";
@@ -212,7 +214,9 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   return (
     <div className="admin-panel-user-list">
       <div className="admin-panel-left-side">
-        <Smile />
+        <Link href={`/users/${selectedUser.id}`}>
+          <Smile />
+        </Link>
         <div>
           <p>{selectedUser.username}</p>
           <p>{selectedUser.email}</p>

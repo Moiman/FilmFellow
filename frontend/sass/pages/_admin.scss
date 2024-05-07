@@ -45,7 +45,6 @@ input[type="text"]:focus-within {
   background-color: abstracts.$primary-grey;
   border-radius: abstracts.$default-border-radius;
   box-shadow: abstracts.$default-shadow;
-  padding: 10px;
 }
 
 .admin-panel-user-list {
@@ -55,28 +54,27 @@ input[type="text"]:focus-within {
   border-color: abstracts.$primary-darkgrey;
   padding: 10px;
   width: 100%;
-  border: 1px solid red;
-
-  & > * {
-    border: 1px solid yellow;
-  }
 }
 
 .admin-panel-left-side {
   display: grid;
-  grid-template-columns: 100px 1fr 1fr;
+  grid-template-columns: 100px 150px 200px;
   gap: 20px;
-  min-width: 100%;
 
   & > * {
     align-content: center;
     min-width: fit-content;
   }
 
-  & > svg {
-    width: 100px;
+  svg {
+    min-width: 80px;
     height: auto;
-    margin: auto;
+    stroke-width: 1.5px;
+    color: grey;
+  }
+
+  svg:hover {
+    color: darkgrey;
   }
 
   .suspended {

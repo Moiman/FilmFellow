@@ -12,7 +12,7 @@ export default async function New({ searchParams }: { searchParams?: { genre: st
         <GenreSelector genre={selectedGenre} />
       </div>
       <div className="section-wrapper">
-        <Section header={"bestrated"}>
+        <Section header={"Best Rated"}>
           <MovieList movies={await fetchMovies(18, "bestrated", selectedGenre)} />
         </Section>
       </div>

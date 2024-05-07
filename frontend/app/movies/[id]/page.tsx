@@ -69,8 +69,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
           }
         >
           <PersonList
-            amount={6}
-            persons={movie.cast.map(castMember => {
+            persons={movie.cast.slice(0, 6).map(castMember => {
               return {
                 id: castMember.person.id,
                 name: castMember.person.name,
@@ -89,8 +88,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
           }
         >
           <PersonList
-            amount={6}
-            persons={movie.crew.map(crewMember => {
+            persons={movie.crew.slice(0, 6).map(crewMember => {
               return {
                 id: crewMember.person.id,
                 name: crewMember.person.name,

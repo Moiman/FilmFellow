@@ -2,9 +2,10 @@ import { Flag } from "react-feather";
 
 interface ProfileButtonsProps {
   ownProfile: boolean;
+  userId: number;
 }
 
-export const ProfileButtons = ({ ownProfile }: ProfileButtonsProps) => {
+export const ProfileButtons = ({ ownProfile, userId }: ProfileButtonsProps) => {
   return (
     <div style={{ display: "inline-flex", marginTop: "40px" }}>
       {ownProfile ? (
@@ -14,11 +15,15 @@ export const ProfileButtons = ({ ownProfile }: ProfileButtonsProps) => {
       ) : (
         <>
           <button className="button-cyan">Add to friends</button>
-
-          <button className="button-pink button-icon-text">
-            <Flag size={16} />
-            Report
-          </button>
+          <form action={`/report/user/${userId}`}>
+            <button
+              type="submit"
+              className="button-pink button-icon-text"
+            >
+              <Flag size={16} />
+              Report
+            </button>
+          </form>
         </>
       )}
     </div>

@@ -29,7 +29,8 @@
 
     img:hover,
     .profile-path-placeholder:hover {
-      border-radius: 20px;
+      transform: scale(105%);
+      border-radius: 5%;
       transition: 0.2s;
       transition-timing-function: ease-in-out;
     }

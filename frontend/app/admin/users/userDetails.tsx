@@ -65,7 +65,11 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
       setAllUsers(users =>
         users.map(user => {
           if (user.id === selectedUser.id) {
-            return { ...user, isActive: data.isActive };
+            return {
+              ...user,
+              isActive: data.isActive,
+              banDuration: data.banDuration ? new Date(data.banDuration) : data.banDuration,
+            };
           }
           return user;
         }),

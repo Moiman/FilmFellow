@@ -1,4 +1,5 @@
 import Modal from "@/components/modal";
+import "@/sass/style.scss";
 
 describe("Modal component testing", () => {
   it("Renders Modal component with footer and content", () => {

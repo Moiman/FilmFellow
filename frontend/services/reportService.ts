@@ -26,11 +26,11 @@ const createReport = async (
   return newReport;
 };
 
-const markReportDone = async (reportId: number) => {
+const markReportDone = async (reportId: number, done: boolean) => {
   const markedReport = await prisma.reports.update({
     where: { id: reportId },
     data: {
-      done: true,
+      done: done,
     },
   });
 
@@ -57,13 +57,17 @@ const getAllReports = async () => {
       creator: {
         select: {
           username: true,
-          id: true
+          id: true,
+          isActive: true,
+          role: true
         },
       },
       targetUser: {
         select: {
           username: true,
-          id:true
+          id:true,
+          isActive: true,
+          role: true
         }
       },
       review: {

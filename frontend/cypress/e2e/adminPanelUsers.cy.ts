@@ -49,7 +49,7 @@ describe("Admin user panel tests", () => {
     cy.get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find(".dropdown")
       .should("be.visible")
@@ -66,7 +66,7 @@ describe("Admin user panel tests", () => {
     cy.get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find("button")
       .eq(0)
@@ -83,7 +83,7 @@ describe("Admin user panel tests", () => {
       .get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find("button")
       .eq(1)
@@ -103,7 +103,7 @@ describe("Admin user panel tests", () => {
       .get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find("button")
       .eq(2)
@@ -112,6 +112,6 @@ describe("Admin user panel tests", () => {
       { timeout: 500 };
     cy.get("dialog").should("exist");
     cy.get(".modal-box").find(".modal-content").contains("button", "Make admin").click();
-    cy.get(".admin-panel-right-side").should("not.exist");
+    cy.get(".admin-panel-user-buttons").should("not.exist");
   });
 });

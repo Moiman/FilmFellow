@@ -214,9 +214,9 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
 
   return (
     <div className="admin-panel-user-list">
-      <div className="admin-panel-left-side">
+      <div className="admin-panel-user-data">
         <Link href={`/users/${selectedUser.id}`}>{selectedUser.isActive ? <Smile /> : <Frown />}</Link>
-        <div>
+        <div className="username-and-email">
           <p className="username">{selectedUser.username}</p>
           <p>{selectedUser.email}</p>
         </div>
@@ -237,7 +237,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         </div>
       </div>
       {selectedUser.role !== Role.admin && (
-        <div className="admin-panel-right-side">
+        <div className="admin-panel-user-buttons">
           {selectedUser.isActive ? (
             <Dropdown
               buttonAlign="right"

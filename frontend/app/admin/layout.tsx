@@ -12,7 +12,7 @@ export default function SideBarLayout({ children }: Props) {
   return (
     <main className="sidebar-main">
       <Sidebar iconPosition="right">
-        <div className="admin-panel-side-bar">
+        <div className="admin-panel-sidebar">
           <Link
             href="/admin/users"
             className={currentPath === "/admin/users" ? "active-admin-link" : ""}

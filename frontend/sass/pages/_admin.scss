@@ -56,14 +56,22 @@
   gap: 20px;
 }
 
-.admin-panel-left-side {
+.admin-panel-user-data {
   display: grid;
-  grid-template-columns: 90px 200px 150px;
+  grid-template-columns: 90px 200px 200px;
   gap: 10px;
 
   & > * {
     align-content: center;
     min-width: fit-content;
+  }
+
+  .username-and-email {
+    word-break: break-all;
+
+    .username {
+      font-weight: 600;
+    }
   }
 
   svg {
@@ -84,13 +92,9 @@
   .active {
     color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
   }
-
-  .username {
-    font-weight: 600;
-  }
 }
 
-.admin-panel-right-side {
+.admin-panel-user-buttons {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -112,33 +116,39 @@
     padding: 20px;
   }
 
-  .admin-panel-right-side {
+  .admin-panel-user-data {
+    grid-template-columns: 90px 150px 200px;
+  }
+
+  .admin-panel-user-buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    button {
+      padding: 5px;
+    }
   }
 }
 
 @media only screen and (max-width: abstracts.$medium-width) {
   .admin-panel-user-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    align-items: center;
   }
 
-  .admin-panel-left-side {
+  .admin-panel-user-data {
     display: grid;
     grid-template-columns: 1fr;
-    width: 100%;
+    min-width: 50%;
     align-items: center;
     text-align: center;
     gap: 0;
-    margin-bottom: 20px;
-    margin: auto;
   }
 }
 
 // Sidebar
-.admin-panel-side-bar {
+.admin-panel-sidebar {
   display: grid;
   grid-template-columns: 1fr;
 
@@ -149,6 +159,7 @@
   & > * {
     border-bottom: 1px solid abstracts.$primary-darkgrey;
     padding: 10px;
+    width: 100px;
   }
 
   $total-colors: length(abstracts.$highlight-colors);
@@ -164,7 +175,7 @@
 }
 
 @media only screen and (max-width: abstracts.$medium-width) {
-  .admin-panel-side-bar {
+  .admin-panel-sidebar {
     display: flex;
     width: 100%;
 

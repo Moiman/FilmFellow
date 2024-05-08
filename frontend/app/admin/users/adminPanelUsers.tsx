@@ -26,7 +26,7 @@ export const AdminPanelUsers = ({ users }: Props) => {
           type="text"
           data-cy="admin-search-input"
           className="admin-searchbar-input"
-          placeholder="Search..."
+          placeholder="Search user..."
           value={searchInput}
           onChange={e => setSearchInput(e.target.value)}
         />

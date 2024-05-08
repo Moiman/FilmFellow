@@ -44,18 +44,3 @@ main.sidebar-main {
     flex-direction: column;
   }
 }
-
-.custom-toastify {
-  border: 1px solid abstracts.$primary-dark;
-  box-shadow: abstracts.$default-shadow;
-  background-color: abstracts.$primary-darkgrey !important;
-  color: abstracts.$primary-light !important;
-
-  svg {
-    color: white !important;
-  }
-
-  button:hover {
-    background-color: transparent;
-  }
-}

@@ -41,7 +41,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
     await toggleIsWatched(movie.id);
     if (watched) {
       setRating(null);
-      toast.success(
+      toast(
         <p>
           <span className="yellow">{movie.title}</span> removed from watched
         </p>,

@@ -21,7 +21,7 @@ export const Favorite = ({ movieId, isFavorite, movieTitle }: Props) => {
       setFavorite(!favorite);
 
       if (favorite) {
-        toast.success(
+        toast(
           <p>
             <span className="yellow">{movieTitle}</span> removed from favorites
           </p>,

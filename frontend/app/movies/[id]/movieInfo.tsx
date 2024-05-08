@@ -4,8 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Slide, ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
@@ -14,6 +12,7 @@ import { Watchlist } from "./watchlist";
 import { Dropdown } from "@/components/dropdown";
 import type { Movie } from "@/app/movies/[id]/page";
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
+import { toast } from "react-toastify";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",
@@ -42,9 +41,17 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
     await toggleIsWatched(movie.id);
     if (watched) {
       setRating(null);
-      toast(<p>{movie.title} removed from watched</p>);
+      toast.success(
+        <p>
+          <span className="yellow">{movie.title}</span> removed from watched
+        </p>,
+      );
     } else {
-      toast.success(<p>{movie.title} marked as watched</p>);
+      toast.success(
+        <p>
+          <span className="yellow">{movie.title}</span> marked as watched
+        </p>,
+      );
     }
     setWatched(!watched);
   };
@@ -61,12 +68,6 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
 
   return (
     <div className="movie-content">
-      <ToastContainer
-        autoClose={2500}
-        newestOnTop
-        draggable
-        theme="dark"
-      />
       <div className="movie-wrapper">
         <div className="image-wrapper">
           <Image

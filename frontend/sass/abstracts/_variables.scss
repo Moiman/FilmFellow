@@ -32,3 +32,17 @@ $a-font-size: 0.8rem;
 
 // Pages
 $default-page-margin: 40px;
+
+// Toastify
+$rt-namespace: "Toastify";
+$rt-mobile: "only screen and (max-width : 480px)" !default;
+
+:root {
+  --toastify-color-light: abstracts.$primary-light !important;
+  --toastify-color-dark: abstracts.$primary-darkgrey !important;
+  --toastify-color-info: #ffc700 !important;
+  --toastify-color-success: #74ccca !important;
+  --toastify-color-warning: #d75eb5 !important;
+  --toastify-color-error: #d75eb5 !important;
+  --toastify-color-transparent: rgba(255, 255, 255, 0.7);
+}

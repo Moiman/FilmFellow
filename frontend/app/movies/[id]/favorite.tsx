@@ -21,12 +21,21 @@ export const Favorite = ({ movieId, isFavorite, movieTitle }: Props) => {
       setFavorite(!favorite);
 
       if (favorite) {
-        toast.success(<p>{movieTitle} added to favorites</p>);
+        toast.success(
+          <p>
+            <span className="yellow">{movieTitle}</span> removed from favorites
+          </p>,
+        );
       } else {
-        toast(<p>{movieTitle} removed from favorites</p>);
+        toast.success(
+          <p>
+            <span className="yellow">{movieTitle}</span> added to favorites
+          </p>,
+        );
       }
     } catch (err) {
       console.error("Failed to favorite movie", movieId);
+      toast.error(<p>Something went wrong!</p>);
     }
   };
 

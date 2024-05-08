@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { Slide, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
@@ -40,6 +42,9 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
     await toggleIsWatched(movie.id);
     if (watched) {
       setRating(null);
+      toast(<p>{movie.title} removed from watched</p>);
+    } else {
+      toast.success(<p>{movie.title} marked as watched</p>);
     }
     setWatched(!watched);
   };
@@ -56,6 +61,12 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
 
   return (
     <div className="movie-content">
+      <ToastContainer
+        autoClose={2500}
+        newestOnTop
+        draggable
+        theme="dark"
+      />
       <div className="movie-wrapper">
         <div className="image-wrapper">
           <Image
@@ -127,6 +138,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                 <Favorite
                   movieId={movie.id}
                   isFavorite={movie.isFavorite}
+                  movieTitle={movie.title}
                 />
                 <Watchlist />
               </div>

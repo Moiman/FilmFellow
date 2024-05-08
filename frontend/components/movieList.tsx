@@ -8,30 +8,25 @@ type MovieListItem = {
 };
 
 type MovieListProps = {
-  movies: (MovieListItem | null)[];
+  movies: MovieListItem[];
 };
 
 export const MovieList = ({ movies }: MovieListProps) => {
   return (
     <div className="movie-list">
-      {movies.length > 0
-        ? movies.map(
-            movie =>
-              movie && (
-                <Link
-                  key={movie.id}
-                  href={"/movies/" + movie.id}
-                >
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                    width={500}
-                    height={500}
-                    alt={movie.title}
-                  />
-                </Link>
-              ),
-          )
-        : null}
+      {movies.map(movie => (
+        <Link
+          key={movie.id}
+          href={"/movies/" + movie.id}
+        >
+          <Image
+            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+            width={500}
+            height={500}
+            alt={movie.title}
+          />
+        </Link>
+      ))}
     </div>
   );
 };

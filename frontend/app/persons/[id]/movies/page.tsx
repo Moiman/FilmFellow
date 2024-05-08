@@ -27,7 +27,7 @@ const getAllPersonMovies = async (person: Person) => {
     }),
   );
 
-  return movies;
+  return movies.filter(movie => movie !== null) as NonNullable<(typeof movies)[0]>[];
 };
 
 export default async function PersonMovies({ params }: { params: { id: string } }) {

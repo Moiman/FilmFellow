@@ -30,7 +30,7 @@ const getBestRatedPersonMovies = async (person: Person) => {
 
   const filteredMovies = movies
     .filter(movie => movie !== null)
-    .sort((a, b) => (b?.vote_average ?? 0) - (a?.vote_average ?? 0));
+    .sort((a, b) => (b?.vote_average ?? 0) - (a?.vote_average ?? 0)) as NonNullable<(typeof movies)[0]>[];
 
   return filteredMovies.slice(0, 6);
 };

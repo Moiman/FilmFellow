@@ -1,22 +1,16 @@
 import Link from "next/link";
-import { findUserById } from "@/services/userService";
-import { findUserFavoritesById } from "@/services/favoriteService";
 import { notFound } from "next/navigation";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
+import { findUserById } from "@/services/userService";
+import { findUserFavoritesById } from "@/services/favoriteService";
+import { getUserLists } from "@/services/listService";
 import { ProfileInfo } from "./profileInfo";
 import { ListButton } from "./listButton";
-
-/* For placeholder purposes */
-const exampleLists = [
-  { id: 1, name: "Favorite horror movies", thumbnail_path: "/", movies: [278, 238, 497] },
-  { id: 2, name: "Worst movies ever", thumbnail_path: "/", movies: [278, 155] },
-  { id: 3, name: "Movies for Christmas", thumbnail_path: "/", movies: [278, 496243, 769] },
-  { id: 4, name: "I'm Batman", thumbnail_path: "/", movies: [155] },
-];
+import { NewListModal } from "./newListModal";
 
 export function shuffleArray(array: any[]) {
   return array.slice().sort(() => Math.random() - 0.5);
@@ -24,6 +18,7 @@ export function shuffleArray(array: any[]) {
 
 export default async function userProfile({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));
+  const lists = await getUserLists(Number(params.id));
 
   if (!user) {
     notFound();
@@ -71,15 +66,18 @@ export default async function userProfile({ params }: { params: { id: string } }
 
         {/* User-made lists */}
         <div className="section">
-          <div className="list-header">
+          <div
+            className="section-header"
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
             <h3 className="h5">Lists</h3>
+            <NewListModal />
           </div>
           <div className="list-wrapper">
-            {exampleLists.map(list => (
+            {lists.map(list => (
               <ListButton
-                userId={Number(params.id)}
                 key={list.id}
-                list={{ id: list.id, name: list.name, movies: list.movies }}
+                list={list}
               />
             ))}
           </div>

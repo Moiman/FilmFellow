@@ -1,22 +1,23 @@
 import Link from "next/link";
 
+import type { getUserLists } from "@/services/listService";
+
 interface ListButtonProps {
-  userId: number;
-  list: { id: number; name: string; movies: any[] };
+  list: Awaited<ReturnType<typeof getUserLists>>[0];
 }
 
-export const ListButton = ({ userId, list }: ListButtonProps) => {
+export const ListButton = ({ list }: ListButtonProps) => {
   return (
     <Link
       className="list-button-style"
-      href={`/users/${userId}/lists/${list.id}`}
+      href={`/lists/${list.id}`}
     >
       {/* Placeholder for list thumbnail */}
       <div style={{ height: "45px", aspectRatio: "3/2", backgroundColor: "darkgrey" }} />
 
       <div className="list-name">
         <p>{list.name}</p>
-        <p className="list-movie-amount">{list.movies.length}</p>
+        <p className="list-movie-amount">{list._count.listMovies}</p>
       </div>
     </Link>
   );

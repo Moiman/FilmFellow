@@ -13,7 +13,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
 
   return (
     <main>
-      <GenreSelector genre={selectedGenre} />
+      <GenreSelector selectedGenre={selectedGenre} />
 
       <div className="section-wrapper">
         <Section

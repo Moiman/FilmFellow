@@ -1,14 +1,11 @@
-import { fetchGenres } from "@/app/movieFetches";
 import Link from "next/link";
 import { Check } from "react-feather";
 import { Dropdown } from "./dropdown";
-import { headers } from "next/headers";
+import { getAllGenres } from "@/services/movieService";
 
-export default async function GenreSelector({ genre }: { genre: string | undefined }) {
-  const selectedGenre = genre;
-
+export default async function GenreSelector({ selectedGenre }: { selectedGenre: string | undefined }) {
   const getGenres = async () => {
-    const fetchedGenres = await fetchGenres();
+    const fetchedGenres = await getAllGenres();
 
     const genres = fetchedGenres.map(genre => {
       return (
@@ -29,6 +26,7 @@ export default async function GenreSelector({ genre }: { genre: string | undefin
     });
     genres.unshift(
       <Link
+        key={-1}
         className="dropdown-item"
         href={"/"}
       >

@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { Check } from "react-feather";
-
-import { Dropdown } from "@/components/dropdown";
 import { Section } from "@/components/section";
-import { fetchGenres, fetchMovies } from "./movieFetches";
+import { fetchMovies } from "./movieFetches";
 import { MovieList } from "@/components/movieList";
+import GenreSelector from "@/components/genreSelector";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
@@ -13,56 +11,9 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
     return moviesArr;
   };
 
-  const getGenres = async () => {
-    const fetchedGenres = await fetchGenres();
-
-    const genres = fetchedGenres.map(genre => {
-      return (
-        <Link
-          key={genre.id}
-          className="dropdown-item"
-          href={"/?genre=" + genre.name}
-        >
-          {genre.name}
-          {genre.name === selectedGenre && (
-            <Check
-              size={20}
-              color="#ffc700"
-            />
-          )}
-        </Link>
-      );
-    });
-    genres.unshift(
-      <Link
-        key={-1}
-        className="dropdown-item"
-        href={"/"}
-      >
-        All
-        {!selectedGenre && (
-          <Check
-            size={20}
-            color="#ffc700"
-          />
-        )}
-      </Link>,
-    );
-    return genres;
-  };
-
   return (
     <main>
-      <div className="genre-dropdown">
-        <p>Genre</p>
-        <Dropdown
-          zIndex={10}
-          width={200}
-          selected={selectedGenre ?? "All"}
-        >
-          {await getGenres()}
-        </Dropdown>
-      </div>
+      <GenreSelector selectedGenre={selectedGenre} />
 
       <div className="section-wrapper">
         <Section

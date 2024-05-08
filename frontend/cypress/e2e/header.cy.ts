@@ -12,7 +12,7 @@ describe("Header tests", () => {
       cy.location("pathname").should("eq", "/");
       cy.get('header a[href="/new"]').click();
       cy.location("pathname").should("eq", "/new");
-      cy.get("main h2").contains("New");
+      cy.get("main h3").contains("New");
     });
 
     it("Navigate to Popular with navbar", () => {
@@ -20,7 +20,7 @@ describe("Header tests", () => {
       cy.location("pathname").should("eq", "/");
       cy.get('header a[href="/popular"]').click();
       cy.location("pathname").should("eq", "/popular");
-      cy.get("main h2").contains("Popular");
+      cy.get("main h3").contains("Popular");
     });
 
     it("Navigate to Best Rated with navbar", () => {
@@ -28,7 +28,7 @@ describe("Header tests", () => {
       cy.location("pathname").should("eq", "/");
       cy.get('header a[href="/bestrated"]').click();
       cy.location("pathname").should("eq", "/bestrated");
-      cy.get("main h2").contains("Best Rated");
+      cy.get("main h3").contains("Best Rated");
     });
 
     it("Navigate to Login with navbar", () => {
@@ -65,7 +65,7 @@ describe("Header tests", () => {
         cy.get('header [data-cy="menu-icon"]').click();
         cy.get('header .dropdown a[href="/new"]').click();
         cy.location("pathname").should("eq", "/new");
-        cy.get("main h2").contains("New");
+        cy.get("main h3").contains("New");
       });
 
       it("Navigate to Popular with navbar", () => {
@@ -74,7 +74,7 @@ describe("Header tests", () => {
         cy.get('header [data-cy="menu-icon"]').click();
         cy.get('header .dropdown a[href="/popular"]').click();
         cy.location("pathname").should("eq", "/popular");
-        cy.get("main h2").contains("Popular");
+        cy.get("main h3").contains("Popular");
       });
 
       it("Navigate to Best Rated with navbar", () => {
@@ -83,7 +83,7 @@ describe("Header tests", () => {
         cy.get('header [data-cy="menu-icon"]').click();
         cy.get('header .dropdown a[href="/bestrated"]').click();
         cy.location("pathname").should("eq", "/bestrated");
-        cy.get("main h2").contains("Best Rated");
+        cy.get("main h3").contains("Best Rated");
       });
 
       it("Navigate to Login with navbar", () => {

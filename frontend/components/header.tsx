@@ -54,6 +54,7 @@ export const Header = () => {
       {/* Placeholder for search bar component */}
       <div className="searchbar">
         <input
+          type="text"
           data-cy="search-input"
           className="searchbar-input"
           placeholder="Search..."

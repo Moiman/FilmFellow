@@ -49,14 +49,14 @@ describe("Admin user panel tests", () => {
     cy.get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find(".dropdown")
       .should("be.visible")
       .click();
 
     cy.get(".dropdown-menu").find(".dropdown-item").first().click();
-    cy.get(".admin-panel-status-suspended").should("exist");
+    cy.get(".suspended").should("exist");
   });
 
   it("Take ban off from user", () => {
@@ -66,13 +66,13 @@ describe("Admin user panel tests", () => {
     cy.get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find("button")
       .eq(0)
       .should("be.visible")
       .click();
-    cy.get(".admin-panel-status-active").should("exist");
+    cy.get(".active").should("exist");
   });
 
   it("Delete user", () => {
@@ -83,7 +83,7 @@ describe("Admin user panel tests", () => {
       .get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find("button")
       .eq(1)
@@ -91,9 +91,8 @@ describe("Admin user panel tests", () => {
       .click(),
       { timeout: 500 };
     cy.get("dialog").should("exist");
-    cy.get(".modal-box").find(".modal-content").contains("button", "Delete Account").click();
-    cy.get('[data-cy="admin-search-input"]').clear();
-    cy.get(".admin-panel-user-list").should("have.length", 2);
+    cy.get(".modal-box").find(".modal-content").contains("button", "Delete account").click();
+    cy.get(".admin-panel-user-list").should("have.length", 0);
   });
 
   it("Change user role to admin", () => {
@@ -104,7 +103,7 @@ describe("Admin user panel tests", () => {
       .get(".admin-panel-content")
       .find(".admin-panel-user-list")
       .should("be.visible")
-      .find(".admin-panel-right-side")
+      .find(".admin-panel-user-buttons")
       .should("be.visible")
       .find("button")
       .eq(2)
@@ -112,7 +111,7 @@ describe("Admin user panel tests", () => {
       .click(),
       { timeout: 500 };
     cy.get("dialog").should("exist");
-    cy.get(".modal-box").find(".modal-content").contains("button", "Make Admin").click();
-    cy.get(".admin-panel-right-side").should("not.exist");
+    cy.get(".modal-box").find(".modal-content").contains("button", "Make admin").click();
+    cy.get(".admin-panel-user-buttons").should("not.exist");
   });
 });

@@ -1,0 +1,25 @@
+describe("new page tests", () => {
+  it("check if posters visible", () => {
+    cy.visit("/new");
+    cy.location("pathname").should("eq", "/new");
+    cy.get(".movie-list > a > img").should("be.visible");
+  });
+
+  it("test genre selection", () => {
+    cy.visit("/new");
+    cy.location("pathname").should("eq", "/new");
+    cy.get(".movie-list").should("be.visible");
+    cy.get(".dropdown-header").click();
+    cy.get(".dropdown-menu").should("be.visible");
+    cy.get(".dropdown-menu").contains("War").click();
+    cy.get(".dropdown").contains("War");
+    cy.get(".movie-list").should("be.visible");
+  });
+
+  it("test poster link", () => {
+    cy.visit("/new");
+    cy.location("pathname").should("eq", "/new");
+    cy.get(".movie-list > a").eq(1).click();
+    cy.location("pathname").should("include", "/movies/");
+  });
+});

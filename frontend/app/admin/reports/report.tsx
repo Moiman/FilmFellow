@@ -132,14 +132,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
     setAllReports(reports => reports.filter(report => report.id !== response.id));
   };
   return (
-    <div
-      style={{
-        display: "grid",
-        // gridTemplateColumns: "auto auto auto auto auto auto",
-        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
-        // justifyContent: "space-between"
-      }}
-    >
+    <div className="admin-panel-reports-grid">
       <label className="label-row">
         <input
           type="checkbox"
@@ -148,12 +141,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         />
       </label>
       <div>
-        <Link
-          style={{ marginLeft: "5px" }}
-          href={`/users/${report.creatorId}`}
-        >
-          {report.creator?.username}
-        </Link>
+        <Link href={`/users/${report.creatorId}`}>{report.creator?.username}</Link>
 
         <p className={report.creator?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
           {report.creator?.isActive ? "Active" : "On Suspension"}
@@ -161,23 +149,19 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       </div>
       <p>{showDate(report.created_at)}</p>
       <div>
-        <Link
-          style={{ marginLeft: "5px" }}
-          href={`/users/${report.targetUserId}`}
-        >
-          {report.targetUser?.username}
-        </Link>
+        <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
 
         <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
           {report.targetUser?.isActive ? "Active" : "On Suspension"}
         </p>
       </div>
-      <p>{report.content}</p>
+      <div className="admin-panel-report-content">
+        <p>{report.content}</p>
+      </div>
       {report.targetUser?.role !== Role.admin ? (
-        <div /*style={{ display: "grid", justifyContent: "flex-start" }}*/>
+        <div>
           {report.targetUser?.isActive ? (
             <Dropdown
-              // buttonAlign="right"
               zIndex={5}
               button={<button>Block user</button>}
             >
@@ -200,11 +184,15 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
           >
             Delete
           </button>
+          {error && (
+            <div>
+              <p className="error-text">{error}</p>
+            </div>
+          )}
         </div>
       ) : (
-        <div /*style={{ display: "grid", justifyContent: "flex-start" }}*/>
+        <div>
           <button
-            // style={{ width: "125%" }}
             className="button-pink"
             onClick={handleDeleteReportSubmit}
           >

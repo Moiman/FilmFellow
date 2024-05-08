@@ -36,7 +36,7 @@ export const AdminPanelReports = ({ reports }: Props) => {
       )
     : allReports;
   const sectionHeader = (
-    <div style={{ display: "grid", gridTemplateColumns: "auto auto auto auto auto auto"}}>
+    <div className="admin-panel-section-header">
       <h4>Done</h4>
       <h4>Reporter</h4>
       <h4>Date</h4>

@@ -83,3 +83,36 @@
   flex: 1;
   padding: 40px 60px;
 }
+
+.admin-panel-reports-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 300px 1fr;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 0px;
+  border-bottom: 1px solid;
+  border-color: abstracts.$primary-darkgrey;
+  & > * {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  a {
+    margin-left: 5px;
+  }
+}
+
+.admin-panel-section-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 300px 1fr;
+  justify-content: space-around;
+
+  h4 {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+.admin-panel-report-content {
+  word-wrap: break-word;
+  max-width: 300px;
+}

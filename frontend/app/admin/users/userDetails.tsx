@@ -283,21 +283,21 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         isOpen={isRoleChangeOpen}
         closeModal={closeRoleChangeModal}
         content={
-          <>
-            <div style={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
-              <h3>Are you sure you want to make this user an admin?</h3>
+          <div style={{ display: "grid", textAlign: "center" }}>
+            <div>
+              <h3 className="h4">Are you sure you want to make this user an admin?</h3>
               <p className="description">You can&lsquo;t demote, block or delete another admin.</p>
             </div>
 
             {modalError && (
               <p
                 className="error-text"
-                style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+                style={{ display: "flex", justifyContent: "center" }}
               >
                 {modalError}
               </p>
             )}
-            <div className="profile-settings-modal-buttons">
+            <div className="modal-buttons">
               <button onClick={closeRoleChangeModal}>Cancel</button>
               <button
                 className="button-pink"
@@ -306,7 +306,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
                 Make admin
               </button>
             </div>
-          </>
+          </div>
         }
       />
 
@@ -314,9 +314,9 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         isOpen={isDeleteOpen}
         closeModal={closeDeleteModal}
         content={
-          <>
-            <div style={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
-              <h3>Are you sure you want to delete this account?</h3>
+          <div style={{ display: "grid", textAlign: "center" }}>
+            <div>
+              <h3 className="h4">Are you sure you want to delete this account?</h3>
 
               <p className="description">
                 If you delete this account, all of the user lists, reviews and other data will be destroyed permanently.
@@ -331,7 +331,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
                 {modalError}
               </p>
             )}
-            <div className="profile-settings-modal-buttons">
+            <div className="modal-buttons">
               <button onClick={closeDeleteModal}>Cancel</button>
               <button
                 className="button-pink"
@@ -340,7 +340,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
                 Delete account
               </button>
             </div>
-          </>
+          </div>
         }
       />
     </div>

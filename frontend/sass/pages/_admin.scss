@@ -58,8 +58,8 @@
 
 .admin-panel-user-data {
   display: grid;
-  grid-template-columns: 90px 200px 200px;
-  gap: 10px;
+  grid-template-columns: 90px 350px 300px;
+  gap: 20px;
 
   & > * {
     align-content: center;
@@ -108,6 +108,16 @@
 
   div {
     margin-right: 4px;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .admin-panel-user-list {
+    gap: 0px;
+  }
+
+  .admin-panel-user-data {
+    grid-template-columns: 90px 150px 200px;
   }
 }
 

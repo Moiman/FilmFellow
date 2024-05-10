@@ -37,7 +37,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
         <p>
           <span className="highlight-text">{movie.title}</span> marked as watched
         </p>,
-        { icon: <Film />, className: "yellow-toast" },
+        { icon: <Film />, className: "cyan-toast" },
       );
     }
     const newRating = stars === rating ? null : stars;

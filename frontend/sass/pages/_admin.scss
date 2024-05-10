@@ -1,6 +1,12 @@
 @use "sass:map";
 @use "../abstracts" as abstracts;
 
+.admin-panel-content {
+  flex: 1;
+  padding: 40px 60px;
+}
+
+// Searchbar
 .admin-searchbar {
   max-width: 200px;
   position: relative;
@@ -12,76 +18,183 @@
   button:focus,
   input:focus {
     outline: 0;
+    border: 0;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: abstracts.$primary-grey;
+    border: 0;
+    color: abstracts.$primary-light;
+    border-radius: 20px;
+  }
+
+  input[type="text"]::placeholder {
+    color: abstracts.$primary-light;
+    opacity: 25%;
+  }
+
+  input[type="text"]:focus-within {
+    outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
 }
 
-.admin-searchbar-input {
-  width: 100%;
-  padding: 10px 20px;
+// List of users
+.admin-panel-user-wrapper {
   background-color: abstracts.$primary-grey;
-  border: 0;
-  color: abstracts.$primary-light;
-  border-radius: 20px;
+  border-radius: abstracts.$default-border-radius;
+  box-shadow: abstracts.$default-shadow;
 }
 
-.admin-searchbar-input::placeholder {
-  color: abstracts.$primary-light;
-  opacity: 25%;
-}
-
-.admin-searchbar:focus-within {
-  outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-}
-
-.admin-searchbar:has(button:focus) {
-  outline: 0;
-}
-
-.admin-panel-status-suspended {
-  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
-  margin-left: 5px;
-}
-.admin-panel-status-active {
-  color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
-  margin-left: 5px;
-}
-
-.admin-panel-left-side {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  min-width: 50%;
-  & > * {
-    padding: 10px;
-  }
-}
-.admin-panel-right-side {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  min-width: 25%;
-  justify-content: space-evenly;
-  padding: 20px;
-}
 .admin-panel-user-list {
-  background-color: abstracts.$primary-grey;
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
   border-bottom: 1px solid;
   border-color: abstracts.$primary-darkgrey;
-}
-.admin-panel-side-bar {
-  display: grid;
-  grid-template-rows: auto;
-}
-.admin-panel-active-link {
-  border-left: 5px solid map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  padding: 10px 20px;
+  width: 100%;
+  gap: 20px;
 }
 
-.admin-panel-content {
-  flex: 1;
-  padding: 40px 60px;
+.admin-panel-user-data {
+  display: grid;
+  grid-template-columns: 90px 350px 300px;
+  gap: 20px;
+
+  & > * {
+    align-content: center;
+    min-width: fit-content;
+  }
+
+  .username-and-email {
+    word-break: break-all;
+
+    .username {
+      font-weight: 600;
+    }
+  }
+
+  svg {
+    min-width: 80px;
+    height: auto;
+    stroke-width: 1.5px;
+    color: grey;
+  }
+
+  svg:hover {
+    color: darkgrey;
+  }
+
+  .suspended {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+
+  .active {
+    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  }
+}
+
+.admin-panel-user-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+
+  * {
+    max-width: 150px;
+    width: 100%;
+    text-wrap: nowrap;
+  }
+
+  div {
+    margin-right: 4px;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .admin-panel-user-list {
+    gap: 0px;
+  }
+
+  .admin-panel-user-data {
+    grid-template-columns: 90px 150px 200px;
+  }
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .admin-panel-content {
+    padding: 20px;
+  }
+
+  .admin-panel-user-data {
+    grid-template-columns: 90px 150px 200px;
+  }
+
+  .admin-panel-user-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    button {
+      padding: 5px;
+    }
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .admin-panel-user-list {
+    display: flex;
+    align-items: center;
+  }
+
+  .admin-panel-user-data {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-width: 50%;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+}
+
+// Sidebar
+.admin-panel-sidebar {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  *:not(.active-admin-link) {
+    padding-left: 15px;
+  }
+
+  & > * {
+    border-bottom: 1px solid abstracts.$primary-darkgrey;
+    padding: 10px;
+    width: 100px;
+  }
+
+  $total-colors: length(abstracts.$highlight-colors);
+
+  @for $i from 1 through $total-colors {
+    $color: nth(map-keys(abstracts.$highlight-colors), $i);
+    $default-color: map-get(map-get(abstracts.$highlight-colors, $color), default);
+
+    .active-admin-link:nth-child(#{$total-colors}n + #{$i}) {
+      border-left: 5px solid $default-color;
+    }
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .admin-panel-sidebar {
+    display: flex;
+    width: 100%;
+
+    & > * {
+      flex: 1;
+      border-bottom: 0;
+      border-right: 1px solid abstracts.$primary-darkgrey;
+    }
+  }
 }
 
 .admin-report-label {

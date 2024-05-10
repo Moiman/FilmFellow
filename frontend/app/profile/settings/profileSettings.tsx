@@ -438,9 +438,9 @@ export const ProfileSettings = ({ user }: Props) => {
               isOpen={isOpen}
               closeModal={closeModal}
               content={
-                <div className="profile-settings-modal-content">
+                <div style={{ display: "grid", textAlign: "center" }}>
                   <div>
-                    <h3>Are you sure you want to delete your account?</h3>
+                    <h3 className="h4">Are you sure you want to delete your account?</h3>
 
                     <p className="description">
                       If you delete your account, all your lists, reviews and other data will be destroyed permanently.
@@ -455,7 +455,7 @@ export const ProfileSettings = ({ user }: Props) => {
                       </p>
                     )}
                   </div>
-                  <div className="profile-settings-modal-buttons">
+                  <div className="modal-buttons">
                     <button
                       onClick={() => {
                         setIsOpen(false);

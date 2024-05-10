@@ -43,7 +43,7 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
               </button>
             </div>
             <div className="modal-content">{content}</div>
-            <div className="modal-footer">{footer}</div>
+            {footer && <div className="modal-footer">{footer}</div>}
           </div>
         </div>
       </dialog>

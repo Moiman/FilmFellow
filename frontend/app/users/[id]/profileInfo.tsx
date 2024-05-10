@@ -2,7 +2,7 @@ import { authOptions } from "@/authOptions";
 import { findUserById } from "@/services/userService";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { Twitter, Instagram, Facebook } from "react-feather";
+import { Twitter, Instagram, Facebook, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
 
 interface ProfileInfoProps {
@@ -16,7 +16,7 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
   return (
     <div className="profile-info">
       <h2 className="h4">{user?.username}</h2>
-      <div style={{ backgroundColor: "grey", width: "150px", height: "150px", borderRadius: "50%" }} />
+      {user?.isActive ? <Smile className="profile-picture" /> : <Frown className="profile-picture" />}
 
       <div>
         <h3 className="h5">Description</h3>

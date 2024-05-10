@@ -1,5 +1,4 @@
 "use server";
-
 import { getAllGenres, getMovieByLimitTypeGenre } from "@/services/movieService";
 
 export const fetchMovies = async (limit: number, type: string, genre: string | undefined) => {

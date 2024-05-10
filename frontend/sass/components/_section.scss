@@ -6,19 +6,22 @@
   height: fit-content;
 
   box-shadow: abstracts.$default-shadow;
-
-  border: 1px solid abstracts.$primary-dark;
-  border-radius: abstracts.$default-border-radius;
 }
 
 .section-header {
   background-color: abstracts.$primary-darkgrey;
   padding: 10px 15px;
+  border-radius: abstracts.$default-border-radius abstracts.$default-border-radius 0 0;
+  border: 1px solid abstracts.$primary-dark;
+  border-bottom: 0;
 }
 
 .section-content {
   background-color: abstracts.$primary-grey;
   padding: 15px;
+  border-radius: 0 0 abstracts.$default-border-radius abstracts.$default-border-radius;
+  border: 1px solid abstracts.$primary-dark;
+  border-top: 0;
 }
 
 .section-wrapper {

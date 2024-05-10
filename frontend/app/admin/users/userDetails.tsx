@@ -76,7 +76,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
-      toast.success(
+      toast(
         <p>
           {selectedUser.username} was blocked
           {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
@@ -172,7 +172,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setModalError("");
-      toast.success(
+      toast(
         <p>
           <span className="highlight-text">{selectedUser.username}</span> (id: {selectedUser.id}) was promoted to admin
         </p>,

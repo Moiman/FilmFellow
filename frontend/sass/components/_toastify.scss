@@ -5,6 +5,7 @@
   box-shadow: abstracts.$default-shadow;
   background-color: abstracts.$primary-darkgrey !important;
   color: abstracts.$primary-light !important;
+  border-radius: abstracts.$default-border-radius !important;
 
   svg {
     color: white !important;

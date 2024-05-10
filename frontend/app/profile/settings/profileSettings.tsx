@@ -8,6 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
 import Modal from "@/components/modal";
+import { toast } from "react-toastify";
 
 interface Props {
   user: User;
@@ -82,6 +83,7 @@ export const ProfileSettings = ({ user }: Props) => {
       signOut();
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
       throw error;
     }
   };
@@ -132,7 +134,7 @@ export const ProfileSettings = ({ user }: Props) => {
       if (updatedEmail.email === user.email) {
         setEmailError("email", {
           type: "manual",
-          message: "Cant change email to same as you already have",
+          message: "Can't change email to same as you already have",
         });
         return;
       }
@@ -157,9 +159,11 @@ export const ProfileSettings = ({ user }: Props) => {
         emailReset();
         setError("");
         router.refresh();
+        toast.success(<p>Your e-mail was changed!</p>);
       }
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
     }
   };
 
@@ -171,7 +175,7 @@ export const ProfileSettings = ({ user }: Props) => {
       if (updatedUsername.username === user.username) {
         setUsernameError("username", {
           type: "manual",
-          message: "Cant change username to same as you already have",
+          message: "Can't change username to same as you already have",
         });
         return;
       }
@@ -196,9 +200,11 @@ export const ProfileSettings = ({ user }: Props) => {
         usernameReset();
         setError("");
         router.refresh();
+        toast.success(<p>Your username was changed!</p>);
       }
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
     }
   };
 
@@ -228,9 +234,11 @@ export const ProfileSettings = ({ user }: Props) => {
         passwordReset();
         setError("");
         router.refresh();
+        toast.success(<p>Your password was changed!</p>);
       }
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
     }
   };
 

@@ -11,6 +11,7 @@ interface User {
   username: string;
   isActive: boolean;
   role: string;
+  banDuration: Date | null;
 }
 
 interface Report {
@@ -52,7 +53,8 @@ export const AdminPanelReports = ({ reports }: Props) => {
           <input
             data-cy="admin-search-input"
             className="admin-searchbar-input"
-            placeholder="Search..."
+            type="text"
+            placeholder="Search user..."
             value={searchInput}
             onChange={e => setSearchInput(e.target.value)}
           />

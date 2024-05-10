@@ -197,6 +197,16 @@
   }
 }
 
+.admin-panel-status-suspended {
+  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  margin-left: 5px;
+}
+
+.admin-panel-status-active {
+  color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  margin-left: 5px;
+}
+
 .admin-report-label {
   display: none;
 }
@@ -243,7 +253,9 @@
 .admin-panel-reports {
   @media only screen and (max-width: abstracts.$large-width) {
     .admin-panel-reports-grid {
+      display: grid;
       grid-template-columns: auto;
+
       button {
         width: 100%;
       }
@@ -252,9 +264,7 @@
         margin-bottom: 10px;
       }
     }
-    .section {
-      width: 50%;
-    }
+
     .section-header {
       display: none;
     }

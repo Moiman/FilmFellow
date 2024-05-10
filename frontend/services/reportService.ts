@@ -66,6 +66,7 @@ const getAllReports = async () => {
           id: true,
           isActive: true,
           role: true,
+          banDuration: true,
         },
       },
       targetUser: {
@@ -74,6 +75,7 @@ const getAllReports = async () => {
           id: true,
           isActive: true,
           role: true,
+          banDuration: true,
         },
       },
       review: {

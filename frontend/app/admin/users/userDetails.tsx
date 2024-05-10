@@ -78,8 +78,8 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
       setError("");
       toast.success(
         <p>
-          {selectedUser.username} (id: {selectedUser.id}) was banned
-          {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}.
+          {selectedUser.username} was blocked
+          {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
         </p>,
       );
     } catch (error) {
@@ -124,11 +124,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
-      toast(
-        <p>
-          {selectedUser.username} (id: {selectedUser.id}) was unbanned.
-        </p>,
-      );
+      toast(<p>{selectedUser.username} was unblocked</p>);
     } catch (error) {
       console.error(error);
     }
@@ -171,7 +167,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
       setModalError("");
       toast.success(
         <p>
-          {selectedUser.username} (id: {selectedUser.id}) was promoted to admin.
+          {selectedUser.username} (id: {selectedUser.id}) was promoted to admin
         </p>,
       );
     } catch (error) {

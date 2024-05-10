@@ -36,7 +36,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <Header />
           <ToastContainer
-            autoClose={2500}
+            autoClose={4000}
             newestOnTop
             draggable
             toastClassName="custom-toastify"

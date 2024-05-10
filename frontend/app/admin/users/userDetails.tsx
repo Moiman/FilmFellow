@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Role } from "@prisma/client";
 import Modal from "@/components/modal";
 import { Dropdown } from "@/components/dropdown";
+import { toast } from "react-toastify";
 
 interface User {
   email: string;
@@ -75,6 +76,12 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
+      toast.success(
+        <p>
+          {selectedUser.username} (id: {selectedUser.id}) was banned
+          {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}.
+        </p>,
+      );
     } catch (error) {
       console.error(error);
     }
@@ -117,6 +124,11 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
+      toast(
+        <p>
+          {selectedUser.username} (id: {selectedUser.id}) was unbanned.
+        </p>,
+      );
     } catch (error) {
       console.error(error);
     }
@@ -157,6 +169,11 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setModalError("");
+      toast.success(
+        <p>
+          {selectedUser.username} (id: {selectedUser.id}) was promoted to admin.
+        </p>,
+      );
     } catch (error) {
       console.error(error);
     }

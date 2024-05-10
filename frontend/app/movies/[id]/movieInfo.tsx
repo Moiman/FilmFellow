@@ -31,6 +31,13 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
   const [watched, setWatched] = useState<boolean>(movie.isWatched);
 
   const setUserRating = async (stars: number | null) => {
+    if (!watched) {
+      toast.success(
+        <p>
+          <span className="yellow">{movie.title}</span> marked as watched
+        </p>,
+      );
+    }
     const newRating = stars === rating ? null : stars;
     setRating(newRating);
     await setMovieRating(movie.id, newRating);

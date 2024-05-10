@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from vectorize_movie import vectorize_movie
 from get_content_based_recommendations_cosine_idx import \
-    get_content_based_recommendations_cosine_idx
+get_content_based_recommendations_cosine_idx
 
 def content_based_new_movie(movie_features, 
                             n_recommendations,

@@ -28,7 +28,6 @@ def find_similar_movies(
         List of integers: List of recommended movies given as TMDB id.
     """
     
-    # matrix = matrix.T 
     neighbour_ids = []
     
     index = movie_id_to_index[TMDB_to_MovieLens[TMDB_id]]
@@ -44,6 +43,8 @@ def find_similar_movies(
                                return_distance=False)
     for i in range(0,k+1):
         n = neighbour.item(i)
+        if movie_index_to_id[n] not in MovieLens_to_TMDB.keys():
+            continue
         neighbour_ids.append(MovieLens_to_TMDB[movie_index_to_id[n]])
     neighbour_ids.pop(0)
     return neighbour_ids

@@ -16,7 +16,10 @@ def content_based_filtering(TMDB_id,
         TMDB_to_MovieLens (dict (int:int)): TMDB id mapped to MovieLens id.
  
     Returns:
+        if movie is in the cosine sim:
         List of integers: List of recommended movies given as TMDB id.
+        if movie is not in the cosine sim:
+        returns an empty list.
     """
     
     
@@ -33,6 +36,9 @@ def content_based_filtering(TMDB_id,
        dtype="float64", 
        mode='r', 
        shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))
+    
+    if TMDB_to_MovieLens[TMDB_id] not in movie_id_to_index.keys():
+        return []
     
     recommendations = get_content_based_recommendations(
                             TMDB_id, 

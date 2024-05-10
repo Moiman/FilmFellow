@@ -35,6 +35,7 @@ def get_recommendations_for_new_movie(movie_features, n_recommendations=100):
     if n_recommendations > 1800:
         print("Too many recommendations! Content based filtering has only " +
               "little more than 1800 movies!")
+        return
         
     movie_features = feature_formatter(movie_features)
     

@@ -23,14 +23,22 @@ export const Favorite = ({ movieId, isFavorite, movieTitle }: Props) => {
       if (favorite) {
         toast(
           <p>
-            <span className="yellow">{movieTitle}</span> removed from favorites
+            <span className="highlight-text">{movieTitle}</span> removed from favorites
           </p>,
+          {
+            icon: <Heart />,
+            className: "yellow-toast",
+          },
         );
       } else {
-        toast.success(
+        toast(
           <p>
-            <span className="yellow">{movieTitle}</span> added to favorites
+            <span className="highlight-text">{movieTitle}</span> added to favorites
           </p>,
+          {
+            icon: <Heart />,
+            className: "cyan-toast",
+          },
         );
       }
     } catch (err) {

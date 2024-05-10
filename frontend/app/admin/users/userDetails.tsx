@@ -1,4 +1,4 @@
-import { Frown, Smile } from "react-feather";
+import { Frown, Smile, Tool } from "react-feather";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -81,6 +81,10 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
           {selectedUser.username} was blocked
           {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
         </p>,
+        {
+          icon: <Tool />,
+          className: "cyan-toast",
+        },
       );
     } catch (error) {
       console.error(error);
@@ -124,7 +128,10 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
-      toast(<p>{selectedUser.username} was unblocked</p>);
+      toast(<p>{selectedUser.username} was unblocked</p>, {
+        icon: <Tool />,
+        className: "yellow-toast",
+      });
     } catch (error) {
       console.error(error);
     }
@@ -167,8 +174,12 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
       setModalError("");
       toast.success(
         <p>
-          {selectedUser.username} (id: {selectedUser.id}) was promoted to admin
+          <span className="highlight-text">{selectedUser.username}</span> (id: {selectedUser.id}) was promoted to admin
         </p>,
+        {
+          icon: <Tool />,
+          className: "cyan-toast",
+        },
       );
     } catch (error) {
       console.error(error);

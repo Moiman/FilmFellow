@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff } from "react-feather";
+import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -159,7 +159,11 @@ export const ProfileSettings = ({ user }: Props) => {
         emailReset();
         setError("");
         router.refresh();
-        toast.success(<p>Your e-mail was changed!</p>);
+        toast(<p>Your e-mail was changed!</p>),
+          {
+            icon: <Save />,
+            className: "cyan-toast",
+          };
       }
     } catch (error) {
       console.error(error);
@@ -200,7 +204,11 @@ export const ProfileSettings = ({ user }: Props) => {
         usernameReset();
         setError("");
         router.refresh();
-        toast.success(<p>Your username was changed!</p>);
+        toast(<p>Your username was changed!</p>),
+          {
+            icon: <Save />,
+            className: "cyan-toast",
+          };
       }
     } catch (error) {
       console.error(error);
@@ -234,7 +242,11 @@ export const ProfileSettings = ({ user }: Props) => {
         passwordReset();
         setError("");
         router.refresh();
-        toast.success(<p>Your password was changed!</p>);
+        toast(<p>Your password was changed!</p>),
+          {
+            icon: <Save />,
+            className: "cyan-toast",
+          };
       }
     } catch (error) {
       console.error(error);

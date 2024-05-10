@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -12,7 +13,7 @@ import { Watchlist } from "./watchlist";
 import { Dropdown } from "@/components/dropdown";
 import type { Movie } from "@/app/movies/[id]/page";
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
-import { toast } from "react-toastify";
+import { Film } from "react-feather";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",
@@ -32,10 +33,11 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
 
   const setUserRating = async (stars: number | null) => {
     if (!watched) {
-      toast.success(
+      toast(
         <p>
-          <span className="yellow">{movie.title}</span> marked as watched
+          <span className="highlight-text">{movie.title}</span> marked as watched
         </p>,
+        { icon: <Film />, className: "yellow-toast" },
       );
     }
     const newRating = stars === rating ? null : stars;
@@ -50,14 +52,16 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
       setRating(null);
       toast(
         <p>
-          <span className="yellow">{movie.title}</span> removed from watched
+          <span className="highlight-text">{movie.title}</span> removed from watched
         </p>,
+        { icon: <Film />, className: "yellow-toast" },
       );
     } else {
-      toast.success(
+      toast(
         <p>
-          <span className="yellow">{movie.title}</span> marked as watched
+          <span className="highlight-text">{movie.title}</span> marked as watched
         </p>,
+        { icon: <Film />, className: "cyan-toast" },
       );
     }
     setWatched(!watched);

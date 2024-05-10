@@ -34,9 +34,6 @@ $a-font-size: 0.8rem;
 $default-page-margin: 40px;
 
 // Toastify
-$rt-namespace: "Toastify";
-$rt-mobile: "only screen and (max-width : 480px)" !default;
-
 :root {
   --toastify-color-light: abstracts.$primary-light !important;
   --toastify-color-dark: abstracts.$primary-darkgrey !important;
@@ -53,6 +50,8 @@ $rt-mobile: "only screen and (max-width : 480px)" !default;
 
   --toastify-text-color-light: abstracts.$primary-dark;
   --toastify-text-color-dark: abstracts.$primary-light !important;
+
+  --toastify-color-progress-light: none;
 
   --toastify-color-progress-light: #ffc700 !important;
   --toastify-color-progress-dark: #ffc700 !important;

@@ -1,11 +1,11 @@
 import { Frown, Smile, Tool } from "react-feather";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Link from "next/link";
 
 import { Role } from "@prisma/client";
 import Modal from "@/components/modal";
 import { Dropdown } from "@/components/dropdown";
-import { toast } from "react-toastify";
 
 interface User {
   email: string;

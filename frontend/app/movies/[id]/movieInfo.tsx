@@ -5,6 +5,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { Film } from "react-feather";
 
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
@@ -13,7 +14,6 @@ import { Watchlist } from "./watchlist";
 import { Dropdown } from "@/components/dropdown";
 import type { Movie } from "@/app/movies/[id]/page";
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
-import { Film } from "react-feather";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",

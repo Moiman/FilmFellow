@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -8,7 +9,6 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
 import Modal from "@/components/modal";
-import { toast } from "react-toastify";
 
 interface Props {
   user: User;
@@ -159,11 +159,10 @@ export const ProfileSettings = ({ user }: Props) => {
         emailReset();
         setError("");
         router.refresh();
-        toast(<p>Your e-mail was changed!</p>),
-          {
-            icon: <Save />,
-            className: "cyan-toast",
-          };
+        toast(<p>Your e-mail was changed!</p>, {
+          icon: <Save />,
+          className: "cyan-toast",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -204,11 +203,10 @@ export const ProfileSettings = ({ user }: Props) => {
         usernameReset();
         setError("");
         router.refresh();
-        toast(<p>Your username was changed!</p>),
-          {
-            icon: <Save />,
-            className: "cyan-toast",
-          };
+        toast(<p>Your username was changed!</p>, {
+          icon: <Save />,
+          className: "cyan-toast",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -242,11 +240,10 @@ export const ProfileSettings = ({ user }: Props) => {
         passwordReset();
         setError("");
         router.refresh();
-        toast(<p>Your password was changed!</p>),
-          {
-            icon: <Save />,
-            className: "cyan-toast",
-          };
+        toast(<p>Your password was changed!</p>, {
+          icon: <Save />,
+          className: "cyan-toast",
+        });
       }
     } catch (error) {
       console.error(error);

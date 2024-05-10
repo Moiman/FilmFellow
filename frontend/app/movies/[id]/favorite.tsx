@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Heart } from "react-feather";
 
 import { toggleIsFavorite } from "@/services/favoriteService";
-import { toast } from "react-toastify";
 
 interface Props {
   isFavorite: boolean;

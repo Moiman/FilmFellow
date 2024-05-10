@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-import { getMovieById, getMovieCastById, getMovieCrewById } from "@/services/movieService";
+import { getMovieById } from "@/services/movieService";
 import { getIsWatched, getMovieRating } from "@/services/watchedService";
 import { getIsFavorite } from "@/services/favoriteService";
 

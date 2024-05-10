@@ -1,10 +1,8 @@
 "use server";
 import { authOptions } from "@/authOptions";
-import { PrismaClient } from "@prisma/client";
 import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
-
-const prisma = new PrismaClient();
+import prisma from "@/db";
 
 const createReport = async (
   creatorId: number,
@@ -27,24 +25,32 @@ const createReport = async (
 };
 
 const markReportDone = async (reportId: number, done: boolean) => {
-  const markedReport = await prisma.reports.update({
-    where: { id: reportId },
-    data: {
-      done: done,
-    },
-  });
+  try {
+    const markedReport = await prisma.reports.update({
+      where: { id: reportId },
+      data: {
+        done: done,
+      },
+    });
 
-  return markedReport;
+    return markedReport;
+  } catch (error) {
+    return { error: "Internal server error" };
+  }
 };
 
 const deleteReportById = async (reportId: number) => {
-  const deletedReport = await prisma.reports.delete({
-    where: {
-      id: reportId,
-    },
-  });
+  try {
+    const deletedReport = await prisma.reports.delete({
+      where: {
+        id: reportId,
+      },
+    });
 
-  return deletedReport;
+    return deletedReport;
+  } catch (error) {
+    return { error: "Internal server error" };
+  }
 };
 
 const getAllReports = async () => {
@@ -59,16 +65,16 @@ const getAllReports = async () => {
           username: true,
           id: true,
           isActive: true,
-          role: true
+          role: true,
         },
       },
       targetUser: {
         select: {
           username: true,
-          id:true,
+          id: true,
           isActive: true,
-          role: true
-        }
+          role: true,
+        },
       },
       review: {
         select: {

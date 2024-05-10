@@ -47,7 +47,7 @@ export const AdminPanelReports = ({ reports }: Props) => {
   );
   return (
     <main>
-      <div>
+      <div className="admin-panel-reports">
         <div className="admin-searchbar">
           <input
             data-cy="admin-search-input"

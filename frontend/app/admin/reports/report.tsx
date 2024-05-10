@@ -36,6 +36,7 @@ const banOptions = [
 
 export const ReportComponent = ({ report, setAllReports }: Props) => {
   const [error, setError] = useState("");
+
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
       const banDetails = {
@@ -121,7 +122,12 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
     }
   };
   const handleCheckBox = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await markReportDone(report.id, e.target.checked);
+    const response = await markReportDone(report.id, e.target.checked);
+    if ("error" in response) {
+      setError(response.error);
+      return;
+    }
+    setError("");
   };
   const showDate = (date: Date) => {
     const dateFormatted = date.toISOString().slice(0, 10).split("-").reverse().join(".");
@@ -129,26 +135,34 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
   };
   const handleDeleteReportSubmit = async () => {
     const response = await deleteReportById(report.id);
+    if ("error" in response) {
+      setError(response.error);
+      return;
+    }
+    setError("");
     setAllReports(reports => reports.filter(report => report.id !== response.id));
   };
   return (
     <div className="admin-panel-reports-grid">
-      <label className="label-row">
-        <input
-          type="checkbox"
-          defaultChecked={report.done}
-          onChange={e => handleCheckBox(e)}
-        />
-      </label>
+      <label className="admin-report-label">Done</label>
+      <input
+        type="checkbox"
+        id="checkbox"
+        defaultChecked={report.done}
+        onChange={e => handleCheckBox(e)}
+      />
       <div>
+        <label className="admin-report-label">Reporter</label>
         <Link href={`/users/${report.creatorId}`}>{report.creator?.username}</Link>
 
         <p className={report.creator?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
           {report.creator?.isActive ? "Active" : "On Suspension"}
         </p>
       </div>
+      <label className="admin-report-label">Date</label>
       <p>{showDate(report.created_at)}</p>
       <div>
+        <label className="admin-report-label">Target</label>
         <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
 
         <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
@@ -156,8 +170,10 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         </p>
       </div>
       <div className="admin-panel-report-content">
+        <label className="admin-report-label">Description</label>
         <p>{report.content}</p>
       </div>
+      <label className="admin-report-label">Actions</label>
       {report.targetUser?.role !== Role.admin ? (
         <div>
           {report.targetUser?.isActive ? (
@@ -198,6 +214,11 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
           >
             Delete
           </button>
+          {error && (
+            <div>
+              <p className="error-text">{error}</p>
+            </div>
+          )}
         </div>
       )}
     </div>

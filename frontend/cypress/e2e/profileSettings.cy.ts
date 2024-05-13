@@ -79,7 +79,7 @@ describe("Profile page tests", () => {
     cy.get('input[name="username"]').clear();
     cy.get('input[name="username"]').type(newUser.email);
     cy.get('button[type="submit"]').click();
-    cy.contains("Cant change username to same as you already have").should("be.visible");
+    cy.contains("Can't change username to same as you already have").should("be.visible");
     cy.location("pathname").should("eq", "/profile/settings");
   });
 
@@ -138,7 +138,7 @@ describe("Profile page tests", () => {
     cy.get('input[name="email"]').clear();
     cy.get('input[name="email"]').type(newUser.email);
     cy.get('button[type="submit"]').click();
-    cy.contains("Cant change email to same as you already have").should("be.visible");
+    cy.contains("Can't change email to same as you already have").should("be.visible");
     cy.location("pathname").should("eq", "/profile/settings");
   });
 

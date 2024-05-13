@@ -1,33 +1,6 @@
 @use "sass:map";
 @use "../abstracts/" as abstracts;
 
-:root {
-  --toastify-color-progress-light: #ffc700 !important;
-  --toastify-color-progress-dark: #ffc700 !important;
-}
-
-.custom-toastify {
-  border: 1px solid abstracts.$primary-dark;
-  box-shadow: abstracts.$default-shadow;
-  background-color: abstracts.$primary-darkgrey !important;
-  color: abstracts.$primary-light !important;
-  border-radius: abstracts.$default-border-radius !important;
-
-  button {
-    margin: 0;
-  }
-
-  button:hover {
-    background-color: transparent;
-  }
-}
-
-.Toastify__toast-container--top-right {
-  .Toastify__toast-body {
-    align-items: flex-start;
-  }
-}
-
 .cyan-toast,
 .yellow-toast,
 .pink-toast {
@@ -46,7 +19,7 @@
   }
 
   .Toastify__close-button > svg {
-    color: white !important;
+    color: white;
   }
 }
 
@@ -59,7 +32,7 @@
   }
 
   .Toastify__toast-icon svg {
-    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default") !important;
+    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
   }
 
   .highlight-text {
@@ -76,7 +49,7 @@
   }
 
   .Toastify__toast-icon svg {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default") !important;
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
 
   .highlight-text {
@@ -93,10 +66,23 @@
   }
 
   .Toastify__toast-icon svg {
-    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default") !important;
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
   }
 
   .highlight-text {
     color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
   }
+}
+
+// Icon position on start when toast has multiple lines
+.Toastify__toast-container {
+  .Toastify__toast-body {
+    align-items: flex-start;
+  }
+}
+
+// Overwrite to disable default gradient on progress bar
+:root {
+  --toastify-color-progress-light: #ffc700 !important;
+  --toastify-color-progress-dark: #ffc700 !important;
 }

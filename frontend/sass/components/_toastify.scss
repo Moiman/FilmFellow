@@ -1,0 +1,88 @@
+@use "sass:map";
+@use "../abstracts/" as abstracts;
+
+.cyan-toast,
+.yellow-toast,
+.pink-toast {
+  border: 1px solid abstracts.$primary-dark;
+  box-shadow: abstracts.$default-shadow;
+  background-color: abstracts.$primary-darkgrey !important;
+  color: abstracts.$primary-light !important;
+  border-radius: abstracts.$default-border-radius !important;
+
+  button {
+    margin: 0;
+  }
+
+  button:hover {
+    background-color: transparent;
+  }
+
+  .Toastify__close-button > svg {
+    color: white;
+  }
+}
+
+.cyan-toast {
+  .Toastify__progress-bar,
+  .Toastify__progress-bar--rtl,
+  .Toastify__progress-bar-theme--light,
+  .Toastify__progress-bar-theme--dark {
+    background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  }
+
+  .Toastify__toast-icon svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  }
+
+  .highlight-text {
+    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  }
+}
+
+.yellow-toast {
+  .Toastify__progress-bar,
+  .Toastify__progress-bar--rtl,
+  .Toastify__progress-bar-theme--light,
+  .Toastify__progress-bar-theme--dark {
+    background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+
+  .Toastify__toast-icon svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+
+  .highlight-text {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+}
+
+.pink-toast {
+  .Toastify__progress-bar,
+  .Toastify__progress-bar--rtl,
+  .Toastify__progress-bar-theme--light,
+  .Toastify__progress-bar-theme--dark {
+    background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+
+  .Toastify__toast-icon svg {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+
+  .highlight-text {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+}
+
+// Icon position on start when toast has multiple lines
+.Toastify__toast-container {
+  .Toastify__toast-body {
+    align-items: flex-start;
+  }
+}
+
+// Overwrite to disable default gradient on progress bar
+:root {
+  --toastify-color-progress-light: #ffc700 !important;
+  --toastify-color-progress-dark: #ffc700 !important;
+}

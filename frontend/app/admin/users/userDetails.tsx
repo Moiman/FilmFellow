@@ -1,6 +1,7 @@
-import { Frown, Smile } from "react-feather";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Frown, Smile, Tool } from "react-feather";
 
 import { Role } from "@prisma/client";
 import Modal from "@/components/modal";
@@ -75,6 +76,16 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
+      toast(
+        <p>
+          {selectedUser.username} was blocked
+          {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
+        </p>,
+        {
+          icon: <Tool />,
+          className: "cyan-toast",
+        },
+      );
     } catch (error) {
       console.error(error);
     }
@@ -117,6 +128,10 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
+      toast(<p>{selectedUser.username} was unblocked</p>, {
+        icon: <Tool />,
+        className: "yellow-toast",
+      });
     } catch (error) {
       console.error(error);
     }
@@ -157,6 +172,15 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setModalError("");
+      toast(
+        <p>
+          <span className="highlight-text">{selectedUser.username}</span> (id: {selectedUser.id}) was promoted to admin
+        </p>,
+        {
+          icon: <Tool />,
+          className: "cyan-toast",
+        },
+      );
     } catch (error) {
       console.error(error);
     }

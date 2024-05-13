@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
+
 import "@/sass/style.scss";
 import { Poppins, Roboto } from "next/font/google";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { getServerSession } from "next-auth";
+
 import SessionProvider from "@/components/sessionProvider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400"], variable: "--font-poppins" });
@@ -29,6 +35,12 @@ export default async function RootLayout({
       <body className={`${poppins.variable} ${roboto.variable}`}>
         <SessionProvider session={session}>
           <Header />
+          <ToastContainer
+            autoClose={4000}
+            newestOnTop
+            draggable
+            toastClassName="custom-toastify"
+          />
           {children}
           <Footer />
         </SessionProvider>

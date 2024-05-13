@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
-import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff } from "react-feather";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
+import { toast } from "react-toastify";
+import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
 import Modal from "@/components/modal";
 
 interface Props {
@@ -82,6 +83,7 @@ export const ProfileSettings = ({ user }: Props) => {
       signOut();
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
       throw error;
     }
   };
@@ -132,7 +134,7 @@ export const ProfileSettings = ({ user }: Props) => {
       if (updatedEmail.email === user.email) {
         setEmailError("email", {
           type: "manual",
-          message: "Cant change email to same as you already have",
+          message: "Can't change email to same as you already have",
         });
         return;
       }
@@ -157,9 +159,14 @@ export const ProfileSettings = ({ user }: Props) => {
         emailReset();
         setError("");
         router.refresh();
+        toast(<p>Your e-mail was changed!</p>, {
+          icon: <Save />,
+          className: "cyan-toast",
+        });
       }
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
     }
   };
 
@@ -171,7 +178,7 @@ export const ProfileSettings = ({ user }: Props) => {
       if (updatedUsername.username === user.username) {
         setUsernameError("username", {
           type: "manual",
-          message: "Cant change username to same as you already have",
+          message: "Can't change username to same as you already have",
         });
         return;
       }
@@ -196,9 +203,14 @@ export const ProfileSettings = ({ user }: Props) => {
         usernameReset();
         setError("");
         router.refresh();
+        toast(<p>Your username was changed!</p>, {
+          icon: <Save />,
+          className: "cyan-toast",
+        });
       }
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
     }
   };
 
@@ -228,9 +240,14 @@ export const ProfileSettings = ({ user }: Props) => {
         passwordReset();
         setError("");
         router.refresh();
+        toast(<p>Your password was changed!</p>, {
+          icon: <Save />,
+          className: "cyan-toast",
+        });
       }
     } catch (error) {
       console.error(error);
+      toast.error(<p>Something went wrong!</p>);
     }
   };
 

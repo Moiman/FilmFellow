@@ -32,6 +32,7 @@
     "react-dom": "^18.3.1",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.51.3",
+    "react-toastify": "^10.0.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {

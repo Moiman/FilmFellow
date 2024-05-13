@@ -25,12 +25,20 @@ interface DropdownMenuProps {
  * @param {React.ReactNode} [props.button] - Optional ReactNode to replace the header. Use only Buttons for accessibility.
  * @param {"center"|"left"|"right"} [props.buttonAlign] - Optional alignment (center, right, left) for custom button. Default is "left".
  * @param {string} [props.width] - Optional width of the dropdown menu. Without this default width is 100% of parent width.
- * @param {string} [props.maxHeight] - Optional maximum height of the dropdown menu. Without this default height is "fit-content".
+ * @param {string} [props.maxHeight] - Optional maximum height of the dropdown menu.  Without this default height is 200px. Max height 0 makes dropdrown height fit-content.
  * @param {number} [props.zIndex] - Optional z-index to ease future layout handling.
  * @returns {JSX.Element} A JSX element representing the Dropdown component.
  */
 
-export const Dropdown = ({ children, selected, button, buttonAlign, width, maxHeight, zIndex }: DropdownMenuProps) => {
+export const Dropdown = ({
+  children,
+  selected,
+  button,
+  buttonAlign,
+  width,
+  maxHeight = 200,
+  zIndex,
+}: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -87,7 +95,7 @@ export const Dropdown = ({ children, selected, button, buttonAlign, width, maxHe
           onClick={() => setIsOpen(!isOpen)}
           style={{
             zIndex: zIndex,
-            maxHeight: maxHeight ? maxHeight + "px" : "fit-content",
+            maxHeight: maxHeight != 0 ? maxHeight + "px" : "fit-content",
             minWidth: width ? width + "px" : "fit-content",
           }}
         >

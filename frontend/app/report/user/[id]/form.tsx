@@ -1,15 +1,14 @@
 "use client";
+import { useState } from "react";
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
-import { useState } from "react";
 
 interface Props {
   targetUserId: string;
   creator: number | string;
 }
 
-export default function ReportForm({targetUserId, creator}: Props) {
-
+export default function ReportForm({ targetUserId, creator }: Props) {
   const [reportInput, setReportInput] = useState("");
   const sectionHeader = (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -37,7 +36,7 @@ export default function ReportForm({targetUserId, creator}: Props) {
               required
               rows={10}
               value={reportInput}
-              onChange={(e) => setReportInput(e.target.value)}
+              onChange={e => setReportInput(e.target.value)}
             />
             <button
               className="form-submit"

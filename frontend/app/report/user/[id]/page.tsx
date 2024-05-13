@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import ReportForm from "./form";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/authOptions";
+import ReportForm from "./form";
 
 interface Params {
   id: string;
@@ -12,6 +12,11 @@ export default async function ReportPage({ params }: { params: Params }) {
   if (!session) {
     redirect("/");
   } else {
-    return <ReportForm targetUserId={params.id} creator={session.user.id} />;
+    return (
+      <ReportForm
+        targetUserId={params.id}
+        creator={session.user.id}
+      />
+    );
   }
 }

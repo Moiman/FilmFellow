@@ -1,7 +1,8 @@
 "use client";
+import { useState } from "react";
 import { Section } from "@/components/section";
 import { ReportComponent } from "./report";
-import { useState } from "react";
+
 
 interface Props {
   reports: Report[];

@@ -153,7 +153,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
   return (
     <div className="admin-panel-reports-grid">
       <div>
-        <label className="admin-report-label">Done</label>
+        <label className="admin-panel-report-label">Done</label>
         <input
           type="checkbox"
           id="checkbox"
@@ -162,7 +162,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         />
       </div>
       <div>
-        <label className="admin-report-label">Reporter</label>
+        <label className="admin-panel-report-label">Reporter</label>
         <Link href={`/users/${report.creatorId}`}>{report.creator?.username}</Link>
 
         <p className={report.creator?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
@@ -173,11 +173,11 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         </p>
       </div>
       <div>
-        <label className="admin-report-label">Date</label>
+        <label className="admin-panel-report-label">Date</label>
         <p>{showDate(report.created_at)}</p>
       </div>
       <div>
-        <label className="admin-report-label">Target</label>
+        <label className="admin-panel-report-label">Target</label>
         <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
 
         <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
@@ -187,14 +187,14 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
               (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
         </p>
       </div>
-      <div className="admin-panel-report-content">
-        <label className="admin-report-label">Description</label>
+      <div className="admin-panel-report-content description">
+        <label className="admin-panel-report-label">Description</label>
         <p>{report.content}</p>
       </div>
 
       {report.targetUser?.role !== Role.admin ? (
         <div>
-          <label className="admin-report-label">Actions</label>
+          <label className="admin-panel-report-label">Actions</label>
           {report.targetUser?.isActive ? (
             <Dropdown
               zIndex={5}
@@ -227,7 +227,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         </div>
       ) : (
         <div>
-          <label className="admin-report-label">Actions</label>
+          <label className="admin-panel-report-label">Actions</label>
           <button
             className="button-pink"
             onClick={handleDeleteReportSubmit}

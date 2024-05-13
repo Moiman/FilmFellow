@@ -48,7 +48,7 @@ export default async function GenreSelector({ selectedGenre }: { selectedGenre: 
         zIndex={10}
         width={200}
         selected={selectedGenre ?? "All"}
-        maxHeight={300}
+        maxHeight={400}
       >
         {await getGenres()}
       </Dropdown>

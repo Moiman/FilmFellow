@@ -95,7 +95,7 @@ export const Dropdown = ({
           onClick={() => setIsOpen(!isOpen)}
           style={{
             zIndex: zIndex,
-            maxHeight: maxHeight != 0 ? maxHeight + "px" : "fit-content",
+            maxHeight: maxHeight !== 0 ? maxHeight + "px" : "fit-content",
             minWidth: width ? width + "px" : "fit-content",
           }}
         >

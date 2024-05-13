@@ -40,6 +40,7 @@ export default async function RootLayout({
             newestOnTop
             draggable
             toastClassName="custom-toastify"
+            position="bottom-right"
           />
           {children}
           <Footer />

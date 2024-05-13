@@ -26,7 +26,7 @@ export const Favorite = ({ movieId, isFavorite, movieTitle }: Props) => {
             <span className="highlight-text">{movieTitle}</span> removed from favorites
           </p>,
           {
-            icon: <Heart />,
+            icon: <Heart strokeWidth={2.5} />,
             className: "yellow-toast",
           },
         );
@@ -36,7 +36,7 @@ export const Favorite = ({ movieId, isFavorite, movieTitle }: Props) => {
             <span className="highlight-text">{movieTitle}</span> added to favorites
           </p>,
           {
-            icon: <Heart />,
+            icon: <Heart strokeWidth={2.5} />,
             className: "cyan-toast",
           },
         );

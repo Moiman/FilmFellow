@@ -32,32 +32,3 @@ $a-font-size: 0.8rem;
 
 // Pages
 $default-page-margin: 40px;
-
-// Toastify
-:root {
-  --toastify-color-light: abstracts.$primary-light !important;
-  --toastify-color-dark: abstracts.$primary-darkgrey !important;
-  --toastify-color-info: #ffc700 !important;
-  --toastify-color-success: #74ccca !important;
-  --toastify-color-warning: #d75eb5 !important;
-  --toastify-color-error: #d75eb5 !important;
-  --toastify-color-transparent: rgba(255, 255, 255, 0.7);
-
-  --toastify-icon-color-info: var(--toastify-color-info);
-  --toastify-icon-color-success: var(--toastify-color-success);
-  --toastify-icon-color-warning: var(--toastify-color-warning);
-  --toastify-icon-color-error: var(--toastify-color-error);
-
-  --toastify-text-color-light: abstracts.$primary-dark;
-  --toastify-text-color-dark: abstracts.$primary-light !important;
-
-  --toastify-color-progress-light: none;
-
-  --toastify-color-progress-light: #ffc700 !important;
-  --toastify-color-progress-dark: #ffc700 !important;
-  --toastify-color-progress-info: var(--toastify-color-info);
-  --toastify-color-progress-success: var(--toastify-color-success);
-  --toastify-color-progress-warning: var(--toastify-color-warning);
-  --toastify-color-progress-error: var(--toastify-color-error);
-  --toastify-color-progress-bgo: 0.2;
-}

@@ -1,6 +1,11 @@
 @use "sass:map";
 @use "../abstracts/" as abstracts;
 
+:root {
+  --toastify-color-progress-light: #ffc700 !important;
+  --toastify-color-progress-dark: #ffc700 !important;
+}
+
 .custom-toastify {
   border: 1px solid abstracts.$primary-dark;
   box-shadow: abstracts.$default-shadow;
@@ -14,6 +19,12 @@
 
   button:hover {
     background-color: transparent;
+  }
+}
+
+.Toastify__toast-container--top-right {
+  .Toastify__toast-body {
+    align-items: flex-start;
   }
 }
 

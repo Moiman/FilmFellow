@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
-import { toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
+import { toast } from "react-toastify";
+import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
 import Modal from "@/components/modal";
 
 interface Props {

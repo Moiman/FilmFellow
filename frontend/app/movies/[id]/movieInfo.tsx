@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Film } from "react-feather";
 
 import { StarRating } from "./starRating";
@@ -12,6 +12,7 @@ import { Favorite } from "./favorite";
 import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
 import { Dropdown } from "@/components/dropdown";
+
 import type { Movie } from "@/app/movies/[id]/page";
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 

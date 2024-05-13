@@ -1,7 +1,7 @@
-import { Frown, Smile, Tool } from "react-feather";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import Link from "next/link";
+import { Frown, Smile, Tool } from "react-feather";
 
 import { Role } from "@prisma/client";
 import Modal from "@/components/modal";

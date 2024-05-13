@@ -4,12 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { Film } from "react-feather";
 
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
 import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
 import { Dropdown } from "@/components/dropdown";
+
 import type { Movie } from "@/app/movies/[id]/page";
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 
@@ -30,6 +33,14 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
   const [watched, setWatched] = useState<boolean>(movie.isWatched);
 
   const setUserRating = async (stars: number | null) => {
+    if (!watched) {
+      toast(
+        <p>
+          <span className="highlight-text">{movie.title}</span> marked as watched
+        </p>,
+        { icon: <Film />, className: "cyan-toast" },
+      );
+    }
     const newRating = stars === rating ? null : stars;
     setRating(newRating);
     await setMovieRating(movie.id, newRating);
@@ -40,6 +51,19 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
     await toggleIsWatched(movie.id);
     if (watched) {
       setRating(null);
+      toast(
+        <p>
+          <span className="highlight-text">{movie.title}</span> removed from watched
+        </p>,
+        { icon: <Film />, className: "yellow-toast" },
+      );
+    } else {
+      toast(
+        <p>
+          <span className="highlight-text">{movie.title}</span> marked as watched
+        </p>,
+        { icon: <Film />, className: "cyan-toast" },
+      );
     }
     setWatched(!watched);
   };
@@ -127,6 +151,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                 <Favorite
                   movieId={movie.id}
                   isFavorite={movie.isFavorite}
+                  movieTitle={movie.title}
                 />
                 <Watchlist />
               </div>

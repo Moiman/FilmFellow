@@ -71,6 +71,7 @@ export const Header = () => {
 
       <div className="sub-nav-narrow">
         <Dropdown
+          maxHeight={0}
           width={100}
           zIndex={20}
           button={

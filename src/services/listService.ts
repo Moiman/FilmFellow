@@ -59,6 +59,16 @@ export const getUserLists = async (userId: number) => {
           listMovies: true,
         },
       },
+      listMovies: {
+        take: 1,
+        select: {
+          movie: {
+            select: {
+              poster_path: true,
+            },
+          },
+        },
+      },
     },
     orderBy: [
       {

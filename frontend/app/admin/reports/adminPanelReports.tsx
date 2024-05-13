@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Section } from "@/components/section";
 import { ReportComponent } from "./report";
 
-
 interface Props {
   reports: Report[];
 }

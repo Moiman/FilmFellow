@@ -4,7 +4,6 @@ import { Role } from "@prisma/client";
 import { Dropdown } from "@/components/dropdown";
 import { deleteReportById, markReportDone } from "@/services/reportService";
 
-
 interface User {
   username: string;
   isActive: boolean;

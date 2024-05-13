@@ -10,6 +10,6 @@ export default async function AdminPanelReportsPage() {
   if (!session || session.user.role !== "admin") {
     redirect("/");
   } else {
-    return <AdminPanelReports reports={reports}/>;
+    return <AdminPanelReports reports={reports} />;
   }
 }

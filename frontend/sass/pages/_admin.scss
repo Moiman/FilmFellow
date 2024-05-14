@@ -230,6 +230,7 @@
 }
 .admin-panel-report-content {
   word-wrap: break-word;
+  min-width: 100%;
 }
 
 .admin-panel-reports {
@@ -273,9 +274,6 @@
     .admin-panel-reports-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .description {
-      grid-column: auto;
-      
-    }
+    
   }
 }

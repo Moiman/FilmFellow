@@ -168,9 +168,9 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
               (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
         </p>
       </div>
-      <div className="admin-panel-report-content description">
+      <div className="admin-panel-report-content report-description">
         <label className="admin-panel-report-label">Description</label>
-        <p>{report.content}</p>
+        <p className="description">{report.content}</p>
       </div>
 
       {report.targetUser?.role !== Role.admin ? (

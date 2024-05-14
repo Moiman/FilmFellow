@@ -264,7 +264,7 @@
     }
     .admin-panel-report-label {
       display: block;
-      font-size: abstracts.$h4-font-size;
+      font-size: abstracts.$h5-font-size;
       font-weight: 400;
     }
   }
@@ -274,6 +274,8 @@
     .admin-panel-reports-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    
+    .description {
+      grid-column: auto;
+    }
   }
 }

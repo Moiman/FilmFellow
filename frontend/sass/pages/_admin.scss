@@ -235,6 +235,16 @@
 
 .admin-panel-reports {
   @media only screen and (max-width: abstracts.$large-width) {
+
+    .report-buttons {
+      display: inline-flex;
+      gap: 4px;
+
+      * {
+        margin: 0;
+        min-width: fit-content;
+      }
+    }
     .admin-panel-reports-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
       align-items: flex-start;

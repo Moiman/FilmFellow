@@ -174,7 +174,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       </div>
 
       {report.targetUser?.role !== Role.admin ? (
-        <div>
+        <div className="report-buttons">
           <label className="admin-panel-report-label">Actions</label>
           {report.targetUser?.isActive ? (
             <Dropdown

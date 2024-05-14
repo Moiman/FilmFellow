@@ -199,12 +199,10 @@
 
 .admin-panel-status-suspended {
   color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
-  margin-left: 5px;
 }
 
 .admin-panel-status-active {
   color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
-  margin-left: 5px;
 }
 
 .admin-panel-report-label {
@@ -214,56 +212,35 @@
 .admin-panel-reports-grid {
   min-width: fit-content;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 300px 1fr;
+  grid-template-columns: 75px 1fr 1fr 1fr 2fr 100px;
   align-items: center;
   justify-content: space-evenly;
   padding: 10px 0px;
   border-bottom: 1px solid;
   border-color: abstracts.$primary-darkgrey;
-  & > * {
-    margin-left: 5%;
-    margin-right: 5%;
-  }
-
-  a {
-    margin-left: 5px;
-  }
-  input {
-    margin-left: 5%;
-  }
+  gap: 10px;
 }
 
 .admin-panel-section-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 300px 1fr;
+  grid-template-columns: 75px 1fr 1fr 1fr 2fr 100px;
   min-width: fit-content;
   justify-content: space-around;
-
-  h4 {
-    min-width: fit-content;
-    margin-left: 5%;
-    margin-right: 5%;
-  }
+  gap: 10px;
 }
 .admin-panel-report-content {
   word-wrap: break-word;
-  max-width: 300px;
 }
 
 .admin-panel-reports {
   @media only screen and (max-width: abstracts.$large-width) {
     .admin-panel-reports-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr)) max-content;
-      align-items: center;
-      text-align: center;
-
-      button {
-        width: 100%;
-      }
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: flex-start;
     }
 
     input {
-      margin: auto;
+      margin: 0;
     }
 
     .admin-panel-report-content {
@@ -298,9 +275,7 @@
     }
     .description {
       grid-column: auto;
-      label {
-        text-align: center;
-      }
+      
     }
   }
 }

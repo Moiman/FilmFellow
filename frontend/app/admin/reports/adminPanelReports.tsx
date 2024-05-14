@@ -16,12 +16,12 @@ export const AdminPanelReports = ({ reports }: { reports: Props }) => {
     : allReports;
   const sectionHeader = (
     <div className="admin-panel-section-header">
-      <h4>Done</h4>
-      <h4>Reporter</h4>
-      <h4>Date</h4>
-      <h4>Target</h4>
-      <h4>Description</h4>
-      <h4>Action</h4>
+      <h5>Done</h5>
+      <h5>Reporter</h5>
+      <h5>Date</h5>
+      <h5>Target</h5>
+      <h5>Description</h5>
+      <h5>Action</h5>
     </div>
   );
   return (

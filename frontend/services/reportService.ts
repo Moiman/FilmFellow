@@ -92,6 +92,7 @@ const getAllReports = async () => {
         },
       },
     },
+    orderBy: { created_at: "desc" },
   });
 
   return reports;

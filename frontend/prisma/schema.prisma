@@ -23,6 +23,8 @@ model Users {
   reviews        Reviews[]
   favorites      Favorites[]
   watchedRatings WatchedRatings[]
+  reporters      Reports[]        @relation("Creator")
+  reportTargets  Reports[]        @relation("TargetUser")
 }
 
 model Favorites {
@@ -85,23 +87,25 @@ model Movies {
 }
 
 model ImportedReviews {
-  id         String   @id
+  id         String    @id
   movieId    Int
   content    String
   created_at DateTime
   updated_at DateTime
   author     String
+  reports    Reports[]
 
   movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Reviews {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   movieId    Int
   content    String
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
   userId     Int
+  reports    Reports[]
 
   movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   user  Users  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -300,6 +304,24 @@ model Images {
 
   movie    Movies     @relation(fields: [movieId], references: [id], onDelete: Cascade)
   language Languages? @relation(fields: [iso_639_1], references: [iso_639_1], onDelete: Cascade)
+}
+
+model Reports {
+  id               Int      @id @default(autoincrement())
+  content          String
+  created_at       DateTime @default(now())
+  targetUserId     Int?
+  creatorId        Int
+  // lists will be added later
+  // listId    Int
+  reviewId         Int?
+  importedReviewId String?
+  done             Boolean  @default(false)
+
+  creator        Users?           @relation("Creator", fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  targetUser     Users?           @relation("TargetUser", fields: [targetUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  review         Reviews?         @relation(fields: [reviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  importedReview ImportedReviews? @relation(fields: [importedReviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum Role {

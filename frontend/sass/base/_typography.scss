@@ -129,6 +129,7 @@ p {
   font-style: italic;
   line-height: abstracts.$default-line-height;
   margin-bottom: 10px;
+  white-space: pre-wrap;
 }
 .yellow-name-header {
   font-family: abstracts.$default-title-font;

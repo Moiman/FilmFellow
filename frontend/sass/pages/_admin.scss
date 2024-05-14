@@ -216,9 +216,11 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 10px 0px;
-  border-bottom: 1px solid;
-  border-color: abstracts.$primary-darkgrey;
   gap: 10px;
+}
+
+.admin-panel-reports-grid:not(:last-child) {
+  border-bottom: 1px solid abstracts.$primary-darkgrey;
 }
 
 .admin-panel-section-header {
@@ -235,7 +237,6 @@
 
 .admin-panel-reports {
   @media only screen and (max-width: abstracts.$large-width) {
-
     .report-buttons {
       display: inline-flex;
       gap: 4px;

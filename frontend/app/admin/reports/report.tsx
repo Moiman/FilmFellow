@@ -174,37 +174,39 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       </div>
 
       {report.targetUser?.role !== Role.admin ? (
-        <div className="report-buttons">
+        <div>
           <label className="admin-panel-report-label">Actions</label>
-          {report.targetUser?.isActive ? (
-            <Dropdown
-              zIndex={5}
-              button={<button>Block user</button>}
+          <div className="report-buttons">
+            {report.targetUser?.isActive ? (
+              <Dropdown
+                zIndex={5}
+                button={<button>Block user</button>}
+              >
+                {banOptions.map(option => (
+                  <button
+                    key={option.id}
+                    className="dropdown-item"
+                    onClick={() => handleBanSubmit(option.banDuration)}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </Dropdown>
+            ) : (
+              <button onClick={handleUnBanSubmit}>Lift Ban</button>
+            )}
+            <button
+              className="button-pink"
+              onClick={handleDeleteReportSubmit}
             >
-              {banOptions.map(option => (
-                <button
-                  key={option.id}
-                  className="dropdown-item"
-                  onClick={() => handleBanSubmit(option.banDuration)}
-                >
-                  {option.text}
-                </button>
-              ))}
-            </Dropdown>
-          ) : (
-            <button onClick={handleUnBanSubmit}>Lift Ban</button>
-          )}
-          <button
-            className="button-pink"
-            onClick={handleDeleteReportSubmit}
-          >
-            Delete
-          </button>
-          {error && (
-            <div>
-              <p className="error-text">{error}</p>
-            </div>
-          )}
+              Delete
+            </button>
+            {error && (
+              <div>
+                <p className="error-text">{error}</p>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <div>

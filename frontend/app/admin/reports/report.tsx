@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Role } from "@prisma/client";
 import { Dropdown } from "@/components/dropdown";
-import { deleteReportById, getAllReports, markReportDone } from "@/services/reportService";
+import { deleteReportById, type getAllReports, markReportDone } from "@/services/reportService";
 
 interface Props {
   report: Reports[0];

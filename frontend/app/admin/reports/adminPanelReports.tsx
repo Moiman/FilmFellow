@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Section } from "@/components/section";
 import { ReportComponent } from "./report";
-import { getAllReports } from "@/services/reportService";
+import type { getAllReports } from "@/services/reportService";
 
 type Props = Awaited<ReturnType<typeof getAllReports>>;
 export const AdminPanelReports = ({ reports }: { reports: Props }) => {

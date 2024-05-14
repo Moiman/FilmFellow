@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
-import { User } from "next-auth";
+import type { User } from "next-auth";
 
 interface Props {
   targetUser: User | null;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function ReportForm({ targetUser }: Props) {
   const [reportInput, setReportInput] = useState("");
+  const router = useRouter();
   const sectionHeader = (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <h4>
@@ -29,6 +31,7 @@ export default function ReportForm({ targetUser }: Props) {
     e.preventDefault();
     await createReport(Number(targetUser?.id), reportInput, null, null);
     setReportInput("");
+    router.push("/");
   };
 
   return (

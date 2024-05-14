@@ -2,30 +2,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { Role } from "@prisma/client";
 import { Dropdown } from "@/components/dropdown";
-import { deleteReportById, markReportDone } from "@/services/reportService";
+import { deleteReportById, getAllReports, markReportDone } from "@/services/reportService";
 
-interface User {
-  username: string;
-  isActive: boolean;
-  role: string;
-  banDuration: Date | null;
-}
-
-interface Report {
-  id: number;
-  content: string;
-  created_at: Date;
-  targetUserId: number | null;
-  reviewId?: number | null;
-  importedReviewId?: string | null;
-  done: boolean;
-  creatorId: number;
-  creator: User | null;
-  targetUser: User | null;
-}
 interface Props {
-  report: Report;
-  setAllReports: React.Dispatch<React.SetStateAction<Report[]>>;
+  report: Reports[0];
+  setAllReports: React.Dispatch<React.SetStateAction<Reports>>;
 }
 
 const banOptions = [
@@ -34,7 +15,7 @@ const banOptions = [
   { id: 2, banDuration: 2592000, text: "30 Days" },
   { id: 3, banDuration: null, text: "Forever" },
 ];
-
+type Reports = Awaited<ReturnType<typeof getAllReports>>;
 export const ReportComponent = ({ report, setAllReports }: Props) => {
   const [error, setError] = useState("");
 
@@ -130,25 +111,25 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
     }
   };
   const handleCheckBox = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const response = await markReportDone(report.id, e.target.checked);
-    if ("error" in response) {
-      setError(response.error);
-      return;
+    try {
+      await markReportDone(report.id, e.target.checked);
+      setError("");
+    } catch (error) {
+      setError("Internal server error");
     }
-    setError("");
   };
   const showDate = (date: Date) => {
     const dateFormatted = date.toISOString().slice(0, 10).split("-").reverse().join(".");
     return dateFormatted;
   };
   const handleDeleteReportSubmit = async () => {
-    const response = await deleteReportById(report.id);
-    if ("error" in response) {
-      setError(response.error);
-      return;
+    try {
+      const response = await deleteReportById(report.id);
+      setAllReports(reports => reports.filter(report => report.id !== response.id));
+      setError("");
+    } catch (error) {
+      setError("Internal server error");
     }
-    setError("");
-    setAllReports(reports => reports.filter(report => report.id !== response.id));
   };
   return (
     <div className="admin-panel-reports-grid">

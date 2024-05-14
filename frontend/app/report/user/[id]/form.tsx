@@ -1,24 +1,33 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
+import { User } from "next-auth";
 
 interface Props {
-  targetUserId: string;
-  creator: number | string;
+  targetUser: User | null;
 }
 
-export default function ReportForm({ targetUserId, creator }: Props) {
+export default function ReportForm({ targetUser }: Props) {
   const [reportInput, setReportInput] = useState("");
   const sectionHeader = (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <h4>Report</h4>
+      <h4>
+        Report about user{" "}
+        <Link
+          className="h4"
+          href={`/users/${targetUser?.id}`}
+        >
+          {targetUser?.username}
+        </Link>
+      </h4>
     </div>
   );
 
   const handleReportSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createReport(creator as number, parseInt(targetUserId), reportInput, null, null);
+    await createReport(Number(targetUser?.id), reportInput, null, null);
     setReportInput("");
   };
 

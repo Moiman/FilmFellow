@@ -2,32 +2,10 @@
 import { useState } from "react";
 import { Section } from "@/components/section";
 import { ReportComponent } from "./report";
+import { getAllReports } from "@/services/reportService";
 
-interface Props {
-  reports: Report[];
-}
-
-interface User {
-  username: string;
-  isActive: boolean;
-  role: string;
-  banDuration: Date | null;
-}
-
-interface Report {
-  id: number;
-  content: string;
-  created_at: Date;
-  targetUserId: number | null;
-  reviewId?: number | null;
-  importedReviewId?: string | null;
-  done: boolean;
-  creatorId: number;
-  creator: User | null;
-  targetUser: User | null;
-}
-
-export const AdminPanelReports = ({ reports }: Props) => {
+type Props = Awaited<ReturnType<typeof getAllReports>>;
+export const AdminPanelReports = ({ reports }: { reports: Props }) => {
   const [allReports, setAllReports] = useState(reports);
   const [searchInput, setSearchInput] = useState("");
   const filteredResults = searchInput

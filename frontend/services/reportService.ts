@@ -5,15 +5,18 @@ import { Role } from "@prisma/client";
 import prisma from "@/db";
 
 const createReport = async (
-  creatorId: number,
   targetUserId: number,
   content: string,
   reviewId: number | null,
   importedReviewId: string | null,
 ) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw "Invalid session";
+  }
   const newReport = await prisma.reports.create({
     data: {
-      creatorId,
+      creatorId: Number(session.user.id),
       targetUserId,
       content,
       reviewId,
@@ -25,32 +28,32 @@ const createReport = async (
 };
 
 const markReportDone = async (reportId: number, done: boolean) => {
-  try {
-    const markedReport = await prisma.reports.update({
-      where: { id: reportId },
-      data: {
-        done: done,
-      },
-    });
-
-    return markedReport;
-  } catch (error) {
-    return { error: "Internal server error" };
+  const session = await getServerSession(authOptions);
+  if (!session || session.user.role !== Role.admin) {
+    throw "Invalid session";
   }
+  const markedReport = await prisma.reports.update({
+    where: { id: reportId },
+    data: {
+      done: done,
+    },
+  });
+
+  return markedReport;
 };
 
 const deleteReportById = async (reportId: number) => {
-  try {
-    const deletedReport = await prisma.reports.delete({
-      where: {
-        id: reportId,
-      },
-    });
-
-    return deletedReport;
-  } catch (error) {
-    return { error: "Internal server error" };
+  const session = await getServerSession(authOptions);
+  if (!session || session.user.role !== Role.admin) {
+    throw "Invalid session";
   }
+  const deletedReport = await prisma.reports.delete({
+    where: {
+      id: reportId,
+    },
+  });
+
+  return deletedReport;
 };
 
 const getAllReports = async () => {

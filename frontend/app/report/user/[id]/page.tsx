@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/authOptions";
 import ReportForm from "./form";
+import { findUserById } from "@/services/userService";
 
 interface Params {
   id: string;
@@ -9,14 +10,11 @@ interface Params {
 
 export default async function ReportPage({ params }: { params: Params }) {
   const session = await getServerSession(authOptions);
+  const targetUserId = parseInt(params.id);
+  const user = await findUserById(targetUserId);
   if (!session) {
     redirect("/");
   } else {
-    return (
-      <ReportForm
-        targetUserId={params.id}
-        creator={session.user.id}
-      />
-    );
+    return <ReportForm targetUser={user} />;
   }
 }

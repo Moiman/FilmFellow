@@ -5,6 +5,8 @@
 - [About this project](#about)
 - [Background](#background)
 - [Used framewoks and libraries](#frameworks-libraries)
+  - [Client and backend](#project)
+  - [Recommender model](#model)
 - [How to run project locally](#install)
 - [Running tests](#testing)
 - [Deployment](#deployment)
@@ -25,9 +27,13 @@ This project was made as a reference group project that was part of Buutti Train
 
 ## Used frameworks and libraries<a name="frameworks-libraries"></a>
 
+### Client and backend:<a name="project"></a>
+
 [Nextjs](https://nextjs.org/), [NextAuth.js](https://next-auth.js.org/), [TypeScript](https://www.typescriptlang.org/), [React](https://react.dev/), [Sass](https://sass-lang.com/), [React-toastify](https://www.npmjs.com/package/react-toastify), [React Hook Form](https://react-hook-form.com/), [yup](https://www.npmjs.com/package/yup), [Feather icons](https://feathericons.com/), [ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [Docker](https://www.docker.com/), [tsx](https://www.npmjs.com/package/tsx), [argon2](https://www.npmjs.com/package/argon2), [PostgreSQL](https://www.npmjs.com/package/postgresql), [Prisma](https://www.npmjs.com/package/prisma), [vitest](https://www.npmjs.com/package/vitest), [Cypress](https://www.cypress.io/)
 
-Add here python libraries
+### Recommender model:<a name="model"></a>
+
+[Python](https://www.python.org/), [numpy](https://numpy.org/), [sklearn](https://scikit-learn.org/stable/), [pandas](https://pandas.pydata.org/), [scipy](https://scipy.org/), [rapidfuzz](https://pypi.org/project/rapidfuzz/)
 
 ## How to run project locally<a name="install"></a>
 
@@ -82,7 +88,7 @@ npm run cypress:run_headless
 
 ## Deployment<a name="deployment"></a>
 
-Project Manager App is deployed to Microsoft Azure: Cloud Computing Services.
+FilmFellow is deployed to Microsoft Azure: Cloud Computing Services.
 
 Link to project: https://filmfellow.azurewebsites.net/
 

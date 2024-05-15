@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { Tool, Trash2 } from "react-feather";
+
 import { Role } from "@prisma/client";
 import { Dropdown } from "@/components/dropdown";
 import { deleteReportById, type getAllReports, markReportDone } from "@/services/reportService";
@@ -64,6 +67,17 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       );
 
       setError("");
+
+      toast(
+        <p>
+          {report.targetUser?.username} was blocked
+          {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
+        </p>,
+        {
+          icon: <Tool />,
+          className: "cyan-toast",
+        },
+      );
     } catch (error) {
       console.error(error);
     }
@@ -106,10 +120,16 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         }),
       );
       setError("");
+
+      toast(<p>{report.targetUser?.username} was unblocked</p>, {
+        icon: <Tool />,
+        className: "yellow-toast",
+      });
     } catch (error) {
       console.error(error);
     }
   };
+
   const handleCheckBox = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       await markReportDone(report.id, e.target.checked);
@@ -118,19 +138,27 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       setError("Internal server error");
     }
   };
+
   const showDate = (date: Date) => {
     const dateFormatted = date.toISOString().slice(0, 10).split("-").reverse().join(".");
     return dateFormatted;
   };
+
   const handleDeleteReportSubmit = async () => {
     try {
       const response = await deleteReportById(report.id);
       setAllReports(reports => reports.filter(report => report.id !== response.id));
       setError("");
+
+      toast(<p>Report was deleted</p>, {
+        icon: <Trash2 />,
+        className: "yellow-toast",
+      });
     } catch (error) {
       setError("Internal server error");
     }
   };
+
   return (
     <div className="admin-panel-reports-grid">
       <div>
@@ -168,6 +196,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
               (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
         </p>
       </div>
+
       <div className="admin-panel-report-content report-description">
         <label className="admin-panel-report-label">Description</label>
         <p className="description">{report.content}</p>

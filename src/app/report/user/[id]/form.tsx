@@ -2,6 +2,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { Flag } from "react-feather";
+
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import type { User } from "next-auth";
@@ -31,6 +34,12 @@ export default function ReportForm({ targetUser }: Props) {
     e.preventDefault();
     await createReport(Number(targetUser?.id), reportInput, null, null);
     setReportInput("");
+
+    toast(<p>Report about {targetUser?.username} was submitted</p>, {
+      icon: <Flag />,
+      className: "yellow-toast",
+    });
+
     router.push("/");
   };
 

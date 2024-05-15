@@ -3,19 +3,18 @@
 footer {
   background-color: abstracts.$primary-dark;
   padding: 10px;
-  width: 100vw;
+  width: 100%;
 
   .content {
-    width: 100%;
     display: flex;
+    width: fit-content;
     align-items: center;
-    justify-content: center;
-    gap: 40px;
+    margin: auto;
+    gap: 20px;
 
-    .github-link {
+    a {
       display: flex;
       align-items: center;
-      gap: 4px;
     }
   }
 }

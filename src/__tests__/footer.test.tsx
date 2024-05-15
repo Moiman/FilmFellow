@@ -16,13 +16,14 @@ test("Checks if footer is rendered", () => {
   expect(Footer).toBeDefined();
 });
 
-test("Checks if link to project GitHub exists", () => {
-  const linkElement = screen.getByText(githubLink.text);
-  expect(linkElement).not.toBeNull();
-  expect(linkElement).toBeDefined();
+test("renders GitHub link with the correct href", () => {
+  const githubLink = screen.getByRole("link", { name: "" });
+  expect(githubLink).toHaveProperty("href", "https://github.com/Moiman/FilmFellow/");
 });
 
-test("Checks if all links have correct href attribute", () => {
-  const linkElement = screen.getByText(githubLink.text);
-  expect(linkElement.getAttribute("href")).toBe(githubLink.href);
+test("renders The Movie Database logo with the correct href and alt text", () => {
+  const tmdbLink = screen.getByRole("link", { name: /the movie database/i });
+  expect(tmdbLink).toHaveProperty("href", "https://www.themoviedb.org/");
+  const tmdbImage = screen.getByAltText("The Movie Database");
+  expect(tmdbImage).toHaveProperty("src", expect.stringContaining("/logos/tmdb_logo.svg"));
 });

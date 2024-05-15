@@ -80,7 +80,7 @@ npm run cypress:run_headless
 
 ## Deployment<a name="deployment"></a>
 
-Film Fellow Application is deployed to Microsoft Azure: Cloud Computing Services.
+FilmFellow Application is deployed to Microsoft Azure: Cloud Computing Services.
 
 Link to project: https://filmfellow.azurewebsites.net/
 

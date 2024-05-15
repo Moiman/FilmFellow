@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { Flag } from "react-feather";
+
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import type { User } from "next-auth";
-import { Flag } from "react-feather";
 
 interface Props {
   targetUser: User | null;

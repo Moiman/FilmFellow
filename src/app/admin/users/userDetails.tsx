@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Frown, Smile, Tool } from "react-feather";
+import { Frown, Smile, Tool, Trash2 } from "react-feather";
 
 import { Role } from "@prisma/client";
 import Modal from "@/components/modal";
@@ -210,6 +210,11 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
 
       setAllUsers(users => users.filter(user => user.id !== data.id));
       setModalError("");
+
+      toast(<p>Account was deleted</p>, {
+        icon: <Trash2 />,
+        className: "yellow-toast",
+      });
     } catch (error) {
       console.error(error);
     }

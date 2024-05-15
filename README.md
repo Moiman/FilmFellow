@@ -34,7 +34,7 @@ Add here python libraries
 ### Start the database and run latest migration
 
 ```
-Copy .env.example to .env in the root folder and inside ./frontend
+Copy .env.example to .env in the root folder and inside ./src
 
 docker-compose up postgres
 ```
@@ -42,21 +42,21 @@ docker-compose up postgres
 After database is running
 
 ```
-navigate to ./frontend
+navigate to ./src
 npm run prisma:migration
 ```
 
 (Optional add admin to database)
 
 ```
-navigate to ./frontend
+navigate to ./src
 npm run init-admin
 ```
 
 ### start Nextjs frontend + backend
 
 ```
-cd frontend
+cd src
 npm install
 npm run dev
 ```
@@ -68,14 +68,14 @@ Make sure database is running in docker
 ### Vitest
 
 ```
-navigate ./frontend
+navigate ./src
 npm run test
 ```
 
 ### Cypress
 
 ```
-navigate ./frontend
+navigate ./src
 npm run dev
 npm run cypress:run_headless
 ```

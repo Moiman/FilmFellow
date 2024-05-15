@@ -17,8 +17,8 @@ services:
       timeout: 5s
       retries: 10
 
-  frontend:
-    build: ./frontend
+  filmfellow:
+    build: ./src
     restart: always
     environment:
       NEXTAUTH_SECRET: generatesecretkey

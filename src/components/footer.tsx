@@ -1,15 +1,12 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { GitHub } from "react-feather";
 
 export const Footer = () => {
   return (
     <footer>
       <div className="content">
-        <Link
-          href="https://github.com/Moiman/FilmFellow/"
-          className="github-link"
-        >
+        <Link href="https://github.com/Moiman/FilmFellow/">
           <GitHub size={20} />
         </Link>
 

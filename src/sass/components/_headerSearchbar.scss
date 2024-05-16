@@ -71,6 +71,7 @@
   display: flex;
   flex-direction: column;
   z-index: 1;
+  border: 1px solid abstracts.$primary-dark;
 
   .searchbar-movie-result {
     border-bottom: 1px solid abstracts.$primary-dark;
@@ -82,8 +83,14 @@
     margin: 0;
 
     display: flex;
-    gap: 10px;
     align-items: center;
+
+    .result-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 10px;
+    }
 
     img {
       object-fit: cover;
@@ -92,6 +99,13 @@
 
   .searchbar-movie-result:hover {
     background-color: abstracts.$primary-grey;
+  }
+
+  .searchbar-movie-result:focus {
+    background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    color: abstracts.$primary-dark;
+    outline: 0;
+    border-bottom: 1px solid abstracts.$primary-dark;
   }
 
   .searchbar-page-button {
@@ -105,5 +119,10 @@
 
   .searchbar-page-button:hover {
     background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+  }
+
+  .searchbar-page-button:focus {
+    background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+    outline: 0;
   }
 }

@@ -16,7 +16,8 @@ type SearchResult = {
   release_date: Date | null;
 };
 
-// Currently shows movies with words popular, new and bestrated as placeholder
+// PLACEHOLDER LOGIC: Currently returns best rated movies using genres as searchwords
+// Searches at maximum every 1 seconds so search isn't spammed on every input change
 
 export const HeaderSearch = () => {
   const [search, setSearch] = useState<string>("");
@@ -31,12 +32,12 @@ export const HeaderSearch = () => {
           setResults([]);
           return;
         }
-        const movies = await fetchMovies(4, search, undefined);
+        const movies = await fetchMovies(4, "bestrated", search);
         setResults(movies);
       };
 
       getMovies();
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(searchDelay);
   }, [search]);
@@ -48,6 +49,7 @@ export const HeaderSearch = () => {
         data-cy="search-input"
         className="searchbar-input"
         placeholder="Search..."
+        value={search}
         onChange={e => setSearch(e.target.value)}
       />
       <button className="button-transparent">
@@ -64,6 +66,7 @@ export const HeaderSearch = () => {
               className="searchbar-movie-result"
               key={movie.id}
               onClick={() => {
+                setSearch("");
                 setResults([]);
                 router.push(`/movies/${movie.id}`);
               }}
@@ -80,7 +83,16 @@ export const HeaderSearch = () => {
             </button>
           ))}
 
-          <button className="searchbar-page-button">See all results for &quot;{search}&quot;</button>
+          <button
+            className="searchbar-page-button"
+            onClick={() => {
+              setSearch("");
+              setResults([]);
+              router.push("/");
+            }}
+          >
+            See all results for &quot;{search}&quot;
+          </button>
         </div>
       )}
     </div>

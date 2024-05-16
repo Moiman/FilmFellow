@@ -5,7 +5,7 @@ export const fetchMovies = async (limit: number, type: string, genre: string | u
   const movies = await getMovieByLimitTypeGenre(limit, type, genre);
 
   const posters = movies.map(movie => {
-    return { id: movie.id, poster_path: movie.poster_path, title: movie.title };
+    return { id: movie.id, poster_path: movie.poster_path, title: movie.title, release_date: movie.release_date };
   });
   return posters;
 };

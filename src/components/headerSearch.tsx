@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 
 import { Search } from "react-feather";
 
-import { fetchMovies } from "@/app/movieFetches";
+import { fetchSearchResults } from "./headerSearchFetch";
 
 type SearchResult = {
   id: number;
   title: string;
-  poster_path: string;
-  release_date: Date | null;
+  posterPath: string;
+  releaseDate: Date | null;
 };
 
 // PLACEHOLDER LOGIC: Currently returns best rated movies using genres as searchwords
@@ -32,7 +32,7 @@ export const HeaderSearch = () => {
           setResults([]);
           return;
         }
-        const movies = await fetchMovies(4, "bestrated", search);
+        const movies = await fetchSearchResults(search);
         setResults(movies);
       };
 
@@ -73,12 +73,12 @@ export const HeaderSearch = () => {
             >
               <Image
                 alt={movie.title}
-                src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w92/${movie.posterPath}`}
                 width={35}
                 height={50}
               />
               <div className="result-title">
-                <span>{movie.title}</span> ({movie.release_date?.getFullYear()})
+                <span>{movie.title}</span> ({movie.releaseDate?.getFullYear()})
               </div>
             </button>
           ))}

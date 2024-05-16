@@ -13,6 +13,16 @@
   input[type="text"] {
     outline: 0;
     border: 0;
+    width: calc(100% - 30px);
+    padding: 0px 20px;
+    background-color: transparent !important;
+    border: 0;
+    color: abstracts.$primary-light;
+  }
+
+  input[type="text"]::placeholder {
+    color: abstracts.$primary-light;
+    opacity: 25%;
   }
 
   button:focus,
@@ -25,19 +35,6 @@
     outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     outline-offset: 2px;
   }
-}
-
-.searchbar-input {
-  width: calc(100% - 30px);
-  padding: 0px 20px;
-  background-color: transparent !important;
-  border: 0;
-  color: abstracts.$primary-light;
-}
-
-.searchbar-input::placeholder {
-  color: abstracts.$primary-light;
-  opacity: 25%;
 }
 
 .header-searchbar:focus-within {
@@ -72,6 +69,8 @@
   flex-direction: column;
   z-index: 11;
   border: 1px solid abstracts.$primary-dark;
+  border-radius: abstracts.$default-border-radius;
+  overflow: hidden;
 
   .searchbar-movie-result {
     border-bottom: 1px solid abstracts.$primary-dark;

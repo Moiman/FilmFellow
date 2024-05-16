@@ -119,6 +119,7 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
   } else {
     return [];
   }
+
   const moviesPopularOrder = await prisma.movies.findMany({
     where: {
       id: { in: movieIdsForCertainGenre.map(movie => movie.movieId) },
@@ -137,6 +138,7 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
       },
     },
   });
+
   const moviesWithRearrangedGenres = moviesPopularOrder.map(element => {
     return { ...element, genres: element.genres.map(genre => genre.genre.name) };
   });
@@ -239,6 +241,31 @@ const getMovieCastById = async (movieId: number) => {
   };
 };
 
+const getMoviesByTitle = async (titlePart: string) => {
+  const movies = await prisma.movies.findMany({
+    where: {
+      title: {
+        contains: titlePart,
+        mode: "insensitive", // Makes the search case-insensitive
+      },
+    },
+    select: {
+      id: true,
+      title: true,
+      poster_path: true,
+      release_date: true,
+    },
+    take: 4,
+  });
+
+  return movies.map(movie => ({
+    id: movie.id,
+    title: movie.title,
+    posterPath: movie.poster_path,
+    releaseDate: movie.release_date,
+  }));
+};
+
 export {
   getMovieById,
   getMovieReviewsById,
@@ -246,4 +273,5 @@ export {
   getAllGenres,
   getMovieCrewById,
   getMovieCastById,
+  getMoviesByTitle,
 };

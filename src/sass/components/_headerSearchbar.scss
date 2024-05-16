@@ -1,0 +1,109 @@
+@use "sass:map";
+@use "../abstracts/" as abstracts;
+
+// Placeholder
+.header-searchbar {
+  max-width: 600px;
+  position: relative;
+  border-radius: 40px;
+  background-color: rgba(abstracts.$primary-light, 0.1);
+  flex: 1;
+  display: flex;
+
+  input[type="text"] {
+    outline: 0;
+    border: 0;
+  }
+
+  button:focus,
+  input[type="text"]:focus {
+    outline: 0;
+    border: 0;
+  }
+
+  button:focus-visible {
+    outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    outline-offset: 2px;
+  }
+}
+
+.searchbar-input {
+  width: calc(100% - 30px);
+  padding: 0px 20px;
+  background-color: transparent !important;
+  border: 0;
+  color: abstracts.$primary-light;
+}
+
+.searchbar-input::placeholder {
+  color: abstracts.$primary-light;
+  opacity: 25%;
+}
+
+.header-searchbar:focus-within {
+  outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
+.header-searchbar:has(button:focus) {
+  outline: 0;
+}
+
+.searchbar-icon {
+  color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
+.header-searchbar > button {
+  border-radius: 4px 20px 20px 4px;
+  padding: 0 10px;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .header-searchbar {
+    width: 100%;
+  }
+}
+
+.searchbar-results {
+  position: absolute;
+  width: 100%;
+  top: 45px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+
+  .searchbar-movie-result {
+    border-bottom: 1px solid abstracts.$primary-dark;
+    background-color: abstracts.$primary-darkgrey;
+    color: abstracts.$primary-light;
+
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    img {
+      object-fit: cover;
+    }
+  }
+
+  .searchbar-movie-result:hover {
+    background-color: abstracts.$primary-grey;
+  }
+
+  .searchbar-page-button {
+    background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    color: abstracts.$primary-dark;
+    padding: 10px;
+    border-radius: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  .searchbar-page-button:hover {
+    background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+  }
+}

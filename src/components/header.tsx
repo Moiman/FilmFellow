@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { LogOut, Menu, Search, Tool, User } from "react-feather";
+import { LogOut, Menu, Tool, User } from "react-feather";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { Dropdown } from "./dropdown";
+import { HeaderSearch } from "./headerSearch";
 
 export const Header = () => {
   const { data: session } = useSession();
@@ -53,21 +54,7 @@ export const Header = () => {
         ))}
       </nav>
 
-      {/* Placeholder for search bar component */}
-      <div className="searchbar">
-        <input
-          type="text"
-          data-cy="search-input"
-          className="searchbar-input"
-          placeholder="Search..."
-        />
-        <button className="button-transparent">
-          <Search
-            className="searchbar-icon"
-            size={20}
-          />
-        </button>
-      </div>
+      <HeaderSearch />
 
       <div className="sub-nav-narrow">
         <Dropdown

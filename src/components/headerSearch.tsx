@@ -16,6 +16,8 @@ type SearchResult = {
   release_date: Date | null;
 };
 
+// Currently shows movies with words popular, new and bestrated as placeholder
+
 export const HeaderSearch = () => {
   const [search, setSearch] = useState<string>("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -23,21 +25,20 @@ export const HeaderSearch = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+    const searchDelay = setTimeout(() => {
       const getMovies = async () => {
         if (search.trim() === "") {
           setResults([]);
           return;
         }
         const movies = await fetchMovies(4, search, undefined);
-        console.log(movies);
         setResults(movies);
       };
 
       getMovies();
-    }, 300); // Delay to debounce
+    }, 500);
 
-    return () => clearTimeout(delayDebounceFn);
+    return () => clearTimeout(searchDelay);
   }, [search]);
 
   return (

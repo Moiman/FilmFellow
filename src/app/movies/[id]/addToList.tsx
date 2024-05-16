@@ -61,7 +61,7 @@ export const AddToList = ({ movieId }: { movieId: number }) => {
             size={20}
             color="#74ccca"
           />
-          Add to new List
+          Add to new list
         </button>
       </Dropdown>
       <Modal

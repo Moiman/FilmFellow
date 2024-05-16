@@ -246,7 +246,7 @@ const getMoviesByTitle = async (titlePart: string) => {
     where: {
       title: {
         contains: titlePart,
-        mode: "insensitive", // Makes the search case-insensitive
+        mode: "insensitive",
       },
     },
     select: {

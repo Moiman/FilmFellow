@@ -16,7 +16,7 @@ type SearchResult = {
   releaseDate: Date | null;
 };
 
-// PLACEHOLDER LOGIC: Currently returns best rated movies using genres as searchwords
+// PLACEHOLDER LOGIC: Currently returns movies that includes searched word in title
 // Searches at maximum every 1 seconds so search isn't spammed on every input change
 
 export const HeaderSearch = () => {
@@ -59,7 +59,7 @@ export const HeaderSearch = () => {
         />
       </button>
 
-      {results.length > 0 && (
+      {search.length > 0 && (
         <div className="searchbar-results">
           {results.map(movie => (
             <button

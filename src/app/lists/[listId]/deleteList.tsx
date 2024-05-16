@@ -17,7 +17,10 @@ export const DeleteList = ({ id, userId }: { id: number; userId: number | string
       className="button-transparent"
       onClick={deleteClick}
     >
-      <Trash className="delete-button" />
+      <Trash
+        className="delete-button"
+        size={20}
+      />
     </button>
   );
 };

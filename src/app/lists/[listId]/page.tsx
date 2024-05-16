@@ -8,7 +8,7 @@ import { getList } from "@/services/listService";
 import { DeleteList } from "./deleteList";
 import { MovieList } from "@/components/movieList";
 
-export default async function userFriends({ params }: { params: { listId: string } }) {
+export default async function List({ params }: { params: { listId: string } }) {
   const session = await getServerSession(authOptions);
   const id = Number(params.listId);
 

@@ -1,42 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+
 import Modal from "@/components/modal";
+import { NewListForm } from "@/components/newListForm";
 import { createNewList } from "@/services/listService";
 
 export const NewListModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
 
   const newListAction = async (formData: FormData) => {
     const name = formData.get("name");
     if (name) {
-      const list = await createNewList(name.toString());
-      router.push("/lists/" + list.id);
+      await createNewList(name.toString());
+      setIsOpen(false);
     }
   };
-
-  const modalForm = (
-    <form
-      className="form"
-      action={newListAction}
-    >
-      <label>List name</label>
-      <input
-        type="text"
-        name="name"
-        placeholder="list name..."
-        required
-      />
-      <button
-        className="form-submit"
-        type="submit"
-      >
-        Create new list
-      </button>
-    </form>
-  );
 
   return (
     <>
@@ -44,7 +23,7 @@ export const NewListModal = () => {
       <Modal
         isOpen={isOpen}
         closeModal={() => setIsOpen(false)}
-        content={modalForm}
+        content={<NewListForm formAction={newListAction} />}
       />
     </>
   );

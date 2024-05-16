@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/authOptions";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
@@ -17,13 +19,16 @@ export function shuffleArray(array: any[]) {
 }
 
 export default async function userProfile({ params }: { params: { id: string } }) {
-  const user = await findUserById(Number(params.id));
-  const lists = await getUserLists(Number(params.id));
+  const session = await getServerSession(authOptions);
+  const userId = Number(params.id);
+
+  const user = await findUserById(userId);
+  const lists = await getUserLists(userId);
 
   if (!user) {
     notFound();
   }
-  const favorites = await findUserFavoritesById(Number(params.id));
+  const favorites = await findUserFavoritesById(userId);
 
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
@@ -43,7 +48,7 @@ export default async function userProfile({ params }: { params: { id: string } }
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
       <Sidebar iconPosition="right">
-        <ProfileInfo userId={Number(params.id)} />
+        <ProfileInfo userId={userId} />
       </Sidebar>
 
       <div className="profile-section-wrapper">
@@ -71,7 +76,7 @@ export default async function userProfile({ params }: { params: { id: string } }
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <h3 className="h5">Lists</h3>
-            <NewListModal />
+            {Number(session?.user.id) === userId && <NewListModal />}
           </div>
           <div className="list-wrapper">
             {lists.map(list => (

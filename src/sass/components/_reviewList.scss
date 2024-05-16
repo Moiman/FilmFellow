@@ -1,0 +1,14 @@
+@use "../abstracts/" as abstracts;
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 20px;
+}
+.review-grid-item {
+    display: flex;
+    justify-content: center;
+    min-height: 300px;
+    border: 1px solid abstracts.$primary-dark;
+    box-shadow: abstracts.$default-shadow;
+}

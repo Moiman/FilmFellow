@@ -72,6 +72,24 @@ export const getMovieRating = async (movieId: number) => {
   return movie.rating;
 };
 
+export const getAllMovieRatings = async (movieId: number) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return null;
+  }
+
+  const movieRatings = await prisma.watchedRatings.findMany({where: {
+    movieId
+  }})
+
+  if (!movieRatings) {
+    return null;
+  }
+
+  return movieRatings;
+};
+
 export const setMovieRating = async (movieId: number, rating: number | null) => {
   const session = await getServerSession(authOptions);
 

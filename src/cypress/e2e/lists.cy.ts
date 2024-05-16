@@ -59,15 +59,4 @@ describe("lisr tests page tests", () => {
     cy.visit("/users/" + userId);
     cy.get(".section").last().should("contain", "List 3");
   });
-
-  // it("Mark as watched", () => {
-  //   cy.login(email, password);
-  //   cy.visit("/movies/13");
-  //   cy.contains("Mark as watched").click();
-  //   cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("be.visible");
-  //   cy.contains("No thanks").click();
-  //   cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("not.exist");
-  //   cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
-  //   cy.contains("Mark as watched").should("be.visible");
-  // });
 });

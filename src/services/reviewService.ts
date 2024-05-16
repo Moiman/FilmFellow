@@ -30,13 +30,13 @@ const deleteReviewById = async (reviewId: number) => {
   if (!session || session.user.role !== Role.admin) {
     throw "Invalid session";
   }
-  const deletedReport = await prisma.reviews.delete({
+  const deletedReview = await prisma.reviews.delete({
     where: {
       id: reviewId,
     },
   });
 
-  return deletedReport;
+  return deletedReview;
 };
 
 const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
@@ -68,11 +68,31 @@ const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
   where: {
     id: movieId
   },
+  include: {
+    reviews: {
+      select: {
+        content: true,
+        id: true,
+        movieId: true,
+        user: {
+          select: {
+            username: true,
+            id: true
+          }
+        }
+
+      }
+    },
+    importedReviews: true,
+    watchedRatings: true
+  }
+  /*
   select: {
     reviews: true,
     importedReviews: true,
     watchedRatings: true
   }
+  */
  })
  return review;
 };

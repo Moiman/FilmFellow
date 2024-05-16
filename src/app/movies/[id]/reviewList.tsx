@@ -1,11 +1,17 @@
 
+interface User {
+  id: number;
+  username: string;
+}
+
 interface Review {
   id: number;
   movieId: number;
   content: string;
-  created_at: Date;
-  updated_at: Date;
-  userId: number;
+  user: User;
+  // created_at: Date;
+  // updated_at: Date;
+  // userId: number;
 }
 
 interface ImportedReview {
@@ -39,10 +45,9 @@ export const ReviewList = ({ importedReviews, reviews, watchedRatings }: Props) 
           key={review.id}
           className="review-grid-item"
         >
-          <p className="description">{review.content}</p>
+          <p className="description">{review.content}{review.user.username}</p>
         </div>
       ))}
     </div>
   );
 };
-

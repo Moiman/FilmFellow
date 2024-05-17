@@ -43,17 +43,17 @@ describe("Header tests", () => {
       cy.visit("/");
       cy.get('header input[placeholder="Search for a movie..."]').type("Interstellar");
       cy.get('header [data-cy="search-input"]').should("have.value", "Interstellar");
-      cy.get("button.movie-result").contains("Interstellar");
+      cy.get("a.movie-result").contains("Interstellar");
 
       cy.get('header input[placeholder="Search for a movie..."]').clear();
-      cy.get("button.movie-results").should("not.exist");
+      cy.get("a.movie-results").should("not.exist");
 
       cy.get('header input[placeholder="Search for a movie..."]').type("Lord of the Rings");
       cy.get('header [data-cy="search-input"]').should("have.value", "Lord of the Rings");
-      cy.get("button.movie-result").contains("Lord of the Rings");
+      cy.get("a.movie-result").contains("Lord of the Rings");
 
       cy.get("header").click("topLeft");
-      cy.get("button.movie-result").should("not.exist");
+      cy.get("a.movie-result").should("not.exist");
     });
   });
 
@@ -110,17 +110,17 @@ describe("Header tests", () => {
         cy.visit("/");
         cy.get('header input[placeholder="Search for a movie..."]').type("Interstellar");
         cy.get('header [data-cy="search-input"]').should("have.value", "Interstellar");
-        cy.get("button.movie-result").contains("Interstellar");
+        cy.get("a.movie-result").contains("Interstellar");
 
         cy.get('header input[placeholder="Search for a movie..."]').clear();
-        cy.get("button.movie-results").should("not.exist");
+        cy.get("a.movie-results").should("not.exist");
 
         cy.get('header input[placeholder="Search for a movie..."]').type("Lord of the Rings");
         cy.get('header [data-cy="search-input"]').should("have.value", "Lord of the Rings");
-        cy.get("button.movie-result").contains("Lord of the Rings");
+        cy.get("a.movie-result").contains("Lord of the Rings");
 
         cy.get("header").click("topLeft");
-        cy.get("button.movie-result").should("not.exist");
+        cy.get("a.movie-result").should("not.exist");
       });
     },
   );

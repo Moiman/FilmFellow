@@ -20,7 +20,6 @@ type SearchResult = {
 
 export const HeaderSearch = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const [search, setSearch] = useState<string>("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,9 +33,11 @@ export const HeaderSearch = () => {
           setLoading(false);
           return;
         }
-        const movies = await getMoviesByTitle(search);
-        setResults(movies);
-        setLoading(false);
+
+        getMoviesByTitle(search).then(movies => {
+          setResults(movies);
+          setLoading(false);
+        });
       };
 
       getMovies();
@@ -74,6 +75,8 @@ export const HeaderSearch = () => {
         data-cy="search-input"
         className="searchbar-input"
         placeholder="Search for a movie..."
+        onFocus={() => setIsOpen(true)}
+        onBlur={() => setIsOpen(false)}
         value={search}
         onChange={e => {
           setSearch(e.target.value);
@@ -97,7 +100,7 @@ export const HeaderSearch = () => {
               href={`/movies/${movie.id}`}
               className="movie-result"
               key={movie.id}
-              onClick={() => resetSearch()}
+              onClick={resetSearch}
             >
               <Image
                 alt={movie.title}
@@ -116,7 +119,7 @@ export const HeaderSearch = () => {
           <Link
             href="/"
             className="searchbar-page-link"
-            onClick={() => resetSearch()}
+            onClick={resetSearch}
           >
             See all results for &quot;{search}&quot;
           </Link>

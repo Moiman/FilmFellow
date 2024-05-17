@@ -258,6 +258,9 @@ const getMoviesByTitle = async (titlePart: string) => {
       release_date: true,
     },
     take: 4,
+    orderBy: {
+      title: "asc",
+    },
   });
 
   return movies.map(movie => ({

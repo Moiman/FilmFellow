@@ -7,18 +7,23 @@ export const NewListForm = ({ formAction }: Props) => (
     className="form"
     action={formAction}
   >
-    <label>List name</label>
+    <label
+      className="h4"
+      htmlFor="name"
+    >
+      Create new list
+    </label>
     <input
       type="text"
       name="name"
-      placeholder="list name..."
+      placeholder="Give list a name..."
       required
     />
     <button
-      className="form-submit"
+      className="list-form-button"
       type="submit"
     >
-      Create new list
+      Create
     </button>
   </form>
 );

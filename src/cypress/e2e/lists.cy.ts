@@ -1,4 +1,4 @@
-describe("lisr tests page tests", () => {
+describe("Movie lists tests", () => {
   const email = "listTest@test.test";
   const password = "Password1!";
   let userId = 0;

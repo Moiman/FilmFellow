@@ -18,7 +18,12 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
         <Link href={`/movies/${movie.id}`}>{movie.title} </Link>
         Review
       </h2>
-      <button type="submit">Send review</button>
+      <button
+        type="submit"
+        form="review-form"
+      >
+        Send review
+      </button>
     </div>
   );
 
@@ -47,6 +52,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
           />
           <form
             onSubmit={handleReportSubmit}
+            id="review-form"
             className="form"
           >
             <label htmlFor="content">Write your review here</label>
@@ -57,12 +63,6 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
               value={contentInput}
               onChange={e => setContentInput(e.target.value)}
             />
-            <button
-              className="form-submit"
-              type="submit"
-            >
-              Submit Report
-            </button>
           </form>
           <ReviewList
             importedReviews={movie.reviewsData?.importedReviews}

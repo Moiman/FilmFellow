@@ -1,3 +1,6 @@
+"use client";
+import { Star } from "react-feather";
+import { ThumbsUp, ThumbsDown } from "react-feather";
 
 interface User {
   id: number;
@@ -36,16 +39,35 @@ interface Props {
 }
 
 export const ReviewList = ({ importedReviews, reviews, watchedRatings }: Props) => {
-  console.log(importedReviews);
-  console.log(watchedRatings);
   return (
     <div className="review-grid">
-      {reviews?.map(review => (
+      {importedReviews?.map(review => (
         <div
           key={review.id}
           className="review-grid-item"
         >
-          <p className="description">{review.content}{review.user.username}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
+            <h2>{review.author}</h2>
+            <div>
+              {[1, 2, 3, 4, 5].map(starRating => (
+                <Star
+                  key={starRating}
+                  stroke={3 >= starRating ? "#ffc700" : "#eff2f2"}
+                  fill={3 >= starRating ? "#ffc700" : "#eff2f2"}
+                  strokeWidth={2}
+                  size={30}
+                />
+              ))}
+            </div>
+          </div>
+
+          <p className="description review-grid-content">{review.content}</p>
+          <div className="review-grid-footer">
+            <p>Was this review helpful</p>{" "}
+            <div>
+              <ThumbsUp /> <ThumbsDown />
+            </div>
+          </div>
         </div>
       ))}
     </div>

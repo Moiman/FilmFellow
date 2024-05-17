@@ -113,7 +113,7 @@
     padding: 10px;
   }
 
-  .searchbar-page-button {
+  .searchbar-page-link {
     background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     color: abstracts.$primary-dark;
     padding: 10px;
@@ -122,11 +122,11 @@
     text-align: left;
   }
 
-  .searchbar-page-button:hover {
+  .searchbar-page-link:hover {
     background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
   }
 
-  .searchbar-page-button:focus {
+  .searchbar-page-link:focus {
     background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
     outline: 0;
   }

@@ -10,8 +10,8 @@ import { getMoviesByTitle } from "@/services/movieService";
 type SearchResult = {
   id: number;
   title: string;
-  posterPath: string;
-  releaseDate: Date | null;
+  poster_path: string;
+  release_date: Date | null;
 };
 
 // PLACEHOLDER LOGIC: Currently returns best rated movies that includes searched word in title
@@ -104,12 +104,12 @@ export const HeaderSearch = () => {
             >
               <Image
                 alt={movie.title}
-                src={`https://image.tmdb.org/t/p/w92/${movie.posterPath}`}
+                src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
                 width={35}
                 height={50}
               />
               <div className="result-title">
-                <span>{movie.title}</span> ({movie.releaseDate?.getFullYear()})
+                <span>{movie.title}</span> ({movie.release_date?.getFullYear()})
               </div>
             </Link>
           ))}

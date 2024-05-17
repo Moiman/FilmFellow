@@ -117,7 +117,6 @@ export default async function Movie({ params }: { params: { id: string } }) {
           <ReviewList
             importedReviews={movie.reviewsData?.importedReviews.slice(0, 4)}
             reviews={movie.reviewsData?.reviews.slice(0, 4)}
-            watchedRatings={movie.reviewsData?.watchedRatings.slice(0, 4)}
           />
         </Section>
 

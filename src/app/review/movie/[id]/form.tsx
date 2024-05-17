@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 export default function ReviewForm({ movie }: { movie: Movie }) {
   const [contentInput, setContentInput] = useState("");
-  const [rating, setRating] = useState<number | null>(movie.userRating);
+  const [rating, setRating] = useState<number | null>(null);
   const reviewHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h2 className="yellow-name-header">
@@ -67,7 +67,6 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
           <ReviewList
             importedReviews={movie.reviewsData?.importedReviews}
             reviews={movie.reviewsData?.reviews}
-            watchedRatings={movie.reviewsData?.watchedRatings}
           />
         </Section>
       </div>

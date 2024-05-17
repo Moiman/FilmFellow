@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import { Role } from "@prisma/client";
 import prisma from "@/db";
-import { getAllMovieRatings, getMovieRating, setMovieRating } from "./watchedService";
 
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
@@ -15,86 +14,89 @@ const createReview = async (movieId: number, content: string, rating?: number | 
       userId: Number(session.user.id),
       movieId,
       content,
+      rating,
     },
   });
-  if (rating) {
-    await setMovieRating(movieId, rating);
-    console.log(rating);
-  }
 
   return newReview;
 };
 
-const deleteReviewById = async (reviewId: number) => {
+const deleteReviewById = async (reviewId: number | string) => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
     throw "Invalid session";
   }
-  const deletedReview = await prisma.reviews.delete({
-    where: {
-      id: reviewId,
-    },
-  });
+  if (typeof reviewId === "number") {
+    const deletedReview = await prisma.reviews.delete({
+      where: {
+        id: reviewId,
+      },
+    });
 
-  return deletedReview;
+    return deletedReview;
+  } else {
+    const deletedReview = await prisma.importedReviews.delete({
+      where: {
+        id: reviewId,
+      },
+    });
+
+    return deletedReview;
+  }
 };
 
 const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
-/*
-  const watchedRatings = await getAllMovieRatings(movieId);
-  const importedReviews = await prisma.importedReviews.findMany({
+  const review = await prisma.movies.findUnique({
     where: {
-      id: String(movieId),
+      id: movieId,
     },
-    // select: {
-    //   importedReviews: true,
-    // },
-  });
-  const reviews = await prisma.reviews.findMany({
-    where: {
-      id: movieId
+    include: {
+      reviews: {
+        select: {
+          content: true,
+          id: true,
+          movieId: true,
+          rating: true,
+          user: {
+            select: {
+              username: true,
+              id: true,
+            },
+          },
+        },
+      },
+      importedReviews: true,
     },
-    // select: {
-      // reviews: true,
-      // importedReviews: true
-    // }
-  })
-  const newReviews = reviews.map(element => {
-    return { ...element, watchedRatings: watchedRatings, importedReviews: importedReviews };
   });
-  return newReviews;
-  */
- const review = await prisma.movies.findUnique({
-  where: {
-    id: movieId
-  },
-  include: {
-    reviews: {
-      select: {
-        content: true,
-        id: true,
-        movieId: true,
+  return review;
+};
+
+const getReviewById = async (reviewId: number | string) => {
+  if (typeof reviewId === "number") {
+    const review = await prisma.reviews.findUnique({
+      where: {
+        id: reviewId,
+      },
+      include: {
         user: {
           select: {
             username: true,
-            id: true
-          }
-        }
+            id: true,
+          },
+        },
+      },
+    });
 
-      }
-    },
-    importedReviews: true,
-    watchedRatings: true
+    return review;
+  } else {
+    const importedReview = await prisma.importedReviews.findUnique({
+      where: {
+        id: reviewId,
+      },
+    });
+
+    return importedReview;
   }
-  /*
-  select: {
-    reviews: true,
-    importedReviews: true,
-    watchedRatings: true
-  }
-  */
- })
- return review;
 };
 
-export { createReview, deleteReviewById, getImportedReviewsAndLocalReviewsById };
+export { getReviewById, createReview, deleteReviewById, getImportedReviewsAndLocalReviewsById };

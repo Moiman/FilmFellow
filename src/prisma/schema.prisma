@@ -105,6 +105,7 @@ model Reviews {
   created_at DateTime  @default(now())
   updated_at DateTime  @default(now())
   userId     Int
+  rating     Int?
   reports    Reports[]
 
   movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)

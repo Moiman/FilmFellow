@@ -5,7 +5,7 @@ import { Role } from "@prisma/client";
 import prisma from "@/db";
 
 const createReport = async (
-  targetUserId: number,
+  targetUserId: number | null,
   content: string,
   reviewId: number | null,
   importedReviewId: string | null,

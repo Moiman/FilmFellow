@@ -1,6 +1,6 @@
 "use client";
-import { Star } from "react-feather";
-import { ThumbsUp, ThumbsDown } from "react-feather";
+import { useState } from "react";
+import { Flag, Star } from "react-feather";
 
 interface User {
   id: number;
@@ -12,9 +12,7 @@ interface Review {
   movieId: number;
   content: string;
   user: User;
-  // created_at: Date;
-  // updated_at: Date;
-  // userId: number;
+  rating: number | null;
 }
 
 interface ImportedReview {
@@ -26,34 +24,28 @@ interface ImportedReview {
   author: string;
 }
 
-interface WatchedRating {
-  userId: number;
-  movieId: number;
-  rating: number | null;
-}
-
 interface Props {
   importedReviews: ImportedReview[] | undefined;
   reviews: Review[] | undefined;
-  watchedRatings: WatchedRating[] | undefined;
 }
 
-export const ReviewList = ({ importedReviews, reviews, watchedRatings }: Props) => {
+export const ReviewList = ({ importedReviews, reviews }: Props) => {
+  const [reported, setReported] = useState(false);
   return (
     <div className="review-grid">
-      {importedReviews?.map(review => (
+      {reviews?.map(review => (
         <div
           key={review.id}
           className="review-grid-item"
         >
           <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
-            <h2>{review.author}</h2>
+            <h2>{review.user.username}</h2>
             <div>
               {[1, 2, 3, 4, 5].map(starRating => (
                 <Star
                   key={starRating}
-                  stroke={3 >= starRating ? "#ffc700" : "#eff2f2"}
-                  fill={3 >= starRating ? "#ffc700" : "#eff2f2"}
+                  stroke={review.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
+                  fill={review.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
                   strokeWidth={2}
                   size={30}
                 />
@@ -61,12 +53,54 @@ export const ReviewList = ({ importedReviews, reviews, watchedRatings }: Props) 
             </div>
           </div>
 
-          <p className="description review-grid-content">{review.content}</p>
-          <div className="review-grid-footer">
-            <p>Was this review helpful</p>{" "}
-            <div>
-              <ThumbsUp /> <ThumbsDown />
-            </div>
+          <p className="review-grid-content description">{review.content}</p>
+          <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+            {!reported ? (
+              <form action={`/report/review/${review.id}`}>
+                <button
+                  type="submit"
+                  className="button-yellow button-icon-text"
+                >
+                  <Flag size={16} />
+                  Report this review
+                </button>
+              </form>
+            ) : (
+              <button className="button-pink button-icon-text">
+                <Flag size={16} />
+                Reported!
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+      {importedReviews?.map(importedReview => (
+        <div
+          key={importedReview.id}
+          className="review-grid-item"
+        >
+          <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
+            <h2>{importedReview.author}</h2>
+          </div>
+
+          <p className="review-grid-content description">{importedReview.content}</p>
+          <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+            {!reported ? (
+              <form action={`/report/review/${importedReview.id}`}>
+                <button
+                  type="submit"
+                  className="button-yellow button-icon-text"
+                >
+                  <Flag size={16} />
+                  Report this review
+                </button>
+              </form>
+            ) : (
+              <button className="button-pink button-icon-text">
+                <Flag size={16} />
+                Reported!
+              </button>
+            )}
           </div>
         </div>
       ))}

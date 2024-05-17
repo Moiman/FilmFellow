@@ -34,7 +34,6 @@ export default async function MovieReviews({ params }: { params: { id: string } 
         <ReviewList
           importedReviews={reviewData?.importedReviews}
           reviews={reviewData?.reviews}
-          watchedRatings={reviewData?.watchedRatings}
         />
       </Section>
     </main>

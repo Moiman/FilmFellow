@@ -7,13 +7,6 @@ import { Search } from "react-feather";
 
 import { getMoviesByTitle } from "@/services/movieService";
 
-type SearchResult = {
-  id: number;
-  title: string;
-  poster_path: string;
-  release_date: Date | null;
-};
-
 // PLACEHOLDER LOGIC: Currently returns best rated movies that includes searched word in title
 // Searches at maximum every 1 seconds so search isn't spammed on every input change
 // "See all results" takes currently nowhere as there is no search page yet
@@ -21,7 +14,7 @@ type SearchResult = {
 export const HeaderSearch = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [results, setResults] = useState<Awaited<ReturnType<typeof getMoviesByTitle>>>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const searchBarRef = useRef<HTMLDivElement>(null);

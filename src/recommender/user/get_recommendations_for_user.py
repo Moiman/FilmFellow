@@ -22,7 +22,12 @@ def get_recommendations_for_user(ratings, favourites):
         if input is not given in a correct form:
         Returns an empty list.
     """
-    
+    try:
+        ratings = dict(map(lambda item: (int(item[0]), item[1]), ratings.items()))
+    except ValueError:
+        print("All the values are not convertable to integers!")
+        ratings = {}
+
     TMDB_ids = np.load("user/TMDB_ids.npy")
     
     if len(ratings) + len(favourites) < 1:
@@ -33,7 +38,7 @@ def get_recommendations_for_user(ratings, favourites):
         print("All the rated movie ids must be integers!")
         return []
     
-    if not all(isinstance(elem, float) or isinstance(elem, int) for elem in 
+    if not all((isinstance(elem, float) or isinstance(elem, int)) for elem in 
                ratings.values()):
         print("All the ratings must be numbers!")
         return []
@@ -51,6 +56,10 @@ def get_recommendations_for_user(ratings, favourites):
     for movie in favourited_movies:
         if movie not in TMDB_ids:
             favourites.remove(movie)
+    
+    if len(ratings) + len(favourites) < 1:
+        print("None of the movies are in the MovieLens data!")
+        return []
     
     MovieLens_to_TMDB = np.load(
         "user/MovieLens_to_TMDB.npy", 

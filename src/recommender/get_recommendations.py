@@ -8,24 +8,18 @@ app = Flask(__name__)
 
 @app.route('/recommender/user', methods=['POST'])
 def user_recommendations():
-    # data = json.loads(request.get_json())
     data = request.get_json()
-    print(jsonify(get_recommendations_for_user(data.get("input"))))
-    return jsonify(get_recommendations_for_user(data.get("input")))
+    return jsonify(get_recommendations_for_user(data.get("ratings"), data.get("favourites")))
 
 @app.route('/recommender/movie/existing', methods=['POST'])
 def existing_movie_recommendations():
-    # data = json.loads(request.get_json())
     data = request.get_json()
-    print(jsonify(get_recommendations_for_movie(data.get("input"))))
-    return jsonify(get_recommendations_for_movie(data.get("input")))
+    return jsonify(get_recommendations_for_movie(data.get("TMDB_id")))
 
 @app.route('/recommender/movie/new', methods=['POST'])
 def new_movie_recommendations():
-    # data = json.loads(request.get_json())
     data = request.get_json()
-    print(jsonify(get_recommendations_for_new_movie(data.get("input"))))
-    return jsonify(get_recommendations_for_new_movie(data.get("input")))
+    return jsonify(get_recommendations_for_new_movie(data.get("features")))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,5 +1,5 @@
 describe("Header tests", () => {
-  describe("Navbar tests when screen width > 1024px", () => {
+  describe("Navbar tests when screen width < 1024px", () => {
     it("Navigate to home page with navbar", () => {
       cy.visit("/new");
       cy.location("pathname").should("eq", "/new");
@@ -39,10 +39,21 @@ describe("Header tests", () => {
       cy.get("main h2").contains("Login");
     });
 
-    it("Test navbar input field", () => {
+    it("Search movies", () => {
       cy.visit("/");
-      cy.get('header input[placeholder="Search..."]').type("Jaws");
-      cy.get('header [data-cy="search-input"]').should("have.value", "Jaws");
+      cy.get('header input[placeholder="Search for a movie..."]').type("Interstellar");
+      cy.get('header [data-cy="search-input"]').should("have.value", "Interstellar");
+      cy.get("button.movie-result").contains("Interstellar");
+
+      cy.get('header input[placeholder="Search for a movie..."]').clear();
+      cy.get("button.movie-results").should("not.exist");
+
+      cy.get('header input[placeholder="Search for a movie..."]').type("Lord of the Rings");
+      cy.get('header [data-cy="search-input"]').should("have.value", "Lord of the Rings");
+      cy.get("button.movie-result").contains("Lord of the Rings");
+
+      cy.get("header").click("topLeft");
+      cy.get("button.movie-result").should("not.exist");
     });
   });
 
@@ -95,10 +106,21 @@ describe("Header tests", () => {
         cy.get("main h2").contains("Login");
       });
 
-      it("Test navbar input field", () => {
+      it("Search movies", () => {
         cy.visit("/");
-        cy.get('header input[placeholder="Search..."]').type("Jaws");
-        cy.get('header [data-cy="search-input"]').should("have.value", "Jaws");
+        cy.get('header input[placeholder="Search for a movie..."]').type("Interstellar");
+        cy.get('header [data-cy="search-input"]').should("have.value", "Interstellar");
+        cy.get("button.movie-result").contains("Interstellar");
+
+        cy.get('header input[placeholder="Search for a movie..."]').clear();
+        cy.get("button.movie-results").should("not.exist");
+
+        cy.get('header input[placeholder="Search for a movie..."]').type("Lord of the Rings");
+        cy.get('header [data-cy="search-input"]').should("have.value", "Lord of the Rings");
+        cy.get("button.movie-result").contains("Lord of the Rings");
+
+        cy.get("header").click("topLeft");
+        cy.get("button.movie-result").should("not.exist");
       });
     },
   );

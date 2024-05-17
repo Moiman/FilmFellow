@@ -11,7 +11,7 @@ import { getReviewById } from "@/services/reviewService";
 interface Props {
   targetReview: Review;
 }
-type Review = Awaited<ReturnType<typeof getReviewById>>;
+export type Review = Awaited<ReturnType<typeof getReviewById>>;
 export default function ReportReviewForm({ targetReview }: Props) {
   console.log(targetReview);
   const [reportInput, setReportInput] = useState("");

@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
 import { Search } from "react-feather";
 
-import { fetchSearchResults } from "./headerSearchFetch";
+import { getMoviesByTitle } from "@/services/movieService";
 
 type SearchResult = {
   id: number;
@@ -22,6 +20,7 @@ type SearchResult = {
 export const HeaderSearch = () => {
   const [search, setSearch] = useState<string>("");
   const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -30,10 +29,12 @@ export const HeaderSearch = () => {
       const getMovies = async () => {
         if (search.trim() === "") {
           setResults([]);
+          setLoading(false);
           return;
         }
-        const movies = await fetchSearchResults(search);
+        const movies = await getMoviesByTitle(search);
         setResults(movies);
+        setLoading(false);
       };
 
       getMovies();
@@ -50,7 +51,10 @@ export const HeaderSearch = () => {
         className="searchbar-input"
         placeholder="Search..."
         value={search}
-        onChange={e => setSearch(e.target.value)}
+        onChange={e => {
+          setSearch(e.target.value);
+          setLoading(true);
+        }}
       />
       <button className="button-transparent">
         <Search
@@ -82,6 +86,9 @@ export const HeaderSearch = () => {
               </div>
             </button>
           ))}
+
+          {loading && <p className="searchbar-searching">Searching for results...</p>}
+          {!loading && results.length === 0 && <p className="searchbar-searching">No results found.</p>}
 
           <button
             className="searchbar-page-button"

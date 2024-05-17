@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/db";
 
 export type MovieResponse = NonNullable<Awaited<ReturnType<typeof getMovieById>>>;

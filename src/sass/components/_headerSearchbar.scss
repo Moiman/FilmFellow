@@ -125,3 +125,10 @@
     outline: 0;
   }
 }
+
+.searchbar-searching {
+  border-bottom: 1px solid abstracts.$primary-dark;
+  background-color: abstracts.$primary-darkgrey;
+  color: abstracts.$primary-light;
+  padding: 10px;
+}

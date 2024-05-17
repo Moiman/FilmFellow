@@ -146,11 +146,6 @@
       justify-content: space-between;
       margin-top: 40px;
 
-      svg {
-        fill: abstracts.$primary-light;
-        cursor: pointer;
-      }
-
       .buttons,
       .transparent-buttons {
         display: inline-flex;
@@ -177,6 +172,11 @@
         button {
           color: abstracts.$primary-light;
           padding: 0;
+        }
+
+        svg {
+          fill: abstracts.$primary-light;
+          cursor: pointer;
         }
 
         .yellow {

@@ -1,0 +1,17 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.list {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .delete-button {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+  .delete-button:hover {
+    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
+  }
+}

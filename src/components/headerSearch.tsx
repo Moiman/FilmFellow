@@ -76,7 +76,6 @@ export const HeaderSearch = () => {
         className="searchbar-input"
         placeholder="Search for a movie..."
         onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
         value={search}
         onChange={e => {
           setSearch(e.target.value);

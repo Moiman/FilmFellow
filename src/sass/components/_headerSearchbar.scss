@@ -72,7 +72,7 @@
   border-radius: abstracts.$default-border-radius;
   overflow: hidden;
 
-  .searchbar-movie-result {
+  .movie-result {
     border-bottom: 1px solid abstracts.$primary-dark;
     background-color: abstracts.$primary-darkgrey;
     color: abstracts.$primary-light;
@@ -96,15 +96,22 @@
     }
   }
 
-  .searchbar-movie-result:hover {
+  .movie-result:hover {
     background-color: abstracts.$primary-grey;
   }
 
-  .searchbar-movie-result:focus {
+  .movie-result:focus {
     background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     color: abstracts.$primary-dark;
     outline: 0;
     border-bottom: 1px solid abstracts.$primary-dark;
+  }
+
+  .searching-results {
+    border-bottom: 1px solid abstracts.$primary-dark;
+    background-color: abstracts.$primary-darkgrey;
+    color: abstracts.$primary-light;
+    padding: 10px;
   }
 
   .searchbar-page-button {
@@ -124,11 +131,4 @@
     background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
     outline: 0;
   }
-}
-
-.searchbar-searching {
-  border-bottom: 1px solid abstracts.$primary-dark;
-  background-color: abstracts.$primary-darkgrey;
-  color: abstracts.$primary-light;
-  padding: 10px;
 }

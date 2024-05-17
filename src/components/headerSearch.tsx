@@ -84,10 +84,10 @@ export const HeaderSearch = () => {
 
       {search.length > 0 && (
         <div className="searchbar-results">
-          {loading && <p className="searchbar-searching">Searching for results...</p>}
+          {loading && <p className="searching-results">Searching for results...</p>}
           {results.map(movie => (
             <button
-              className="searchbar-movie-result"
+              className="movie-result"
               key={movie.id}
               onClick={() => {
                 setSearch("");
@@ -107,7 +107,7 @@ export const HeaderSearch = () => {
             </button>
           ))}
 
-          {!loading && results.length === 0 && <p className="searchbar-searching">No results found.</p>}
+          {!loading && results.length === 0 && <p className="searching-results">No results found.</p>}
 
           <button
             className="searchbar-page-button"

@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../abstracts" as abstracts;
 
 .movie-catalogue {
@@ -9,6 +10,7 @@
     font-size: abstracts.$p-font-size;
     letter-spacing: abstracts.$text-letter-spacing;
     background-color: abstracts.$primary-darkgrey;
+    font-weight: 600;
   }
 
   .movie {
@@ -17,11 +19,16 @@
     align-items: center;
 
     * {
-      padding: 2px 10px;
+      padding: 4px 10px;
     }
 
     *:not(:last-child) {
       border-right: 1px solid abstracts.$primary-dark;
+    }
+
+    svg {
+      fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     }
   }
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Star } from "react-feather";
 
 type MovieCatalogueItem = {
   id: number;
@@ -21,16 +22,15 @@ export const MovieCatalogue = ({ movies }: { movies: MovieCatalogueItem[] }) => 
 
       {movies.map(movie => (
         <Link
+          className="movie"
           key={movie.id}
           href={`/movies/${movie.id}`}
         >
-          <div className="movie">
-            <p>{movie.title}</p>
-            <p>{movie.release_date?.getFullYear()}</p>
-            <p>{movie.runtime} min</p>
-            <p>???</p>
-            <p>{movie.vote_average}</p>
-          </div>
+          <p>{movie.title}</p>
+          <p>{movie.release_date?.getFullYear()}</p>
+          <p>{movie.runtime} min</p>
+          <p>???</p>
+          <p className="yellow">{movie.vote_average.toString().slice(0, 3)}</p>
         </Link>
       ))}
     </div>

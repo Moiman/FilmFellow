@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Edit } from "react-feather";
+import { toast } from "react-toastify";
+
 import Modal from "@/components/modal";
 import { RenameListForm } from "./renameListForm";
 import { updateListName } from "@/services/listService";
@@ -20,6 +22,15 @@ export const RenameList = ({ id }: { id: number }) => {
 
     if (name) {
       const list = updateListName(id, name.toString());
+      toast(
+        <p>
+          List was renamed to <span className="highlight-text">{name.toString()}</span>
+        </p>,
+        {
+          icon: <Edit strokeWidth={2.5} />,
+          className: "yellow-toast",
+        },
+      );
       setIsOpen(false);
     }
     router.push("/lists/" + id);

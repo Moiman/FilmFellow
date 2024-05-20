@@ -37,6 +37,7 @@ export default async function ListPage({ params }: { params: { listId: string } 
               <div className="list-edit">
                 <RenameList id={id} />
                 <DeleteList
+                  name={list.name}
                   id={id}
                   userId={session.user.id}
                 />

@@ -4,7 +4,7 @@ import Image from "next/image";
 type MovieListItem = {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path: string | null;
 };
 
 type MovieListProps = {
@@ -19,12 +19,14 @@ export const MovieList = ({ movies }: MovieListProps) => {
           key={movie.id}
           href={"/movies/" + movie.id}
         >
-          <Image
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            width={500}
-            height={500}
-            alt={movie.title}
-          />
+          {movie.poster_path && (
+            <Image
+              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              width={500}
+              height={500}
+              alt={movie.title}
+            />
+          )}
         </Link>
       ))}
     </div>

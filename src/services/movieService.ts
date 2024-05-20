@@ -100,11 +100,14 @@ const getMovieById = async (movieId: number, iso_3166_1 = "FI") => {
 
 const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: string | undefined) => {
   const orderBy = {} as Record<string, string>;
+  let voteCountLimit = 0;
   if (type === "new") {
+    voteCountLimit = 10;
     orderBy.release_date = "desc";
   } else if (type === "popular") {
     orderBy.popularity = "desc";
   } else if (type === "bestrated") {
+    voteCountLimit = 300;
     orderBy.vote_average = "desc";
   } else {
     return [];
@@ -121,7 +124,8 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
           },
         },
       },
-      vote_count: { gt: 300 },
+      vote_count: { gte: voteCountLimit },
+      poster_path: { not: null },
     },
     take: limit,
     orderBy: orderBy,

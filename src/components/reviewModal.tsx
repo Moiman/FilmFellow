@@ -1,6 +1,6 @@
 "use client";
 import Modal from "./modal";
-import { Flag, Star } from "react-feather";
+import { Flag, Smile, Star } from "react-feather";
 import { useSession } from "next-auth/react";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface Review {
-    id: number;
+  id: number;
   movieId: number;
   content: string;
   user: User;
@@ -34,15 +34,36 @@ interface User {
   username: string;
 }
 
-export const ReviewModal = ({ review, importedReview, isModalOpen, setIsModalOpen, reviewReported, importedReviewReported }: Props) => {
-    const { data: session } = useSession();
+export const ReviewModal = ({
+  review,
+  importedReview,
+  isModalOpen,
+  setIsModalOpen,
+  reviewReported,
+  importedReviewReported,
+}: Props) => {
+  const { data: session } = useSession();
   const content = () => {
     if (review) {
       return (
-        <div className="review-grid-item">
-          <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
-            <h2>{review?.user.username}</h2>
-            <div>
+        <div className="review-grid-modal-item">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "10px",
+            }}
+          >
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+              <Smile
+                style={{ marginLeft: "10px" }}
+                size={30}
+              />
+              <h2>{review?.user.username}</h2>
+            </div>
+            <div style={{ marginRight: "10px" }}>
               {[1, 2, 3, 4, 5].map(starRating => (
                 <Star
                   key={starRating}
@@ -53,7 +74,7 @@ export const ReviewModal = ({ review, importedReview, isModalOpen, setIsModalOpe
                 />
               ))}
             </div>
-            <p>{review.content}</p>
+            <p className="review-grid-content description">{review.content}</p>
           </div>
           {session && (
             <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
@@ -79,11 +100,23 @@ export const ReviewModal = ({ review, importedReview, isModalOpen, setIsModalOpe
       );
     } else if (importedReview) {
       return (
-        <div className="review-grid-item">
-          <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
+        <div className="review-grid-modal-item">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "10px",
+            }}
+          >
+            <Smile
+              style={{ marginLeft: "10px" }}
+              size={30}
+            />
             <h2>{importedReview?.author}</h2>
           </div>
-          <p>{importedReview?.content}</p>
+          <p className="review-grid-content description">{importedReview?.content}</p>
           {session && (
             <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
               {!importedReviewReported ? (

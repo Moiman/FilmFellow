@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Flag, Star } from "react-feather";
+import { Flag, Smile, Star } from "react-feather";
 import { ReviewModal } from "./reviewModal";
 import { UserReports } from "@/app/movies/[id]/reviewList";
 
@@ -15,7 +15,6 @@ interface Review {
   content: string;
   user: User;
   rating: number | null;
-
 }
 
 interface ImportedReview {
@@ -40,16 +39,30 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
 
   const checkIfReviewReported = () => {
     return userReports?.some(report => report.reviewId === review?.id) || false;
-  }
+  };
   const checkIfImportedReviewReported = () => {
     return userReports?.some(report => report.importedReviewId === importedReview?.id) || false;
   };
 
   return review ? (
     <div className="review-grid-item">
-      <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
-        <h2>{review.user.username}</h2>
-        <div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "auto auto",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "10px",
+        }}
+      >
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+          <Smile
+            style={{ marginLeft: "10px" }}
+            size={30}
+          />
+          <h2>{review.user.username}</h2>
+        </div>
+        <div style={{ marginRight: "10px" }}>
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
               key={starRating}
@@ -66,7 +79,7 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
         onClick={() => setOpenReviewModal(true)}
         className="review-grid-content description"
       >
-        {review.content}
+        {review.content.length > 303 ? review.content.slice(0, 300) + "..." : review.content}
       </p>
       <ReviewModal
         reviewReported={checkIfReviewReported()}
@@ -98,7 +111,19 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
     </div>
   ) : (
     <div className="review-grid-item">
-      <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "auto auto",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          gap: "10px",
+        }}
+      >
+        <Smile
+          style={{ marginLeft: "10px" }}
+          size={30}
+        />
         <h2>{importedReview?.author}</h2>
       </div>
 
@@ -106,7 +131,9 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
         onClick={() => setOpenImportedReviewModal(true)}
         className="review-grid-content description"
       >
-        {importedReview?.content}
+        {importedReview?.content.length! > 303
+          ? importedReview?.content.slice(0, 300) + "..."
+          : importedReview?.content}
       </p>
       <ReviewModal
         importedReviewReported={checkIfImportedReviewReported()}

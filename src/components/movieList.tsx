@@ -25,6 +25,7 @@ export const MovieList = ({ movies }: MovieListProps) => {
               width={500}
               height={500}
               alt={movie.title}
+              priority
             />
           )}
         </Link>

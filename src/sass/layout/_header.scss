@@ -1,5 +1,4 @@
 @use "sass:map";
-
 @use "../abstracts/" as abstracts;
 
 header {
@@ -53,58 +52,6 @@ header {
   .sub-nav-narrow {
     display: none;
   }
-
-  // Placeholder
-  .searchbar {
-    max-width: 600px;
-    position: relative;
-    border-radius: 40px;
-    background-color: rgba(abstracts.$primary-light, 0.1);
-    flex: 1;
-    display: flex;
-
-    button:focus,
-    input[type="text"]:focus {
-      outline: 0;
-      border: 0;
-    }
-
-    button:focus-visible {
-      outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-      outline-offset: 2px;
-    }
-  }
-
-  .searchbar-input {
-    width: calc(100% - 30px);
-    padding: 0px 20px;
-    background-color: transparent !important;
-    border: 0;
-    color: abstracts.$primary-light;
-    border-radius: 20px 4px 4px 20px;
-  }
-
-  .searchbar-input::placeholder {
-    color: abstracts.$primary-light;
-    opacity: 25%;
-  }
-
-  .searchbar:focus-within {
-    outline: 2px solid map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-  }
-
-  .searchbar:has(button:focus) {
-    outline: 0;
-  }
-
-  .searchbar-icon {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-  }
-
-  .searchbar > button {
-    border-radius: 4px 20px 20px 4px;
-    padding: 0 10px;
-  }
 }
 
 @media only screen and (max-width: abstracts.$large-width) {
@@ -116,10 +63,6 @@ header {
     .main-nav,
     .sub-nav-wide {
       display: none;
-    }
-
-    .searchbar {
-      width: 100%;
     }
 
     .sub-nav-narrow {

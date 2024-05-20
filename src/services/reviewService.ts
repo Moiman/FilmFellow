@@ -112,6 +112,9 @@ const findReviewsBySessionHolder = async () => {
     where: {
       userId: Number(session.user.id),
     },
+    include: {
+      movie: true
+    }
   });
 
   return userReviews;

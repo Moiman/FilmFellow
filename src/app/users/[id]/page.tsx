@@ -9,6 +9,7 @@ import { Sidebar } from "@/components/sidebar";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
 import { ProfileInfo } from "./profileInfo";
 import { ListButton } from "./listButton";
+import { findReviewsBySessionHolder } from "@/services/reviewService";
 
 /* For placeholder purposes */
 const exampleLists = [
@@ -29,6 +30,7 @@ export default async function userProfile({ params }: { params: { id: string } }
     notFound();
   }
   const favorites = await findUserFavoritesById(Number(params.id));
+  const userReviews = await findReviewsBySessionHolder();
 
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
@@ -64,8 +66,12 @@ export default async function userProfile({ params }: { params: { id: string } }
         {/* Thumbnails of user's latest reviews and link to all reviews */}
         <Section header={userReviewsHeader}>
           <div className="review-wrapper">
-            <ReviewThumbnail />
-            <ReviewThumbnail />
+            {userReviews.slice(0, 2).map(userReview => (
+              <ReviewThumbnail
+                key={userReview.id}
+                userReview={userReview}
+              />
+            ))}
           </div>
         </Section>
 

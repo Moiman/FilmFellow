@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Trash } from "react-feather";
+import { Trash2 } from "react-feather";
 import { toast } from "react-toastify";
 import { deleteList } from "@/services/listService";
 
@@ -15,7 +15,7 @@ export const DeleteList = ({ id, name, userId }: { id: number; name: string; use
         List <span className="highlight-text">{name}</span> was deleted
       </p>,
       {
-        icon: <Trash strokeWidth={2.5} />,
+        icon: <Trash2 strokeWidth={2.5} />,
         className: "pink-toast",
       },
     );
@@ -27,7 +27,7 @@ export const DeleteList = ({ id, name, userId }: { id: number; name: string; use
       className="button-transparent"
       onClick={deleteClick}
     >
-      <Trash
+      <Trash2
         className="delete-button"
         size={20}
       />

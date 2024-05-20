@@ -98,4 +98,18 @@ const getAllReports = async () => {
   return reports;
 };
 
-export { createReport, markReportDone, deleteReportById, getAllReports };
+const getReportsByCreatorId = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    throw "Invalid session";
+  }
+  const reports = await prisma.reports.findMany({
+    where: {
+      creatorId: Number(session.user.id),
+    },
+  });
+  return reports;
+};
+
+export { getReportsByCreatorId, createReport, markReportDone, deleteReportById, getAllReports };

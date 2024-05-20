@@ -8,10 +8,11 @@ import { getIsFavorite } from "@/services/favoriteService";
 import { Section } from "@/components/section";
 import { MovieInfo } from "./movieInfo";
 import { PersonList } from "./personList";
-import { ReviewList } from "./reviewList";
+import { ReviewList, UserReports } from "./reviewList";
 import { getImportedReviewsAndLocalReviewsById } from "@/services/reviewService";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
+import { getReportsByCreatorId } from "@/services/reportService";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
@@ -71,6 +72,11 @@ export const getMovie = async (movieId: string) => {
 
 export default async function Movie({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
+  let userReports: UserReports = [];
+  if(session) {
+    userReports = await getReportsByCreatorId();
+  }
+
   const reviewsHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h3>Reviews</h3>
@@ -115,6 +121,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
         </Section>
         <Section header={reviewsHeader}>
           <ReviewList
+            userReports={userReports}
             importedReviews={movie.reviewsData?.importedReviews.slice(0, 4)}
             reviews={movie.reviewsData?.reviews.slice(0, 4)}
           />

@@ -84,6 +84,7 @@ const getReviewById = async (reviewId: number | string) => {
             id: true,
           },
         },
+        reports: true,
       },
     });
 
@@ -93,10 +94,27 @@ const getReviewById = async (reviewId: number | string) => {
       where: {
         id: reviewId,
       },
+      include: {
+        reports: true,
+      },
     });
 
     return importedReview;
   }
 };
 
-export { getReviewById, createReview, deleteReviewById, getImportedReviewsAndLocalReviewsById };
+const findReviewsBySessionHolder = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw "Invalid session";
+  }
+  const userReviews = await prisma.reviews.findMany({
+    where: {
+      userId: Number(session.user.id),
+    },
+  });
+
+  return userReviews;
+};
+
+export { findReviewsBySessionHolder, getReviewById, createReview, deleteReviewById, getImportedReviewsAndLocalReviewsById };

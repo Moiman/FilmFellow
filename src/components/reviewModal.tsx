@@ -1,14 +1,15 @@
 "use client";
-import { useState } from "react";
 import Modal from "./modal";
 import { Flag, Star } from "react-feather";
-// import { Review } from "@/app/report/review/[id]/form";
+import { useSession } from "next-auth/react";
 
 interface Props {
   review?: Review;
   importedReview?: ImportedReview;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  reviewReported?: boolean;
+  importedReviewReported?: boolean;
 }
 
 interface Review {
@@ -33,16 +34,14 @@ interface User {
   username: string;
 }
 
-export const ReviewModal = ({ review, importedReview, isModalOpen, setIsModalOpen }: Props) => {
-
+export const ReviewModal = ({ review, importedReview, isModalOpen, setIsModalOpen, reviewReported, importedReviewReported }: Props) => {
+    const { data: session } = useSession();
   const content = () => {
     if (review) {
       return (
         <div className="review-grid-item">
           <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
-            <h2>
-              {review?.user.username}
-            </h2>
+            <h2>{review?.user.username}</h2>
             <div>
               {[1, 2, 3, 4, 5].map(starRating => (
                 <Star
@@ -56,22 +55,26 @@ export const ReviewModal = ({ review, importedReview, isModalOpen, setIsModalOpe
             </div>
             <p>{review.content}</p>
           </div>
-          <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
-            <form action={`/report/review/${review?.id}`}>
-              <button
-                type="submit"
-                className="button-yellow button-icon-text"
-              >
-                <Flag size={16} />
-                Report this review
-              </button>
-            </form>
-
-            <button className="button-pink button-icon-text">
-              <Flag size={16} />
-              Reported!
-            </button>
-          </div>
+          {session && (
+            <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+              {!reviewReported ? (
+                <form action={`/report/review/${review.id}`}>
+                  <button
+                    type="submit"
+                    className="button-yellow button-icon-text"
+                  >
+                    <Flag size={16} />
+                    Report this review
+                  </button>
+                </form>
+              ) : (
+                <button className="button-pink button-icon-text">
+                  <Flag size={16} />
+                  Reported!
+                </button>
+              )}
+            </div>
+          )}
         </div>
       );
     } else if (importedReview) {
@@ -81,22 +84,26 @@ export const ReviewModal = ({ review, importedReview, isModalOpen, setIsModalOpe
             <h2>{importedReview?.author}</h2>
           </div>
           <p>{importedReview?.content}</p>
-          <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
-            <form action={`/report/review/${importedReview?.id}`}>
-              <button
-                type="submit"
-                className="button-yellow button-icon-text"
-              >
-                <Flag size={16} />
-                Report this review
-              </button>
-            </form>
-
-            <button className="button-pink button-icon-text">
-              <Flag size={16} />
-              Reported!
-            </button>
-          </div>
+          {session && (
+            <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+              {!importedReviewReported ? (
+                <form action={`/report/review/${importedReview.id}`}>
+                  <button
+                    type="submit"
+                    className="button-yellow button-icon-text"
+                  >
+                    <Flag size={16} />
+                    Report this review
+                  </button>
+                </form>
+              ) : (
+                <button className="button-pink button-icon-text">
+                  <Flag size={16} />
+                  Reported!
+                </button>
+              )}
+            </div>
+          )}
         </div>
       );
     }

@@ -6,11 +6,11 @@ import { List, Grid, Table } from "react-feather";
 
 import { Section } from "@/components/section";
 import { getList } from "@/services/listService";
-import { DeleteList } from "./deleteList";
-import { RenameList } from "./renameList";
-import { MovieList } from "@/components/movieList";
+import { DeleteList } from "../deleteList";
+import { RenameList } from "../renameList";
+import { MovieGrid } from "../movieGrid";
 
-export default async function ListPage({ params }: { params: { listId: string } }) {
+export default async function GridPage({ params }: { params: { listId: string } }) {
   const session = await getServerSession(authOptions);
   const id = Number(params.listId);
 
@@ -59,7 +59,7 @@ export default async function ListPage({ params }: { params: { listId: string } 
           </div>
         }
       >
-        <MovieList movies={movies} />
+        <MovieGrid movies={movies} />
       </Section>
     </main>
   );

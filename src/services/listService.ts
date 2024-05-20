@@ -183,3 +183,16 @@ export const toggleMovieList = async (movieId: number, listId: number) => {
     return false;
   }
 };
+
+export const updateListName = async (listId: number, newName: string) => {
+  const updatedList = await prisma.lists.update({
+    where: {
+      id: listId,
+    },
+    data: {
+      name: newName,
+      updated_at: new Date(),
+    },
+  });
+  return updatedList;
+};

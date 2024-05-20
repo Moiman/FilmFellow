@@ -2,12 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
+import { List, Grid, Table } from "react-feather";
 
 import { Section } from "@/components/section";
 import { getList } from "@/services/listService";
 import { DeleteList } from "./deleteList";
 import { MovieList } from "@/components/movieList";
 import { RenameList } from "./renameList";
+import { MovieCatalogue } from "./movieCatalogue";
+import { MovieGrid } from "./movieGrid";
 
 export default async function ListPage({ params }: { params: { listId: string } }) {
   const session = await getServerSession(authOptions);
@@ -43,10 +46,18 @@ export default async function ListPage({ params }: { params: { listId: string } 
                 />
               </div>
             )}
+
+            <div className="highlight-nav list-styles">
+              <Grid size={20} />
+              <List size={20} />
+              <Table size={20} />
+            </div>
           </div>
         }
       >
         <MovieList movies={movies} />
+        <MovieCatalogue movies={movies} />
+        <MovieGrid movies={movies} />
       </Section>
     </main>
   );

@@ -7,11 +7,7 @@ type MovieListItem = {
   poster_path: string;
 };
 
-type MovieListProps = {
-  movies: MovieListItem[];
-};
-
-export const MovieList = ({ movies }: MovieListProps) => {
+export const MovieList = ({ movies }: { movies: MovieListItem[] }) => {
   return (
     <div className="movie-list">
       {movies.map(movie => (

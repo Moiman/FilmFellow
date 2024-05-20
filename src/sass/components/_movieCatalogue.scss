@@ -1,0 +1,35 @@
+@use "../abstracts" as abstracts;
+
+.movie-catalogue {
+  width: 100%;
+  border: 1px solid abstracts.$primary-dark;
+
+  .title {
+    font-family: abstracts.$default-text-font;
+    font-size: abstracts.$p-font-size;
+    letter-spacing: abstracts.$text-letter-spacing;
+    background-color: abstracts.$primary-darkgrey;
+  }
+
+  .movie {
+    display: grid;
+    grid-template-columns: auto repeat(4, 100px);
+    align-items: center;
+
+    * {
+      padding: 2px 10px;
+    }
+
+    *:not(:last-child) {
+      border-right: 1px solid abstracts.$primary-dark;
+    }
+  }
+
+  .movie:not(:last-child) {
+    border-bottom: 1px solid abstracts.$primary-dark;
+  }
+
+  .movie:hover {
+    background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+  }
+}

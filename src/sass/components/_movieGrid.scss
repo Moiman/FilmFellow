@@ -1,0 +1,11 @@
+@use "../abstracts" as abstracts;
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  .movie {
+    padding: 10px;
+    border: 1px solid abstracts.$primary-dark;
+  }
+}

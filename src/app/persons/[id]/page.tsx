@@ -54,13 +54,15 @@ export default async function Person({ params }: { params: { id: string } }) {
       <div className="person-content">
         <div className="person-wrapper">
           <div className="image-wrapper">
-            <Image
-              alt={`${person.name}`}
-              src={`https://image.tmdb.org/t/p/h632/${person.profile_path}`}
-              fill={true}
-              sizes="100%"
-              priority={true}
-            />
+            {person.profile_path && (
+              <Image
+                alt={`${person.name}`}
+                src={`https://image.tmdb.org/t/p/h632/${person.profile_path}`}
+                fill={true}
+                sizes="100%"
+                priority={true}
+              />
+            )}
             <div className="gradient" />
           </div>
 

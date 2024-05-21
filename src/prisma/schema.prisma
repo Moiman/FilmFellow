@@ -23,6 +23,7 @@ model Users {
   reviews        Reviews[]
   favorites      Favorites[]
   watchedRatings WatchedRatings[]
+  lists          Lists[]
   reporters      Reports[]        @relation("Creator")
   reportTargets  Reports[]        @relation("TargetUser")
 }
@@ -49,18 +50,41 @@ model WatchedRatings {
   @@map("Watched")
 }
 
+model Lists {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  listMovies ListMovies[]
+}
+
+model ListMovies {
+  listId     Int
+  movieId    Int
+  created_at DateTime @default(now())
+
+  movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  list  Lists  @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([listId, movieId])
+}
+
 model Movies {
   id                Int       @id
   adult             Boolean
-  backdrop_path     String
+  backdrop_path     String?
   budget            Int
   homepage          String
-  imdb_id           String
+  imdb_id           String?
   original_language String
   original_title    String
   overview          String
   popularity        Float
-  poster_path       String
+  poster_path       String?
   release_date      DateTime? @db.Date
   revenue           Float
   runtime           Int
@@ -84,6 +108,7 @@ model Movies {
   movieProvider       MovieProviders[]
   favorites           Favorites[]
   watchedRatings      WatchedRatings[]
+  ListMovies          ListMovies[]
 }
 
 model ImportedReviews {

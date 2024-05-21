@@ -1,35 +1,35 @@
 import Link from "next/link";
-import { findUserById } from "@/services/userService";
-import { findUserFavoritesById } from "@/services/favoriteService";
 import { notFound } from "next/navigation";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/authOptions";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
+import { findUserById } from "@/services/userService";
+import { findUserFavoritesById } from "@/services/favoriteService";
+import { getUserLists } from "@/services/listService";
 import { ProfileInfo } from "./profileInfo";
 import { ListButton } from "./listButton";
 import { findReviewsByUserId } from "@/services/reviewService";
-
-/* For placeholder purposes */
-const exampleLists = [
-  { id: 1, name: "Favorite horror movies", thumbnail_path: "/", movies: [278, 238, 497] },
-  { id: 2, name: "Worst movies ever", thumbnail_path: "/", movies: [278, 155] },
-  { id: 3, name: "Movies for Christmas", thumbnail_path: "/", movies: [278, 496243, 769] },
-  { id: 4, name: "I'm Batman", thumbnail_path: "/", movies: [155] },
-];
+import { NewListModal } from "./newListModal";
 
 export function shuffleArray(array: any[]) {
   return array.slice().sort(() => Math.random() - 0.5);
 }
 
 export default async function userProfile({ params }: { params: { id: string } }) {
-  const user = await findUserById(Number(params.id));
+  const session = await getServerSession(authOptions);
+  const userId = Number(params.id);
+
+  const user = await findUserById(userId);
+  const lists = await getUserLists(userId);
 
   if (!user) {
     notFound();
   }
-  const favorites = await findUserFavoritesById(Number(params.id));
+  const favorites = await findUserFavoritesById(userId);
   const userReviews = await findReviewsByUserId(user.id);
 
   const userFavoriteHeader = (
@@ -50,7 +50,7 @@ export default async function userProfile({ params }: { params: { id: string } }
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
       <Sidebar iconPosition="right">
-        <ProfileInfo userId={Number(params.id)} />
+        <ProfileInfo userId={userId} />
       </Sidebar>
 
       <div className="profile-section-wrapper">
@@ -77,15 +77,18 @@ export default async function userProfile({ params }: { params: { id: string } }
 
         {/* User-made lists */}
         <div className="section">
-          <div className="list-header">
+          <div
+            className="section-header"
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
             <h3 className="h5">Lists</h3>
+            {Number(session?.user.id) === userId && <NewListModal />}
           </div>
           <div className="list-wrapper">
-            {exampleLists.map(list => (
+            {lists.map(list => (
               <ListButton
-                userId={Number(params.id)}
                 key={list.id}
-                list={{ id: list.id, name: list.name, movies: list.movies }}
+                list={list}
               />
             ))}
           </div>

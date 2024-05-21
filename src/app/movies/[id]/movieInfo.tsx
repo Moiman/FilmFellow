@@ -7,14 +7,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Film } from "react-feather";
 
+import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
 import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
-import { Dropdown } from "@/components/dropdown";
-
+import { AddToList } from "./addToList";
 import type { Movie } from "@/app/movies/[id]/page";
-import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 
 const placeholderIcon = {
   backgroundColor: "rgba(0,0,0,0.25)",
@@ -82,13 +81,15 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
     <div className="movie-content">
       <div className="movie-wrapper">
         <div className="image-wrapper">
-          <Image
-            alt={`${movie.title}`}
-            src={`https://image.tmdb.org/t/p/w780/${movie.backdropPath}`}
-            fill={true}
-            sizes="100%"
-            priority={true}
-          />
+          {movie.backdropPath && (
+            <Image
+              alt={`${movie.title}`}
+              src={`https://image.tmdb.org/t/p/w780/${movie.backdropPath}`}
+              fill={true}
+              sizes="100%"
+              priority={true}
+            />
+          )}
           <div className="gradient" />
         </div>
 
@@ -132,14 +133,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
           {session && (
             <div className="all-buttons">
               <div className="buttons">
-                <Dropdown
-                  button={<button>Add to list</button>}
-                  width={200}
-                >
-                  <button className="dropdown-item">Example list 1</button>
-                  <button className="dropdown-item">Example list 2</button>
-                  <button className="dropdown-item">Example list 3</button>
-                </Dropdown>
+                <AddToList movieId={movie.id} />
                 <Watched
                   watched={watched}
                   toggleWatched={toggleWatched}

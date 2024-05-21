@@ -25,7 +25,7 @@ export default async function Layout({ params, children }: { params: { listId: s
     <main className="list">
       <Section
         header={
-          <div className="header">
+          <div className={session ? "header" : "header-visitor"}>
             <div className="list-title">
               <h2 className="yellow-name-header h3">
                 <Link href={"/users/" + list.userId}>{list.user.username}</Link>&rsquo;s {list.name}

@@ -63,6 +63,10 @@
         flex: 1;
         overflow: hidden;
 
+        .overview {
+          margin-bottom: 10px;
+        }
+
         .cyan {
           display: flex;
           gap: 20px;

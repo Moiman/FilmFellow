@@ -2,7 +2,8 @@
 @use "../abstracts" as abstracts;
 
 .list {
-  .header {
+  .header,
+  .header-visitor {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -23,7 +24,8 @@
   @media only screen and (max-width: abstracts.$large-width) {
     .header {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      grid-template-columns: 1fr;
 
       & > *:nth-child(2) {
         justify-content: flex-start;
@@ -38,6 +40,17 @@
         grid-area: 1 / 1 / 1 / 4;
         margin-right: 0px;
         max-width: 100%;
+      }
+    }
+
+    .header-visitor {
+      display: grid;
+      gap: 0;
+      grid-template-columns: 1fr;
+
+      & > *:last-child {
+        justify-content: flex-end;
+        width: 100%;
       }
     }
   }

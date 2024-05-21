@@ -146,6 +146,16 @@ export const getList = async (id: number) => {
               runtime: true,
               overview: true,
               vote_average: true,
+              release_dates: {
+                where: {
+                  iso_3166_1: {
+                    equals: "US",
+                  },
+                },
+                select: {
+                  certification: true,
+                },
+              },
             },
           },
         },
@@ -198,5 +208,6 @@ export const updateListName = async (listId: number, newName: string) => {
       updated_at: new Date(),
     },
   });
+
   return updatedList;
 };

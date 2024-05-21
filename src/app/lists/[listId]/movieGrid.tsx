@@ -10,6 +10,7 @@ type MovieListItem = {
   release_date: Date | null;
   runtime: number;
   vote_average: number;
+  release_dates: { certification: string }[];
 };
 
 export const MovieGrid = ({ movies }: { movies: MovieListItem[] }) => {
@@ -34,7 +35,7 @@ export const MovieGrid = ({ movies }: { movies: MovieListItem[] }) => {
               <div className="title">
                 <h4>{movie.title}</h4>
                 <p className="yellow">
-                  {movie.vote_average.toString().slice(0, 3)} <Star size={18} />
+                  <Star size={18} /> {movie.vote_average.toString().slice(0, 3)}
                 </p>
               </div>
               <div className="info">
@@ -42,7 +43,7 @@ export const MovieGrid = ({ movies }: { movies: MovieListItem[] }) => {
                 <div className="cyan">
                   <p>{movie.release_date?.getFullYear()}</p>
                   <p>{movie.runtime} min</p>
-                  <p>???</p>
+                  <p>{movie.release_dates[0].certification}</p>
                 </div>
               </div>
             </div>

@@ -7,6 +7,7 @@ type MovieCatalogueItem = {
   release_date: Date | null;
   runtime: number;
   vote_average: number;
+  release_dates: [{ certification: string }];
 };
 
 export const MovieCatalogue = ({ movies }: { movies: MovieCatalogueItem[] }) => {
@@ -29,7 +30,7 @@ export const MovieCatalogue = ({ movies }: { movies: MovieCatalogueItem[] }) => 
           <p>{movie.title}</p>
           <p>{movie.release_date?.getFullYear()}</p>
           <p>{movie.runtime} min</p>
-          <p>???</p>
+          <p>{movie.release_dates[0].certification}</p>
           <p className="yellow"> {movie.vote_average.toString().slice(0, 3)}</p>
         </Link>
       ))}

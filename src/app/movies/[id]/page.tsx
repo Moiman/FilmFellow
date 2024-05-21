@@ -98,10 +98,6 @@ export default async function Movie({ params }: { params: { id: string } }) {
           <p>Coming soon</p>
         </Section>
 
-        <Section header="In theaters">
-          <p>Coming soon</p>
-        </Section>
-
         <Section header="Similar movies">
           <p>Coming soon</p>
         </Section>

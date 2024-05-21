@@ -61,7 +61,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                   style={{ marginLeft: "10px" }}
                   size={30}
                 />
-                <Link href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
+                <Link className="h2" href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
               </div>
               <div style={{ marginRight: "10px" }}>
                 {[1, 2, 3, 4, 5].map(starRating => (

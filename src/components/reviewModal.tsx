@@ -62,7 +62,7 @@ export const ReviewModal = ({
                 style={{ marginLeft: "10px" }}
                 size={30}
               />
-              <Link href={"/users/" + review.user.id}>{review.user.username}</Link>
+              <Link className="h2" href={"/users/" + review.user.id}>{review.user.username}</Link>
             </div>
             <div style={{ marginRight: "10px" }}>
               {[1, 2, 3, 4, 5].map(starRating => (

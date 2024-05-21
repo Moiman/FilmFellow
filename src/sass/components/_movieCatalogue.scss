@@ -52,6 +52,38 @@
 
   .movie:hover {
     background-color: rgba(abstracts.$primary-darkgrey, 0.5);
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+
+    *:first-child {
+      color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    }
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .movie-catalogue {
+    display: grid;
+    gap: 10px;
+    border: 0;
+
+    .title-row {
+      display: none;
+    }
+
+    .movie {
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid abstracts.$primary-dark;
+      border-radius: abstracts.$default-border-radius;
+
+      *:first-child {
+        grid-area: 1 / 1 / 1 / 6;
+        border-right: 0;
+        border-bottom: 1px solid abstracts.$primary-dark;
+        background-color: abstracts.$primary-darkgrey;
+      }
+
+      *:first-child:hover {
+        background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+      }
+    }
   }
 }

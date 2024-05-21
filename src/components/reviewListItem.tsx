@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Smile, Star } from "react-feather";
+import { Smile, Star, Trash2 } from "react-feather";
 import { ReviewModal } from "./reviewModal";
 import { UserReports } from "@/app/movies/[id]/reviewList";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { deleteReviewById } from "@/services/reviewService";
 
 interface User {
   id: number;
@@ -33,14 +35,20 @@ interface Props {
 }
 
 export const ReviewListItem = ({ review, importedReview, userReports }: Props) => {
+  const { data: session } = useSession();
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [openImportedReviewModal, setOpenImportedReviewModal] = useState(false);
 
   const checkIfReviewReported = () => {
     return userReports?.some(report => report.reviewId === review?.id) || false;
   };
+
   const checkIfImportedReviewReported = () => {
     return userReports?.some(report => report.importedReviewId === importedReview?.id) || false;
+  };
+
+  const handleDeleteReview = async () => {
+    await deleteReviewById(Number(review?.id));
   };
 
   return review ? (
@@ -60,8 +68,12 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
             size={30}
           />
 
-            <Link className="h2" href={"/users/" + review.user.id}>{review.user.username}</Link>
-          
+          <Link
+            className="h2"
+            href={"/users/" + review.user.id}
+          >
+            {review.user.username}
+          </Link>
         </div>
         <div style={{ marginRight: "10px" }}>
           {[1, 2, 3, 4, 5].map(starRating => (
@@ -88,6 +100,20 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
         isModalOpen={openReviewModal}
         setIsModalOpen={setOpenReviewModal}
       />
+      {review.user.id === session?.user.id && (
+        <div className="review-grid-footer-primary">
+          <button
+            onClick={handleDeleteReview}
+            className="button-transparent"
+          >
+            <Trash2
+              color="black"
+              style={{ marginLeft: "10px" }}
+              size={20}
+            />
+          </button>
+        </div>
+      )}
     </div>
   ) : (
     <div className="review-grid-item">
@@ -121,6 +147,14 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
         isModalOpen={openImportedReviewModal}
         setIsModalOpen={setOpenImportedReviewModal}
       />
+      <div className="review-grid-footer-secondary">
+        <p
+          className="yellow"
+          style={{ marginLeft: "10px" }}
+        >
+          Imported from TMDB
+        </p>
+      </div>
     </div>
   );
 };

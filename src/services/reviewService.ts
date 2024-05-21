@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import { Role } from "@prisma/client";
 import prisma from "@/db";
+import { revalidatePath } from "next/cache";
 
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
@@ -32,7 +33,7 @@ const deleteReviewById = async (reviewId: number | string) => {
         id: reviewId,
       },
     });
-
+    revalidatePath(`/movie/${deletedReview.movieId}`);
     return deletedReview;
   } else {
     const deletedReview = await prisma.importedReviews.delete({
@@ -40,7 +41,7 @@ const deleteReviewById = async (reviewId: number | string) => {
         id: reviewId,
       },
     });
-
+    revalidatePath(`/movie/${deletedReview.movieId}`);
     return deletedReview;
   }
 };
@@ -110,7 +111,7 @@ const findReviewsByUserId = async (userId: number) => {
     },
     include: {
       movie: true,
-      reports: true
+      reports: true,
     },
   });
 

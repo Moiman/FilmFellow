@@ -23,7 +23,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
 
   const ReviewHeader = () => {
     return (
-      <div className="review-thumbnail-header">
+      <div className="review-thumbnail-header" style={{justifyContent: "space-between"}}>
         <Link href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
         <div className="stars">
           {[1, 2, 3, 4, 5].map(starRating => (

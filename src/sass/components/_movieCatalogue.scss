@@ -4,13 +4,27 @@
 .movie-catalogue {
   width: 100%;
   border: 1px solid abstracts.$primary-dark;
+  border-radius: abstracts.$default-border-radius;
+  overflow: hidden;
 
-  .title {
-    font-family: abstracts.$default-text-font;
-    font-size: abstracts.$p-font-size;
-    letter-spacing: abstracts.$text-letter-spacing;
-    background-color: abstracts.$primary-darkgrey;
-    font-weight: 600;
+  .title-row {
+    display: grid;
+    grid-template-columns: auto repeat(4, 100px);
+    align-items: center;
+
+    .title {
+      padding: 4px 10px;
+      font-family: abstracts.$default-text-font;
+      font-size: abstracts.$p-font-size;
+      letter-spacing: abstracts.$text-letter-spacing;
+      background-color: abstracts.$primary-darkgrey;
+      font-weight: 600;
+      border-bottom: 1px solid abstracts.$primary-dark;
+    }
+
+    *:not(:last-child) {
+      border-right: 1px solid abstracts.$primary-dark;
+    }
   }
 
   .movie {
@@ -38,5 +52,6 @@
 
   .movie:hover {
     background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
 }

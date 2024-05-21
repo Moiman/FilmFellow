@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
-import { List, Grid, Table } from "react-feather";
+import { Table, Grid, Columns } from "react-feather";
 
 import { Section } from "@/components/section";
 import { getList } from "@/services/listService";
@@ -48,10 +48,10 @@ export default async function Layout({ params, children }: { params: { listId: s
               <Link href={`/lists/${list.id}/`}>
                 <Grid size={20} />
               </Link>
-              <Link href={`/lists/${list.id}/catalogue`}>
-                <List size={20} />
-              </Link>
               <Link href={`/lists/${list.id}/grid`}>
+                <Columns size={20} />
+              </Link>
+              <Link href={`/lists/${list.id}/catalogue`}>
                 <Table size={20} />
               </Link>
             </div>

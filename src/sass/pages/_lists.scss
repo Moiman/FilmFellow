@@ -46,5 +46,10 @@
     display: flex;
     gap: 15px;
     align-items: center;
+
+    * {
+      display: flex;
+      align-items: center;
+    }
   }
 }

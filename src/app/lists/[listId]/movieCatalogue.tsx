@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Star } from "react-feather";
 
 type MovieCatalogueItem = {
   id: number;
@@ -11,7 +12,7 @@ type MovieCatalogueItem = {
 export const MovieCatalogue = ({ movies }: { movies: MovieCatalogueItem[] }) => {
   return (
     <div className="movie-catalogue">
-      <div className="movie">
+      <div className="title-row">
         <h3 className="title">Title</h3>
         <h3 className="title">Year</h3>
         <h3 className="title">Length</h3>
@@ -29,7 +30,7 @@ export const MovieCatalogue = ({ movies }: { movies: MovieCatalogueItem[] }) => 
           <p>{movie.release_date?.getFullYear()}</p>
           <p>{movie.runtime} min</p>
           <p>???</p>
-          <p className="yellow">{movie.vote_average.toString().slice(0, 3)}</p>
+          <p className="yellow"> {movie.vote_average.toString().slice(0, 3)}</p>
         </Link>
       ))}
     </div>

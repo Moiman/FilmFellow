@@ -1,8 +1,8 @@
-import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Flag, Smile, Star } from "react-feather";
+import { Smile, Star } from "react-feather";
 import { ReviewModal } from "./reviewModal";
 import { UserReports } from "@/app/movies/[id]/reviewList";
+import Link from "next/link";
 
 interface User {
   id: number;
@@ -33,7 +33,6 @@ interface Props {
 }
 
 export const ReviewListItem = ({ review, importedReview, userReports }: Props) => {
-  const { data: session } = useSession();
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [openImportedReviewModal, setOpenImportedReviewModal] = useState(false);
 
@@ -60,7 +59,9 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
             style={{ marginLeft: "10px" }}
             size={30}
           />
-          <h2>{review.user.username}</h2>
+
+          <Link href={"/users/" + review.user.id}>{review.user.username}</Link>
+         
         </div>
         <div style={{ marginRight: "10px" }}>
           {[1, 2, 3, 4, 5].map(starRating => (
@@ -87,27 +88,6 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
         isModalOpen={openReviewModal}
         setIsModalOpen={setOpenReviewModal}
       />
-
-      {session && (
-        <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
-          {!checkIfReviewReported() ? (
-            <form action={`/report/review/${review.id}`}>
-              <button
-                type="submit"
-                className="button-yellow button-icon-text"
-              >
-                <Flag size={16} />
-                Report this review
-              </button>
-            </form>
-          ) : (
-            <button className="button-pink button-icon-text">
-              <Flag size={16} />
-              Reported!
-            </button>
-          )}
-        </div>
-      )}
     </div>
   ) : (
     <div className="review-grid-item">
@@ -141,26 +121,6 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
         isModalOpen={openImportedReviewModal}
         setIsModalOpen={setOpenImportedReviewModal}
       />
-      {session && (
-        <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
-          {!checkIfImportedReviewReported() ? (
-            <form action={`/report/review/${importedReview?.id}`}>
-              <button
-                type="submit"
-                className="button-yellow button-icon-text"
-              >
-                <Flag size={16} />
-                Report this review
-              </button>
-            </form>
-          ) : (
-            <button className="button-pink button-icon-text">
-              <Flag size={16} />
-              Reported!
-            </button>
-          )}
-        </div>
-      )}
     </div>
   );
 };

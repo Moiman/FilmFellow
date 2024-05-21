@@ -103,21 +103,18 @@ const getReviewById = async (reviewId: number | string) => {
   }
 };
 
-const findReviewsBySessionHolder = async () => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw "Invalid session";
-  }
+const findReviewsByUserId = async (userId: number) => {
   const userReviews = await prisma.reviews.findMany({
     where: {
-      userId: Number(session.user.id),
+      userId: userId,
     },
     include: {
-      movie: true
-    }
+      movie: true,
+      reports: true
+    },
   });
 
   return userReviews;
 };
 
-export { findReviewsBySessionHolder, getReviewById, createReview, deleteReviewById, getImportedReviewsAndLocalReviewsById };
+export { findReviewsByUserId, getReviewById, createReview, deleteReviewById, getImportedReviewsAndLocalReviewsById };

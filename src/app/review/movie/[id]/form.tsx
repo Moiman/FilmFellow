@@ -1,6 +1,6 @@
 "use client";
 import type { Movie } from "@/app/movies/[id]/page";
-import { ReviewList } from "@/app/movies/[id]/reviewList";
+import { ReviewList, UserReports } from "@/app/movies/[id]/reviewList";
 import { StarRating } from "@/app/movies/[id]/starRating";
 import { Section } from "@/components/section";
 import { createReview } from "@/services/reviewService";
@@ -9,7 +9,12 @@ import { useState } from "react";
 import { Flag } from "react-feather";
 import { toast } from "react-toastify";
 
-export default function ReviewForm({ movie }: { movie: Movie }) {
+interface Props {
+  movie: Movie;
+  userReports: UserReports;
+}
+
+export default function ReviewForm({ movie, userReports }: Props ) {
   const [contentInput, setContentInput] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const reviewHeader = (
@@ -65,6 +70,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
             />
           </form>
           <ReviewList
+            userReports={userReports}
             importedReviews={movie.reviewsData?.importedReviews}
             reviews={movie.reviewsData?.reviews}
           />

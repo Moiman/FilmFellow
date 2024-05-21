@@ -1,22 +1,30 @@
 "use client";
-import { Smile, Star } from "react-feather";
+import { Flag, Smile, Star } from "react-feather";
 
 import { Section } from "./section";
-import { findReviewsBySessionHolder } from "@/services/reviewService";
+import { findReviewsByUserId } from "@/services/reviewService";
 import { useState } from "react";
 import Modal from "./modal";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface Props {
   userReview: UserReview[0];
 }
-type UserReview = Awaited<ReturnType<typeof findReviewsBySessionHolder>>;
+type UserReview = Awaited<ReturnType<typeof findReviewsByUserId>>;
 
 export const ReviewThumbnail = ({ userReview }: Props) => {
+  const { data: session } = useSession();
   const [openReviewModal, setOpenReviewModal] = useState(false);
+
+  const checkIfReviewReported = () => {
+    return userReview?.reports.some(report => report.reviewId === userReview?.id) || false;
+  };
+
   const ReviewHeader = () => {
     return (
       <div className="review-thumbnail-header">
-        <h6>{userReview.movie.title}</h6>
+        <Link href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
         <div className="stars">
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
@@ -53,7 +61,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                   style={{ marginLeft: "10px" }}
                   size={30}
                 />
-                <h2>{userReview.movie.title}</h2>
+                <Link href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
               </div>
               <div style={{ marginRight: "10px" }}>
                 {[1, 2, 3, 4, 5].map(starRating => (
@@ -67,6 +75,26 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                 ))}
               </div>
               <p className="review-grid-content description">{userReview.content}</p>
+              {session && session.user.id !== userReview.userId && (
+                <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+                  {!checkIfReviewReported() ? (
+                    <form action={`/report/review/${userReview.id}`}>
+                      <button
+                        type="submit"
+                        className="button-yellow button-icon-text"
+                      >
+                        <Flag size={16} />
+                        Report this review
+                      </button>
+                    </form>
+                  ) : (
+                    <button className="button-pink button-icon-text">
+                      <Flag size={16} />
+                      Reported!
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         }

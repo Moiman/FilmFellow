@@ -9,7 +9,7 @@ import { Sidebar } from "@/components/sidebar";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
 import { ProfileInfo } from "./profileInfo";
 import { ListButton } from "./listButton";
-import { findReviewsBySessionHolder } from "@/services/reviewService";
+import { findReviewsByUserId } from "@/services/reviewService";
 
 /* For placeholder purposes */
 const exampleLists = [
@@ -30,7 +30,7 @@ export default async function userProfile({ params }: { params: { id: string } }
     notFound();
   }
   const favorites = await findUserFavoritesById(Number(params.id));
-  const userReviews = await findReviewsBySessionHolder();
+  const userReviews = await findReviewsByUserId(user.id);
 
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>

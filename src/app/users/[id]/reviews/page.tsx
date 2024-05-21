@@ -4,7 +4,7 @@ import { findUserById } from "@/services/userService";
 
 import { Section } from "@/components/section";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
-import { findReviewsBySessionHolder } from "@/services/reviewService";
+import { findReviewsByUserId } from "@/services/reviewService";
 
 export default async function userReviews({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));
@@ -12,7 +12,7 @@ export default async function userReviews({ params }: { params: { id: string } }
   if (!user) {
     notFound();
   }
-  const userReviews = await findReviewsBySessionHolder();
+  const userReviews = await findReviewsByUserId(user.id);
 
   return (
     <main>

@@ -27,7 +27,7 @@ interface ImportedReview {
 interface Props {
   importedReviews: ImportedReview[] | undefined;
   reviews: Review[] | undefined;
-  userReports: UserReports;
+  userReports?: UserReports;
 }
 
 export type UserReports = Awaited<ReturnType<typeof getReportsByCreatorId>>;

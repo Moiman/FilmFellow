@@ -2,6 +2,7 @@
 import Modal from "./modal";
 import { Flag, Smile, Star } from "react-feather";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface Props {
   review?: Review;
@@ -61,7 +62,7 @@ export const ReviewModal = ({
                 style={{ marginLeft: "10px" }}
                 size={30}
               />
-              <h2>{review?.user.username}</h2>
+              <Link href={"/users/" + review.user.id}>{review.user.username}</Link>
             </div>
             <div style={{ marginRight: "10px" }}>
               {[1, 2, 3, 4, 5].map(starRating => (
@@ -74,9 +75,10 @@ export const ReviewModal = ({
                 />
               ))}
             </div>
-            <p className="review-grid-content description">{review.content}</p>
           </div>
-          {session && (
+          <p className="review-grid-content description">{review.content}</p>
+
+          {session && session.user.id !== review.user.id  && (
             <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
               {!reviewReported ? (
                 <form action={`/report/review/${review.id}`}>

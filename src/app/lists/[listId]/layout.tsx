@@ -30,7 +30,6 @@ export default async function Layout({ params, children }: { params: { listId: s
               <h2 className="yellow-name-header h3">
                 <Link href={"/users/" + list.userId}>{list.user.username}</Link>&rsquo;s {list.name}
               </h2>
-              <p className="movie-amount">{movies.length}</p>
             </div>
 
             {session && session.user.id === list.userId && (

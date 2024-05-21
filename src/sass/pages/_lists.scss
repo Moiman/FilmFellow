@@ -4,19 +4,41 @@
 .list {
   .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    & > * {
+      width: fit-content;
+    }
   }
 
   .list-title {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
+    h2 {
+      overflow-wrap: break-word;
+      width: fit-content;
+    }
+  }
 
-    .movie-amount {
-      color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-      font-size: abstracts.$h6-font-size;
+  @media only screen and (max-width: abstracts.$large-width) {
+    .header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      & > *:nth-child(2) {
+        justify-content: flex-start;
+      }
+
+      & > *:last-child {
+        justify-content: flex-end;
+        width: 100%;
+      }
+
+      .list-title {
+        grid-area: 1 / 1 / 1 / 4;
+        margin-right: 0px;
+        max-width: 100%;
+      }
     }
   }
 

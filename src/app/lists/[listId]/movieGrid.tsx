@@ -17,7 +17,7 @@ export const MovieGrid = ({ movies }: { movies: MovieListItem[] }) => {
     <div className="movie-grid">
       {movies.map(movie => (
         <Link
-          href={`movies/${movie.id}`}
+          href={`/movies/${movie.id}`}
           key={movie.id}
         >
           <div className="movie">

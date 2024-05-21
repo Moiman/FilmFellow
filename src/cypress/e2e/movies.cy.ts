@@ -145,6 +145,14 @@ describe("Logged in movie page tests", () => {
     cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
     cy.contains("Mark as watched").should("be.visible");
   });
+
+  it("Add movie to watchlist", () => {
+    cy.login(email, password);
+    cy.visit("/movies/13");
+    cy.contains("Add to watchlist").click();
+    cy.contains("Remove from watchlist", { timeout: 1000 }).should("be.visible").click();
+    cy.contains("Add to watchlist", { timeout: 1000 }).should("be.visible");
+  });
 });
 
 describe("Movie crew and cast tests", () => {

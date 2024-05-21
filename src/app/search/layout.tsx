@@ -1,79 +1,101 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Filter from "./filter";
 import Link from "next/link";
 import { Key } from "react";
 
-// genres: string;
-// releaseYear: string;
-// counries: string;
-// languages: string;
-// budgetMin: string;
-// budgetMax: string;
-// studios: string;
-// movieLengthMin: string;
-// movieLengthMax: string;
-// directors: string;
-// actors: string;
-
-export default function SearchFilters({ fetchedGenres }: { fetchedGenres: any }) {
-  const currentPath = usePathname();
-
+export default function SearchFilters({
+  genres,
+  countries,
+  languages,
+}: {
+  genres: any;
+  countries: any;
+  languages: any;
+}) {
   return (
     <div className="filter-wrapper">
       <Filter title={"genres"}>
-        {/* {fetchedGenres.map((genre: { id: Key | null | undefined }) => (
-          <Link
-            key={genre.id}
-            href={"asd"}
-          >
-            genre.name
-          </Link>
-        ))} */}
-        a
+        <form>
+          {genres.map((genre: { id: Key | null | undefined; name: string | undefined }) => (
+            <div key={genre.id}>
+              <title>{genre.name}</title>
+              <input
+                type="checkbox"
+                title={genre.name}
+                name={genre.name}
+                value={genre.name}
+              />
+            </div>
+          ))}
+        </form>
       </Filter>
       <Filter title={"Release year"}>
         <form>
           <input type="number"></input>
           <input type="number"></input>
         </form>
-        <Link href={currentPath + "?releaseYear"}></Link>
+        <Link href={"?releaseYear"}></Link>
       </Filter>
       <Filter title={"Counries"}>
-        <Link href={currentPath + "?countries"}>
-          <div>test</div>
-        </Link>
+        <div>
+          {countries.map((country: { iso_3166_1: Key | null | undefined; english_name: string }) => (
+            <Link
+              key={country.iso_3166_1}
+              href={"?countries"}
+            >
+              {country.english_name}{" "}
+            </Link>
+          ))}
+        </div>
       </Filter>
       <Filter title={"Languages"}>
-        <Link href={currentPath + "?language"}>
-          <div>test</div>
-        </Link>
+        {languages.map((language: { iso_639_1: Key | null | undefined; english_name: string }) => (
+          <Link
+            key={language.iso_639_1}
+            href={"?language"}
+          >
+            {language.english_name}
+          </Link>
+        ))}
       </Filter>
       <Filter title={"Budget"}>
-        <Link href={currentPath + "?budget"}>
-          <div>test</div>
-        </Link>
+        <form>
+          <input type="number"></input>
+          <input type="number"></input>
+        </form>
       </Filter>
       <Filter title={"Studios"}>
-        <Link href={currentPath + "?studios"}>
+        <Link href={"?studios"}>
           <div>test</div>
         </Link>
       </Filter>
       <Filter title={"Movie length"}>
-        <Link href={currentPath + "?movieLength"}>
-          <div>test</div>
-        </Link>
+        <form>
+          <input
+            type="number"
+            value="movieLength"
+            name="movieLength"
+          ></input>
+        </form>
       </Filter>
       <Filter title={"Directors"}>
-        <Link href={currentPath + "?directors"}>
-          <div>test</div>
-        </Link>
+        <form>
+          <input
+            type="text"
+            value="directors"
+            name="directors"
+          ></input>
+        </form>
       </Filter>
       <Filter title={"Actors"}>
-        <Link href={currentPath + "?actors"}>
-          <div>test</div>
-        </Link>
+        <form>
+          <input
+            type="text"
+            value="Actors"
+            name="Actors"
+          ></input>
+        </form>
       </Filter>
     </div>
   );

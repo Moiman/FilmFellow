@@ -1,6 +1,7 @@
 import { MovieList } from "@/components/movieList";
 import SearchFilters from "./layout";
 import { fetchGenres } from "../movieFetches";
+import { getAllGenres, getCountries, getLanguages } from "@/services/movieService";
 
 export default async function search({
   searchParams,
@@ -20,10 +21,16 @@ export default async function search({
   };
 }) {
   const fetchedGenres = await fetchGenres();
+  const countries = await getCountries();
+  const languages = await getLanguages();
 
   return (
     <div>
-      <SearchFilters fetchedGenres={fetchedGenres} />
+      <SearchFilters
+        genres={fetchedGenres}
+        countries={countries}
+        languages={languages}
+      />
       <main>
         <MovieList movies={[]}></MovieList>
       </main>

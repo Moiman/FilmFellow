@@ -270,6 +270,19 @@ const getMoviesByTitle = async (titlePart: string) => {
   return movies;
 };
 
+const getCountries = async () => {
+  const countries = await prisma.countries.findMany({
+    select: { iso_3166_1: true, english_name: true, native_name: true },
+  });
+  return countries;
+};
+
+const getLanguages = async () => {
+  const languages = await prisma.languages.findMany({
+    select: { iso_639_1: true, english_name: true, name: true },
+  });
+  return languages;
+};
 export {
   getMovieById,
   getMovieReviewsById,
@@ -278,4 +291,6 @@ export {
   getMovieCrewById,
   getMovieCastById,
   getMoviesByTitle,
+  getCountries,
+  getLanguages,
 };

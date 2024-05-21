@@ -16,6 +16,10 @@ export const createNewList = async (name: string) => {
     throw "Missing name";
   }
 
+  if (name.trim().length === 0) {
+    throw "Needs a name";
+  }
+
   const list = await prisma.lists.create({
     data: {
       name,
@@ -199,6 +203,20 @@ export const toggleMovieList = async (movieId: number, listId: number) => {
 };
 
 export const updateListName = async (listId: number, newName: string) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    throw "Not logged in";
+  }
+
+  if (!newName) {
+    throw "Missing name";
+  }
+
+  if (newName.trim().length === 0) {
+    throw "Needs a name";
+  }
+
   const updatedList = await prisma.lists.update({
     where: {
       id: listId,

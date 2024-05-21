@@ -17,11 +17,11 @@ export const RenameList = ({ id }: { id: number }) => {
     setIsOpen(false);
   };
 
-  const renameList = (formData: FormData) => {
+  const renameList = async (formData: FormData) => {
     const name = formData.get("name");
 
     if (name) {
-      const list = updateListName(id, name.toString());
+      await updateListName(id, name.toString());
       toast(
         <p>
           List was renamed to <span className="highlight-text">{name.toString()}</span>
@@ -33,7 +33,8 @@ export const RenameList = ({ id }: { id: number }) => {
       );
       setIsOpen(false);
     }
-    router.push("/lists/" + id);
+
+    router.refresh();
   };
 
   return (

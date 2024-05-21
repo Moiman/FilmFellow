@@ -77,13 +77,22 @@ const fetchAllPersons = async () => {
   console.log("Fetched all person ids");
   console.log("Fetching all persons");
 
-  fetchPersonsData(personIds, initPersonDB);
+  await fetchPersonsData(personIds, initPersonDB);
+  console.log("Fetched all persons");
 };
 
 const fetchAllMovies = async () => {
   const movieIds = await fetchMovieIds();
-  fetchMoviesData(movieIds, initMovieDB);
+  console.log("Fetched all movie ids");
+  console.log("Fetching all movies");
+
+  await fetchMoviesData(movieIds, initMovieDB);
+  console.log("Fetched all movies");
 };
 
-fetchAllPersons();
-fetchAllMovies();
+const fetchAll = async () => {
+  await fetchAllPersons();
+  await fetchAllMovies();
+};
+
+fetchAll();

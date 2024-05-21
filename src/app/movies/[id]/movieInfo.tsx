@@ -81,13 +81,15 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
     <div className="movie-content">
       <div className="movie-wrapper">
         <div className="image-wrapper">
-          <Image
-            alt={`${movie.title}`}
-            src={`https://image.tmdb.org/t/p/w780/${movie.backdropPath}`}
-            fill={true}
-            sizes="100%"
-            priority={true}
-          />
+          {movie.backdropPath && (
+            <Image
+              alt={`${movie.title}`}
+              src={`https://image.tmdb.org/t/p/w780/${movie.backdropPath}`}
+              fill={true}
+              sizes="100%"
+              priority={true}
+            />
+          )}
           <div className="gradient" />
         </div>
 

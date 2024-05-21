@@ -1,20 +1,20 @@
 "use client";
 import type { Movie } from "@/app/movies/[id]/page";
-import { ReviewList, UserReports } from "@/app/movies/[id]/reviewList";
 import { StarRating } from "@/app/movies/[id]/starRating";
 import { Section } from "@/components/section";
 import { createReview } from "@/services/reviewService";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Flag } from "react-feather";
 import { toast } from "react-toastify";
 
 interface Props {
   movie: Movie;
-  userReports: UserReports;
 }
 
-export default function ReviewForm({ movie, userReports }: Props ) {
+export default function ReviewForm({ movie }: Props ) {
+  const router = useRouter();
   const [contentInput, setContentInput] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const reviewHeader = (
@@ -41,6 +41,7 @@ export default function ReviewForm({ movie, userReports }: Props ) {
       icon: <Flag />,
       className: "yellow-toast",
     });
+    router.push("/");
   };
 
   const setUserRating = async (stars: number | null) => {
@@ -69,11 +70,6 @@ export default function ReviewForm({ movie, userReports }: Props ) {
               onChange={e => setContentInput(e.target.value)}
             />
           </form>
-          <ReviewList
-            userReports={userReports}
-            importedReviews={movie.reviewsData?.importedReviews}
-            reviews={movie.reviewsData?.reviews}
-          />
         </Section>
       </div>
     </main>

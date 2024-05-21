@@ -1,8 +1,8 @@
 "use client";
-import { Flag, Smile, Star } from "react-feather";
+import { Flag, Smile, Star, Trash2 } from "react-feather";
 
 import { Section } from "./section";
-import { findReviewsByUserId } from "@/services/reviewService";
+import { deleteReviewById, findReviewsByUserId } from "@/services/reviewService";
 import { useState } from "react";
 import Modal from "./modal";
 import Link from "next/link";
@@ -19,6 +19,10 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
 
   const checkIfReviewReported = () => {
     return userReview?.reports.some(report => report.reviewId === userReview?.id) || false;
+  };
+
+  const handleDeleteReview = async () => {
+    await deleteReviewById(Number(userReview.id));
   };
 
   const ReviewHeader = () => {
@@ -41,9 +45,26 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
   };
   return (
     <Section header={ReviewHeader()}>
-      <p onClick={() => setOpenReviewModal(true)}>
+      <p
+        className="review-grid-content description"
+        onClick={() => setOpenReviewModal(true)}
+      >
         {userReview.content.length > 303 ? userReview.content.slice(0, 300) + "..." : userReview.content}
       </p>
+      {userReview.userId === session?.user.id && (
+        <div className="review-grid-footer-primary">
+          <button
+            onClick={handleDeleteReview}
+            className="button-transparent"
+          >
+            <Trash2
+              color="black"
+              style={{ marginLeft: "10px" }}
+              size={20}
+            />
+          </button>
+        </div>
+      )}
       <Modal
         content={
           <div className="review-grid-modal-item">
@@ -61,7 +82,12 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                   style={{ marginLeft: "10px" }}
                   size={30}
                 />
-                <Link className="h2" href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
+                <Link
+                  className="h2"
+                  href={"/movies/" + userReview.movieId}
+                >
+                  {userReview.movie.title}
+                </Link>
               </div>
               <div style={{ marginRight: "10px" }}>
                 {[1, 2, 3, 4, 5].map(starRating => (

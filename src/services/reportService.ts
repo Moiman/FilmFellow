@@ -84,11 +84,13 @@ const getAllReports = async () => {
       review: {
         select: {
           id: true,
+          content:true
         },
       },
       importedReview: {
         select: {
           id: true,
+          content: true
         },
       },
     },

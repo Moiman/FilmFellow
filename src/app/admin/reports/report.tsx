@@ -6,6 +6,8 @@ import { Tool, Trash2 } from "react-feather";
 import { Role } from "@prisma/client";
 import { Dropdown } from "@/components/dropdown";
 import { deleteReportById, type getAllReports, markReportDone } from "@/services/reportService";
+import { ReviewModal } from "@/components/reviewModal";
+import Modal from "@/components/modal";
 
 interface Props {
   report: Reports[0];
@@ -20,6 +22,7 @@ const banOptions = [
 ];
 type Reports = Awaited<ReturnType<typeof getAllReports>>;
 export const ReportComponent = ({ report, setAllReports }: Props) => {
+  const [openModal, setOpenModal] = useState(false);
   const [error, setError] = useState("");
 
   const handleBanSubmit = async (banDuration: number | null) => {
@@ -188,13 +191,16 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       <div>
         <label className="admin-panel-report-label">Target</label>
         <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
-
-        <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
-          {report.targetUser?.isActive
-            ? "Active"
-            : "On suspension " +
-              (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
-        </p>
+        {report.targetUserId !== null ? (
+          <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
+            {report.targetUser?.isActive
+              ? "Active"
+              : "On suspension " +
+                (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
+          </p>
+        ) : (
+          <><p onClick={() => setOpenModal(true)}>Show review</p><Modal isOpen={openModal} closeModal={() => setOpenModal(false)} content={<div>YOLO</div>} /></>
+        )}
       </div>
 
       <div className="admin-panel-report-content report-description">

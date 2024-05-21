@@ -27,7 +27,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
     if ("author" in targetReview!) {
       await createReport(null, reportInput, null, targetReview.id);
     } else {
-      await createReport(Number(targetReview?.userId), reportInput, targetReview?.id!, null);
+      await createReport(/*Number(targetReview?.userId),*/null, reportInput, targetReview?.id!, null);
     }
 
     setReportInput("");

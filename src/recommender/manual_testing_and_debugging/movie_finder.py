@@ -1,6 +1,7 @@
 from rapidfuzz import process, fuzz
+from typing import List
 
-def movie_finder(title, movie_titles):
+def movie_finder(title: str, movie_titles: List[str]) -> str:
     """
     Finds the closest matching movie title to title from movie_titles.
 

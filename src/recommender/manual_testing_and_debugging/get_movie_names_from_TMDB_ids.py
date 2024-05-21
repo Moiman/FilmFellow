@@ -1,7 +1,8 @@
 import numpy as np
+from typing import List
 
 def get_movie_names_from_TMDB_ids(
-        TMDB_ids):
+        TMDB_ids: List[int]) -> List[str]:
     """
     Gives the names of the movies with given TMDB ids.
     
@@ -14,7 +15,8 @@ def get_movie_names_from_TMDB_ids(
     """
     
     TMDB_id_to_movie_title = np.load(
-        "manual_testing_and_debugging/TMBD_id_to_movie_title.npy", 
+        "recommender_files/manual_testing_and_debugging" +
+        "/TMBD_id_to_movie_title.npy", 
         allow_pickle=True).item()
     
     movie_names = []

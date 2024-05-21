@@ -101,22 +101,15 @@ const getMovieById = async (movieId: number, iso_3166_1 = "FI") => {
 };
 
 const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: string | undefined) => {
-  const movieIdsForCertainGenre = await prisma.movieGenres.findMany({
-    where: {
-      genre: {
-        name: {
-          equals: genre,
-          mode: "insensitive",
-        },
-      },
-    },
-  });
   const orderBy = {} as Record<string, string>;
+  let voteCountLimit = 0;
   if (type === "new") {
+    voteCountLimit = 10;
     orderBy.release_date = "desc";
   } else if (type === "popular") {
     orderBy.popularity = "desc";
   } else if (type === "bestrated") {
+    voteCountLimit = 300;
     orderBy.vote_average = "desc";
   } else {
     return [];
@@ -124,7 +117,18 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
 
   const moviesPopularOrder = await prisma.movies.findMany({
     where: {
-      id: { in: movieIdsForCertainGenre.map(movie => movie.movieId) },
+      genres: {
+        some: {
+          genre: {
+            name: {
+              equals: genre,
+              mode: "insensitive",
+            },
+          },
+        },
+      },
+      vote_count: { gte: voteCountLimit },
+      poster_path: { not: null },
     },
     take: limit,
     orderBy: orderBy,

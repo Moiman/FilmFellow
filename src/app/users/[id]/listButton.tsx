@@ -13,7 +13,7 @@ export const ListButton = ({ list }: ListButtonProps) => {
       className="list-button-style"
       href={`/lists/${list.id}`}
     >
-      {list.listMovies.length > 0 ? (
+      {list.listMovies.length > 0 && list.listMovies[0]?.movie.poster_path ? (
         <Image
           src={`https://image.tmdb.org/t/p/w92/${list.listMovies[0]?.movie.poster_path}`}
           width={67.5}

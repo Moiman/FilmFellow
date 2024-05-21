@@ -76,15 +76,15 @@ model ListMovies {
 model Movies {
   id                Int       @id
   adult             Boolean
-  backdrop_path     String
+  backdrop_path     String?
   budget            Int
   homepage          String
-  imdb_id           String
+  imdb_id           String?
   original_language String
   original_title    String
   overview          String
   popularity        Float
-  poster_path       String
+  poster_path       String?
   release_date      DateTime? @db.Date
   revenue           Float
   runtime           Int

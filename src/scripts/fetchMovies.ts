@@ -3,7 +3,7 @@ import { fetchTMDB } from "./fetchHelper.js";
 import type { MovieResponse } from "./types.js";
 
 const apiKey = process.env.API_KEY;
-let delay = 25;
+let delay = 100;
 const waitAfter429 = 4000;
 
 const parseMovieResponseData = (movieData: MovieResponse) => {
@@ -227,11 +227,12 @@ export const fetchMoviesData = async (
             })
             .catch(err => {
               console.error("Fatal: Failed again to fetch movie =", movieId);
-              throw err;
+              // throw err;
             });
         } else {
           console.error("Fatal: Failed to fetch movie =", movieId);
-          throw err;
+          console.log(err);
+          // throw err;
         }
       });
 

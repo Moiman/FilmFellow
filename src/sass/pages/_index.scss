@@ -1,6 +1,7 @@
+@forward "./_admin";
+@forward "./_lists";
 @forward "./_movies";
 @forward "./_notFound";
 @forward "./_persons";
-@forward "./profileSettings";
-@forward "./userProfile";
-@forward "./admin";
+@forward "./_profileSettings";
+@forward "./_userProfile";

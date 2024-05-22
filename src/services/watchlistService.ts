@@ -3,6 +3,7 @@
 import prisma from "@/db";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
+import { revalidatePath } from "next/cache";
 
 export const getIsInWatchlist = async (movieId: number) => {
   const session = await getServerSession(authOptions);
@@ -37,6 +38,7 @@ export const toggleWatchlist = async (movieId: number) => {
         movieId: movieId,
       },
     });
+    revalidatePath("movies/" + movieId);
     return true;
   } else {
     await prisma.watchListMovies.delete({
@@ -47,6 +49,7 @@ export const toggleWatchlist = async (movieId: number) => {
         },
       },
     });
+    revalidatePath("movies/" + movieId);
     return false;
   }
 };

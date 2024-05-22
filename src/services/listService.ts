@@ -219,6 +219,6 @@ export const updateListName = async (listId: number, newName: string) => {
     },
   });
 
-  revalidatePath("/");
+  revalidatePath(`/lists/${listId}`);
   return updatedList;
 };

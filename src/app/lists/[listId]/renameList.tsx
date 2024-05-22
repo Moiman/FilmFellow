@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Edit } from "react-feather";
 import { toast } from "react-toastify";
 
@@ -11,7 +10,6 @@ import { updateListName } from "@/services/listService";
 
 export const RenameList = ({ id }: { id: number }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const router = useRouter();
 
   const closeModal = () => {
     setIsOpen(false);

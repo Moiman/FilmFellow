@@ -4,7 +4,7 @@ import Image from "next/image";
 import { getWatchProvidersByMovieId } from "@/services/movieService";
 
 export const MovieWatchProviders = ({ id }: { id: number }) => {
-  const [providers, setProviders] = useState<any[]>([]);
+  const [providers, setProviders] = useState<Awaited<ReturnType<typeof getWatchProvidersByMovieId>>>([]);
 
   useEffect(() => {
     const fetchProviders = async () => {

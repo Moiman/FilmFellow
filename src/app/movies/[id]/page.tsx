@@ -8,6 +8,7 @@ import { getIsFavorite } from "@/services/favoriteService";
 import { Section } from "@/components/section";
 import { MovieInfo } from "./movieInfo";
 import { PersonList } from "./personList";
+import { getIsInWatchlist } from "@/services/watchlistService";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
@@ -17,6 +18,7 @@ const getMovie = async (movieId: string) => {
     const userRating = await getMovieRating(Number(movieId));
     const isWatched = await getIsWatched(Number(movieId));
     const isFavorite = await getIsFavorite(Number(movieId));
+    const isInWatchlist = await getIsInWatchlist(Number(movieId));
     const watchProviders = await getWatchProvidersByMovieId(Number(movieId));
 
     if (!movieData) {
@@ -50,12 +52,13 @@ const getMovie = async (movieId: string) => {
       voteAverage: vote_average,
       directors,
       ageRestrictions: rating ? rating : "?",
+      crew: movieCrew,
+      cast: movieCast,
       isFavorite,
       isWatched,
       userRating,
-      crew: movieCrew,
-      cast: movieCast,
-      watchProviders,
+      isInWatchlist,
+      watchProviders
     };
 
     return movie;

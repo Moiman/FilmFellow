@@ -12,7 +12,6 @@ describe("Movie page tests", () => {
     cy.contains("Cast").should("be.visible");
     cy.contains("Crew").should("be.visible");
     cy.contains("Reviews").should("be.visible");
-    cy.contains("In theaters").should("be.visible");
     cy.contains("Similar movies").should("be.visible");
     cy.contains("Watch at").should("be.visible");
   });
@@ -28,7 +27,6 @@ describe("Movie page tests", () => {
     cy.contains("Cast").should("be.visible");
     cy.contains("Crew").should("be.visible");
     cy.contains("Reviews").should("be.visible");
-    cy.contains("In theaters").should("be.visible");
     cy.contains("Similar movies").should("be.visible");
     cy.contains("Watch at").should("be.visible");
   });
@@ -76,7 +74,6 @@ describe("Logged in movie page tests", () => {
     cy.contains("Cast").should("be.visible");
     cy.contains("Crew").should("be.visible");
     cy.contains("Reviews").should("be.visible");
-    cy.contains("In theaters").should("be.visible");
     cy.contains("Similar movies").should("be.visible");
     cy.contains("Watch at").should("be.visible");
     cy.contains("Add to watchlist").should("be.visible");

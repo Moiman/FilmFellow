@@ -2,16 +2,89 @@
 @use "../abstracts" as abstracts;
 
 .list {
-  .header {
+  .header,
+  .header-visitor {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    & > * {
+      width: fit-content;
+    }
+  }
+
+  .list-title {
+    h2 {
+      overflow-wrap: break-word;
+      width: fit-content;
+    }
+  }
+
+  @media only screen and (max-width: abstracts.$large-width) {
+    .header {
+      display: grid;
+      gap: 0;
+      grid-template-columns: 1fr;
+
+      & > *:nth-child(2) {
+        justify-content: flex-start;
+      }
+
+      & > *:last-child {
+        justify-content: flex-end;
+        width: 100%;
+      }
+
+      .list-title {
+        grid-area: 1 / 1 / 1 / 4;
+        margin-right: 0px;
+        max-width: 100%;
+      }
+    }
+
+    .header-visitor {
+      display: grid;
+      gap: 0;
+      grid-template-columns: 1fr;
+
+      & > *:last-child {
+        justify-content: flex-end;
+        width: 100%;
+      }
+    }
+  }
+
+  .list-edit {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .edit-button {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+
+  .edit-button:hover {
+    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
   }
 
   .delete-button {
     color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
   }
+
   .delete-button:hover {
     color: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
+  }
+
+  .list-styles {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+    * {
+      display: flex;
+      align-items: center;
+    }
   }
 }

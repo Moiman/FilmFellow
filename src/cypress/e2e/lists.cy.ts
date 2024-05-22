@@ -31,7 +31,7 @@ describe("Movie lists tests", () => {
     cy.get(".section").contains("List 2").click();
     cy.location("pathname").should("contain", "/lists/");
     cy.get(".section").contains("List 2");
-    cy.get(".section button").click();
+    cy.get(".section .delete-button").click();
     cy.location("pathname").should("eq", "/users/" + userId);
     cy.get(".section").last().should("contain", "List 1");
     cy.get(".section").last().should("not.contain", "List 2");
@@ -58,5 +58,32 @@ describe("Movie lists tests", () => {
 
     cy.visit("/users/" + userId);
     cy.get(".section").last().should("contain", "List 3");
+  });
+
+  it("Change list page styles", () => {
+    cy.login(email, password);
+    cy.visit("/users/" + userId);
+    cy.get(".section").contains("List 1").click();
+    cy.get("h2").contains("List 1");
+    cy.get(`[alt="The Shawshank Redemption"]`);
+
+    cy.get(".list-styles>a").eq(1).click();
+    cy.contains("Framed in the 1940s for the double murder of his wife and her lover").should("be.visible");
+
+    cy.get(".list-styles>a").eq(2).click();
+    cy.get(".title-row").should("be.visible");
+    cy.contains("The Shawshank Redemption").should("be.visible").click();
+    cy.url().should("include", "/movies/278");
+  });
+
+  it("Rename list", () => {
+    cy.login(email, password);
+    cy.visit("/users/" + userId);
+    cy.get(".section").contains("List 1").click();
+    cy.get("h2").contains("List 1");
+    cy.get(".list-edit>button").eq(0).click();
+    cy.get("dialog input[name='name']").type("New List Name");
+    cy.get("button").contains("Rename").click();
+    cy.get("h2").contains("New List Name");
   });
 });

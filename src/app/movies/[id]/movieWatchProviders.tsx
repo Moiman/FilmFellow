@@ -10,7 +10,6 @@ export const MovieWatchProviders = ({ id }: { id: number }) => {
     const fetchProviders = async () => {
       const providersData = await getWatchProvidersByMovieId(id);
       setProviders(providersData);
-      console.log(providersData);
     };
 
     fetchProviders();

@@ -37,6 +37,13 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
       await toggleMovieList(movieId, list.id);
       setLists(lists.concat({ id: list.id, name: name.toString(), isMovieInList: true }));
       setIsOpen(false);
+
+      toast(
+        <p>
+          List <span className="highlight-text">{name.toString()}</span> was created and updated
+        </p>,
+        { icon: <Film />, className: "yellow-toast" },
+      );
     }
   };
 

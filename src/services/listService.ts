@@ -212,6 +212,7 @@ export const updateListName = async (listId: number, newName: string) => {
   const updatedList = await prisma.lists.update({
     where: {
       id: listId,
+      userId: Number(session.user.id),
     },
     data: {
       name: newName,
@@ -219,6 +220,7 @@ export const updateListName = async (listId: number, newName: string) => {
     },
   });
 
+  revalidatePath("/users/" + session.user.id);
   revalidatePath(`/lists/${listId}`);
   return updatedList;
 };

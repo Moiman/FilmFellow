@@ -5,7 +5,7 @@ import { Star } from "react-feather";
 type MovieListItem = {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path: string | null;
   overview: string;
   release_date: Date | null;
   runtime: number;
@@ -23,13 +23,15 @@ export const MovieGrid = ({ movies }: { movies: MovieListItem[] }) => {
         >
           <div className="movie">
             <div className="poster">
-              <Image
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                width={150}
-                height={300}
-                alt={movie.title}
-                priority
-              />
+              {movie.poster_path && (
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  width={150}
+                  height={300}
+                  alt={movie.title}
+                  priority
+                />
+              )}
             </div>
             <div className="movie-info">
               <div className="title">

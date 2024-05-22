@@ -12,7 +12,7 @@ export const createNewList = async (name: string) => {
     throw "Not logged in";
   }
 
-  if (!name) {
+  if (!name && name.trim().length === 0) {
     throw "Missing name";
   }
 
@@ -142,6 +142,20 @@ export const getList = async (id: number) => {
               id: true,
               title: true,
               poster_path: true,
+              release_date: true,
+              runtime: true,
+              overview: true,
+              vote_average: true,
+              release_dates: {
+                where: {
+                  iso_3166_1: {
+                    equals: "US",
+                  },
+                },
+                select: {
+                  certification: true,
+                },
+              },
             },
           },
         },
@@ -182,4 +196,31 @@ export const toggleMovieList = async (movieId: number, listId: number) => {
     });
     return false;
   }
+};
+
+export const updateListName = async (listId: number, newName: string) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    throw "Not logged in";
+  }
+
+  if (!newName && newName.trim().length === 0) {
+    throw "Missing name";
+  }
+
+  const updatedList = await prisma.lists.update({
+    where: {
+      id: listId,
+      userId: Number(session.user.id),
+    },
+    data: {
+      name: newName,
+      updated_at: new Date(),
+    },
+  });
+
+  revalidatePath("/users/" + session.user.id);
+  revalidatePath(`/lists/${listId}`);
+  return updatedList;
 };

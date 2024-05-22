@@ -26,7 +26,7 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
       <p>
         <span className="highlight-text">{movieTitle}</span> {isInList ? "added to list" : "removed from list"}
       </p>,
-      { icon: <Film />, className: "yellow-toast" },
+      { icon: <Film />, className: isInList ? "cyan-toast" : "yellow-toast" },
     );
   };
 

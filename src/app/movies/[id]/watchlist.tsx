@@ -22,7 +22,7 @@ export const Watchlist = ({ movieId, isInWatchlist, title }: Props) => {
       <p>
         <span className="highlight-text">{title}</span> {watchlist ? "removed from watchlist" : "added to watchlist"}
       </p>,
-      { icon: <Film />, className: "yellow-toast" },
+      { icon: <Film />, className: watchlist ? "yellow-toast" : "cyan-toast" },
     );
   };
 

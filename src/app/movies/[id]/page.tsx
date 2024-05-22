@@ -8,6 +8,7 @@ import { getIsFavorite } from "@/services/favoriteService";
 import { Section } from "@/components/section";
 import { MovieInfo } from "./movieInfo";
 import { PersonList } from "./personList";
+import { getIsInWatchlist } from "@/services/watchlistService";
 import { ReviewList, UserReports } from "./reviewList";
 import { getImportedReviewsAndLocalReviewsById } from "@/services/reviewService";
 import { getServerSession } from "next-auth";
@@ -22,6 +23,7 @@ export const getMovie = async (movieId: string) => {
     const userRating = await getMovieRating(Number(movieId));
     const isWatched = await getIsWatched(Number(movieId));
     const isFavorite = await getIsFavorite(Number(movieId));
+    const isInWatchlist = await getIsInWatchlist(Number(movieId));
     const reviewsData = await getImportedReviewsAndLocalReviewsById(Number(movieId));
 
     if (!movieData) {
@@ -55,11 +57,12 @@ export const getMovie = async (movieId: string) => {
       voteAverage: vote_average,
       directors,
       ageRestrictions: rating ? rating : "?",
+      crew: movieCrew,
+      cast: movieCast,
       isFavorite,
       isWatched,
       userRating,
-      crew: movieCrew,
-      cast: movieCast,
+      isInWatchlist,
       reviewsData,
     };
 
@@ -125,10 +128,6 @@ export default async function Movie({ params }: { params: { id: string } }) {
             importedReviews={movie.reviewsData?.importedReviews.slice(0, 4)}
             reviews={movie.reviewsData?.reviews.slice(0, 4)}
           />
-        </Section>
-
-        <Section header="In theaters">
-          <p>Coming soon</p>
         </Section>
 
         <Section header="Similar movies">

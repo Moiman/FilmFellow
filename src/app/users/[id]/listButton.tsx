@@ -16,13 +16,13 @@ export const ListButton = ({ list }: ListButtonProps) => {
       {list.listMovies.length > 0 && list.listMovies[0]?.movie.poster_path ? (
         <Image
           src={`https://image.tmdb.org/t/p/w92/${list.listMovies[0]?.movie.poster_path}`}
-          width={67.5}
-          height={45}
+          width={60}
+          height={60}
           alt={list.name}
-          style={{ aspectRatio: "3/2", objectFit: "cover" }}
+          className="list-thumbnail"
         />
       ) : (
-        <div style={{ height: "45px", aspectRatio: "3/2", backgroundColor: "darkgrey" }} />
+        <div className="list-thumbnail list-thumbnail-placeholder" />
       )}
 
       <div className="list-name">

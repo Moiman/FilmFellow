@@ -270,6 +270,34 @@ const getMoviesByTitle = async (titlePart: string) => {
   return movies;
 };
 
+const getWatchProvidersByMovieId = async (movieId: number) => {
+  const watchProviders = await prisma.movieProviders.findMany({
+    where: {
+      movieId: movieId,
+      country: {
+        iso_3166_1: "US",
+      },
+    },
+    select: {
+      watchProvider: {
+        select: {
+          logo_path: true,
+          provider_name: true,
+          display_priority: true,
+        },
+      },
+    },
+    orderBy: {
+      watchProvider: {
+        display_priority: "asc",
+      },
+    },
+    take: 6,
+  });
+
+  return watchProviders;
+};
+
 export {
   getMovieById,
   getMovieReviewsById,
@@ -278,4 +306,5 @@ export {
   getMovieCrewById,
   getMovieCastById,
   getMoviesByTitle,
+  getWatchProvidersByMovieId,
 };

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { Check, PlusCircle } from "react-feather";
+import { toast } from "react-toastify";
+import { Check, Film, PlusCircle } from "react-feather";
 
 import { Dropdown } from "@/components/dropdown";
 import { toggleMovieList, getUsersOwnLists, createNewList } from "@/services/listService";
 import { NewListForm } from "@/components/newListForm";
 import Modal from "@/components/modal";
 
-export const AddToList = ({ movieId }: { movieId: number }) => {
+export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [lists, setLists] = useState<Awaited<ReturnType<typeof getUsersOwnLists>>>([]);
 
@@ -20,6 +21,13 @@ export const AddToList = ({ movieId }: { movieId: number }) => {
   const toggleList = async (listId: number) => {
     const isInList = await toggleMovieList(movieId, listId);
     setLists(lists.map(list => (list.id === listId ? { ...list, isMovieInList: isInList } : list)));
+
+    toast(
+      <p>
+        <span className="highlight-text">{movieTitle}</span> {isInList ? "added to list" : "removed from list"}
+      </p>,
+      { icon: <Film />, className: "yellow-toast" },
+    );
   };
 
   const newListAction = async (formData: FormData) => {

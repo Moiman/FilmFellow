@@ -122,7 +122,10 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
           {session && (
             <div className="all-buttons">
               <div className="buttons">
-                <AddToList movieId={movie.id} />
+                <AddToList
+                  movieId={movie.id}
+                  movieTitle={movie.title}
+                />
                 <Watched
                   watched={watched}
                   toggleWatched={toggleWatched}
@@ -139,6 +142,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                 <Watchlist
                   isInWatchlist={movie.isInWatchlist}
                   movieId={movie.id}
+                  title={movie.title}
                 />
               </div>
             </div>

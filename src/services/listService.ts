@@ -12,12 +12,8 @@ export const createNewList = async (name: string) => {
     throw "Not logged in";
   }
 
-  if (!name) {
+  if (!name && name.trim().length === 0) {
     throw "Missing name";
-  }
-
-  if (name.trim().length === 0) {
-    throw "Needs a name";
   }
 
   const list = await prisma.lists.create({
@@ -209,12 +205,8 @@ export const updateListName = async (listId: number, newName: string) => {
     throw "Not logged in";
   }
 
-  if (!newName) {
+  if (!newName && newName.trim().length === 0) {
     throw "Missing name";
-  }
-
-  if (newName.trim().length === 0) {
-    throw "Needs a name";
   }
 
   const updatedList = await prisma.lists.update({

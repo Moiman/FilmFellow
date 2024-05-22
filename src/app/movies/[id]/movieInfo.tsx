@@ -142,7 +142,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
           )}
         </div>
       </div>
-      <MovieWatchProviders id={movie.id} />
+      <MovieWatchProviders watchProviders={movie.watchProviders} />
     </div>
   );
 };

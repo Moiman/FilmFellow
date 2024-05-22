@@ -295,8 +295,8 @@ const getWatchProvidersByMovieId = async (movieId: number) => {
 
   const modifiedProviders = providers.map(provider => ({
     provider_id: provider.provider_id,
-    logo_path: provider.watchProvider?.logo_path,
-    provider_name: provider.watchProvider?.provider_name,
+    logo_path: provider.watchProvider.logo_path,
+    provider_name: provider.watchProvider.provider_name,
   }));
 
   return modifiedProviders;

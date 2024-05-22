@@ -58,7 +58,7 @@ const getMovie = async (movieId: string) => {
       isWatched,
       userRating,
       isInWatchlist,
-      watchProviders
+      watchProviders,
     };
 
     return movie;

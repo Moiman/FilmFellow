@@ -1,8 +1,9 @@
 "use client";
-import Modal from "./modal";
 import { Flag, Smile, Star } from "react-feather";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import Modal from "./modal";
+
 
 interface Props {
   review?: Review;

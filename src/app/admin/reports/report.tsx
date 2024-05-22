@@ -21,6 +21,7 @@ const banOptions = [
   { id: 3, banDuration: null, text: "Forever" },
 ];
 type Reports = Awaited<ReturnType<typeof getAllReports>>;
+
 export const ReportComponent = ({ report, setAllReports }: Props) => {
   const [openModal, setOpenModal] = useState(false);
   const [error, setError] = useState("");

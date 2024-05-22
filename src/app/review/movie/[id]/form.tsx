@@ -1,13 +1,13 @@
 "use client";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useState } from "react";
+import { Flag } from "react-feather";
+import { toast } from "react-toastify";
 import type { Movie } from "@/app/movies/[id]/page";
 import { StarRating } from "@/app/movies/[id]/starRating";
 import { Section } from "@/components/section";
 import { createReview } from "@/services/reviewService";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Flag } from "react-feather";
-import { toast } from "react-toastify";
 
 interface Props {
   movie: Movie;

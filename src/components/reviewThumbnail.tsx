@@ -1,16 +1,16 @@
 "use client";
-import { Flag, Smile, Star, Trash2 } from "react-feather";
-
-import { Section } from "./section";
-import { deleteReviewById, findReviewsByUserId } from "@/services/reviewService";
 import { useState } from "react";
-import Modal from "./modal";
+import { Flag, Smile, Star, Trash2 } from "react-feather";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { Section } from "./section";
+import { deleteReviewById, findReviewsByUserId } from "@/services/reviewService";
+import Modal from "./modal";
 
 interface Props {
   userReview: UserReview[0];
 }
+
 type UserReview = Awaited<ReturnType<typeof findReviewsByUserId>>;
 
 export const ReviewThumbnail = ({ userReview }: Props) => {

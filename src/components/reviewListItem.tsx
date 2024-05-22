@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Smile, Star, Trash2 } from "react-feather";
-import { ReviewModal } from "./reviewModal";
-import { UserReports } from "@/app/movies/[id]/reviewList";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { deleteReviewById } from "@/services/reviewService";
+import { ReviewModal } from "./reviewModal";
+import { UserReports } from "@/app/movies/[id]/reviewList";
 
 interface User {
   id: number;

@@ -82,7 +82,7 @@
 }
 
 // Overwrite to disable default gradient on progress bar
-:root {
+* {
   --toastify-color-progress-light: #ffc700 !important;
   --toastify-color-progress-dark: #ffc700 !important;
 }

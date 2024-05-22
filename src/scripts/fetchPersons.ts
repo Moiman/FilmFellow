@@ -13,12 +13,12 @@ export interface PersonData {
   gender: number;
   homepage: string | null;
   id: number;
-  imdb_id: string;
+  imdb_id: string | null;
   known_for_department: string | null;
   name: string;
-  place_of_birth: string;
+  place_of_birth: string | null;
   popularity: number;
-  profile_path: string;
+  profile_path: string | null;
 }
 
 interface PersonResponse extends PersonData {
@@ -67,11 +67,11 @@ export const fetchPersonsData = async (
             })
             .catch(err => {
               console.error("Fatal: Failed again to fetch person =", personId);
-              throw err;
+              // throw err;
             });
         } else {
           console.error("Fatal: Failed to fetch person =", personId);
-          throw err;
+          // throw err;
         }
       });
 

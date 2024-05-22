@@ -1,0 +1,90 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.movie-catalogue {
+  width: 100%;
+  border: 1px solid abstracts.$primary-dark;
+  border-radius: abstracts.$default-border-radius;
+  overflow: hidden;
+
+  .title-row {
+    display: grid;
+    grid-template-columns: auto repeat(4, 100px);
+    align-items: center;
+
+    .title {
+      padding: 4px 10px;
+      font-family: abstracts.$default-text-font;
+      font-size: abstracts.$p-font-size;
+      letter-spacing: abstracts.$text-letter-spacing;
+      background-color: abstracts.$primary-darkgrey;
+      font-weight: 600;
+      border-bottom: 1px solid abstracts.$primary-dark;
+    }
+
+    *:not(:last-child) {
+      border-right: 1px solid abstracts.$primary-dark;
+    }
+  }
+
+  .movie {
+    display: grid;
+    grid-template-columns: auto repeat(4, 100px);
+    align-items: center;
+
+    * {
+      padding: 4px 10px;
+      height: 100%;
+    }
+
+    *:not(:last-child) {
+      border-right: 1px solid abstracts.$primary-dark;
+    }
+
+    svg {
+      fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    }
+  }
+
+  .movie:not(:last-child) {
+    border-bottom: 1px solid abstracts.$primary-dark;
+  }
+
+  .movie:hover {
+    background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+
+    *:first-child {
+      color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    }
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .movie-catalogue {
+    display: grid;
+    gap: 10px;
+    border: 0;
+
+    .title-row {
+      display: none;
+    }
+
+    .movie {
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid abstracts.$primary-dark;
+      border-radius: abstracts.$default-border-radius;
+
+      *:first-child {
+        grid-area: 1 / 1 / 1 / 6;
+        border-right: 0;
+        border-bottom: 1px solid abstracts.$primary-dark;
+        background-color: abstracts.$primary-darkgrey;
+      }
+
+      *:first-child:hover {
+        background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+      }
+    }
+  }
+}

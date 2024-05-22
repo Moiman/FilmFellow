@@ -143,12 +143,12 @@ interface Crew {
 
 export interface MovieResponse {
   adult: boolean;
-  backdrop_path: string;
+  backdrop_path: string | null;
   budget: number;
   genres: Genre[];
   homepage: string;
   id: number;
-  imdb_id: string;
+  imdb_id: string | null;
   original_language: string;
   original_title: string;
   overview: string;

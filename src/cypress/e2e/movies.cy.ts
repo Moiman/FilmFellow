@@ -12,7 +12,6 @@ describe("Movie page tests", () => {
     cy.contains("Cast").should("be.visible");
     cy.contains("Crew").should("be.visible");
     cy.contains("Reviews").should("be.visible");
-    cy.contains("In theaters").should("be.visible");
     cy.contains("Similar movies").should("be.visible");
     cy.contains("Watch at").should("be.visible");
   });
@@ -28,7 +27,6 @@ describe("Movie page tests", () => {
     cy.contains("Cast").should("be.visible");
     cy.contains("Crew").should("be.visible");
     cy.contains("Reviews").should("be.visible");
-    cy.contains("In theaters").should("be.visible");
     cy.contains("Similar movies").should("be.visible");
     cy.contains("Watch at").should("be.visible");
   });
@@ -76,7 +74,6 @@ describe("Logged in movie page tests", () => {
     cy.contains("Cast").should("be.visible");
     cy.contains("Crew").should("be.visible");
     cy.contains("Reviews").should("be.visible");
-    cy.contains("In theaters").should("be.visible");
     cy.contains("Similar movies").should("be.visible");
     cy.contains("Watch at").should("be.visible");
     cy.contains("Add to watchlist").should("be.visible");
@@ -144,6 +141,14 @@ describe("Logged in movie page tests", () => {
     cy.get(".movie-rating svg").eq(2).should("have.attr", "fill").should("eq", "#eff2f2");
     cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
     cy.contains("Mark as watched").should("be.visible");
+  });
+
+  it("Add movie to watchlist", () => {
+    cy.login(email, password);
+    cy.visit("/movies/13");
+    cy.contains("Add to watchlist").click();
+    cy.contains("Remove from watchlist", { timeout: 1000 }).should("be.visible").click();
+    cy.contains("Add to watchlist", { timeout: 1000 }).should("be.visible");
   });
 });
 

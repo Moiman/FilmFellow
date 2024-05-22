@@ -11,9 +11,11 @@ import { getReviewById } from "@/services/reviewService";
 interface Props {
   targetReview: Review;
 }
+
 export type Review = Awaited<ReturnType<typeof getReviewById>>;
+
 export default function ReportReviewForm({ targetReview }: Props) {
-  console.log(targetReview);
+
   const [reportInput, setReportInput] = useState("");
   const router = useRouter();
   const sectionHeader = (
@@ -32,7 +34,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
 
     setReportInput("");
 
-    toast(<p>Report about was submitted</p>, {
+    toast(<p>Report was submitted</p>, {
       icon: <Flag />,
       className: "yellow-toast",
     });

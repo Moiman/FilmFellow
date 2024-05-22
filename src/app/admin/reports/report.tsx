@@ -24,6 +24,7 @@ type Reports = Awaited<ReturnType<typeof getAllReports>>;
 export const ReportComponent = ({ report, setAllReports }: Props) => {
   const [openModal, setOpenModal] = useState(false);
   const [error, setError] = useState("");
+  const [modalError, setModalError] = useState("");
 
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
@@ -163,7 +164,30 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
   };
 
   const handleDeleteReview = async () => {
-    await deleteReviewById(report.id);
+    try {
+      if (report.reviewId) {
+        const response = await deleteReviewById(report.reviewId);
+        setAllReports(reports => reports.filter(report => report.reviewId !== response.id));
+        toast(<p>Review was deleted</p>, {
+          icon: <Trash2 />,
+          className: "yellow-toast",
+        });
+      } else {
+        const response = await deleteReviewById(String(report.importedReviewId));
+        setAllReports(reports => reports.filter(report => report.importedReviewId !== response.id));
+        toast(<p>Review was deleted</p>, {
+          icon: <Trash2 />,
+          className: "yellow-toast",
+        });
+      }
+    } catch (error) {
+      setModalError("Internal server error");
+    }
+  };
+
+  const closeReviewDeleteModal = () => {
+    setOpenModal(false);
+    setModalError("");
   };
 
   return (
@@ -213,7 +237,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             </p>
             <Modal
               isOpen={openModal}
-              closeModal={() => setOpenModal(false)}
+              closeModal={closeReviewDeleteModal}
               content={
                 <div className="review-grid-modal-item">
                   <div style={{ display: "flex", justifyContent: "center" }}>
@@ -226,8 +250,16 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                       <p className="review-grid-content description">{report.review?.content}</p>
                     )}
                   </div>
+                  {modalError && (
+                    <p
+                      className="error-text"
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
+                      {modalError}
+                    </p>
+                  )}
                   <div className="modal-buttons">
-                    <button onClick={() => setOpenModal(false)}>Cancel</button>
+                    <button onClick={closeReviewDeleteModal}>Cancel</button>
                     <button
                       className="button-pink"
                       onClick={handleDeleteReview}

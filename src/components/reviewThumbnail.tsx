@@ -27,7 +27,10 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
 
   const ReviewHeader = () => {
     return (
-      <div className="review-thumbnail-header" style={{justifyContent: "space-between"}}>
+      <div
+        className="review-thumbnail-header"
+        style={{ justifyContent: "space-between" }}
+      >
         <Link href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
         <div className="stars">
           {[1, 2, 3, 4, 5].map(starRating => (
@@ -100,28 +103,28 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                   />
                 ))}
               </div>
-              <p className="review-grid-content description">{userReview.content}</p>
-              {session && session.user.id !== userReview.userId && (
-                <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
-                  {!checkIfReviewReported() ? (
-                    <form action={`/report/review/${userReview.id}`}>
-                      <button
-                        type="submit"
-                        className="button-yellow button-icon-text"
-                      >
-                        <Flag size={16} />
-                        Report this review
-                      </button>
-                    </form>
-                  ) : (
-                    <button className="button-pink button-icon-text">
-                      <Flag size={16} />
-                      Reported!
-                    </button>
-                  )}
-                </div>
-              )}
             </div>
+            <p className="review-grid-content description">{userReview.content}</p>
+            {session && session.user.id !== userReview.userId && (
+              <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+                {!checkIfReviewReported() ? (
+                  <form action={`/report/review/${userReview.id}`}>
+                    <button
+                      type="submit"
+                      className="button-yellow button-icon-text"
+                    >
+                      <Flag size={16} />
+                      Report this review
+                    </button>
+                  </form>
+                ) : (
+                  <button className="button-pink button-icon-text">
+                    <Flag size={16} />
+                    Reported!
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         }
         isOpen={openReviewModal}

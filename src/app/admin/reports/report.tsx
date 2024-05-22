@@ -6,8 +6,8 @@ import { Tool, Trash2 } from "react-feather";
 import { Role } from "@prisma/client";
 import { Dropdown } from "@/components/dropdown";
 import { deleteReportById, type getAllReports, markReportDone } from "@/services/reportService";
-import { ReviewModal } from "@/components/reviewModal";
 import Modal from "@/components/modal";
+import { deleteReviewById } from "@/services/reviewService";
 
 interface Props {
   report: Reports[0];
@@ -162,6 +162,10 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
     }
   };
 
+  const handleDeleteReview = async () => {
+    await deleteReviewById(report.id);
+  };
+
   return (
     <div className="admin-panel-reports-grid">
       <div>
@@ -191,15 +195,50 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       <div>
         <label className="admin-panel-report-label">Target</label>
         <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
-        {report.targetUserId !== null ? (
+        {report.targetUserId !== null && (
           <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
             {report.targetUser?.isActive
               ? "Active"
               : "On suspension " +
                 (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
           </p>
-        ) : (
-          <><p onClick={() => setOpenModal(true)}>Show review</p><Modal isOpen={openModal} closeModal={() => setOpenModal(false)} content={<div>YOLO</div>} /></>
+        )}
+        {(report.importedReviewId || report.reviewId) && (
+          <>
+            <p
+              className="admin-panel-review-paragraph"
+              onClick={() => setOpenModal(true)}
+            >
+              Show reported review
+            </p>
+            <Modal
+              isOpen={openModal}
+              closeModal={() => setOpenModal(false)}
+              content={
+                <div className="review-grid-modal-item">
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <h3 className="h4">Are you sure you want to delete this review?</h3>
+                  </div>
+                  <div>
+                    {report.importedReview ? (
+                      <p className="review-grid-content description">{report.importedReview.content}</p>
+                    ) : (
+                      <p className="review-grid-content description">{report.review?.content}</p>
+                    )}
+                  </div>
+                  <div className="modal-buttons">
+                    <button onClick={() => setOpenModal(false)}>Cancel</button>
+                    <button
+                      className="button-pink"
+                      onClick={handleDeleteReview}
+                    >
+                      Delete Review
+                    </button>
+                  </div>
+                </div>
+              }
+            />
+          </>
         )}
       </div>
 
@@ -228,7 +267,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                 ))}
               </Dropdown>
             ) : (
-              <button onClick={handleUnBanSubmit}>Lift Ban</button>
+              report.targetUser !== null && <button onClick={handleUnBanSubmit}>Lift Ban</button>
             )}
             <button
               className="button-pink"

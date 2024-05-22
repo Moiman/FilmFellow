@@ -7,6 +7,7 @@
   gap: 20px;
 }
 .review-grid-item {
+  padding: 15px;
   min-height: 300px;
   max-height: 300px;
   border: 1px solid abstracts.$primary-dark;
@@ -20,7 +21,7 @@
 }
 
 .review-grid-content {
-  min-height: 183px;
+  min-height: 150px;
   margin: 10px;
 }
 .review-grid-footer-primary {
@@ -28,14 +29,12 @@
   align-items: center;
   min-height: 40px;
   background-color: map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
-
 }
 .review-grid-footer-secondary {
   display: flex;
   align-items: center;
   min-height: 40px;
   background-color: abstracts.$primary-dark;
-
 }
 
 @media only screen and (max-width: abstracts.$medium-width) {

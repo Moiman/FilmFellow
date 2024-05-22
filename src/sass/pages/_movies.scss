@@ -217,8 +217,12 @@
     justify-content: flex-end;
     background-color: abstracts.$primary-darkgrey;
     width: 100%;
-    min-height: 10px;
-    padding: 10px;
+    padding: 15px;
     gap: 10px;
+
+    p {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
   }
 }

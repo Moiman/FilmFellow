@@ -271,19 +271,17 @@ const getMoviesByTitle = async (titlePart: string) => {
 };
 
 const getWatchProvidersByMovieId = async (movieId: number) => {
-  const watchProviders = await prisma.movieProviders.findMany({
+  const providers = await prisma.movieProviders.findMany({
     where: {
       movieId: movieId,
-      country: {
-        iso_3166_1: "US",
-      },
+      iso_3166_1: "US",
     },
     select: {
+      provider_id: true,
       watchProvider: {
         select: {
-          logo_path: true,
           provider_name: true,
-          display_priority: true,
+          logo_path: true,
         },
       },
     },
@@ -295,7 +293,13 @@ const getWatchProvidersByMovieId = async (movieId: number) => {
     take: 6,
   });
 
-  return watchProviders;
+  const modifiedProviders = providers.map(provider => ({
+    provider_id: provider.provider_id,
+    logo_path: provider.watchProvider?.logo_path,
+    provider_name: provider.watchProvider?.provider_name,
+  }));
+
+  return modifiedProviders;
 };
 
 export {

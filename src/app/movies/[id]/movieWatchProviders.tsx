@@ -10,6 +10,7 @@ export const MovieWatchProviders = ({ id }: { id: number }) => {
     const fetchProviders = async () => {
       const providersData = await getWatchProvidersByMovieId(id);
       setProviders(providersData);
+      console.log(providersData);
     };
 
     fetchProviders();
@@ -22,12 +23,12 @@ export const MovieWatchProviders = ({ id }: { id: number }) => {
           <p>Watch at:</p>
           {providers.map(provider => (
             <Image
-              key={provider.watchProvider.provider_name}
-              src={`https://image.tmdb.org/t/p/w45/${provider.watchProvider.logo_path}`}
+              key={provider.provider_id}
+              src={`https://image.tmdb.org/t/p/w45/${provider.logo_path}`}
               width={25}
               height={25}
-              title={provider.watchProvider.provider_name}
-              alt={provider.watchProvider.provider_name}
+              title={provider.provider_name}
+              alt={provider.provider_name}
             />
           ))}
         </>

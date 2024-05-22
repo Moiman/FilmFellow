@@ -6,13 +6,13 @@ from recommender_codes.movie.vectorize_movie import vectorize_movie
 from recommender_codes.movie.get_content_based_recommendations_cosine_idx \
 import get_content_based_recommendations_cosine_idx
 
-def content_based_new_movie(movie_features: List[str], 
+def content_based_features(movie_features: List[str], 
                             n_recommendations: int,
                             MovieLens_to_TMDB: Dict[int, int],
                             TMDB_to_MovieLens: Dict[int, int]) -> List[int]:
     """
-    Gives content based recommendations for a new movie based on it's 
-    features.'
+    Gives content based recommendations for a movie based on it's 
+    features.
     
     Args:
         movie_features (list: str): Features present in the movie: genres 

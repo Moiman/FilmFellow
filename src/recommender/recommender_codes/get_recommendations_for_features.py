@@ -1,13 +1,13 @@
 import numpy as np
 from typing import List
-from recommender_codes.movie.content_based_new_movie \
-import content_based_new_movie
+from recommender_codes.movie.content_based_features \
+import content_based_features
 from recommender_codes.movie.feature_formatter import feature_formatter
 
-def get_recommendations_for_new_movie(movie_features: List[str], 
+def get_recommendations_for_features(movie_features: List[str], 
 n_recommendations: int = 100) -> List[int]:
     """
-    Gives content based recommendations for a new movie, not found on the 
+    Gives content based recommendations for a movie not found on the 
     MovieLens data.
     
     Args:
@@ -52,7 +52,7 @@ n_recommendations: int = 100) -> List[int]:
     "recommender_files/movie/content_based_filtering/TMDB_to_MovieLens.npy", 
         allow_pickle=True).item()
     
-    recommendations = content_based_new_movie(movie_features, 
+    recommendations = content_based_features(movie_features, 
                                             n_recommendations,
                                             MovieLens_to_TMDB,
                                             TMDB_to_MovieLens)

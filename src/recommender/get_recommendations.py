@@ -4,26 +4,26 @@ from recommender_codes.get_recommendations_for_user \
 import get_recommendations_for_user
 from recommender_codes.get_recommendations_for_movie \
 import get_recommendations_for_movie
-from recommender_codes.get_recommendations_for_new_movie \
-import get_recommendations_for_new_movie
+from recommender_codes.get_recommendations_for_features \
+import get_recommendations_for_features
 
-app = Flask(__name__)
+recommender = Flask(__name__)
 
-@app.route('/recommender/user', methods=['POST'])
+@recommender.route('/recommender/user', methods=['POST'])
 def user_recommendations():
     data = request.get_json()
     return jsonify(get_recommendations_for_user(data.get("ratings"), 
     data.get("favourites")))
 
-@app.route('/recommender/movie/existing', methods=['POST'])
+@recommender.route('/recommender/movie/existing', methods=['POST'])
 def existing_movie_recommendations():
     data = request.get_json()
     return jsonify(get_recommendations_for_movie(data.get("TMDB_id")))
 
-@app.route('/recommender/movie/new', methods=['POST'])
-def new_movie_recommendations():
+@recommender.route('/recommender/movie/features', methods=['POST'])
+def recommendations_based_on_features():
     data = request.get_json()
-    return jsonify(get_recommendations_for_new_movie(data.get("features")))
+    return jsonify(get_recommendations_for_features(data.get("features")))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    recommender.run(host='0.0.0.0', port=5000)

@@ -147,7 +147,10 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                   isFavorite={movie.isFavorite}
                   movieTitle={movie.title}
                 />
-                <Watchlist />
+                <Watchlist
+                  isInWatchlist={movie.isInWatchlist}
+                  movieId={movie.id}
+                />
               </div>
             </div>
           )}

@@ -33,8 +33,6 @@ export const RenameList = ({ id }: { id: number }) => {
       );
       setIsOpen(false);
     }
-
-    router.refresh();
   };
 
   return (

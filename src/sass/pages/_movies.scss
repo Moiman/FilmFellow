@@ -218,11 +218,26 @@
     background-color: abstracts.$primary-darkgrey;
     width: 100%;
     padding: 15px;
-    gap: 10px;
+    gap: 40px;
+
+    .centered-logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
     p {
       font-size: 0.9rem;
-      font-weight: 600;
+      color: rgba(abstracts.$primary-light, 0.75);
+    }
+  }
+
+  @media only screen and (max-width: abstracts.$medium-width) {
+    .movie-streaming-sites {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      justify-items: center;
     }
   }
 }

@@ -3,9 +3,7 @@ import { getList } from "@/services/listService";
 import { MovieGrid } from "../movieGrid";
 
 export default async function GridPage({ params }: { params: { listId: string } }) {
-  const id = Number(params.listId);
-
-  const list = await getList(id);
+  const list = await getList(params.listId);
 
   if (!list) {
     notFound();

@@ -40,8 +40,8 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
 
   return (
     <div className="profile-info">
-      <h2 className="h4">{user.username}</h2>
-      {user.isActive ? <Smile className="profile-picture" /> : <Frown className="profile-picture" />}
+      <h2 className="h3">{user.username}</h2>
+      {/* {user.isActive ? <Smile className="profile-picture" /> : <Frown className="profile-picture" />} */}
 
       <div className="full-width">
         <h3 className="h5">Description</h3>
@@ -78,6 +78,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
         </div>
       )}
 
+      {/* Hide until implemented
       <div className="full-width">
         <div className="profile-friend-list">
           <div className="friends-title">
@@ -97,6 +98,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
           </div>
         </div>
       </div>
+    */}
 
       {session && (
         <ProfileButtons

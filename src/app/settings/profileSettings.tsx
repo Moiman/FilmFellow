@@ -455,6 +455,7 @@ export const ProfileSettings = ({ user }: Props) => {
           />
         </div>
       </div>
+      {/* Hide until implemented
       <div className="profile-settings-divider">
         <h3>Profile Privacy</h3>
         <p className="description">Here you can choose who can see your profile.</p>
@@ -503,6 +504,7 @@ export const ProfileSettings = ({ user }: Props) => {
           </label>
         </form>
       </div>
+          */}
     </div>
   );
 };

@@ -36,11 +36,12 @@
 
   .profile-description {
     margin: 0;
+    white-space: pre-line;
   }
 
   .profile-social-media {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     width: 100%;
     margin-top: 5px;
@@ -49,9 +50,9 @@
       display: inline-flex;
       gap: 6px;
       align-items: center;
-
+      line-break: anywhere;
       svg {
-        width: 24px;
+        min-width: 24px;
         height: auto;
       }
     }

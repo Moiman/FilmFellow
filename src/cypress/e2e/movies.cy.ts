@@ -271,7 +271,7 @@ describe("Movie review tests", () => {
     cy.visit("/movies/278");
     cy.get("h2").contains("The Shawshank Redemption");
 
-    cy.get(".review-grid-footer-primary").first().should("be.visible").find("button").click();
+    cy.get(".review-grid-footer-primary", { timeout: 500 }).first().should("be.visible").find("button").click();
 
     cy.contains("Making a test review to a movie").should("not.exist");
   });

@@ -186,3 +186,69 @@ describe("Movie crew and cast tests", () => {
     cy.get("h2").contains(`${crewMember.name}`);
   });
 });
+
+describe("Movie review and report tests", () => {
+  const user = {
+    email: "user@gmail.com",
+    username: "user",
+    password: "Password1!",
+  };
+  let userId = "";
+
+  after(() => {
+    cy.deleteUser(user.email, user.password);
+  });
+
+  it("Create user", () => {
+    cy.request({ method: "POST", url: "/api/users/register", body: user, failOnStatusCode: false }).should(response => {
+      expect(response.status).to.eq(200);
+      expect(response.body.email).to.equal(user.email);
+      userId = response.body.id;
+    });
+  });
+
+  it("Write review to movie", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+    cy.get("button").contains("Add review").click();
+    cy.location("pathname").should("eq", "/review/movie/278");
+
+    cy.get("textarea").type("Making a test review to a movie");
+    cy.get("button[type=submit]").click();
+
+    cy.location("pathname").should("eq", `/`);
+  });
+
+  it("View own written review on userpage", () => {
+    cy.login(user.email, user.password);
+    cy.visit(`/users/${userId}`);
+
+    cy.get(".review-grid-content").contains("Making a test review to a movie");
+  });
+
+  it("Movie reviews exists and can be navigated to see all reviews", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+
+    cy.get(".section-padding").find(".section").eq(2).find("a").contains("See all").click();
+    cy.location("pathname").should("eq", "/movies/278/reviews");
+
+    cy.get(".review-grid")
+      .find(".review-grid-item")
+      .should("be.visible")
+      .find("p")
+      .contains("Making a test review to a movie");
+  });
+
+  it("Delete own review", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+
+    cy.get(".review-grid-footer-primary").first().should("be.visible").find("button").click();
+
+    cy.contains("Making a test review to a movie").should("not.exist");
+  });
+});

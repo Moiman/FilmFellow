@@ -1,15 +1,19 @@
 "use client";
 import { useState } from "react";
+
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
+
 import { toast } from "react-toastify";
-import { Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
+import { Eye, EyeOff, Save } from "react-feather";
+
 import Modal from "@/components/modal";
-import { tiktokIcon } from "../users/[id]/profileInfo";
+import { UpdateProfile } from "./updateProfile";
 
 interface Props {
   user: User;
@@ -266,46 +270,7 @@ export const ProfileSettings = ({ user }: Props) => {
 
   return (
     <div className="profile-settings">
-      <div className="profile-settings-left">
-        <Smile
-          size={200}
-          strokeWidth={1}
-          color={"grey"}
-        />
-
-        <div style={{ marginBottom: "20px" }}>
-          <h3 className="h5">Description</h3>
-          <textarea rows={5} />
-        </div>
-
-        <h3 className="h5">Social Media</h3>
-        <div className="profile-settings-social-media">
-          <div className="social-media-row pink">
-            <Twitter />
-            <input
-              type="text"
-              value={"@username"}
-              readOnly
-            />
-          </div>
-          <div className="social-media-row yellow">
-            <Instagram />
-            <input
-              type="text"
-              value={"@username"}
-              readOnly
-            />
-          </div>
-          <div className="social-media-row cyan">
-            {tiktokIcon}
-            <input
-              type="text"
-              value={"@username"}
-              readOnly
-            />
-          </div>
-        </div>
-      </div>
+      <UpdateProfile userId={Number(user.id)} />
       <div className="profile-settings-right">
         <div className="profile-settings-divider">
           <h3>User Information</h3>

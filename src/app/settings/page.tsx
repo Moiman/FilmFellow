@@ -11,6 +11,7 @@ export default async function Profile() {
       <h2 className="h3">Settings</h2>
     </div>
   );
+
   if (!session) {
     redirect("/");
   } else {

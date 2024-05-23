@@ -78,14 +78,14 @@ export const getMovie = async (movieId: string) => {
 export default async function Movie({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
   let userReports: UserReports = [];
-  if(session) {
+  if (session) {
     userReports = await getReportsByCreatorId();
   }
 
   const reviewsHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h3>Reviews</h3>
-      <div style={{display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px"}}>
+      <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
         {session && (
           <form action={`/review/movie/${params.id}`}>
             <button type="submit">Add review</button>

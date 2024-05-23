@@ -13,7 +13,7 @@ interface Props {
   movie: Movie;
 }
 
-export default function ReviewForm({ movie }: Props ) {
+export default function ReviewForm({ movie }: Props) {
   const router = useRouter();
   const [contentInput, setContentInput] = useState("");
   const [rating, setRating] = useState<number | null>(null);

@@ -15,7 +15,6 @@ interface Props {
 export type Review = Awaited<ReturnType<typeof getReviewById>>;
 
 export default function ReportReviewForm({ targetReview }: Props) {
-
   const [reportInput, setReportInput] = useState("");
   const router = useRouter();
   const sectionHeader = (

@@ -6,7 +6,10 @@ export const Footer = () => {
   return (
     <footer>
       <div className="content">
-        <Link href="https://github.com/Moiman/FilmFellow/">
+        <Link
+          href="https://github.com/Moiman/FilmFellow/"
+          title="GitHub"
+        >
           <GitHub size={20} />
         </Link>
 
@@ -16,6 +19,17 @@ export const Footer = () => {
             height={32}
             width={32}
             alt="The Movie Database"
+            title="The Movie Database"
+          />
+        </Link>
+
+        <Link href="https://www.justwatch.com/">
+          <Image
+            src="/logos/justwatch_logo.svg"
+            height={30}
+            width={80}
+            alt="JustWatch"
+            title="JustWatch"
           />
         </Link>
       </div>

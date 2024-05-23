@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-import { getMovieById } from "@/services/movieService";
+import { getMovieById, getWatchProvidersByMovieId } from "@/services/movieService";
 import { getIsWatched, getMovieRating } from "@/services/watchedService";
 import { getIsFavorite } from "@/services/favoriteService";
 
@@ -24,6 +24,7 @@ export const getMovie = async (movieId: string) => {
     const isWatched = await getIsWatched(Number(movieId));
     const isFavorite = await getIsFavorite(Number(movieId));
     const isInWatchlist = await getIsInWatchlist(Number(movieId));
+    const watchProviders = await getWatchProvidersByMovieId(Number(movieId));
     const reviewsData = await getImportedReviewsAndLocalReviewsById(Number(movieId));
 
     if (!movieData) {
@@ -63,6 +64,7 @@ export const getMovie = async (movieId: string) => {
       isWatched,
       userRating,
       isInWatchlist,
+      watchProviders,
       reviewsData,
     };
 
@@ -97,7 +99,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
   if (!movie) {
     notFound();
   }
-  
+
   return (
     <main style={{ padding: 0 }}>
       <MovieInfo movie={movie} />

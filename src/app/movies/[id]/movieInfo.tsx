@@ -13,18 +13,8 @@ import { Favorite } from "./favorite";
 import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
 import { AddToList } from "./addToList";
+import { MovieWatchProviders } from "./movieWatchProviders";
 import type { Movie } from "@/app/movies/[id]/page";
-
-const placeholderIcon = {
-  backgroundColor: "rgba(0,0,0,0.25)",
-  color: "rgba(255,255,255,0.35)",
-  padding: "5px",
-  aspectRatio: 1,
-  display: "flex",
-  alignItems: "center",
-  fontSize: "0.75rem",
-  borderRadius: "50%",
-};
 
 export const MovieInfo = ({ movie }: { movie: Movie }) => {
   const { data: session } = useSession();
@@ -129,11 +119,13 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
             <p className="movie-description">{movie.overview}</p>
           </div>
 
-          {/* Buttons not working yet, functionality comes later */}
           {session && (
             <div className="all-buttons">
               <div className="buttons">
-                <AddToList movieId={movie.id} />
+                <AddToList
+                  movieId={movie.id}
+                  movieTitle={movie.title}
+                />
                 <Watched
                   watched={watched}
                   toggleWatched={toggleWatched}
@@ -150,18 +142,14 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                 <Watchlist
                   isInWatchlist={movie.isInWatchlist}
                   movieId={movie.id}
+                  title={movie.title}
                 />
               </div>
             </div>
           )}
         </div>
       </div>
-      <div className="movie-streaming-sites">
-        <h6>Watch at:</h6>
-        <p style={placeholderIcon}>icon</p>
-        <p style={placeholderIcon}>icon</p>
-        <p style={placeholderIcon}>icon</p>
-      </div>
+      <MovieWatchProviders watchProviders={movie.watchProviders} />
     </div>
   );
 };

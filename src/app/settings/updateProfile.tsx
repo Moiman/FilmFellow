@@ -11,6 +11,7 @@ export const UpdateProfile = async ({ userId }: { userId: number }) => {
 
   return (
     <div className="profile-settings-left">
+      <h3>About Me</h3>
       {/*
       <Smile
         size={200}

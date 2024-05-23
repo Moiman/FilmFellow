@@ -72,6 +72,8 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
             onChange={e => setUserTiktok(e.currentTarget.value)}
           />
         </div>
+      </div>
+      <div className="submit-button">
         <button type="submit">Save</button>
       </div>
     </form>

@@ -1,8 +1,8 @@
 @use "../abstracts/" as abstracts;
 
 .profile-info {
-  padding: 20px 40px;
-  width: 400px;
+  padding: 40px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,6 +18,7 @@
   h2 {
     line-height: 1.4rem;
     word-break: break-all;
+    width: 100%;
   }
 
   h6 {

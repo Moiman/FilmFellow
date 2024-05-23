@@ -11,11 +11,14 @@ interface Params {
 export default async function ReportReviewPage({ params }: { params: Params }) {
   const session = await getServerSession(authOptions);
   const targetReviewId = parseInt(params.id);
+  if (isNaN(targetReviewId)) {
+    notFound();
+  }
   let review = await getReviewById(targetReviewId);
-  if(!review){
+  if (!review) {
     review = await getReviewById(params.id);
   }
-  if(!review){
+  if (!review) {
     notFound();
   }
   if (!session) {

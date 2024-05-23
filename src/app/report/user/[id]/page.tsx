@@ -11,6 +11,9 @@ interface Params {
 export default async function ReportPage({ params }: { params: Params }) {
   const session = await getServerSession(authOptions);
   const targetUserId = parseInt(params.id);
+  if (isNaN(targetUserId)) {
+    notFound();
+  }
   const user = await findUserById(targetUserId);
   if (!user) {
     notFound();

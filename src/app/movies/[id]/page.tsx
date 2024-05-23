@@ -97,7 +97,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
   if (!movie) {
     notFound();
   }
-  console.log(movie.reviewsData);
+  
   return (
     <main style={{ padding: 0 }}>
       <MovieInfo movie={movie} />

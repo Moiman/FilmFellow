@@ -1,9 +1,8 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
-import { Role } from "@prisma/client";
 import prisma from "@/db";
-import { revalidatePath } from "next/cache";
 
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
@@ -24,7 +23,7 @@ const createReview = async (movieId: number, content: string, rating?: number | 
 
 const deleteReviewById = async (reviewId: number | string) => {
   const session = await getServerSession(authOptions);
-  if (!session || session.user.role !== Role.admin) {
+  if (!session) {
     throw "Invalid session";
   }
   if (typeof reviewId === "number") {

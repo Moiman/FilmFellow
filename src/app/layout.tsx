@@ -37,7 +37,6 @@ export default async function RootLayout({
           <Header />
           <ToastContainer
             autoClose={4000}
-            newestOnTop
             draggable
             toastClassName="custom-toastify"
             position="bottom-right"

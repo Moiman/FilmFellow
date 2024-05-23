@@ -187,7 +187,7 @@ describe("Movie crew and cast tests", () => {
   });
 });
 
-describe("Movie review and report tests", () => {
+describe("Movie review tests", () => {
   const user = {
     email: "user@gmail.com",
     username: "user",
@@ -207,6 +207,14 @@ describe("Movie review and report tests", () => {
     });
   });
 
+  it("Test review form header to redirect movie details on click", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/review/movie/278");
+    cy.get(".yellow-name-header").find("a").contains("The Shawshank Redemption").click();
+
+    cy.location("pathname").should("eq", `/movies/278`);
+  });
+
   it("Write review to movie", () => {
     cy.login(user.email, user.password);
     cy.visit("/movies/278");
@@ -220,11 +228,27 @@ describe("Movie review and report tests", () => {
     cy.location("pathname").should("eq", `/`);
   });
 
+  it("Click the username that has written review should redirect to user page", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+    cy.get(".review-grid-item").find("a").contains(user.username).click();
+    cy.location("pathname").should("eq", `/users/${userId}`);
+  });
+
   it("View own written review on userpage", () => {
     cy.login(user.email, user.password);
     cy.visit(`/users/${userId}`);
 
     cy.get(".review-grid-content").contains("Making a test review to a movie");
+  });
+
+  it("Click the moviename where user has written review should redirect to movie page", () => {
+    cy.login(user.email, user.password);
+    cy.visit(`/users/${userId}`);
+    cy.get(".review-thumbnail-header").find("a").first().contains("The Shawshank Redemption").click();
+
+    cy.location("pathname").should("eq", `/movies/278`);
   });
 
   it("Movie reviews exists and can be navigated to see all reviews", () => {

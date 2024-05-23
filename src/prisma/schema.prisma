@@ -27,6 +27,12 @@ model Users {
   reporters       Reports[]         @relation("Creator")
   reportTargets   Reports[]         @relation("TargetUser")
   WatchListMovies WatchListMovies[]
+
+
+  description  String    @default("")
+  twitter      String    @default("")
+  instagram    String    @default("")
+  tiktok       String    @default("")
 }
 
 model Favorites {

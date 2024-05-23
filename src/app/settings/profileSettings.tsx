@@ -7,8 +7,9 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
 import { toast } from "react-toastify";
-import { Facebook, Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
+import { Instagram, Twitter, Smile, Eye, EyeOff, Save } from "react-feather";
 import Modal from "@/components/modal";
+import { tiktokIcon } from "../users/[id]/profileInfo";
 
 interface Props {
   user: User;
@@ -296,7 +297,7 @@ export const ProfileSettings = ({ user }: Props) => {
             />
           </div>
           <div className="social-media-row cyan">
-            <Facebook />
+            {tiktokIcon}
             <input
               type="text"
               value={"@username"}

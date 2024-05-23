@@ -283,6 +283,38 @@ const getLanguages = async () => {
   });
   return languages;
 };
+const getWatchProvidersByMovieId = async (movieId: number) => {
+  const providers = await prisma.movieProviders.findMany({
+    where: {
+      movieId: movieId,
+      iso_3166_1: "US",
+    },
+    select: {
+      provider_id: true,
+      watchProvider: {
+        select: {
+          provider_name: true,
+          logo_path: true,
+        },
+      },
+    },
+    orderBy: {
+      watchProvider: {
+        display_priority: "asc",
+      },
+    },
+    take: 6,
+  });
+
+  const modifiedProviders = providers.map(provider => ({
+    provider_id: provider.provider_id,
+    logo_path: provider.watchProvider.logo_path,
+    provider_name: provider.watchProvider.provider_name,
+  }));
+
+  return modifiedProviders;
+};
+
 export {
   getMovieById,
   getMovieReviewsById,
@@ -293,4 +325,5 @@ export {
   getMoviesByTitle,
   getCountries,
   getLanguages,
+  getWatchProvidersByMovieId,
 };

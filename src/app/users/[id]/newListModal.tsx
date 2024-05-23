@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { Film } from "react-feather";
 
 import Modal from "@/components/modal";
 import { NewListForm } from "@/components/newListForm";
@@ -14,6 +16,13 @@ export const NewListModal = () => {
     if (name) {
       await createNewList(name.toString());
       setIsOpen(false);
+
+      toast(
+        <p>
+          List <span className="highlight-text">{name.toString()}</span> was created
+        </p>,
+        { icon: <Film />, className: "yellow-toast" },
+      );
     }
   };
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Instagram, Twitter } from "react-feather";
+import { Instagram, Save, Twitter } from "react-feather";
 
 import { tiktokIcon } from "../users/[id]/profileInfo";
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
@@ -23,8 +23,18 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
   const [userTiktok, setUserTiktok] = useState<string>(tiktok);
 
   const handleSubmit = async () => {
-    await updateDescriptionAndSocialMedia(userId, userDescription, userTwitter, userInstagram, userTiktok);
-    toast("Your profile was updated!");
+    if (
+      description !== userDescription ||
+      twitter !== userTwitter ||
+      instagram !== userInstagram ||
+      tiktok !== userTiktok
+    ) {
+      await updateDescriptionAndSocialMedia(userId, userDescription, userTwitter, userInstagram, userTiktok);
+      toast(<p>Your profile was updated!</p>, {
+        icon: <Save />,
+        className: "cyan-toast",
+      });
+    }
   };
 
   return (

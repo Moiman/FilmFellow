@@ -2,14 +2,14 @@
 
 .profile-info {
   padding: 40px;
-  width: 100%;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 
   .profile-picture {
-    min-width: 150px;
+    width: 125px;
     height: auto;
     stroke-width: 1.5px;
     color: grey;
@@ -18,7 +18,6 @@
   h2 {
     line-height: 1.4rem;
     word-break: break-all;
-    width: 100%;
   }
 
   h6 {
@@ -38,20 +37,24 @@
   .profile-description {
     margin: 0;
     white-space: pre-line;
+    height: fit-content;
+    max-height: 200px;
+    overflow-x: auto;
   }
 
   .profile-social-media {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 4px;
     width: 100%;
     margin-top: 5px;
 
     div {
       display: inline-flex;
-      gap: 6px;
+      gap: 4px;
       align-items: center;
       line-break: anywhere;
+
       svg {
         min-width: 24px;
         height: auto;

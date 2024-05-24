@@ -3,7 +3,7 @@
 
 .profile-settings {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 40px;
   padding: 20px 40px;
   width: fit-content;
@@ -15,10 +15,16 @@
 }
 
 .profile-settings-left {
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
 
-  & > svg {
-    width: 100%;
+  .profile-picture {
+    width: 125px;
+    height: auto;
+    stroke-width: 1.5px;
+    color: grey;
+    margin: auto;
   }
 
   .submit-button {
@@ -111,7 +117,6 @@
 
   .profile-settings-left {
     width: 100%;
-    max-width: 400px;
     margin: auto;
     padding: 0;
   }

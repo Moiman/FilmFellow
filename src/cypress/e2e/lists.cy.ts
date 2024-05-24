@@ -13,6 +13,20 @@ describe("Movie lists tests", () => {
     cy.deleteUser(email, password);
   });
 
+  it("Watched list", () => {
+    cy.visit("/users/" + userId);
+    cy.get(".section").contains("Watched").click();
+    cy.location("pathname").should("contain", "/lists/");
+    cy.get(".section").contains("Watched");
+  });
+
+  it("Watchlist list", () => {
+    cy.visit("/users/" + userId);
+    cy.get(".section").contains("Watchlist").click();
+    cy.location("pathname").should("contain", "/lists/");
+    cy.get(".section").contains("Watchlist");
+  });
+
   it("Add list 1", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);

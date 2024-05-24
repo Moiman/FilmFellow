@@ -13,13 +13,11 @@ export default async function Layout({ params, children }: { params: { listId: s
   const session = await getServerSession(authOptions);
   const id = Number(params.listId);
 
-  const list = await getList(id);
+  const list = await getList(params.listId);
 
   if (!list) {
     notFound();
   }
-
-  const movies = list.listMovies.map(movie => movie.movie);
 
   return (
     <main className="list">
@@ -32,7 +30,7 @@ export default async function Layout({ params, children }: { params: { listId: s
               </h2>
             </div>
 
-            {session && session.user.id === list.userId && (
+            {session && session.user.id === list.userId && !Number.isNaN(id) && (
               <div className="list-edit">
                 <RenameList id={id} />
                 <DeleteList

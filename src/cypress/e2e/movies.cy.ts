@@ -195,18 +195,17 @@ describe("Movie review tests", () => {
   };
   let userId = "";
 
-  after(() => {
-    cy.deleteUser(user.email, user.password);
-  });
-
-  it("Create user", () => {
+  before(() => {
     cy.request({ method: "POST", url: "/api/users/register", body: user, failOnStatusCode: false }).should(response => {
       expect(response.status).to.eq(200);
       expect(response.body.email).to.equal(user.email);
       userId = response.body.id;
     });
   });
-
+  after(() => {
+    cy.deleteUser(user.email, user.password);
+  });
+  
   it("Test review form header to redirect movie details on click", () => {
     cy.login(user.email, user.password);
     cy.visit("/review/movie/278");
@@ -271,14 +270,10 @@ describe("Movie review tests", () => {
     cy.visit("/movies/278");
     cy.get("h2").contains("The Shawshank Redemption");
     cy.location("pathname").should("eq", "/movies/278");
-    cy.get(".review-grid")
-      .find(".review-grid-item")
-      .should("be.visible")
-      .find("p")
-      .contains("Making a test review to a movie")
-      .parent()
-      .find("button")
-      .click({ force: true });
+
+    cy.contains("Making a test review to a movie").parent({ timeout: 500 }).get(".review-grid-footer-primary");
+
+    cy.get(".review-grid-item").first().find("button").click({ force: true });
 
     cy.contains("Making a test review to a movie").should("not.exist");
   });

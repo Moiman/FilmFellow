@@ -1,9 +1,9 @@
 "use server";
 
-import prisma from "@/db";
+import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
-import { revalidatePath } from "next/cache";
+import prisma from "@/db";
 
 export const getIsInWatchlist = async (movieId: number) => {
   const session = await getServerSession(authOptions);

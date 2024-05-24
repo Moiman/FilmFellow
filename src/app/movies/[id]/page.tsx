@@ -1,19 +1,15 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-
+import { getServerSession } from "next-auth";
 import { getMovieById, getWatchProvidersByMovieId } from "@/services/movieService";
 import { getIsWatched, getMovieRating } from "@/services/watchedService";
 import { getIsFavorite } from "@/services/favoriteService";
-
+import { authOptions } from "@/authOptions";
 import { Section } from "@/components/section";
 import { MovieInfo } from "./movieInfo";
 import { PersonList } from "./personList";
 import { getIsInWatchlist } from "@/services/watchlistService";
-import { ReviewList, UserReports } from "./reviewList";
-import { getImportedReviewsAndLocalReviewsById } from "@/services/reviewService";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/authOptions";
-import { getReportsByCreatorId } from "@/services/reportService";
+import { ReviewList } from "./reviewList";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
@@ -25,7 +21,6 @@ export const getMovie = async (movieId: string) => {
     const isFavorite = await getIsFavorite(Number(movieId));
     const isInWatchlist = await getIsInWatchlist(Number(movieId));
     const watchProviders = await getWatchProvidersByMovieId(Number(movieId));
-    const reviewsData = await getImportedReviewsAndLocalReviewsById(Number(movieId));
 
     if (!movieData) {
       return null;
@@ -65,7 +60,6 @@ export const getMovie = async (movieId: string) => {
       userRating,
       isInWatchlist,
       watchProviders,
-      reviewsData,
     };
 
     return movie;
@@ -77,10 +71,6 @@ export const getMovie = async (movieId: string) => {
 
 export default async function Movie({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
-  let userReports: UserReports = [];
-  if (session) {
-    userReports = await getReportsByCreatorId();
-  }
 
   const reviewsHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -126,9 +116,9 @@ export default async function Movie({ params }: { params: { id: string } }) {
         </Section>
         <Section header={reviewsHeader}>
           <ReviewList
-            userReports={userReports}
-            importedReviews={movie.reviewsData?.importedReviews.slice(0, 4)}
-            reviews={movie.reviewsData?.reviews.slice(0, 4)}
+            movieId={params.id}
+             start={0}
+             end={4}
           />
         </Section>
 

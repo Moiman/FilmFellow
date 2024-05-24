@@ -205,7 +205,7 @@ describe("Movie review tests", () => {
   after(() => {
     cy.deleteUser(user.email, user.password);
   });
-  
+
   it("Test review form header to redirect movie details on click", () => {
     cy.login(user.email, user.password);
     cy.visit("/review/movie/278");
@@ -271,9 +271,7 @@ describe("Movie review tests", () => {
     cy.get("h2").contains("The Shawshank Redemption");
     cy.location("pathname").should("eq", "/movies/278");
 
-    cy.contains("Making a test review to a movie").parent({ timeout: 500 }).get(".review-grid-footer-primary");
-
-    cy.get(".review-grid-item").first().find("button").click({ force: true });
+    cy.contains("Making a test review to a movie").parent({ timeout: 500 }).get(".review-grid-footer-primary").find("button").click();
 
     cy.contains("Making a test review to a movie").should("not.exist");
   });

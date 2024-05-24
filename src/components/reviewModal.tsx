@@ -59,17 +59,16 @@ export const ReviewModal = ({
           >
             <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
               <Smile
-                style={{ marginLeft: "10px" }}
                 size={30}
               />
               <Link
-                className="h2"
+                className="h5"
                 href={"/users/" + review.user.id}
               >
                 {review.user.username}
               </Link>
             </div>
-            <div style={{ marginRight: "10px" }}>
+            <div>
               {[1, 2, 3, 4, 5].map(starRating => (
                 <Star
                   key={starRating}
@@ -84,7 +83,7 @@ export const ReviewModal = ({
           <p className="review-grid-content description">{review.content}</p>
 
           {session && session.user.id !== review.user.id && (
-            <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
               {!reviewReported ? (
                 <form action={`/report/review/${review.id}`}>
                   <button
@@ -118,14 +117,13 @@ export const ReviewModal = ({
             }}
           >
             <Smile
-              style={{ marginLeft: "10px" }}
               size={30}
             />
-            <h2>{importedReview?.author}</h2>
+            <p className="h5">{importedReview?.author}</p>
           </div>
           <p className="review-grid-content description">{importedReview?.content}</p>
           {session && (
-            <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
               {!importedReviewReported ? (
                 <form action={`/report/review/${importedReview.id}`}>
                   <button

@@ -1,7 +1,7 @@
+"use client";
 import { useState } from "react";
 import { Smile, Star, Trash2 } from "react-feather";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { deleteReviewById } from "@/services/reviewService";
 import { ReviewModal } from "./reviewModal";
 import { UserReports } from "@/app/movies/[id]/reviewList";
@@ -32,10 +32,10 @@ interface Props {
   review?: Review;
   importedReview?: ImportedReview;
   userReports?: UserReports;
+  ownReview?: boolean;
 }
 
-export const ReviewListItem = ({ review, importedReview, userReports }: Props) => {
-  const { data: session } = useSession();
+export const ReviewListItem = ({ review, importedReview, userReports, ownReview }: Props) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [openImportedReviewModal, setOpenImportedReviewModal] = useState(false);
 
@@ -60,22 +60,20 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
           alignItems: "center",
           justifyContent: "space-between",
           gap: "10px",
+          margin: "0 10px",
         }}
       >
         <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-          <Smile
-            style={{ marginLeft: "10px" }}
-            size={30}
-          />
+          <Smile size={30} />
 
           <Link
-            className="h2"
+            className="h5"
             href={"/users/" + review.user.id}
           >
             {review.user.username}
           </Link>
         </div>
-        <div style={{ marginRight: "10px" }}>
+        <div>
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
               key={starRating}
@@ -100,7 +98,7 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
         isModalOpen={openReviewModal}
         setIsModalOpen={setOpenReviewModal}
       />
-      {review.user.id === session?.user.id && (
+      {ownReview && (
         <div className="review-grid-footer-primary">
           <button
             onClick={handleDeleteReview}
@@ -124,13 +122,13 @@ export const ReviewListItem = ({ review, importedReview, userReports }: Props) =
           alignItems: "center",
           justifyContent: "flex-start",
           gap: "10px",
+          margin: "0 10px",
         }}
       >
         <Smile
-          style={{ marginLeft: "10px" }}
           size={30}
         />
-        <h2>{importedReview?.author}</h2>
+        <p className="h5">{importedReview?.author}</p>
       </div>
 
       <p

@@ -3,20 +3,14 @@ import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { getMovieCrewById } from "@/services/movieService";
 import { Section } from "@/components/section";
-import { ReviewList, UserReports } from "../reviewList";
-import { getImportedReviewsAndLocalReviewsById } from "@/services/reviewService";
+import { ReviewList } from "../reviewList";
 import { authOptions } from "@/authOptions";
-import { getReportsByCreatorId } from "@/services/reportService";
 
 export default async function MovieReviews({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
-  const reviewData = await getImportedReviewsAndLocalReviewsById(parseInt(params.id));
   const movie = await getMovieCrewById(parseInt(params.id));
-
-  !movie.title && notFound();
-  let userReports: UserReports = [];
-  if (session) {
-    userReports = await getReportsByCreatorId();
+  if (!movie.title) {
+    notFound();
   }
 
   return (
@@ -36,11 +30,7 @@ export default async function MovieReviews({ params }: { params: { id: string } 
           </div>
         }
       >
-        <ReviewList
-          userReports={userReports}
-          importedReviews={reviewData?.importedReviews}
-          reviews={reviewData?.reviews}
-        />
+        <ReviewList movieId={params.id} />
       </Section>
     </main>
   );

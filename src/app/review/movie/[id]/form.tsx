@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import { Flag } from "react-feather";
+import { Star } from "react-feather";
 import { toast } from "react-toastify";
 import type { Movie } from "@/app/movies/[id]/page";
 import { StarRating } from "@/app/movies/[id]/starRating";
@@ -38,7 +38,7 @@ export default function ReviewForm({ movie }: Props) {
     setContentInput("");
 
     toast(<p>Review was submitted</p>, {
-      icon: <Flag />,
+      icon: <Star />,
       className: "yellow-toast",
     });
     router.push("/");
@@ -60,6 +60,7 @@ export default function ReviewForm({ movie }: Props) {
             onSubmit={handleReportSubmit}
             id="review-form"
             className="form"
+            style={{ padding: "0" }}
           >
             <label htmlFor="content">Write your review here</label>
             <textarea

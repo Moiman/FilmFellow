@@ -1,48 +1,36 @@
-"use client";
+import { authOptions } from "@/authOptions";
 import { ReviewListItem } from "@/components/reviewListItem";
 import { getReportsByCreatorId } from "@/services/reportService";
-
-interface User {
-  id: number;
-  username: string;
-}
-
-interface Review {
-  id: number;
-  movieId: number;
-  content: string;
-  user: User;
-  rating: number | null;
-}
-
-interface ImportedReview {
-  id: string;
-  movieId: number;
-  content: string;
-  created_at: Date;
-  updated_at: Date;
-  author: string;
-}
+import { getImportedReviewsAndLocalReviewsById } from "@/services/reviewService";
+import { getServerSession } from "next-auth";
 
 interface Props {
-  importedReviews: ImportedReview[] | undefined;
-  reviews: Review[] | undefined;
-  userReports?: UserReports;
+  movieId: string;
+  start?: number;
+  end?: number;
 }
 
 export type UserReports = Awaited<ReturnType<typeof getReportsByCreatorId>>;
 
-export const ReviewList = ({ importedReviews, reviews, userReports }: Props) => {
+export const ReviewList = async ({ movieId, start, end }: Props) => {
+  const session = await getServerSession(authOptions);
+  let userReports: UserReports = [];
+  if (session) {
+    userReports = await getReportsByCreatorId();
+  }
+  const reviewsData = await getImportedReviewsAndLocalReviewsById(Number(movieId));
+
   return (
     <div className="review-grid">
-      {reviews?.map(review => (
+      {reviewsData.reviews.slice(start ?? 0, end ?? reviewsData.reviews.length).map(review => (
         <ReviewListItem
+          ownReview={review.user.id === session?.user.id ? true : false}
           userReports={userReports}
           key={review.id}
           review={review}
         />
       ))}
-      {importedReviews?.map(importedReview => (
+      {reviewsData.importedReviews.slice(start ?? 0, end ?? reviewsData.importedReviews.length).map(importedReview => (
         <ReviewListItem
           userReports={userReports}
           key={importedReview.id}

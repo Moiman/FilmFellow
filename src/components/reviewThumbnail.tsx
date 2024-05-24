@@ -29,7 +29,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
     return (
       <div
         className="review-thumbnail-header"
-        style={{ justifyContent: "space-between" }}
+        style={{ justifyContent: "space-between", gap: "10px" }}
       >
         <Link href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
         <div className="stars">
@@ -86,7 +86,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                   size={30}
                 />
                 <Link
-                  className="h2"
+                  className="h5"
                   href={"/movies/" + userReview.movieId}
                 >
                   {userReview.movie.title}

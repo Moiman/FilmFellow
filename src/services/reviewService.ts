@@ -46,7 +46,7 @@ const deleteReviewById = async (reviewId: number | string) => {
 };
 
 const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
-  const review = await prisma.movies.findUnique({
+  const review = await prisma.movies.findUniqueOrThrow({
     where: {
       id: movieId,
     },
@@ -73,7 +73,7 @@ const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
 
 const getReviewById = async (reviewId: number | string) => {
   if (typeof reviewId === "number") {
-    const review = await prisma.reviews.findUnique({
+    const review = await prisma.reviews.findUniqueOrThrow({
       where: {
         id: reviewId,
       },
@@ -90,7 +90,7 @@ const getReviewById = async (reviewId: number | string) => {
 
     return review;
   } else {
-    const importedReview = await prisma.importedReviews.findUnique({
+    const importedReview = await prisma.importedReviews.findUniqueOrThrow({
       where: {
         id: reviewId,
       },

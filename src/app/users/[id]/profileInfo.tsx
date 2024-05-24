@@ -1,7 +1,6 @@
 import { authOptions } from "@/authOptions";
 import { getDescriptionAndSocialMedia } from "@/services/userService";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
 

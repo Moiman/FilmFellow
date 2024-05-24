@@ -45,7 +45,7 @@ export const MovieGrid = ({ movies }: { movies: MovieListItem[] }) => {
                 <div className="cyan">
                   <p>{movie.release_date ? movie.release_date.getFullYear() : "unknown"}</p>
                   <p>{movie.runtime} min</p>
-                  <p>{movie.release_dates[0].certification}</p>
+                  <p>{movie.release_dates[0]?.certification}</p>
                 </div>
               </div>
             </div>

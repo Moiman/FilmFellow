@@ -29,17 +29,17 @@ export const toggleWatchlist = async (movieId: number) => {
     throw Error("No session");
   }
 
+  const userId = Number(session.user.id);
+
   const isInWatchlist = await getIsInWatchlist(movieId);
 
   if (!isInWatchlist) {
     await prisma.watchListMovies.create({
       data: {
-        userId: Number(session.user.id),
+        userId: userId,
         movieId: movieId,
       },
     });
-    revalidatePath("movies/" + movieId);
-    return true;
   } else {
     await prisma.watchListMovies.delete({
       where: {
@@ -49,7 +49,9 @@ export const toggleWatchlist = async (movieId: number) => {
         },
       },
     });
-    revalidatePath("movies/" + movieId);
-    return false;
   }
+
+  revalidatePath("/movies/" + movieId);
+
+  return !isInWatchlist;
 };

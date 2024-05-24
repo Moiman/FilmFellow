@@ -1,23 +1,28 @@
 describe("User profile tests", () => {
-  const email = "admin@gmail.com";
-  const password = "Adminadmin!½";
+  const email = "profileUpdateTest@test.test";
+  const password = "testingPassword123!";
+  let userId = 0;
+
+  before(() => {
+    cy.register(email, password);
+    cy.login(email, password);
+    cy.request({ url: "/api/auth/session" }).then(res => (userId = res.body.user.id));
+  });
+
+  after(() => {
+    cy.deleteUser(email, password);
+  });
 
   it("Visit profile page", () => {
     cy.login(email, password);
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("h2").contains(email);
   });
 
   it("Change description", () => {
     cy.login(email, password);
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("h2").contains(email);
     cy.get('button[type="submit"]').contains("Go to settings").click();
@@ -25,20 +30,14 @@ describe("User profile tests", () => {
     cy.get("textarea").clear().type("This is a test!");
     cy.get('button[type="submit"]').contains("Save").click();
 
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("p").contains("This is a test!");
   });
 
   it("Empty description", () => {
     cy.login(email, password);
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("h2").contains(email);
     cy.get('button[type="submit"]').contains("Go to settings").click();
@@ -46,20 +45,14 @@ describe("User profile tests", () => {
     cy.get('textarea[name="description"]').clear();
     cy.get('button[type="submit"]').contains("Save").click();
 
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("p").contains("has no description");
   });
 
   it("Change social media handles", () => {
     cy.login(email, password);
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("h2").contains(email);
     cy.get('button[type="submit"]').contains("Go to settings").click();
@@ -69,10 +62,7 @@ describe("User profile tests", () => {
     cy.get('input[name="tiktok"]').clear().type("tiktokUsername");
     cy.get('button[type="submit"]').contains("Save").click();
 
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("p").contains("twitterUsername");
     cy.get("p").contains("instagramUsername");
@@ -81,10 +71,7 @@ describe("User profile tests", () => {
 
   it("Empty social media handles", () => {
     cy.login(email, password);
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("h2").contains(email);
     cy.get('button[type="submit"]').contains("Go to settings").click();
@@ -94,10 +81,7 @@ describe("User profile tests", () => {
     cy.get('input[name="tiktok"]').clear();
     cy.get('button[type="submit"]').contains("Save").click();
 
-    cy.visit("/");
-    // Wait for session?
-    cy.wait(4000);
-    cy.get('a[href*="/users/"]').click();
+    cy.visit("/users/" + userId);
 
     cy.get("h3").contains("Social media").should("not.exist");
   });

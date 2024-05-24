@@ -11,9 +11,9 @@ export const UpdateProfile = async ({ userId }: { userId: number }) => {
 
   return (
     <div className="profile-settings-left">
+      <h3>About Me</h3>
       <Smile className="profile-picture" />
       <div>
-        <h3>About Me</h3>
         <UpdateProfileForm
           userId={userId}
           description={user.description}

@@ -13,20 +13,20 @@ describe("Profile page tests", () => {
   });
 
   it("Try to go to profile page without logging in", () => {
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.location("pathname").should("eq", "/");
   });
 
   it("Go to profile page as logged in user", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".section-header").contains("Settings");
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Try to change username in the profile page without value", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -38,14 +38,14 @@ describe("Profile page tests", () => {
       .should("be.visible")
       .click();
     cy.get('input[name="username"]').clear();
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Try to change username in the profile page to something that doesnt meet the requirements", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -58,14 +58,14 @@ describe("Profile page tests", () => {
       .click();
     cy.get('input[name="username"]').clear();
     cy.get('input[name="username"]').type("1");
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.contains("Username too short, minimum length is 2").should("be.visible");
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Try to change username in the profile page as existing one", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -78,14 +78,14 @@ describe("Profile page tests", () => {
       .click();
     cy.get('input[name="username"]').clear();
     cy.get('input[name="username"]').type(newUser.email);
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.contains("Can't change username to same as you already have").should("be.visible");
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Change username successfully in the profile page", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -98,14 +98,14 @@ describe("Profile page tests", () => {
       .click();
     cy.get('input[name="username"]').clear();
     cy.get('input[name="username"]').type(newUser.username);
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.contains(newUser.username).should("be.visible");
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Try to change email in the profile page without value", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -117,14 +117,14 @@ describe("Profile page tests", () => {
       .should("be.visible")
       .click();
     cy.get('input[name="email"]').clear();
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Try to change email in the profile page as existing one", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -137,14 +137,14 @@ describe("Profile page tests", () => {
       .click();
     cy.get('input[name="email"]').clear();
     cy.get('input[name="email"]').type(newUser.email);
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.contains("Can't change email to same as you already have").should("be.visible");
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Change email successfully in the profile page", () => {
     cy.login(newUser.email, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -157,14 +157,14 @@ describe("Profile page tests", () => {
       .click();
     cy.get('input[name="email"]').clear();
     cy.get('input[name="email"]').type(newEmail);
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.contains(newEmail).should("be.visible");
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Try to change password in the profile page without value", () => {
     cy.login(newEmail, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -175,14 +175,14 @@ describe("Profile page tests", () => {
       .find("button")
       .should("be.visible")
       .click();
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.get("input:invalid").should("have.length", 1);
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Try to change password in the profile page to something that doesnt meet the requirements", () => {
     cy.login(newEmail, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -194,14 +194,14 @@ describe("Profile page tests", () => {
       .should("be.visible")
       .click();
     cy.get('input[name="password"]').type("newpassword");
-    cy.get('button[type="submit"]').click();
+    cy.get('.profile-settings-input>button[type="submit"]').click();
     cy.contains("Password requires atleast 1 capital character").should("be.visible");
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Change password succeessfully in the profile page", () => {
     cy.login(newEmail, newUser.password);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy.get(".profile-settings-right")
       .find(".profile-settings-divider")
       .first()
@@ -213,13 +213,13 @@ describe("Profile page tests", () => {
       .should("be.visible")
       .click();
     cy.get('input[name="password"]').type(newPassword);
-    cy.get('button[type="submit"]').click();
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.get('.profile-settings-input>button[type="submit"]').click();
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Delete user confirmation modal in the profile page and press cancel", () => {
     cy.login(newEmail, newPassword);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy
       .get(".profile-settings-right")
       .find(".profile-settings-divider")
@@ -234,12 +234,12 @@ describe("Profile page tests", () => {
       { timeout: 500 };
     cy.get("dialog").should("exist");
     cy.get(".modal-box").find(".modal-content").contains("button", "Cancel").click();
-    cy.location("pathname").should("eq", "/profile/settings");
+    cy.location("pathname").should("eq", "/settings");
   });
 
   it("Delete user confirmation modal in the profile page and successfully delete user", () => {
     cy.login(newEmail, newPassword);
-    cy.visit("/profile/settings");
+    cy.visit("/settings");
     cy
       .get(".profile-settings-right")
       .find(".profile-settings-divider")

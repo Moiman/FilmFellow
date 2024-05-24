@@ -270,16 +270,15 @@ describe("Movie review tests", () => {
     cy.login(user.email, user.password);
     cy.visit("/movies/278");
     cy.get("h2").contains("The Shawshank Redemption");
-
-    cy
-      .get(".review-grid")
+    cy.location("pathname").should("eq", "/movies/278");
+    cy.get(".review-grid")
       .find(".review-grid-item")
       .should("be.visible")
       .find("p")
-      .contains("Making a test review to a movie"),
-      { timeout: 500 };
-
-    cy.get(".review-grid-footer-primary").first().should("be.visible").find("button").click();
+      .contains("Making a test review to a movie")
+      .parent()
+      .find("button")
+      .click({ force: true });
 
     cy.contains("Making a test review to a movie").should("not.exist");
   });

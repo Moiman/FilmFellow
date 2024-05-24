@@ -12,6 +12,10 @@ describe("Profile page tests", () => {
     cy.register(newUser.email, newUser.password);
   });
 
+  after(() => {
+    Cypress.session.clearAllSavedSessions();
+  });
+
   it("Try to go to profile page without logging in", () => {
     cy.visit("/settings");
     cy.location("pathname").should("eq", "/");

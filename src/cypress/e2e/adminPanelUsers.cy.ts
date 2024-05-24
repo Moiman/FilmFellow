@@ -31,6 +31,10 @@ describe("Register dummy users for admin user panel tests", () => {
 });
 
 describe("Admin user panel tests", () => {
+  after(() => {
+    cy.deleteUser("dummy@gmail.com", "Password1!");
+  });
+
   it("Try to go to admin user panel without logging in as admin", () => {
     cy.visit("/admin/users");
     cy.location("pathname").should("eq", "/");

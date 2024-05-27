@@ -1,3 +1,5 @@
+"use server";
+
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
 import { Role } from "@prisma/client";
@@ -140,6 +142,46 @@ const changeUserStatusById = async (id: number, status: boolean, banDuration?: n
   }
 };
 
+const getDescriptionAndSocialMedia = async (userId: number) => {
+  return await prisma.users.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      username: true,
+      isActive: true,
+      description: true,
+      twitter: true,
+      instagram: true,
+      tiktok: true,
+    },
+  });
+};
+
+const updateDescriptionAndSocialMedia = async (
+  userId: number,
+  description: string,
+  twitter: string,
+  instagram: string,
+  tiktok: string,
+) => {
+  const session = await getServerSession(authOptions);
+
+  if (userId === session?.user.id) {
+    await prisma.users.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        description: description,
+        twitter: twitter,
+        instagram: instagram,
+        tiktok: tiktok,
+      },
+    });
+  }
+};
+
 export {
   createUser,
   findUserByEmail,
@@ -150,4 +192,6 @@ export {
   getAllUsers,
   updateUserLastVisited,
   changeUserStatusById,
+  getDescriptionAndSocialMedia,
+  updateDescriptionAndSocialMedia,
 };

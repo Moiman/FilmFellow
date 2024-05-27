@@ -4,7 +4,7 @@ import { Smile, Star, Trash2 } from "react-feather";
 import Link from "next/link";
 import { deleteReviewById } from "@/services/reviewService";
 import { ReviewModal } from "./reviewModal";
-import { UserReports } from "@/app/movies/[id]/reviewList";
+import type { UserReports } from "@/app/movies/[id]/reviewList";
 
 interface User {
   id: number;

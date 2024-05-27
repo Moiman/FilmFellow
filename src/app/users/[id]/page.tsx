@@ -66,7 +66,7 @@ export default async function userProfile({ params }: { params: { id: string } }
         {/* Thumbnails of user's latest reviews and link to all reviews */}
         <Section header={userReviewsHeader}>
           <div className="review-wrapper">
-            {userReviews.slice(0, 2).map(userReview => (
+            {userReviews.slice(0, 4).map(userReview => (
               <ReviewThumbnail
                 key={userReview.id}
                 userReview={userReview}

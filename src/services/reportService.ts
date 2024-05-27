@@ -100,7 +100,7 @@ const getAllReports = async () => {
   return reports;
 };
 
-const getReportsByCreatorId = async () => {
+const getUserReports = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -114,4 +114,4 @@ const getReportsByCreatorId = async () => {
   return reports;
 };
 
-export { getReportsByCreatorId, createReport, markReportDone, deleteReportById, getAllReports };
+export { getUserReports, createReport, markReportDone, deleteReportById, getAllReports };

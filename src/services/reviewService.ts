@@ -112,6 +112,7 @@ const findReviewsByUserId = async (userId: number) => {
       movie: true,
       reports: true,
     },
+    orderBy: { created_at: "desc" },
   });
 
   return userReviews;

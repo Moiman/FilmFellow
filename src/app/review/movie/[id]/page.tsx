@@ -3,16 +3,12 @@ import { notFound, redirect } from "next/navigation";
 import { authOptions } from "@/authOptions";
 
 import ReviewForm from "./form";
-import { getMovie } from "@/app/movies/[id]/page";
+import { getMovieById } from "@/services/movieService";
 
-interface Params {
-  id: string;
-}
-
-export default async function ReviewPage({ params }: { params: Params }) {
+export default async function ReviewPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
 
-  const movie = await getMovie(params.id);
+  const movie = await getMovieById(Number(params.id));
   if (!movie) {
     notFound();
   }

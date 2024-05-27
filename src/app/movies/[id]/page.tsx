@@ -117,8 +117,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <Section header={reviewsHeader}>
           <ReviewList
             movieId={params.id}
-             start={0}
-             end={4}
+            moviesCount={4}
           />
         </Section>
 

@@ -1,9 +1,9 @@
+import Image from "next/image";
 import { authOptions } from "@/authOptions";
 import { getDescriptionAndSocialMedia } from "@/services/userService";
 import { getServerSession } from "next-auth";
 import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
-import { TiktokIcon } from "@/components/tiktokIcon";
 
 export const ProfileInfo = async ({ userId }: { userId: number }) => {
   const session = await getServerSession(authOptions);
@@ -45,7 +45,13 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
 
             {user.tiktok && (
               <div>
-                {TiktokIcon}
+                <Image
+                  src="/icons/tiktok_icon.svg"
+                  height={24}
+                  width={24}
+                  alt="Tiktok"
+                  style={{ overflow: "hidden" }}
+                />
                 <p>{user.tiktok}</p>
               </div>
             )}

@@ -4,7 +4,6 @@ import { authOptions } from "@/authOptions";
 import prisma from "@/db";
 import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
-import { revalidatePath } from "next/cache";
 
 export interface User {
   username: string;
@@ -169,7 +168,7 @@ const updateDescriptionAndSocialMedia = async (
   const session = await getServerSession(authOptions);
 
   if (userId === session?.user.id) {
-    const user = await prisma.users.update({
+    await prisma.users.update({
       where: {
         id: userId,
       },

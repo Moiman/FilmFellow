@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
 import * as yup from "yup";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 import { Instagram, Save, Twitter } from "react-feather";
 
 import { tiktokIcon } from "../users/[id]/profileInfo";

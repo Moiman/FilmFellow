@@ -27,6 +27,17 @@
     margin: auto;
   }
 
+  .description-word-amount {
+    width: 100%;
+    text-align: right;
+    position: absolute;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: rgba(abstracts.$primary-light, 0.5);
+  }
+
   .submit-button {
     width: 100%;
     margin-top: 20px;

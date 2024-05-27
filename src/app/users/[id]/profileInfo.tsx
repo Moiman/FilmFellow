@@ -47,8 +47,8 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
               <div>
                 <Image
                   src="/icons/tiktok_icon.svg"
-                  height={20}
-                  width={20}
+                  height={24}
+                  width={24}
                   alt="Tiktok"
                 />
                 <p>{user.tiktok}</p>

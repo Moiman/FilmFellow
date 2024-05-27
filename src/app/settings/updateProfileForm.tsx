@@ -60,6 +60,7 @@ const validationSchema = yup.object().shape({
 
 export const UpdateProfileForm = ({ userId, description, twitter, instagram, tiktok }: UpdateProfileFormProps) => {
   const [userDescription, setUserDescription] = useState<string>(description);
+  const [isDescriptionActive, setIsDescriptionActive] = useState<boolean>(false);
 
   const [userTwitter, setUserTwitter] = useState<string>(twitter);
   const [userInstagram, setUserInstagram] = useState<string>(instagram);
@@ -101,14 +102,25 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div style={{ marginBottom: "20px" }}>
-        <h3 className="h5">Description</h3>
+      <div style={{ marginBottom: "20px", position: "relative" }}>
+        <h3 className="h5">Description </h3>
+
+        {isDescriptionActive && (
+          <div className="description-word-amount">
+            <p className={userDescription.length <= 255 ? "description" : "description pink"}>
+              {userDescription.length}/225
+            </p>
+          </div>
+        )}
+
         <textarea
           rows={5}
           placeholder="Tell about yourself!"
           {...register("description")}
           value={userDescription}
           onChange={e => setUserDescription(e.currentTarget.value)}
+          onFocus={() => setIsDescriptionActive(true)}
+          onBlur={() => setIsDescriptionActive(false)}
         />
         {errors.description && <p className="error-text">{errors.description.message}</p>}
       </div>
@@ -142,8 +154,8 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         <div className="social-media-row cyan">
           <Image
             src="/icons/tiktok_icon.svg"
-            height={20}
-            width={20}
+            height={24}
+            width={24}
             alt="Tiktok"
           />
           <input

@@ -63,26 +63,7 @@ describe("User profile tests", () => {
     cy.get("p").contains("Description contains invalid characters");
   });
 
-  it("Change social media handles", () => {
-    cy.login(email, password);
-    cy.visit("/users/" + userId);
-
-    cy.get("h2").contains(email);
-    cy.get('button[type="submit"]').contains("Go to settings").click();
-    cy.get("h2").contains("Settings");
-    cy.get('input[name="twitter"]').clear().type("twitterUsername");
-    cy.get('input[name="instagram"]').clear().type("instagramUsername");
-    cy.get('input[name="tiktok"]').clear().type("tiktokUsername");
-    cy.get('button[type="submit"]').contains("Save").click();
-
-    cy.visit("/users/" + userId);
-
-    cy.get("p").contains("twitterUsername");
-    cy.get("p").contains("instagramUsername");
-    cy.get("p").contains("tiktokUsername");
-  });
-
-  it("Empty social media handles", () => {
+  it("Empty social media usernames", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);
 
@@ -99,7 +80,26 @@ describe("User profile tests", () => {
     cy.get("h3").contains("Social media").should("not.exist");
   });
 
-  it("Invalid social media handles", () => {
+  it("Change social media usernames", () => {
+    cy.login(email, password);
+    cy.visit("/users/" + userId);
+
+    cy.get("h2").contains(email);
+    cy.get('button[type="submit"]').contains("Go to settings").click();
+    cy.get("h2").contains("Settings");
+    cy.get('input[name="twitter"]').clear().type("twusername");
+    cy.get('input[name="instagram"]').clear().type("igusername");
+    cy.get('input[name="tiktok"]').clear().type("ttusername");
+    cy.get('button[type="submit"]').contains("Save").click();
+
+    cy.visit("/users/" + userId);
+
+    cy.get("p").contains("twusername");
+    cy.get("p").contains("igusername");
+    cy.get("p").contains("ttusername");
+  });
+
+  it("Invalid social media usernames", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);
 
@@ -112,7 +112,7 @@ describe("User profile tests", () => {
     cy.get('button[type="submit"]').contains("Save").click();
 
     cy.get("p").contains(
-      "Twitter username must be at least 4 characters long, containing only letters, numbers, and underscores, with a maximum length of 15 characters",
+      "Twitter username can only contain letters, numbers, and underscores, with a maximum length of 15 characters",
     );
     cy.get("p").contains(
       "Instagram username can only contain numbers, letters, and periods, with a maximum length of 30 characters",

@@ -37,8 +37,8 @@ const validationSchema = yup.object().shape({
     .string()
     .trim()
     .matches(
-      /^\w{4,15}$/,
-      "Twitter username must be at least 4 characters long, containing only letters, numbers, and underscores, with a maximum length of 15 characters",
+      /^\w{0,15}$/,
+      "Twitter username can only contain letters, numbers, and underscores, with a maximum length of 15 characters",
     )
     .optional(),
   instagram: yup

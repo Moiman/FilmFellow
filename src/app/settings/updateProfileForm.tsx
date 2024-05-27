@@ -36,16 +36,14 @@ const validationSchema = yup.object().shape({
   twitter: yup
     .string()
     .trim()
-    .max(15, "Twitter username must be 15 characters or less")
     .matches(
-      /^\w{0,15}$/,
+      /^\w{4,15}$/,
       "Twitter username must be at least 4 characters long, containing only letters, numbers, and underscores, with a maximum length of 15 characters",
     )
     .optional(),
   instagram: yup
     .string()
     .trim()
-    .max(30, "Instagram username must be 30 characters or less")
     .matches(
       /^[a-zA-Z0-9.]{0,30}$/,
       "Instagram username can only contain numbers, letters, and periods, with a maximum length of 30 characters",
@@ -54,7 +52,6 @@ const validationSchema = yup.object().shape({
   tiktok: yup
     .string()
     .trim()
-    .max(30, "TikTok username too long, max length is 24")
     .matches(
       /^[a-zA-Z0-9._]{0,24}$/,
       "TikTok username can only contain letters, numbers, periods, and underscores, with a maximum length of 24 characters",

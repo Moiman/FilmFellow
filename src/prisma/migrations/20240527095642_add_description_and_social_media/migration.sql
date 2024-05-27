@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Users" ADD COLUMN     "description" VARCHAR(255) NOT NULL DEFAULT '',
+ADD COLUMN     "instagram" VARCHAR(50) NOT NULL DEFAULT '',
+ADD COLUMN     "tiktok" VARCHAR(50) NOT NULL DEFAULT '',
+ADD COLUMN     "twitter" VARCHAR(50) NOT NULL DEFAULT '';

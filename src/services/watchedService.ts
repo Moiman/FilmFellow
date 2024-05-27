@@ -1,8 +1,9 @@
 "use server";
 
-import prisma from "@/db";
+import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
+import prisma from "@/db";
 
 export const getIsWatched = async (movieId: number) => {
   const session = await getServerSession(authOptions);
@@ -47,6 +48,8 @@ export const toggleIsWatched = async (movieId: number) => {
       },
     });
   }
+
+  revalidatePath("/movies/" + movieId);
 };
 
 export const getMovieRating = async (movieId: number) => {

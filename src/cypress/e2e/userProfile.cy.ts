@@ -50,6 +50,19 @@ describe("User profile tests", () => {
     cy.get("p").contains("has no description");
   });
 
+  it("Invalid description", () => {
+    cy.login(email, password);
+    cy.visit("/users/" + userId);
+
+    cy.get("h2").contains(email);
+    cy.get('button[type="submit"]').contains("Go to settings").click();
+    cy.get("h2").contains("Settings");
+    cy.get("textarea").clear().type("This is a description with *&^ special characters.");
+    cy.get('button[type="submit"]').contains("Save").click();
+
+    cy.get("p").contains("Description contains invalid characters");
+  });
+
   it("Change social media handles", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);
@@ -84,5 +97,28 @@ describe("User profile tests", () => {
     cy.visit("/users/" + userId);
 
     cy.get("h3").contains("Social media").should("not.exist");
+  });
+
+  it("Invalid social media handles", () => {
+    cy.login(email, password);
+    cy.visit("/users/" + userId);
+
+    cy.get("h2").contains(email);
+    cy.get('button[type="submit"]').contains("Go to settings").click();
+    cy.get("h2").contains("Settings");
+    cy.get('input[name="twitter"]').clear().type("user@name");
+    cy.get('input[name="instagram"]').clear().type("user!name");
+    cy.get('input[name="tiktok"]').clear().type("user.name!");
+    cy.get('button[type="submit"]').contains("Save").click();
+
+    cy.get("p").contains(
+      "Twitter username must be at least 4 characters long, containing only letters, numbers, and underscores, with a maximum length of 15 characters",
+    );
+    cy.get("p").contains(
+      "Instagram username can only contain numbers, letters, and periods, with a maximum length of 30 characters",
+    );
+    cy.get("p").contains(
+      "TikTok username can only contain letters, numbers, periods, and underscores, with a maximum length of 24 characters",
+    );
   });
 });

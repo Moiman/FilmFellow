@@ -108,7 +108,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         {isDescriptionActive && (
           <div className="description-word-amount">
             <p className={userDescription.length <= 255 ? "description" : "description pink"}>
-              {userDescription.length}/225
+              {userDescription.length}/255
             </p>
           </div>
         )}
@@ -157,6 +157,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
             height={24}
             width={24}
             alt="Tiktok"
+            style={{ overflow: "hidden" }}
           />
           <input
             type="text"

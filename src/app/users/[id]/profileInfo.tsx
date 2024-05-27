@@ -50,6 +50,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
                   height={24}
                   width={24}
                   alt="Tiktok"
+                  style={{ overflow: "hidden" }}
                 />
                 <p>{user.tiktok}</p>
               </div>

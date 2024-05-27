@@ -7,8 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Instagram, Save, Twitter } from "react-feather";
 
-import { tiktokIcon } from "../users/[id]/profileInfo";
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
+import { TiktokIcon } from "@/components/tiktokIcon";
 
 interface UpdateProfileFormProps {
   userId: number;
@@ -29,7 +29,7 @@ const validationSchema = yup.object().shape({
   description: yup
     .string()
     .trim()
-    .max(300, "Description too long, max length is 300")
+    .max(255, "Description too long, max length is 255")
     .matches(/^[a-zA-Z0-9\s.,'!&]*$/, "Description contains invalid characters")
     .optional(),
   twitter: yup
@@ -140,7 +140,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         {errors.instagram && <p className="error-text">{errors.instagram.message}</p>}
 
         <div className="social-media-row cyan">
-          {tiktokIcon}
+          {TiktokIcon}
           <input
             type="text"
             placeholder="Your TikTok handle"

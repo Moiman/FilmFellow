@@ -3,31 +3,7 @@ import { getDescriptionAndSocialMedia } from "@/services/userService";
 import { getServerSession } from "next-auth";
 import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
-
-export const tiktokIcon = (
-  <svg
-    width="24px"
-    height="24px"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M21 7.33333C17.5307 7.33333 14.0204 5.31371 14.0204 2"
-      stroke="#74ccca"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M8.5102 11.4737C5.467 11.4737 3 13.8301 3 16.7368C3 19.6436 5.467 22 8.5102 22C11.5534 22 14.0204 19.6436 14.0204 16.7368V2"
-      stroke="#74ccca"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+import { TiktokIcon } from "@/components/tiktokIcon";
 
 export const ProfileInfo = async ({ userId }: { userId: number }) => {
   const session = await getServerSession(authOptions);
@@ -69,7 +45,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
 
             {user.tiktok && (
               <div>
-                {tiktokIcon}
+                {TiktokIcon}
                 <p>{user.tiktok}</p>
               </div>
             )}

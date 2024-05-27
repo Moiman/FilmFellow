@@ -29,10 +29,10 @@ model Users {
   WatchListMovies WatchListMovies[]
 
 
-  description  String    @default("")
-  twitter      String    @default("")
-  instagram    String    @default("")
-  tiktok       String    @default("")
+  description  String    @default("") @db.VarChar(255) 
+  twitter      String    @default("") @db.VarChar(50) 
+  instagram    String    @default("") @db.VarChar(50) 
+  tiktok       String    @default("") @db.VarChar(50) 
 }
 
 model Favorites {

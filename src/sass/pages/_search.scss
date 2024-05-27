@@ -1,0 +1,28 @@
+@use "../abstracts" as abstracts;
+
+.filter-wrapper {
+  background-color: abstracts.$primary-grey;
+  min-height: 100%;
+  max-width: 25%;
+  width: auto;
+
+  .filter-header {
+    background-color: abstracts.$primary-darkgrey;
+    display: flex;
+    align-self: center;
+
+    width: 100%;
+
+    padding: 0px 10px;
+
+    line-height: 0;
+  }
+
+  .filter-chevron {
+    justify-self: end;
+  }
+
+  .filter-content {
+    display: flex;
+  }
+}

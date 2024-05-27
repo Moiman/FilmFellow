@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -8,7 +9,6 @@ import { toast } from "react-toastify";
 import { Instagram, Save, Twitter } from "react-feather";
 
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
-import { TiktokIcon } from "@/components/tiktokIcon";
 
 interface UpdateProfileFormProps {
   userId: number;
@@ -140,7 +140,12 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         {errors.instagram && <p className="error-text">{errors.instagram.message}</p>}
 
         <div className="social-media-row cyan">
-          {TiktokIcon}
+          <Image
+            src="/icons/tiktok_icon.svg"
+            height={20}
+            width={20}
+            alt="Tiktok"
+          />
           <input
             type="text"
             placeholder="Your TikTok handle"

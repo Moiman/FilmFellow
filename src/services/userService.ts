@@ -180,8 +180,6 @@ const updateDescriptionAndSocialMedia = async (
         tiktok: tiktok,
       },
     });
-
-    revalidatePath("/settings/");
   }
 };
 

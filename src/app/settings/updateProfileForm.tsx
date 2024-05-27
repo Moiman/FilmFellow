@@ -60,7 +60,6 @@ const validationSchema = yup.object().shape({
 
 export const UpdateProfileForm = ({ userId, description, twitter, instagram, tiktok }: UpdateProfileFormProps) => {
   const [userDescription, setUserDescription] = useState<string>(description);
-  const [isDescriptionActive, setIsDescriptionActive] = useState<boolean>(false);
 
   const [userTwitter, setUserTwitter] = useState<string>(twitter);
   const [userInstagram, setUserInstagram] = useState<string>(instagram);
@@ -105,13 +104,11 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
       <div style={{ marginBottom: "20px", position: "relative" }}>
         <h3 className="h5">Description </h3>
 
-        {isDescriptionActive && (
-          <div className="description-word-amount">
-            <p className={userDescription.length <= 255 ? "description" : "description pink"}>
-              {userDescription.length}/255
-            </p>
-          </div>
-        )}
+        <div className="description-word-amount">
+          <p className={userDescription.length <= 255 ? "description" : "description pink"}>
+            {userDescription.length}/255
+          </p>
+        </div>
 
         <textarea
           rows={5}
@@ -119,8 +116,6 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
           {...register("description")}
           value={userDescription}
           onChange={e => setUserDescription(e.currentTarget.value)}
-          onFocus={() => setIsDescriptionActive(true)}
-          onBlur={() => setIsDescriptionActive(false)}
         />
         {errors.description && <p className="error-text">{errors.description.message}</p>}
       </div>

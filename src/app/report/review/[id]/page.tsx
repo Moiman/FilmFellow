@@ -4,20 +4,11 @@ import { authOptions } from "@/authOptions";
 import ReportReviewForm from "./form";
 import { getReviewById } from "@/services/reviewService";
 
-interface Params {
-  id: string;
-}
-
-export default async function ReportReviewPage({ params }: { params: Params }) {
+export default async function ReportReviewPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
-  const targetReviewId = parseInt(params.id);
-  if (isNaN(targetReviewId)) {
-    notFound();
-  }
-  let review = await getReviewById(targetReviewId);
-  if (!review) {
-    review = await getReviewById(params.id);
-  }
+
+  const review = await getReviewById(params.id);
+
   if (!review) {
     notFound();
   }

@@ -45,6 +45,9 @@ const findUserByEmail = async (email: string) => {
 };
 
 const findUserById = async (id: number) => {
+  if (isNaN(id)) {
+    return null;
+  }
   const user = await prisma.users.findUnique({
     where: {
       id: id,

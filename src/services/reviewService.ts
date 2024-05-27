@@ -71,36 +71,44 @@ const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
   return review;
 };
 
-const getReviewById = async (reviewId: number | string) => {
-  if (typeof reviewId === "number") {
-    const review = await prisma.reviews.findUniqueOrThrow({
-      where: {
-        id: reviewId,
-      },
-      include: {
-        user: {
-          select: {
-            username: true,
-            id: true,
-          },
-        },
-        reports: true,
-      },
-    });
+const getReviewById = async (reviewId: string) => {
+  const importedReview = await prisma.importedReviews.findUnique({
+    where: {
+      id: reviewId,
+    },
+    include: {
+      reports: true,
+    },
+  });
 
-    return review;
-  } else {
-    const importedReview = await prisma.importedReviews.findUniqueOrThrow({
-      where: {
-        id: reviewId,
-      },
-      include: {
-        reports: true,
-      },
-    });
-
+  if (importedReview) {
     return importedReview;
   }
+
+  const reviewIdAsNumber = Number(reviewId);
+
+  if (isNaN(reviewIdAsNumber)) {
+    return null;
+  }
+
+  const review = await prisma.reviews.findUnique({
+    where: {
+      id: reviewIdAsNumber,
+    },
+    include: {
+      user: {
+        select: {
+          username: true,
+          id: true,
+        },
+      },
+      reports: true,
+    },
+  });
+  if (review) {
+    return review;
+  }
+  return null;
 };
 
 const findReviewsByUserId = async (userId: number) => {

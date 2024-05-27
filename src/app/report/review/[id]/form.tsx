@@ -25,10 +25,12 @@ export default function ReportReviewForm({ targetReview }: Props) {
 
   const handleReportSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if ("author" in targetReview) {
-      await createReport(null, reportInput, null, targetReview.id);
-    } else {
-      await createReport(Number(targetReview?.userId), reportInput, targetReview?.id, null);
+    if (targetReview) {
+      if ("author" in targetReview) {
+        await createReport(null, reportInput, null, targetReview.id);
+      } else {
+        await createReport(Number(targetReview.userId), reportInput, targetReview.id, null);
+      }
     }
 
     setReportInput("");

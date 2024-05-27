@@ -4,16 +4,10 @@ import { authOptions } from "@/authOptions";
 import ReportForm from "./form";
 import { findUserById } from "@/services/userService";
 
-interface Params {
-  id: string;
-}
-
-export default async function ReportPage({ params }: { params: Params }) {
+export default async function ReportPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
   const targetUserId = parseInt(params.id);
-  if (isNaN(targetUserId)) {
-    notFound();
-  }
+
   const user = await findUserById(targetUserId);
   if (!user) {
     notFound();

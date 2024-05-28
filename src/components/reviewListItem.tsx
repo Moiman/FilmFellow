@@ -39,17 +39,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
 
   return review ? (
     <div className="review-grid-item">
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "auto auto",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "10px",
-          margin: "0 10px",
-          padding: "15px",
-        }}
-      >
+      <div className="review-header-item">
         <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
           <Smile size={30} />
 
@@ -102,19 +92,14 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
     </div>
   ) : (
     <div className="review-grid-item">
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "auto auto",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          gap: "10px",
-          margin: "0 10px",
-          padding: "15px",
-        }}
-      >
+      <div className="review-header-item-secondary">
         <Smile size={30} />
-        <p className="h5">{importedReview?.author}</p>
+        <p
+          className="h5"
+          style={{ lineHeight: "2.1rem" }}
+        >
+          {importedReview?.author}
+        </p>
       </div>
 
       <p

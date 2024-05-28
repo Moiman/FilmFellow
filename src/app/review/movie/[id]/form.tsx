@@ -13,7 +13,7 @@ interface Props {
   movie: Movie;
 }
 
-type Movie = Awaited<ReturnType<typeof getMovieById>>;
+type Movie = NonNullable<Awaited<ReturnType<typeof getMovieById>>>;
 
 export default function ReviewForm({ movie }: Props) {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function ReviewForm({ movie }: Props) {
   const reviewHeader = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h2 className="yellow-name-header">
-        <Link href={`/movies/${movie?.id}`}>{movie?.title} </Link>
+        <Link href={`/movies/${movie.id}`}>{movie.title} </Link>
         Review
       </h2>
       <button
@@ -36,7 +36,7 @@ export default function ReviewForm({ movie }: Props) {
 
   const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createReview(Number(movie?.id), contentInput, rating);
+    await createReview(Number(movie?.id), contentInput.trim(), rating);
     setContentInput("");
 
     toast(<p>Review was submitted</p>, {

@@ -45,8 +45,9 @@ const deleteReviewById = async (reviewId: number | string) => {
   }
 };
 
-const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
-  const review = await prisma.movies.findUniqueOrThrow({
+const getAllReviewsForMovie = async (movieId: number) => {
+  const session = await getServerSession(authOptions);
+  const reviews = await prisma.movies.findUniqueOrThrow({
     where: {
       id: movieId,
     },
@@ -63,12 +64,31 @@ const getImportedReviewsAndLocalReviewsById = async (movieId: number) => {
               id: true,
             },
           },
+          reports: {
+            where: {
+              creatorId: session ? Number(session.user.id) : -1,
+            },
+          },
         },
       },
-      importedReviews: true,
+      importedReviews: {
+        select: {
+          id: true,
+          movieId: true,
+          content: true,
+          created_at: true,
+          updated_at: true,
+          author: true,
+          reports: {
+            where: {
+              creatorId: session ? Number(session.user.id) : -1,
+            },
+          },
+        },
+      },
     },
   });
-  return review;
+  return reviews;
 };
 
 const getReviewById = async (reviewId: string) => {
@@ -126,4 +146,4 @@ const findReviewsByUserId = async (userId: number) => {
   return userReviews;
 };
 
-export { findReviewsByUserId, getReviewById, createReview, deleteReviewById, getImportedReviewsAndLocalReviewsById };
+export { findReviewsByUserId, getReviewById, createReview, deleteReviewById, getAllReviewsForMovie };

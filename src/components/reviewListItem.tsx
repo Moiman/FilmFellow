@@ -2,49 +2,35 @@
 import { useState } from "react";
 import { Smile, Star, Trash2 } from "react-feather";
 import Link from "next/link";
-import { deleteReviewById } from "@/services/reviewService";
+import { deleteReviewById, getAllReviewsForMovie } from "@/services/reviewService";
 import { ReviewModal } from "./reviewModal";
-import type { UserReports } from "@/app/movies/[id]/reviewList";
-
-interface User {
-  id: number;
-  username: string;
-}
-
-interface Review {
-  id: number;
-  movieId: number;
-  content: string;
-  user: User;
-  rating: number | null;
-}
-
-interface ImportedReview {
-  id: string;
-  movieId: number;
-  content: string;
-  created_at: Date;
-  updated_at: Date;
-  author: string;
-}
 
 interface Props {
-  review?: Review;
-  importedReview?: ImportedReview;
-  userReports?: UserReports;
+  review?: Reviews["reviews"][0];
+  importedReview?: Reviews["importedReviews"][0];
   ownReview?: boolean;
 }
 
-export const ReviewListItem = ({ review, importedReview, userReports, ownReview }: Props) => {
+type Reviews = Awaited<ReturnType<typeof getAllReviewsForMovie>>;
+
+export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [openImportedReviewModal, setOpenImportedReviewModal] = useState(false);
 
   const checkIfReviewReported = () => {
-    return userReports?.some(report => report.reviewId === review?.id) || false;
+    if (review) {
+      return review.reports.length > 0;
+    } else {
+      return false;
+    }
   };
 
   const checkIfImportedReviewReported = () => {
-    return userReports?.some(report => report.importedReviewId === importedReview?.id) || false;
+    if (importedReview) {
+      return importedReview.reports.length > 0;
+    } else {
+      return false;
+    }
   };
 
   const handleDeleteReview = async () => {
@@ -61,6 +47,7 @@ export const ReviewListItem = ({ review, importedReview, userReports, ownReview 
           justifyContent: "space-between",
           gap: "10px",
           margin: "0 10px",
+          padding: "15px",
         }}
       >
         <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
@@ -123,11 +110,10 @@ export const ReviewListItem = ({ review, importedReview, userReports, ownReview 
           justifyContent: "flex-start",
           gap: "10px",
           margin: "0 10px",
+          padding: "15px",
         }}
       >
-        <Smile
-          size={30}
-        />
+        <Smile size={30} />
         <p className="h5">{importedReview?.author}</p>
       </div>
 

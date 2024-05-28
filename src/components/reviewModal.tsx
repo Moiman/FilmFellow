@@ -55,12 +55,11 @@ export const ReviewModal = ({
               alignItems: "center",
               justifyContent: "space-between",
               gap: "10px",
+              padding: "15px",
             }}
           >
             <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-              <Smile
-                size={30}
-              />
+              <Smile size={30} />
               <Link
                 className="h5"
                 href={"/users/" + review.user.id}
@@ -114,11 +113,10 @@ export const ReviewModal = ({
               alignItems: "center",
               justifyContent: "flex-start",
               gap: "10px",
+              padding: "15px",
             }}
           >
-            <Smile
-              size={30}
-            />
+            <Smile size={30} />
             <p className="h5">{importedReview?.author}</p>
           </div>
           <p className="review-grid-content description">{importedReview?.content}</p>

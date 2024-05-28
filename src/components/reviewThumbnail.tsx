@@ -31,7 +31,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
         className="review-thumbnail-header"
         style={{ justifyContent: "space-between", gap: "10px" }}
       >
-        <Link href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
+        <Link className="h5" href={"/movies/" + userReview.movieId}>{userReview.movie.title}</Link>
         <div className="stars">
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
@@ -78,13 +78,11 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 gap: "10px",
+                margin: "0 10px",
+                padding: "15px",
               }}
             >
               <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-                <Smile
-                  style={{ marginLeft: "10px" }}
-                  size={30}
-                />
                 <Link
                   className="h5"
                   href={"/movies/" + userReview.movieId}
@@ -92,7 +90,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                   {userReview.movie.title}
                 </Link>
               </div>
-              <div style={{ marginRight: "10px" }}>
+              <div>
                 {[1, 2, 3, 4, 5].map(starRating => (
                   <Star
                     key={starRating}
@@ -106,7 +104,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
             </div>
             <p className="review-grid-content description">{userReview.content}</p>
             {session && session.user.id !== userReview.userId && (
-              <div style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 {!checkIfReviewReported() ? (
                   <form action={`/report/review/${userReview.id}`}>
                     <button

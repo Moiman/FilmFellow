@@ -86,22 +86,15 @@
       align-items: center;
       gap: 15px;
 
-      .genre-separator {
-        color: rgba(abstracts.$primary-light, 0.25);
-      }
-
       p {
         font-size: 0.9rem;
         color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-      }
-
-      p:first-child {
-        padding-left: 0px;
+        padding-right: 15px;
+        border-right: 1px solid rgba(abstracts.$primary-light, 0.25);
       }
 
       p:last-child {
         border-right: 0px;
-        padding-right: 0;
       }
     }
 

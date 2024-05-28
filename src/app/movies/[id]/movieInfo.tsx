@@ -96,10 +96,8 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
 
           <div className="movie-basic-data">
             <div className="movie-genres">
-              {movie.genres.map((genre, index) => (
-                <>
-                  <p key={genre}>{genre}</p> {index !== movie.genres.length - 1 && <p className="genre-separator">|</p>}
-                </>
+              {movie.genres.map(genre => (
+                <p key={genre}>{genre}</p>
               ))}
             </div>
 

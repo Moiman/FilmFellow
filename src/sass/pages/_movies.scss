@@ -77,14 +77,7 @@
     min-height: 400px;
 
     h2 {
-      line-height: 3.4rem;
-    }
-
-    .movie-rating-and-genres {
-      display: inline-flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
+      line-height: 3rem;
     }
 
     .movie-genres {
@@ -92,11 +85,11 @@
       gap: 10px;
       flex-wrap: wrap;
       height: fit-content;
-      justify-content: flex-end;
+      justify-content: flex-start;
 
       p {
-        font-size: 1rem;
-        padding: 0px 10px 0px 5px;
+        font-size: 0.9rem;
+        padding: 0px 15px 0px 5px;
         color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
         border-right: rgba(abstracts.$primary-light, 0.25) 2px solid;
       }
@@ -107,18 +100,7 @@
 
       p:last-child {
         border-right: 0px;
-      }
-    }
-
-    @media only screen and (max-width: abstracts.$large-width) {
-      .movie-rating-and-genres {
-        display: grid;
-        grid-template-columns: 1fr;
-        align-items: start;
-      }
-
-      .movie-genres {
-        justify-content: flex-start;
+        padding-right: 0;
       }
     }
 
@@ -136,8 +118,8 @@
       .current-rating {
         border-radius: 50%;
         background-color: abstracts.$primary-dark;
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -146,7 +128,7 @@
         line-height: abstracts.$default-line-height;
         letter-spacing: abstracts.$title-letter-spacing;
         color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
     }
 
@@ -166,7 +148,7 @@
         a {
           font-family: abstracts.$default-text-font;
           font-weight: 100;
-          font-size: 1rem;
+          font-size: 0.9rem;
           letter-spacing: normal;
         }
       }

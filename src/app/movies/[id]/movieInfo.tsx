@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Film } from "react-feather";
+import { Film, Star } from "react-feather";
 
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 import { StarRating } from "./starRating";
@@ -84,28 +84,27 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
         </div>
 
         <div className="movie-info">
-          <div className="movie-rating-and-genres">
-            <div className="movie-rating">
-              <div className="current-rating">{movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}</div>
-              {session && (
-                <StarRating
-                  rating={rating}
-                  setRating={setUserRating}
-                />
-              )}
-            </div>
+          <div className="movie-rating">
+            <div className="current-rating">{movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}</div>
+            {session && (
+              <StarRating
+                rating={rating}
+                setRating={setUserRating}
+              />
+            )}
+          </div>
 
+          <div className="movie-basic-data">
             <div className="movie-genres">
-              {movie.genres.slice(0, 3).map(genre => (
+              {movie.genres.map(genre => (
                 <p key={genre}>{genre}</p>
               ))}
             </div>
-          </div>
-          <div className="movie-basic-data">
+
             <h2 className="h1">{movie.title}</h2>
             <div className="movie-data-row">
               {movie.directors.length > 0 ? (
-                <p className="yellow">
+                <p className="cyan">
                   Directed by{" "}
                   {movie.directors
                     .map<React.ReactNode>(director => (
@@ -122,7 +121,7 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
               {movie.releaseYear ? <p className="cyan">{movie.releaseYear}</p> : null}
               {movie.ageRestrictions ? <p className="cyan">{movie.ageRestrictions}</p> : null}
               {movie.runtime ? <p className="cyan">{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
-            </div>{" "}
+            </div>
             <p className="movie-description">{movie.overview}</p>
           </div>
 

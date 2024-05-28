@@ -82,16 +82,17 @@
 
     .movie-genres {
       display: inline-flex;
-      gap: 10px;
       flex-wrap: wrap;
-      height: fit-content;
-      justify-content: flex-start;
+      align-items: center;
+      gap: 15px;
+
+      .genre-separator {
+        color: rgba(abstracts.$primary-light, 0.25);
+      }
 
       p {
         font-size: 0.9rem;
-        padding: 0px 15px 0px 5px;
         color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-        border-right: rgba(abstracts.$primary-light, 0.25) 2px solid;
       }
 
       p:first-child {

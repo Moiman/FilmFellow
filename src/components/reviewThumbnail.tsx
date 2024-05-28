@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Flag, Smile, Star, Trash2 } from "react-feather";
+import { Flag, Star, Trash2 } from "react-feather";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { Section } from "./section";
 import { deleteReviewById, findReviewsByUserId } from "@/services/reviewService";
 import Modal from "./modal";
 
@@ -25,37 +24,33 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
     await deleteReviewById(Number(userReview.id));
   };
 
-  const ReviewHeader = () => {
-    return (
-      <div
-        className="review-thumbnail-header"
-        style={{ justifyContent: "space-between", gap: "10px" }}
-      >
-        <Link
-          className="h5"
-          href={"/movies/" + userReview.movieId}
-        >
-          {userReview.movie.title}
-        </Link>
-        <div className="stars">
+  return (
+    <div className="review-grid-item">
+      <div className="review-header-item">
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+          <Link
+            className="h5"
+            href={"/movies/" + userReview.movieId}
+          >
+            {userReview.movie.title}
+          </Link>
+        </div>
+        <div>
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
               key={starRating}
               stroke={userReview.rating && userReview.rating >= starRating ? "#ffc700" : "#eff2f2"}
               fill={userReview.rating && userReview.rating >= starRating ? "#ffc700" : "#eff2f2"}
               strokeWidth={2}
-              size={30}
+              size={20}
             />
           ))}
         </div>
       </div>
-    );
-  };
-  return (
-    <Section header={ReviewHeader()}>
+
       <p
-        className="review-grid-content description"
         onClick={() => setOpenReviewModal(true)}
+        className="review-grid-content description"
       >
         {userReview.content.length > 303 ? userReview.content.slice(0, 300) + "..." : userReview.content}
       </p>
@@ -83,8 +78,6 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 gap: "10px",
-                margin: "0 10px",
-                padding: "15px",
               }}
             >
               <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
@@ -102,7 +95,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                     stroke={userReview.rating && userReview.rating >= starRating ? "#ffc700" : "#eff2f2"}
                     fill={userReview.rating && userReview.rating >= starRating ? "#ffc700" : "#eff2f2"}
                     strokeWidth={2}
-                    size={30}
+                    size={20}
                   />
                 ))}
               </div>
@@ -133,6 +126,6 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
         isOpen={openReviewModal}
         closeModal={() => setOpenReviewModal(false)}
       />
-    </Section>
+    </div>
   );
 };

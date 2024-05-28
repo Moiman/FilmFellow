@@ -55,7 +55,6 @@ export const ReviewModal = ({
               alignItems: "center",
               justifyContent: "space-between",
               gap: "10px",
-              padding: "15px",
             }}
           >
             <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
@@ -74,7 +73,7 @@ export const ReviewModal = ({
                   stroke={review?.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
                   fill={review?.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
                   strokeWidth={2}
-                  size={30}
+                  size={20}
                 />
               ))}
             </div>
@@ -113,7 +112,6 @@ export const ReviewModal = ({
               alignItems: "center",
               justifyContent: "flex-start",
               gap: "10px",
-              padding: "15px",
             }}
           >
             <Smile size={30} />

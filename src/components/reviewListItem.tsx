@@ -57,7 +57,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
               stroke={review.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
               fill={review.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
               strokeWidth={2}
-              size={30}
+              size={20}
             />
           ))}
         </div>

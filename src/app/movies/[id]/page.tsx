@@ -1,14 +1,15 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-
+import { getServerSession } from "next-auth";
 import { getMovieById, getWatchProvidersByMovieId } from "@/services/movieService";
 import { getIsWatched, getMovieRating } from "@/services/watchedService";
 import { getIsFavorite } from "@/services/favoriteService";
-
+import { authOptions } from "@/authOptions";
 import { Section } from "@/components/section";
 import { MovieInfo } from "./movieInfo";
 import { PersonList } from "./personList";
 import { getIsInWatchlist } from "@/services/watchlistService";
+import { ReviewList } from "./reviewList";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
@@ -82,6 +83,21 @@ const getMovie = async (movieId: string) => {
 };
 
 export default async function Movie({ params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+
+  const reviewsHeader = (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <h3>Reviews</h3>
+      <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
+        {session && (
+          <form action={`/movies/${params.id}/reviewform`}>
+            <button type="submit">Add review</button>
+          </form>
+        )}
+        <Link href={`${params.id}/reviews`}>See all</Link>
+      </div>
+    </div>
+  );
   const movie = await getMovie(params.id);
   if (!movie) {
     notFound();
@@ -111,9 +127,11 @@ export default async function Movie({ params }: { params: { id: string } }) {
         >
           <PersonList persons={movie.crew.slice(0, 6)} />
         </Section>
-
-        <Section header="Reviews">
-          <p>Coming soon</p>
+        <Section header={reviewsHeader}>
+          <ReviewList
+            movieId={params.id}
+            moviesCount={4}
+          />
         </Section>
 
         <Section header="Similar movies">

@@ -104,9 +104,9 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
             </div>
 
             <h2 className="h1">{movie.title}</h2>
-            <div className="movie-data-row">
+            <div className="movie-data-row cyan">
               {movie.directors.length > 0 ? (
-                <p className="cyan">
+                <p>
                   Directed by{" "}
                   {movie.directors
                     .map<React.ReactNode>(director => (
@@ -120,9 +120,9 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                     .reduce((links, directorLink) => [links, ", ", directorLink])}
                 </p>
               ) : null}
-              {movie.releaseYear ? <p className="cyan">{movie.releaseYear}</p> : null}
-              {movie.ageRestrictions ? <p className="cyan">{movie.ageRestrictions}</p> : null}
-              {movie.runtime ? <p className="cyan">{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
+              {movie.releaseYear ? <p>{movie.releaseYear}</p> : null}
+              {movie.ageRestrictions ? <p>{movie.ageRestrictions}</p> : null}
+              {movie.runtime ? <p>{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
             </div>
             <p className="movie-description">{movie.overview}</p>
           </div>

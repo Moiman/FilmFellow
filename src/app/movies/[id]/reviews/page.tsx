@@ -23,7 +23,7 @@ export default async function MovieReviews({ params }: { params: { id: string } 
               Reviews
             </h2>
             {session && (
-              <form action={`/review/movie/${params.id}`}>
+              <form action={`/movies/${params.id}/reviewform`}>
                 <button type="submit">Add review</button>
               </form>
             )}

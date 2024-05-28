@@ -77,7 +77,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
       <h3>Reviews</h3>
       <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
         {session && (
-          <form action={`/review/movie/${params.id}`}>
+          <form action={`/movies/${params.id}/reviewform`}>
             <button type="submit">Add review</button>
           </form>
         )}

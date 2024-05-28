@@ -26,8 +26,20 @@ const getMovie = async (movieId: string) => {
       return null;
     }
 
-    const { id, title, backdrop_path, overview, runtime, release_date, vote_average, directors, rating, cast, crew } =
-      movieData;
+    const {
+      id,
+      title,
+      backdrop_path,
+      overview,
+      runtime,
+      release_date,
+      vote_average,
+      directors,
+      rating,
+      cast,
+      crew,
+      genres,
+    } = movieData;
 
     const movieCast = cast.map(castMember => ({
       id: castMember.personId,
@@ -60,6 +72,7 @@ const getMovie = async (movieId: string) => {
       userRating,
       isInWatchlist,
       watchProviders,
+      genres,
     };
 
     return movie;

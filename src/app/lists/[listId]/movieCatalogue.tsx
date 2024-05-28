@@ -29,7 +29,7 @@ export const MovieCatalogue = ({ movies }: { movies: MovieCatalogueItem[] }) => 
           <p>{movie.title}</p>
           <p>{movie.release_date ? movie.release_date.getFullYear() : "unknown"}</p>
           <p>{movie.runtime} min</p>
-          <p>{movie.release_dates[0].certification}</p>
+          <p>{movie.release_dates[0]?.certification}</p>
           <p className="yellow"> {movie.vote_average.toString().slice(0, 3)}</p>
         </Link>
       ))}

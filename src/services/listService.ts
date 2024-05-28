@@ -77,7 +77,66 @@ export const getUserLists = async (userId: number) => {
       { created_at: "desc" },
     ],
   });
-  return lists;
+
+  const watchlistPoster = await prisma.watchListMovies.findFirst({
+    where: {
+      userId,
+      movie: { NOT: { poster_path: null } },
+    },
+    select: {
+      movie: {
+        select: {
+          poster_path: true,
+        },
+      },
+    },
+  });
+
+  const watchlistList = {
+    id: ("watchlist_" + userId) as number | string,
+    name: "Watchlist",
+    listMovies: [
+      {
+        movie: {
+          poster_path: watchlistPoster?.movie.poster_path ?? null,
+        },
+      },
+    ],
+    _count: {
+      listMovies: await prisma.watchListMovies.count({ where: { userId } }),
+    },
+  };
+
+  const watchedPoster = await prisma.watchedRatings.findFirst({
+    where: {
+      userId,
+      movie: { NOT: { poster_path: null } },
+    },
+    select: {
+      movie: {
+        select: {
+          poster_path: true,
+        },
+      },
+    },
+  });
+
+  const watchedList = {
+    id: ("watched_" + userId) as number | string,
+    name: "Watched",
+    listMovies: [
+      {
+        movie: {
+          poster_path: watchedPoster?.movie.poster_path ?? null,
+        },
+      },
+    ],
+    _count: {
+      listMovies: await prisma.watchedRatings.count({ where: { userId } }),
+    },
+  };
+
+  return [watchedList, watchlistList].concat(lists);
 };
 
 export const getUsersOwnLists = async (movieId: number) => {
@@ -121,47 +180,153 @@ export const getUsersOwnLists = async (movieId: number) => {
   });
 };
 
-export const getList = async (id: number) => {
-  return await prisma.lists.findUnique({
-    where: {
-      id: id,
-    },
-    select: {
-      userId: true,
-      name: true,
-      id: true,
-      user: {
-        select: {
-          username: true,
+export const getList = async (listId: string) => {
+  if (listId.slice(0, 9) === "watchlist") {
+    const userId = Number(listId.slice(10));
+    const user = await prisma.users.findUniqueOrThrow({
+      where: {
+        id: userId,
+      },
+      select: {
+        username: true,
+      },
+    });
+
+    const watchListMovies = await prisma.watchListMovies.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        movie: {
+          select: {
+            id: true,
+            title: true,
+            poster_path: true,
+            release_date: true,
+            runtime: true,
+            overview: true,
+            vote_average: true,
+            release_dates: {
+              where: {
+                iso_3166_1: {
+                  equals: "US",
+                },
+              },
+              select: {
+                certification: true,
+              },
+            },
+          },
         },
       },
-      listMovies: {
-        select: {
-          movie: {
-            select: {
-              id: true,
-              title: true,
-              poster_path: true,
-              release_date: true,
-              runtime: true,
-              overview: true,
-              vote_average: true,
-              release_dates: {
-                where: {
-                  iso_3166_1: {
-                    equals: "US",
-                  },
+    });
+
+    const watchlistList = {
+      userId,
+      id: "watchlist_" + userId,
+      name: "Watchlist",
+      user: {
+        username: user.username,
+      },
+      listMovies: watchListMovies,
+    };
+
+    return watchlistList;
+  } else if (listId.slice(0, 7) === "watched") {
+    const userId = Number(listId.slice(8));
+    const user = await prisma.users.findUniqueOrThrow({
+      where: {
+        id: userId,
+      },
+      select: {
+        username: true,
+      },
+    });
+
+    const watchedRatings = await prisma.watchedRatings.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        movie: {
+          select: {
+            id: true,
+            title: true,
+            poster_path: true,
+            release_date: true,
+            runtime: true,
+            overview: true,
+            vote_average: true,
+            release_dates: {
+              where: {
+                iso_3166_1: {
+                  equals: "US",
                 },
-                select: {
-                  certification: true,
+              },
+              select: {
+                certification: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const watchedList = {
+      userId,
+      id: "watched_" + userId,
+      name: "Watched",
+      user: {
+        username: user.username,
+      },
+      listMovies: watchedRatings,
+    };
+
+    return watchedList;
+  } else {
+    const id = Number(listId);
+    const list = await prisma.lists.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        userId: true,
+        name: true,
+        id: true,
+        user: {
+          select: {
+            username: true,
+          },
+        },
+        listMovies: {
+          select: {
+            movie: {
+              select: {
+                id: true,
+                title: true,
+                poster_path: true,
+                release_date: true,
+                runtime: true,
+                overview: true,
+                vote_average: true,
+                release_dates: {
+                  where: {
+                    iso_3166_1: {
+                      equals: "US",
+                    },
+                  },
+                  select: {
+                    certification: true,
+                  },
                 },
               },
             },
           },
         },
       },
-    },
-  });
+    });
+    return list;
+  }
 };
 
 export const toggleMovieList = async (movieId: number, listId: number) => {

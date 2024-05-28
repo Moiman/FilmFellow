@@ -1,51 +1,65 @@
+import Image from "next/image";
 import { authOptions } from "@/authOptions";
-import { findUserById } from "@/services/userService";
+import { getDescriptionAndSocialMedia } from "@/services/userService";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
-import { Twitter, Instagram, Facebook, Smile, Frown } from "react-feather";
+import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
 
-interface ProfileInfoProps {
-  userId: number;
-}
-
-export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
+export const ProfileInfo = async ({ userId }: { userId: number }) => {
   const session = await getServerSession(authOptions);
-  const user = await findUserById(Number(userId));
+  const user = await getDescriptionAndSocialMedia(userId);
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="profile-info">
-      <h2 className="h4">{user?.username}</h2>
-      {user?.isActive ? <Smile className="profile-picture" /> : <Frown className="profile-picture" />}
+      {user.isActive ? <Smile className="profile-picture" /> : <Frown className="profile-picture" />}
+      <h2 className="h3">{user.username}</h2>
 
-      <div>
+      <div className="full-width">
         <h3 className="h5">Description</h3>
         <p className="profile-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis atque maxime repudiandae quasi sunt delectus
-          perferendis, provident pariatur reprehenderit iure quas officia mollitia, corporis ipsa.
+          {user.description ? user.description : `${user.username} has no description.`}
         </p>
       </div>
 
-      <div className="full-width">
-        <h3 className="h5">Social media</h3>
-        <div className="profile-social-media">
-          <div>
-            <Twitter color="#d75eb5" />
-            <p>@username</p>
-          </div>
+      {(user.twitter || user.instagram || user.tiktok) && (
+        <div className="full-width">
+          <h3 className="h5">Social media</h3>
+          <div className="profile-social-media">
+            {user.twitter && (
+              <div>
+                <Twitter color="#d75eb5" />
+                <p>{user.twitter}</p>
+              </div>
+            )}
 
-          <div>
-            <Instagram color="#ffc700" />
-            <p>@username</p>
-          </div>
+            {user.instagram && (
+              <div>
+                <Instagram color="#ffc700" />
+                <p>{user.instagram}</p>
+              </div>
+            )}
 
-          <div>
-            <Facebook color="#74ccca" />
-            <p>@username</p>
+            {user.tiktok && (
+              <div>
+                <Image
+                  src="/icons/tiktok_icon.svg"
+                  height={24}
+                  width={24}
+                  alt="Tiktok"
+                  style={{ overflow: "hidden" }}
+                />
+                <p>{user.tiktok}</p>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
 
+      {/* Hide until implemented
       <div className="full-width">
         <div className="profile-friend-list">
           <div className="friends-title">
@@ -65,6 +79,7 @@ export const ProfileInfo = async ({ userId }: ProfileInfoProps) => {
           </div>
         </div>
       </div>
+    */}
 
       {session && (
         <ProfileButtons

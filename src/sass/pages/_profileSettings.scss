@@ -2,11 +2,12 @@
 @use "../abstracts" as abstracts;
 
 .profile-settings {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   gap: 40px;
   padding: 20px 40px;
   width: fit-content;
-  margin: auto;
+  width: 100%;
 
   textarea {
     resize: none;
@@ -14,18 +15,42 @@
 }
 
 .profile-settings-left {
-  width: 100%;
-  max-width: 300px;
-  min-width: 200px;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
 
-  & > svg {
+  .profile-picture {
+    width: 125px;
+    height: auto;
+    stroke-width: 1.5px;
+    color: grey;
+    margin: auto;
+  }
+
+  .description-word-amount {
     width: 100%;
+    text-align: right;
+    position: absolute;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: rgba(abstracts.$primary-light, 0.5);
+  }
+
+  .submit-button {
+    width: 100%;
+    margin-top: 20px;
+    text-align: right;
+
+    button {
+      max-width: fit-content;
+    }
   }
 }
 
 .profile-settings-right {
-  width: 100%;
-  min-width: 300px;
+  min-width: 100%;
 }
 
 .profile-settings-social-media {
@@ -80,7 +105,6 @@
     p,
     input,
     .password-input-wrapper {
-      max-width: 700px;
       width: 100%;
     }
 
@@ -89,10 +113,6 @@
       margin: 0;
     }
   }
-}
-
-.profile-settings-divider {
-  padding: 20px 0;
 }
 
 .profile-settings-divider:not(:last-child) {
@@ -108,7 +128,6 @@
 
   .profile-settings-left {
     width: 100%;
-    max-width: 400px;
     margin: auto;
     padding: 0;
   }

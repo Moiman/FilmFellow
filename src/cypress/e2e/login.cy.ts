@@ -1,3 +1,7 @@
+after(() => {
+  cy.deleteUser("test@gmail.com", "Password1!");
+});
+
 describe("Registration tests", () => {
   it("Try to register new user without username, email, password", () => {
     cy.visit("/register");

@@ -1,15 +1,15 @@
 @use "../abstracts/" as abstracts;
 
 .profile-info {
-  padding: 20px 40px;
-  width: 400px;
+  padding: 40px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 
   .profile-picture {
-    min-width: 150px;
+    width: 125px;
     height: auto;
     stroke-width: 1.5px;
     color: grey;
@@ -36,22 +36,28 @@
 
   .profile-description {
     margin: 0;
+    white-space: pre-line;
+    word-wrap: break-word;
+    height: fit-content;
+    max-height: 300px;
+    overflow-x: auto;
   }
 
   .profile-social-media {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
     width: 100%;
     margin-top: 5px;
 
     div {
       display: inline-flex;
-      gap: 6px;
+      gap: 4px;
       align-items: center;
+      line-break: anywhere;
 
       svg {
-        width: 24px;
+        min-width: 24px;
         height: auto;
       }
     }

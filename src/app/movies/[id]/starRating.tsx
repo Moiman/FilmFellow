@@ -8,19 +8,17 @@ interface Props {
 
 export const StarRating = ({ rating, setRating, size = 30 }: Props) => {
   return (
-    <div style={{ display: "inline-flex" }}>
+    <div className="star-rating">
       {[1, 2, 3, 4, 5].map(starRating => (
         <button
           key={starRating}
           onClick={() => setRating(starRating)}
-          className="button-transparent"
+          className="star-rating-button"
         >
           <Star
-            stroke={rating && rating >= starRating ? "#ffc700" : "#eff2f2"}
-            fill={rating && rating >= starRating ? "#ffc700" : "#eff2f2"}
+            className={rating && rating >= starRating ? "selected" : "not-selected"}
             strokeWidth={2}
             size={size}
-            style={{ cursor: "pointer" }}
           />
         </button>
       ))}

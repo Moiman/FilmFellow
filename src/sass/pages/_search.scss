@@ -3,26 +3,44 @@
 .filter-wrapper {
   background-color: abstracts.$primary-grey;
   min-height: 100%;
-  max-width: 25%;
-  width: auto;
+  width: 25%;
 
   .filter-header {
     background-color: abstracts.$primary-darkgrey;
     display: flex;
     align-self: center;
-
     width: 100%;
-
     padding: 0px 10px;
-
     line-height: 0;
+    cursor: pointer;
   }
 
   .filter-chevron {
     justify-self: end;
+    align-self: center;
   }
 
   .filter-content {
-    display: flex;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height: auto;
+    max-height: 400px;
+
+    .filter {
+      display: inline-flex;
+      padding: 3px;
+    }
+
+    input[type="number"] {
+      max-width: 20%;
+    }
+    input[type="text"] {
+      max-width: 40%;
+    }
+  }
+
+  .filter-content::-webkit-scrollbar {
+    display: none;
   }
 }

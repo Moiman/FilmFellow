@@ -19,11 +19,10 @@ export default async function search({
   };
 }) {
   return (
-    <div>
+    <main className="sidebar-main">
       <SearchFilters />
-      <main>
-        <MovieList movies={[]}></MovieList>
-      </main>
-    </div>
+
+      <MovieList movies={[]}></MovieList>
+    </main>
   );
 }

@@ -80,6 +80,48 @@
       line-height: 3.4rem;
     }
 
+    .movie-rating-and-genres {
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .movie-genres {
+      display: inline-flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      height: fit-content;
+      justify-content: flex-end;
+
+      p {
+        font-size: 1rem;
+        padding: 0px 10px 0px 5px;
+        color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+        border-right: rgba(abstracts.$primary-light, 0.25) 2px solid;
+      }
+
+      p:first-child {
+        padding-left: 0px;
+      }
+
+      p:last-child {
+        border-right: 0px;
+      }
+    }
+
+    @media only screen and (max-width: abstracts.$large-width) {
+      .movie-rating-and-genres {
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .movie-genres {
+        justify-content: flex-start;
+      }
+    }
+
     .movie-rating {
       display: inline-flex;
       align-items: center;
@@ -238,6 +280,7 @@
       grid-template-columns: 1fr;
       gap: 0;
       justify-items: center;
+      padding-bottom: 5px;
     }
   }
 }

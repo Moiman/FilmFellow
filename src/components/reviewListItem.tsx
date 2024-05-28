@@ -63,12 +63,12 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         </div>
       </div>
 
-      <p
+      <button
         onClick={() => setOpenReviewModal(true)}
-        className="review-grid-content description"
+        className="review-grid-content description button-review"
       >
-        {review.content.length > 303 ? review.content.slice(0, 300) + "..." : review.content}
-      </p>
+        <p>{review.content.length > 303 ? review.content.slice(0, 300) + "..." : review.content}</p>
+      </button>
       <ReviewModal
         reviewReported={checkIfReviewReported()}
         review={review}
@@ -76,14 +76,13 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         setIsModalOpen={setOpenReviewModal}
       />
       {ownReview && (
-        <div className="review-grid-footer-primary">
+        <div className="review-grid-footer review-grid-footer-yellow">
           <button
             onClick={handleDeleteReview}
             className="button-transparent"
           >
             <Trash2
               color="black"
-              style={{ marginLeft: "10px" }}
               size={20}
             />
           </button>
@@ -96,33 +95,30 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         <Smile size={30} />
         <p
           className="h5"
-          style={{ lineHeight: "2.1rem" }}
+          style={{ lineHeight: "2rem" }}
         >
           {importedReview?.author}
         </p>
       </div>
 
-      <p
+      <button
         onClick={() => setOpenImportedReviewModal(true)}
-        className="review-grid-content description"
+        className="review-grid-content description button-review"
       >
-        {importedReview?.content.length! > 303
-          ? importedReview?.content.slice(0, 300) + "..."
-          : importedReview?.content}
-      </p>
+        <p>
+          {importedReview?.content.length! > 303
+            ? importedReview?.content.slice(0, 300) + "..."
+            : importedReview?.content}
+        </p>
+      </button>
       <ReviewModal
         importedReviewReported={checkIfImportedReviewReported()}
         importedReview={importedReview}
         isModalOpen={openImportedReviewModal}
         setIsModalOpen={setOpenImportedReviewModal}
       />
-      <div className="review-grid-footer-secondary">
-        <p
-          className="yellow"
-          style={{ marginLeft: "10px" }}
-        >
-          Imported from TMDB
-        </p>
+      <div className="review-grid-footer review-grid-footer-dark">
+        <p className="yellow">Imported from TMDB</p>
       </div>
     </div>
   );

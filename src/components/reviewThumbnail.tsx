@@ -35,7 +35,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
             {userReview.movie.title}
           </Link>
         </div>
-        <div>
+        <div className="star-rating">
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
               key={starRating}
@@ -48,21 +48,20 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
         </div>
       </div>
 
-      <p
+      <button
         onClick={() => setOpenReviewModal(true)}
-        className="review-grid-content description"
+        className="review-grid-content description button-review"
       >
-        {userReview.content.length > 303 ? userReview.content.slice(0, 300) + "..." : userReview.content}
-      </p>
+        <p>{userReview.content.length > 303 ? userReview.content.slice(0, 300) + "..." : userReview.content}</p>
+      </button>
       {userReview.userId === session?.user.id && (
-        <div className="review-grid-footer-primary">
+        <div className="review-grid-footer review-grid-footer-yellow">
           <button
             onClick={handleDeleteReview}
             className="button-transparent"
           >
             <Trash2
               color="black"
-              style={{ marginLeft: "10px" }}
               size={20}
             />
           </button>
@@ -100,7 +99,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                 ))}
               </div>
             </div>
-            <p className="review-grid-content description">{userReview.content}</p>
+            <p className="review-modal-content description">{userReview.content}</p>
             {session && session.user.id !== userReview.userId && (
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 {!checkIfReviewReported() ? (

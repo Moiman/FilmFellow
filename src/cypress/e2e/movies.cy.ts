@@ -208,7 +208,7 @@ describe("Movie review tests", () => {
 
   it("Test review form header to redirect movie details on click", () => {
     cy.login(user.email, user.password);
-    cy.visit("/review/movie/278");
+    cy.visit("/movies/278/reviewform");
     cy.get(".yellow-name-header").find("a").contains("The Shawshank Redemption").click();
 
     cy.location("pathname").should("eq", `/movies/278`);
@@ -219,12 +219,12 @@ describe("Movie review tests", () => {
     cy.visit("/movies/278");
     cy.get("h2").contains("The Shawshank Redemption");
     cy.get("button").contains("Add review").click();
-    cy.location("pathname").should("eq", "/review/movie/278");
+    cy.location("pathname").should("eq", "/movies/278/reviewform");
 
     cy.get("textarea").type("Making a test review to a movie");
     cy.get("button[type=submit]").click();
 
-    cy.location("pathname").should("eq", `/`);
+    cy.location("pathname").should("eq", `/movies/278`);
   });
 
   it("Click the username that has written review should redirect to user page", () => {
@@ -245,7 +245,7 @@ describe("Movie review tests", () => {
   it("Click the moviename where user has written review should redirect to movie page", () => {
     cy.login(user.email, user.password);
     cy.visit(`/users/${userId}`);
-    cy.get(".review-thumbnail-header").find("a").first().contains("The Shawshank Redemption").click();
+    cy.get(".review-header-item").find("a").contains("The Shawshank Redemption").click();
 
     cy.location("pathname").should("eq", `/movies/278`);
   });

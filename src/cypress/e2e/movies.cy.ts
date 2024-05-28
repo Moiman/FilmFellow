@@ -126,8 +126,8 @@ describe("Logged in movie page tests", () => {
     cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("be.visible");
     cy.get(".modal-content svg").eq(1).click();
     cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("not.exist");
-    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#ffc700");
-    cy.get(".movie-rating svg").eq(2).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.get(".movie-rating svg").eq(1).should("have.class", "selected");
+    cy.get(".movie-rating svg").eq(2).should("have.class", "not-selected");
     cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
     cy.contains("Mark as watched").should("be.visible");
   });
@@ -135,10 +135,10 @@ describe("Logged in movie page tests", () => {
   it("Give stars", () => {
     cy.login(email, password);
     cy.visit("/movies/13");
-    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.get(".movie-rating svg").eq(1).should("have.class", "not-selected");
     cy.get(".movie-rating svg").eq(1).click();
-    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#ffc700");
-    cy.get(".movie-rating svg").eq(2).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.get(".movie-rating svg").eq(1).should("have.class", "selected");
+    cy.get(".movie-rating svg").eq(2).should("have.class", "not-selected");
     cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
     cy.contains("Mark as watched").should("be.visible");
   });

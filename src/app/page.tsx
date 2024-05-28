@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Section } from "@/components/section";
-import { fetchMovies } from "./movieFetches";
+import { getMovieByLimitTypeGenre } from "@/services/movieService";
 import { MovieList } from "@/components/movieList";
 import GenreSelector from "@/components/genreSelector";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
   const getPosters = async (type: string, genre: string | undefined) => {
-    const moviesArr = await fetchMovies(6, type, genre);
+    const moviesArr = await getMovieByLimitTypeGenre(6, type, genre);
     return moviesArr;
   };
 

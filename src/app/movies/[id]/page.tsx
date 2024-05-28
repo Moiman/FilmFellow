@@ -13,7 +13,7 @@ import { ReviewList } from "./reviewList";
 
 export type Movie = NonNullable<Awaited<ReturnType<typeof getMovie>>>;
 
-export const getMovie = async (movieId: string) => {
+const getMovie = async (movieId: string) => {
   try {
     const movieData = await getMovieById(parseInt(movieId), "US");
     const userRating = await getMovieRating(Number(movieId));

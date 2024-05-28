@@ -271,7 +271,11 @@ describe("Movie review tests", () => {
     cy.get("h2").contains("The Shawshank Redemption");
     cy.location("pathname").should("eq", "/movies/278");
 
-    cy.contains("Making a test review to a movie").parent({ timeout: 500 }).get(".review-grid-footer-primary").find("button").click();
+    cy.contains("Making a test review to a movie")
+      .parent({ timeout: 500 })
+      .get(".review-grid-footer-primary")
+      .find("button")
+      .click();
 
     cy.contains("Making a test review to a movie").should("not.exist");
   });

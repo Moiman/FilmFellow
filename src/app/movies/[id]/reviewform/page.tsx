@@ -8,13 +8,12 @@ import { getMovieById } from "@/services/movieService";
 export default async function ReviewPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
 
+  if (!session) {
+    redirect("/");
+  }
   const movie = await getMovieById(Number(params.id));
   if (!movie) {
     notFound();
-  }
-
-  if (!session) {
-    redirect("/");
   } else {
     return <ReviewForm movie={movie} />;
   }

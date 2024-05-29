@@ -32,7 +32,7 @@ def get_recommendations_for_user(ratings: Dict[int, float], favourites:
         print("All the values are not convertable to integers!")
         ratings = {}
 
-    TMDB_ids = np.load("recommender_files/user/TMDB_ids.npy")
+    TMDB_ids = np.load("Recommender_files/user/TMDB_ids.npy")
     
     if len(ratings) + len(favourites) < 1:
         print("Give at least one movie as rating or a favourite!")
@@ -66,29 +66,29 @@ def get_recommendations_for_user(ratings: Dict[int, float], favourites:
         return []
     
     MovieLens_to_TMDB = np.load(
-        "recommender_files/user/MovieLens_to_TMDB.npy", 
+        "Recommender_files/user/MovieLens_to_TMDB.npy", 
         allow_pickle=True).item()
     TMDB_to_MovieLens = np.load(
-        "recommender_files/user/TMDB_to_MovieLens.npy", 
+        "Recommender_files/user/TMDB_to_MovieLens.npy", 
         allow_pickle=True).item()
     movie_id_to_index_con = np.load(
-        "recommender_files/user/content_based_filtering/movie_id_to_index.npy", 
+        "Recommender_files/user/content_based_filtering/movie_id_to_index.npy", 
         allow_pickle=True).item()
     movie_index_to_id_con = np.load(
-        "recommender_files/user/content_based_filtering/movie_index_to_id.npy", 
+        "Recommender_files/user/content_based_filtering/movie_index_to_id.npy", 
         allow_pickle=True).item()
     movie_id_to_index_coll = np.load(
-        "recommender_files/user/collaborative_filtering/movie_mapper.npy", 
+        "Recommender_files/user/collaborative_filtering/movie_mapper.npy", 
         allow_pickle=True).item()
     movie_index_to_id_coll = np.load(
-    "recommender_files/user/collaborative_filtering/movie_inverse_mapper.npy", 
+    "Recommender_files/user/collaborative_filtering/movie_inverse_mapper.npy", 
         allow_pickle=True).item()
     matrix = scipy.sparse.load_npz(
-        "recommender_files/user/collaborative_filtering/sparse_matrix.npz")
+        "Recommender_files/user/collaborative_filtering/sparse_matrix.npz")
     
     num_movies_in_cosine_sim = 1841
     cosine_sim = np.memmap(
-       "recommender_files/user/content_based_filtering/cosine_sim_memmap.npy", 
+       "Recommender_files/user/content_based_filtering/cosine_sim_memmap.npy", 
        dtype="float64", 
        mode='r', 
        shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))

@@ -1,4 +1,4 @@
-fetch('http://127.0.0.1:5000/recommender/movie/existing', {
+fetch('http://0.0.0.0:5000/recommender/movie/existing', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'

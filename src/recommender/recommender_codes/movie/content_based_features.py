@@ -27,18 +27,18 @@ def content_based_features(movie_features: List[str],
     
     
     movie_index_to_id = np.load(
-    "recommender_files/movie/content_based_filtering/movie_index_to_id.npy", 
+    "Recommender_files/movie/content_based_filtering/movie_index_to_id.npy", 
         allow_pickle=True).item()
     
     num_movies_in_cosine_sim = 1841
     cosine_sim_new = np.memmap(
-        "recommender_files/movie/content_based_filtering" +
+        "Recommender_files/movie/content_based_filtering" +
         "/cosine_sim_new_memmap.npy", 
        dtype="float64", 
        mode='r+', 
        shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))
     
-    matrix = pd.read_csv("recommender_files/movie/content_based_filtering" +
+    matrix = pd.read_csv("Recommender_files/movie/content_based_filtering" +
     "/movies_matrix.csv")
     
     new_movie = vectorize_movie(movie_features, list(matrix))

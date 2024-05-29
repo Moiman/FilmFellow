@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
-import json
 from recommender_codes.get_recommendations_for_user \
 import get_recommendations_for_user
 from recommender_codes.get_recommendations_for_movie \
 import get_recommendations_for_movie
 from recommender_codes.get_recommendations_for_features \
 import get_recommendations_for_features
+from check_and_download_files \
+import check_and_download_files
 
 recommender = Flask(__name__)
 
@@ -25,5 +26,4 @@ def recommendations_based_on_features():
     data = request.get_json()
     return jsonify(get_recommendations_for_features(data.get("features")))
 
-if __name__ == '__main__':
-    recommender.run(host='0.0.0.0', port=5000)
+check_and_download_files()

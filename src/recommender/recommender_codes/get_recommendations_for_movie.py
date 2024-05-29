@@ -33,7 +33,7 @@ def get_recommendations_for_movie(
         if the input is not of correct form:
         returns an empty list.
     """
-    TMDB_ids = np.load("recommender_files/movie/TMDB_ids.npy")
+    TMDB_ids = np.load("Recommender_files/movie/TMDB_ids.npy")
     
     if type(TMDB_id) != int:
         print("TMDB id must be an integer!")
@@ -61,10 +61,10 @@ def get_recommendations_for_movie(
         return []
     
     MovieLens_to_TMDB = np.load(
-        "recommender_files/movie/MovieLens_to_TMDB.npy", 
+        "Recommender_files/movie/MovieLens_to_TMDB.npy", 
         allow_pickle=True).item()
     TMDB_to_MovieLens = np.load(
-        "recommender_files/movie/TMDB_to_MovieLens.npy", 
+        "Recommender_files/movie/TMDB_to_MovieLens.npy", 
         allow_pickle=True).item()
     
     num_of_collaborative, num_of_content_based = \

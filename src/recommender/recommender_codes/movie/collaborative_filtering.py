@@ -21,17 +21,17 @@ def collaborative_filtering(TMDB_id: int,
     """    
     
     movie_id_to_index = np.load(
-        "recommender_files/movie/collaborative_filtering/movie_mapper.npy", 
+        "Recommender_files/movie/collaborative_filtering/movie_mapper.npy", 
         allow_pickle=True).item()
     movie_index_to_id = np.load(
-        "recommender_files/movie/collaborative_filtering" + 
+        "Recommender_files/movie/collaborative_filtering" + 
         "/movie_inverse_mapper.npy", 
         allow_pickle=True).item()
     
     num_movies_in_matrix = 83239
     num_singular_values = 100
     matrix = np.memmap(
-        "recommender_files/movie/collaborative_filtering" +
+        "Recommender_files/movie/collaborative_filtering" +
         "/singular_matrix_memmap.npy", 
        dtype="float64", 
        mode='r', 

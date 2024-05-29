@@ -26,15 +26,15 @@ def content_based_filtering(TMDB_id: int,
     
     
     movie_id_to_index = np.load(
-    "recommender_files/movie/content_based_filtering/movie_id_to_index.npy", 
+    "Recommender_files/movie/content_based_filtering/movie_id_to_index.npy", 
         allow_pickle=True).item()
     movie_index_to_id = np.load(
-    "recommender_files/movie/content_based_filtering/movie_index_to_id.npy", 
+    "Recommender_files/movie/content_based_filtering/movie_index_to_id.npy", 
         allow_pickle=True).item()
     
     num_movies_in_cosine_sim = 1841
     cosine_sim = np.memmap(
-    "recommender_files/movie/content_based_filtering/cosine_sim_memmap.npy", 
+    "Recommender_files/movie/content_based_filtering/cosine_sim_memmap.npy", 
        dtype="float64", 
        mode='r', 
        shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))

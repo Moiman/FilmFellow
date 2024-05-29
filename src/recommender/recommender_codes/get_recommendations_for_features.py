@@ -46,10 +46,10 @@ n_recommendations: int = 100) -> List[int]:
     movie_features = feature_formatter(movie_features)
     
     MovieLens_to_TMDB = np.load(
-    "recommender_files/movie/content_based_filtering/MovieLens_to_TMDB.npy", 
+    "Recommender_files/movie/content_based_filtering/MovieLens_to_TMDB.npy", 
         allow_pickle=True).item()
     TMDB_to_MovieLens = np.load(
-    "recommender_files/movie/content_based_filtering/TMDB_to_MovieLens.npy", 
+    "Recommender_files/movie/content_based_filtering/TMDB_to_MovieLens.npy", 
         allow_pickle=True).item()
     
     recommendations = content_based_features(movie_features, 

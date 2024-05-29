@@ -78,7 +78,7 @@ export const ReviewModal = ({
               ))}
             </div>
           </div>
-          <p className="review-grid-content description">{review.content}</p>
+          <p className="review-modal-content description">{review.content}</p>
 
           {session && session.user.id !== review.user.id && (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -117,7 +117,7 @@ export const ReviewModal = ({
             <Smile size={30} />
             <p className="h5">{importedReview?.author}</p>
           </div>
-          <p className="review-grid-content description">{importedReview?.content}</p>
+          <p className="review-modal-content description">{importedReview?.content}</p>
           {session && (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               {!importedReviewReported ? (

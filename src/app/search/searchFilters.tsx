@@ -1,10 +1,10 @@
 "use client";
 
-import Filter from "./filter";
 import { ChangeEvent, Key, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { getCountries, getLanguages } from "@/services/movieService";
-import { fetchGenres } from "../movieFetches";
+import { getAllGenres, getCountries, getLanguages } from "@/services/movieService";
+import RatingStars from "./ratingStars";
+import Filter from "./filter";
 
 export default function SearchFilters() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function SearchFilters() {
 
   useEffect(() => {
     const fetch = async () => {
-      setGenres(await fetchGenres());
+      setGenres(await getAllGenres());
       setCountries(await getCountries());
       setLanguages(await getLanguages());
     };
@@ -43,32 +43,38 @@ export default function SearchFilters() {
   return (
     <div className="filter-wrapper">
       <Filter title="genres">
-        {genres.map((genre: { id: Key; name: string }) => (
-          <div
-            className="filter"
-            key={genre.id}
-          >
-            <input
-              type="checkbox"
-              id={genre.name}
-              onChange={e => handleFilter(e, genre.name)}
-            />
-            <p>{genre.name}</p>
-          </div>
-        ))}
+        <div className="genres">
+          {genres.map((genre: { id: Key; name: string }) => (
+            <div
+              className="filter"
+              key={genre.id}
+            >
+              <input
+                type="checkbox"
+                id={genre.name}
+                onChange={e => handleFilter(e, genre.name)}
+              />
+              <p>{genre.name}</p>
+            </div>
+          ))}
+        </div>
       </Filter>
       <Filter title="Release year">
-        <input
-          onChange={e => handleFilter(e, e.target.name)}
-          name="ReleaseYearMin"
-          type="number"
-        />
-        <p>-</p>
-        <input
-          onChange={e => handleFilter(e, e.target.name)}
-          name="ReleaseYearMax"
-          type="number"
-        />
+        <div className="filter">
+          <input
+            onChange={e => handleFilter(e, e.target.name)}
+            name="ReleaseYearMin"
+            type="number"
+            placeholder="Min"
+          />
+          <p>-</p>
+          <input
+            onChange={e => handleFilter(e, e.target.name)}
+            name="ReleaseYearMax"
+            type="number"
+            placeholder="Max"
+          />
+        </div>
       </Filter>
       <Filter title="Counries">
         {countries.map((country: { iso_3166_1: Key; english_name: string }) => (
@@ -101,82 +107,55 @@ export default function SearchFilters() {
         ))}
       </Filter>
       <Filter title="Budget">
-        <input
-          type="number"
-          name="budgetMin"
-          onChange={e => handleFilter(e, e.target.name)}
-        />
-        <p>-</p>
-        <input
-          type="number"
-          name="budgetMax"
-          onChange={e => handleFilter(e, e.target.name)}
-        />
-      </Filter>
-      <Filter title="Studios">
-        <input
-          type="text"
-          name="studios"
-          onChange={e => handleFilter(e, e.target.name)}
-        />
+        <div className="filter">
+          <input
+            type="number"
+            name="budgetMin"
+            placeholder="Min"
+            onChange={e => handleFilter(e, e.target.name)}
+          />
+          <p>-</p>
+          <input
+            type="number"
+            name="budgetMax"
+            placeholder="Max"
+            onChange={e => handleFilter(e, e.target.name)}
+          />
+        </div>
       </Filter>
       <Filter title="Movie length">
         <div className="filter">
           <input
             type="number"
             name="movieLength"
+            placeholder="Minutes"
             onChange={e => handleFilter(e, e.target.name)}
           />
-          <p>minutes</p>
         </div>
       </Filter>
-      <Filter title="Directors">
-        <input
-          type="text"
-          name="directors"
-          onChange={e => handleFilter(e, e.target.name)}
-        />
-      </Filter>
-      <Filter title="Actors">
-        <input
-          type="text"
-          name="Actors"
-          onChange={e => handleFilter(e, e.target.name)}
-        />
-      </Filter>
       <Filter title="Rating">
-        <form>
-          <input
-            type="checkbox"
-            value={1}
-            name="rating"
-            onChange={e => handleFilter(e, e.target.name)}
+        <div>
+          <RatingStars
+            stars={1}
+            inputHandler={handleFilter}
           />
-          <input
-            type="checkbox"
-            value={2}
-            name="rating"
-            onChange={e => handleFilter(e, e.target.name)}
+          <RatingStars
+            stars={2}
+            inputHandler={handleFilter}
           />
-          <input
-            type="checkbox"
-            value={3}
-            name="rating"
-            onChange={e => handleFilter(e, e.target.name)}
+          <RatingStars
+            stars={3}
+            inputHandler={handleFilter}
           />
-          <input
-            type="checkbox"
-            value={4}
-            name="rating"
-            onChange={e => handleFilter(e, e.target.name)}
+          <RatingStars
+            stars={4}
+            inputHandler={handleFilter}
           />
-          <input
-            type="checkbox"
-            value={5}
-            name="rating"
-            onChange={e => handleFilter(e, e.target.name)}
+          <RatingStars
+            stars={5}
+            inputHandler={handleFilter}
           />
-        </form>
+        </div>
       </Filter>
     </div>
   );

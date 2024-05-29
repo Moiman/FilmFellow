@@ -1,17 +1,18 @@
+@use "sass:map";
 @use "../abstracts" as abstracts;
 
 .filter-wrapper {
   background-color: abstracts.$primary-grey;
   min-height: 100%;
-  width: 25%;
+  width: 300px;
 
   .filter-header {
     background-color: abstracts.$primary-darkgrey;
     display: flex;
-    align-self: center;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     padding: 0px 10px;
-    line-height: 0;
     cursor: pointer;
   }
 
@@ -22,21 +23,36 @@
 
   .filter-content {
     overflow-y: scroll;
+    height: auto;
+    max-height: 200px;
+
     -ms-overflow-style: none;
     scrollbar-width: none;
-    height: auto;
-    max-height: 400px;
+
+    .genres {
+      display: grid;
+      grid-template-columns: auto auto;
+      padding: 3px;
+    }
 
     .filter {
-      display: inline-flex;
+      display: flex;
+      align-items: center;
+      gap: 5px;
       padding: 3px;
     }
 
     input[type="number"] {
-      max-width: 20%;
+      max-width: 100px;
     }
+
     input[type="text"] {
       max-width: 40%;
+    }
+
+    .selected {
+      stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     }
   }
 

@@ -1,28 +1,9 @@
-import { MovieList } from "@/components/movieList";
-import SearchFilters from "./searchFIlter";
+import SearchFilters from "./searchFilters";
 
-export default async function search({
-  searchParams,
-}: {
-  searchParams?: {
-    genres: string;
-    releaseYear: string;
-    counries: string;
-    languages: string;
-    budgetMin: string;
-    budgetMax: string;
-    studios: string;
-    movieLengthMin: string;
-    movieLengthMax: string;
-    directors: string;
-    actors: string;
-  };
-}) {
+export default async function search() {
   return (
     <main className="sidebar-main">
       <SearchFilters />
-
-      <MovieList movies={[]}></MovieList>
     </main>
   );
 }

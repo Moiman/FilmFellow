@@ -63,7 +63,7 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
             {list.isMovieInList && (
               <Check
                 size={20}
-                color="#ffc700"
+                className="yellow-icon"
               />
             )}
           </button>
@@ -74,7 +74,7 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
         >
           <PlusCircle
             size={20}
-            color="#74ccca"
+            className="yellow-icon"
           />
           Add to new list
         </button>

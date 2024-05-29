@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Check, Film, PlusCircle } from "react-feather";
+import { Check, List, PlusCircle } from "react-feather";
 
 import { Dropdown } from "@/components/dropdown";
 import { toggleMovieList, getUsersOwnLists, createNewList } from "@/services/listService";
@@ -26,7 +26,7 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
       <p>
         <span className="highlight-text">{movieTitle}</span> {isInList ? "added to list" : "removed from list"}
       </p>,
-      { icon: <Film />, className: isInList ? "cyan-toast" : "yellow-toast" },
+      { icon: <List />, className: isInList ? "cyan-toast" : "yellow-toast" },
     );
   };
 
@@ -42,7 +42,7 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
         <p>
           List <span className="highlight-text">{name.toString()}</span> was created and updated
         </p>,
-        { icon: <Film />, className: "yellow-toast" },
+        { icon: <List />, className: "yellow-toast" },
       );
     }
   };

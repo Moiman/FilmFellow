@@ -38,8 +38,8 @@ export default function ReviewForm({ movie }: Props) {
     await createReview(Number(movie?.id), contentInput.trim(), rating);
     setContentInput("");
 
-    toast(<p>Review was submitted</p>, {
-      icon: <Star />,
+    toast(<p>Your review was submitted</p>, {
+      icon: <Star className="yellow-icon-filled" />,
       className: "yellow-toast",
     });
     router.push("/movies/" + movie?.id);

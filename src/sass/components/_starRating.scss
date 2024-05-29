@@ -1,0 +1,26 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+
+  .star-rating-button {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+
+    .selected {
+      stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      cursor: pointer;
+    }
+
+    .not-selected {
+      stroke: abstracts.$primary-light;
+      fill: abstracts.$primary-light;
+      cursor: pointer;
+    }
+  }
+}

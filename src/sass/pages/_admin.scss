@@ -56,6 +56,11 @@
   gap: 20px;
 }
 
+.admin-panel-review-paragraph {
+  cursor: pointer;
+  color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
 .admin-panel-user-data {
   display: grid;
   grid-template-columns: 90px 350px 300px;

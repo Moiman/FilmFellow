@@ -5,6 +5,7 @@ import { ReportComponent } from "./report";
 import type { getAllReports } from "@/services/reportService";
 
 type Props = Awaited<ReturnType<typeof getAllReports>>;
+
 export const AdminPanelReports = ({ reports }: { reports: Props }) => {
   const [allReports, setAllReports] = useState(reports);
   const [searchInput, setSearchInput] = useState("");

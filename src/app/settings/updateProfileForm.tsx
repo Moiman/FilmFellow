@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -8,7 +9,6 @@ import { toast } from "react-toastify";
 import { Instagram, Save, Twitter } from "react-feather";
 
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
-import { TiktokIcon } from "@/components/tiktokIcon";
 
 interface UpdateProfileFormProps {
   userId: number;
@@ -101,8 +101,15 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div style={{ marginBottom: "20px" }}>
-        <h3 className="h5">Description</h3>
+      <div style={{ marginBottom: "20px", position: "relative" }}>
+        <h3 className="h5">Description </h3>
+
+        <div className="description-word-amount">
+          <p className={userDescription.length <= 255 ? "description" : "description pink"}>
+            {userDescription.length}/255
+          </p>
+        </div>
+
         <textarea
           rows={5}
           placeholder="Tell about yourself!"
@@ -140,7 +147,13 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         {errors.instagram && <p className="error-text">{errors.instagram.message}</p>}
 
         <div className="social-media-row cyan">
-          {TiktokIcon}
+          <Image
+            src="/icons/tiktok_icon.svg"
+            height={24}
+            width={24}
+            alt="Tiktok"
+            style={{ overflow: "hidden" }}
+          />
           <input
             type="text"
             placeholder="Your TikTok handle"

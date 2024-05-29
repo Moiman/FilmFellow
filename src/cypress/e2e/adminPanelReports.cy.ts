@@ -98,6 +98,28 @@ describe("Admin report panel tests", () => {
     cy.location("pathname").should("eq", `/users/${reportDummyUserId}`);
   });
 
+  it("Write report about movie review", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit("/movies/278");
+    cy.get(".review-grid").find(".review-grid-item").first().should("be.visible").find(".review-grid-content").click(),
+      { timeout: 500 };
+    cy.get("dialog").should("exist");
+    cy.get(".modal-box").find(".modal-content").contains("button", "Report this review").click();
+
+    cy.get("textarea").type("Making a test report of review");
+    cy.get("button[type=submit]").click();
+    cy.location("pathname").should("eq", `/`);
+  });
+
+  it("Delete reported review", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit("/admin/reports");
+    cy.get(".admin-panel-review-paragraph").contains("p", "Show reported review").click();
+    cy.get("dialog").should("exist");
+    cy.get(".modal-box").find(".modal-content").contains("button", "Delete Review").click();
+    cy.get(".admin-panel-reports-grid").should("have.length", 1);
+  });
+
   it("Delete report", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");
@@ -105,6 +127,7 @@ describe("Admin report panel tests", () => {
     cy.get(".admin-panel-reports-grid").contains("button", "Delete").click();
     cy.get(".admin-panel-reports-grid").should("have.length", 0);
   });
+
   it("Delete user", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/users");

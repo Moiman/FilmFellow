@@ -6,6 +6,8 @@ import { Tool, Trash2 } from "react-feather";
 import { Role } from "@prisma/client";
 import { Dropdown } from "@/components/dropdown";
 import { deleteReportById, type getAllReports, markReportDone } from "@/services/reportService";
+import Modal from "@/components/modal";
+import { deleteReviewById } from "@/services/reviewService";
 
 interface Props {
   report: Reports[0];
@@ -19,8 +21,11 @@ const banOptions = [
   { id: 3, banDuration: null, text: "Forever" },
 ];
 type Reports = Awaited<ReturnType<typeof getAllReports>>;
+
 export const ReportComponent = ({ report, setAllReports }: Props) => {
+  const [openModal, setOpenModal] = useState(false);
   const [error, setError] = useState("");
+  const [modalError, setModalError] = useState("");
 
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
@@ -159,6 +164,33 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
     }
   };
 
+  const handleDeleteReview = async () => {
+    try {
+      if (report.reviewId) {
+        const response = await deleteReviewById(report.reviewId);
+        setAllReports(reports => reports.filter(report => report.reviewId !== response.id));
+        toast(<p>Review was deleted</p>, {
+          icon: <Trash2 />,
+          className: "yellow-toast",
+        });
+      } else {
+        const response = await deleteReviewById(String(report.importedReviewId));
+        setAllReports(reports => reports.filter(report => report.importedReviewId !== response.id));
+        toast(<p>Review was deleted</p>, {
+          icon: <Trash2 />,
+          className: "yellow-toast",
+        });
+      }
+    } catch (error) {
+      setModalError("Internal server error");
+    }
+  };
+
+  const closeReviewDeleteModal = () => {
+    setOpenModal(false);
+    setModalError("");
+  };
+
   return (
     <div className="admin-panel-reports-grid">
       <div>
@@ -188,13 +220,59 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       <div>
         <label className="admin-panel-report-label">Target</label>
         <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
-
-        <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
-          {report.targetUser?.isActive
-            ? "Active"
-            : "On suspension " +
-              (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
-        </p>
+        {report.targetUserId !== null && (
+          <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
+            {report.targetUser?.isActive
+              ? "Active"
+              : "On suspension " +
+                (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
+          </p>
+        )}
+        {(report.importedReviewId || report.reviewId) && (
+          <>
+            <p
+              className="admin-panel-review-paragraph"
+              onClick={() => setOpenModal(true)}
+            >
+              Show reported review
+            </p>
+            <Modal
+              isOpen={openModal}
+              closeModal={closeReviewDeleteModal}
+              content={
+                <div className="review-grid-modal-item">
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <h3 className="h4">Are you sure you want to delete this review?</h3>
+                  </div>
+                  <div>
+                    {report.importedReview ? (
+                      <p className="review-grid-content description">{report.importedReview.content}</p>
+                    ) : (
+                      <p className="review-grid-content description">{report.review?.content}</p>
+                    )}
+                  </div>
+                  {modalError && (
+                    <p
+                      className="error-text"
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
+                      {modalError}
+                    </p>
+                  )}
+                  <div className="modal-buttons">
+                    <button onClick={closeReviewDeleteModal}>Cancel</button>
+                    <button
+                      className="button-pink"
+                      onClick={handleDeleteReview}
+                    >
+                      Delete Review
+                    </button>
+                  </div>
+                </div>
+              }
+            />
+          </>
+        )}
       </div>
 
       <div className="admin-panel-report-content report-description">
@@ -222,7 +300,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                 ))}
               </Dropdown>
             ) : (
-              <button onClick={handleUnBanSubmit}>Lift Ban</button>
+              report.targetUser !== null && <button onClick={handleUnBanSubmit}>Lift Ban</button>
             )}
             <button
               className="button-pink"

@@ -1,0 +1,65 @@
+@use "sass:map";
+@use "../abstracts/" as abstracts;
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.review-grid-item {
+  min-height: 300px;
+  border: 1px solid abstracts.$primary-dark;
+  box-shadow: abstracts.$default-shadow;
+  border-radius: abstracts.$default-border-radius;
+  overflow: hidden;
+}
+
+.review-header-item {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 15px;
+  background-color: abstracts.$primary-darkgrey;
+}
+
+.review-header-item-secondary {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 15px;
+  background-color: abstracts.$primary-darkgrey;
+}
+
+.review-grid-modal-item {
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 0 10px;
+}
+
+.review-grid-content {
+  padding: 15px;
+  min-height: 200px;
+}
+.review-grid-footer-primary {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  background-color: map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
+}
+.review-grid-footer-secondary {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  background-color: abstracts.$primary-dark;
+}
+
+@media only screen and (max-width: abstracts.$large-width) {
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+}

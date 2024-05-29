@@ -273,7 +273,7 @@ describe("Movie review tests", () => {
 
     cy.contains("Making a test review to a movie")
       .parent({ timeout: 500 })
-      .get(".review-grid-footer-primary")
+      .get(".review-grid-footer")
       .find("button")
       .click();
 

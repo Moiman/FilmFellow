@@ -63,6 +63,20 @@ button:focus-visible {
   }
 }
 
+.button-review {
+  display: flex;
+  background-color: transparent;
+  padding: 0;
+  color: abstracts.$primary-light;
+  border-radius: 0;
+  text-align: left;
+  height: 100%;
+}
+
+.button-review:hover {
+  background-color: transparent;
+}
+
 .button-icon-text {
   display: inline-flex;
   gap: 2px;

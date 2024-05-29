@@ -23,7 +23,7 @@ export default async function userReviews({ params }: { params: { id: string } }
           </h2>
         }
       >
-        <div className="review-thumbnail-wrapper">
+        <div className="review-grid">
           {userReviews.map(userReview => (
             <ReviewThumbnail
               key={userReview.id}

@@ -8,9 +8,10 @@
   align-content: flex-start;
   gap: 40px;
   max-width: 1800px;
+  width: 100%;
 
   .review-wrapper {
-    gap: 5px;
+    gap: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-content: start;

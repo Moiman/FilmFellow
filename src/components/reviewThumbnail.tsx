@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
-import { Flag, Star, Trash2 } from "react-feather";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { toast } from "react-toastify";
+import { Flag, Star, Trash2 } from "react-feather";
 import { deleteReviewById, findReviewsByUserId } from "@/services/reviewService";
 import Modal from "./modal";
 
@@ -22,6 +23,10 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
 
   const handleDeleteReview = async () => {
     await deleteReviewById(Number(userReview.id));
+    toast(<p>Your review was deleted</p>, {
+      icon: <Trash2 strokeWidth={2.5} />,
+      className: "pink-toast",
+    });
   };
 
   return (
@@ -55,7 +60,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
         <p>{userReview.content}</p>
       </button>
       {userReview.userId === session?.user.id && (
-        <div className="review-grid-footer review-grid-footer-yellow">
+        <div className="review-grid-footer bg-yellow">
           <button
             onClick={handleDeleteReview}
             className="button-transparent"

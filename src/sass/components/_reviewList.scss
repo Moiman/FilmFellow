@@ -80,11 +80,11 @@
   }
 }
 
-.review-grid-footer-yellow {
+.bg-yellow {
   background-color: map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
 }
 
-.review-grid-footer-dark {
+.bg-dark {
   background-color: abstracts.$primary-dark;
 }
 

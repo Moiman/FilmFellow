@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Smile, Star, Trash2 } from "react-feather";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { Smile, Star, Trash2 } from "react-feather";
 import { deleteReviewById, getAllReviewsForMovie } from "@/services/reviewService";
 import { ReviewModal } from "./reviewModal";
 
@@ -35,6 +36,10 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
 
   const handleDeleteReview = async () => {
     await deleteReviewById(Number(review?.id));
+    toast(<p>Your review was deleted</p>, {
+      icon: <Trash2 strokeWidth={2.5} />,
+      className: "pink-toast",
+    });
   };
 
   return review ? (
@@ -76,7 +81,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         setIsModalOpen={setOpenReviewModal}
       />
       {ownReview && (
-        <div className="review-grid-footer review-grid-footer-yellow">
+        <div className="review-grid-footer bg-yellow">
           <button
             onClick={handleDeleteReview}
             className="button-transparent"
@@ -113,7 +118,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         isModalOpen={openImportedReviewModal}
         setIsModalOpen={setOpenImportedReviewModal}
       />
-      <div className="review-grid-footer review-grid-footer-dark">
+      <div className="review-grid-footer bg-dark">
         <p className="yellow">Imported from TMDB</p>
       </div>
     </div>

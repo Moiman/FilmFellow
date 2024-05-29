@@ -14,7 +14,7 @@ import { Watched } from "./watched";
 import { Watchlist } from "./watchlist";
 import { AddToList } from "./addToList";
 import { MovieWatchProviders } from "./movieWatchProviders";
-import type { Movie } from "@/app/movies/[id]/page";
+import type { Movie } from "./getMovie";
 
 export const MovieInfo = ({ movie }: { movie: Movie }) => {
   const { data: session } = useSession();

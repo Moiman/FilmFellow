@@ -221,29 +221,17 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         <label className="admin-panel-report-label">Reporter</label>
 
         <Link
-          
-          className={
-            report.creator?.isActive
-              ? "admin-panel-status-active reporter-status"
-              : "admin-panel-status-suspended reporter-status"
-          }
+          className={report.creator?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}
           href={`/users/${report.creatorId}`}
+          title={
+            report.creator?.isActive
+              ? "Active"
+              : "On suspension " +
+                (report.creator?.banDuration ? "until " + report.creator.banDuration.toDateString() : "forever")
+          }
         >
           {report.creator?.username}
         </Link>
-
-        <p
-          className={
-            report.creator?.isActive
-              ? "admin-panel-status-active hide-reporter-status"
-              : "admin-panel-status-suspended hide-reporter-status"
-          }
-        >
-          {report.creator?.isActive
-            ? "Active"
-            : "On suspension " +
-              (report.creator?.banDuration ? "until " + report.creator.banDuration.toDateString() : "forever")}
-        </p>
       </div>
       <div>
         <label className="admin-panel-report-label">Date</label>
@@ -253,30 +241,17 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         <label className="admin-panel-report-label">Target</label>
 
         <Link
-
-          className={
-            report.targetUser?.isActive
-              ? "admin-panel-status-active target-status"
-              : "admin-panel-status-suspended target-status"
-          }
+          className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}
           href={`/users/${report.targetUserId}`}
+          title={
+            report.targetUser?.isActive
+              ? "Active"
+              : "On suspension " +
+                (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")
+          }
         >
           {report.targetUser?.username}
         </Link>
-
-        <p
-          className={
-            report.targetUser?.isActive
-              ? "admin-panel-status-active hide-target-status"
-              : "admin-panel-status-suspended hide-target-status"
-          }
-        >
-          {report.targetUser?.isActive
-            ? "Active"
-            : "On suspension " +
-              (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
-        </p>
-
         {(report.importedReviewId || report.reviewId) && (
           <>
             {report.review ? <p>{report.review.movie.title}</p> : <p>{report.importedReview?.movie.title}</p>}

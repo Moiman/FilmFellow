@@ -237,7 +237,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         <label className="admin-panel-report-label">Date</label>
         <p>{showDate(report.created_at)}</p>
       </div>
-      <div>
+      <div style={{display: "grid", gridTemplateColumns: "auto"}}>
         <label className="admin-panel-report-label">Target</label>
 
         <Link
@@ -254,7 +254,11 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         </Link>
         {(report.importedReviewId || report.reviewId) && (
           <>
-            {report.review ? <p>{report.review.movie.title}</p> : <p>{report.importedReview?.movie.title}</p>}
+            {report.review ? (
+              <Link href={`/movies/${report.review.movie.id}`}>{report.review.movie.title}</Link>
+            ) : (
+              <Link href={`/movies/${report.importedReview?.movie.id}`}>{report.importedReview?.movie.title}</Link>
+            )}
 
             <p
               className="admin-panel-review-paragraph"

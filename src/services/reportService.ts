@@ -85,14 +85,14 @@ const getAllReports = async () => {
         select: {
           id: true,
           content: true,
-          movie: true
+          movie: true,
         },
       },
       importedReview: {
         select: {
           id: true,
           content: true,
-          movie: true
+          movie: true,
         },
       },
     },

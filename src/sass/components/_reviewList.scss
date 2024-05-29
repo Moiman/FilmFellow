@@ -53,9 +53,13 @@
 }
 
 .review-grid-content {
-  padding: 15px;
-  min-height: 200px;
-  height: 100%;
+  margin: 15px 15px 20px 15px;
+  max-height: 100%;
+  overflow: hidden;
+
+  p {
+    height: 200px;
+  }
 }
 
 .review-modal-content {

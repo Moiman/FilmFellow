@@ -67,7 +67,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         onClick={() => setOpenReviewModal(true)}
         className="review-grid-content description button-review"
       >
-        <p>{review.content.length > 303 ? review.content.slice(0, 300) + "..." : review.content}</p>
+        <p>{review.content}</p>
       </button>
       <ReviewModal
         reviewReported={checkIfReviewReported()}
@@ -105,11 +105,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         onClick={() => setOpenImportedReviewModal(true)}
         className="review-grid-content description button-review"
       >
-        <p>
-          {importedReview?.content.length! > 303
-            ? importedReview?.content.slice(0, 300) + "..."
-            : importedReview?.content}
-        </p>
+        <p>{importedReview?.content}</p>
       </button>
       <ReviewModal
         importedReviewReported={checkIfImportedReviewReported()}

@@ -52,7 +52,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
         onClick={() => setOpenReviewModal(true)}
         className="review-grid-content description button-review"
       >
-        <p>{userReview.content.length > 303 ? userReview.content.slice(0, 300) + "..." : userReview.content}</p>
+        <p>{userReview.content}</p>
       </button>
       {userReview.userId === session?.user.id && (
         <div className="review-grid-footer review-grid-footer-yellow">

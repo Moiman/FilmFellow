@@ -2,33 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getPersonById } from "@/services/personsService";
-import { getMovieById } from "@/services/movieService";
+import { getMovieById, getBestRatedPersonMovies } from "@/services/movieService";
 
 import { Section } from "@/components/section";
 import { MovieList } from "@/components/movieList";
-
-type Person = NonNullable<Awaited<ReturnType<typeof getPersonById>>>;
-
-const getAllPersonMovies = async (person: Person) => {
-  const movieCastIds = person.movieCast.map(cast => cast.movieId);
-  const movieCrewIds = person.movieCrew.map(crew => crew.movieId);
-
-  const uniqueIds = new Set([...movieCastIds, ...movieCrewIds]);
-
-  const movies = await Promise.all(
-    Array.from(uniqueIds).map(async movieId => {
-      const movie = await getMovieById(movieId);
-
-      if (!movie) {
-        return null;
-      }
-
-      return { poster_path: movie.poster_path, title: movie.title, id: movie.id };
-    }),
-  );
-
-  return movies.filter(movie => movie !== null) as NonNullable<(typeof movies)[0]>[];
-};
 
 export default async function PersonMovies({ params }: { params: { id: string } }) {
   const person = await getPersonById(parseInt(params.id));
@@ -37,7 +14,7 @@ export default async function PersonMovies({ params }: { params: { id: string } 
     notFound();
   }
 
-  const movies = await getAllPersonMovies(person);
+  const movies = await getBestRatedPersonMovies(person.id);
 
   return (
     <main>

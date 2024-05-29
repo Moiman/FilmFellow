@@ -17,7 +17,7 @@ test("Checks if footer is rendered", () => {
 });
 
 test("renders GitHub link with the correct href", () => {
-  const githubLink = screen.getByRole("link", { name: "" });
+  const githubLink = screen.getByRole("link", { name: "GitHub" });
   expect(githubLink).toHaveProperty("href", "https://github.com/Moiman/FilmFellow/");
 });
 

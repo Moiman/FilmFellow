@@ -77,7 +77,25 @@
     min-height: 400px;
 
     h2 {
-      line-height: 3.4rem;
+      line-height: 3rem;
+    }
+
+    .movie-genres {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 15px;
+
+      p {
+        font-size: 0.9rem;
+        color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+        padding-right: 15px;
+        border-right: 1px solid rgba(abstracts.$primary-light, 0.25);
+      }
+
+      p:last-child {
+        border-right: 0px;
+      }
     }
 
     .movie-rating {
@@ -94,8 +112,8 @@
       .current-rating {
         border-radius: 50%;
         background-color: abstracts.$primary-dark;
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -104,7 +122,7 @@
         line-height: abstracts.$default-line-height;
         letter-spacing: abstracts.$title-letter-spacing;
         color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
     }
 
@@ -124,7 +142,7 @@
         a {
           font-family: abstracts.$default-text-font;
           font-weight: 100;
-          font-size: 1rem;
+          font-size: 0.9rem;
           letter-spacing: normal;
         }
       }
@@ -217,8 +235,28 @@
     justify-content: flex-end;
     background-color: abstracts.$primary-darkgrey;
     width: 100%;
-    min-height: 10px;
-    padding: 10px;
-    gap: 10px;
+    padding: 15px;
+    gap: 40px;
+
+    .centered-logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: rgba(abstracts.$primary-light, 0.75);
+    }
+  }
+
+  @media only screen and (max-width: abstracts.$medium-width) {
+    .movie-streaming-sites {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      justify-items: center;
+      padding-bottom: 5px;
+    }
   }
 }

@@ -12,6 +12,7 @@ import { findUserFavoritesById } from "@/services/favoriteService";
 import { getUserLists } from "@/services/listService";
 import { ProfileInfo } from "./profileInfo";
 import { ListButton } from "./listButton";
+import { findReviewsByUserId } from "@/services/reviewService";
 import { NewListModal } from "./newListModal";
 
 export function shuffleArray(array: any[]) {
@@ -29,6 +30,7 @@ export default async function userProfile({ params }: { params: { id: string } }
     notFound();
   }
   const favorites = await findUserFavoritesById(userId);
+  const userReviews = await findReviewsByUserId(user.id);
 
   const userFavoriteHeader = (
     <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
@@ -48,7 +50,7 @@ export default async function userProfile({ params }: { params: { id: string } }
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
       <Sidebar iconPosition="right">
-        <ProfileInfo userId={userId} />
+        <ProfileInfo userId={user.id} />
       </Sidebar>
 
       <div className="profile-section-wrapper">
@@ -64,8 +66,12 @@ export default async function userProfile({ params }: { params: { id: string } }
         {/* Thumbnails of user's latest reviews and link to all reviews */}
         <Section header={userReviewsHeader}>
           <div className="review-wrapper">
-            <ReviewThumbnail />
-            <ReviewThumbnail />
+            {userReviews.slice(0, 4).map(userReview => (
+              <ReviewThumbnail
+                key={userReview.id}
+                userReview={userReview}
+              />
+            ))}
           </div>
         </Section>
 

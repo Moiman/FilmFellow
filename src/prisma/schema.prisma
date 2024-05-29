@@ -27,6 +27,12 @@ model Users {
   reporters       Reports[]         @relation("Creator")
   reportTargets   Reports[]         @relation("TargetUser")
   WatchListMovies WatchListMovies[]
+
+
+  description  String    @default("") @db.VarChar(255) 
+  twitter      String    @default("") @db.VarChar(50) 
+  instagram    String    @default("") @db.VarChar(50) 
+  tiktok       String    @default("") @db.VarChar(50) 
 }
 
 model Favorites {
@@ -143,6 +149,7 @@ model Reviews {
   created_at DateTime  @default(now())
   updated_at DateTime  @default(now())
   userId     Int
+  rating     Int?
   reports    Reports[]
 
   movie Movies @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: Cascade)

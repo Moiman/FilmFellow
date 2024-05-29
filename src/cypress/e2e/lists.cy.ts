@@ -13,6 +13,20 @@ describe("Movie lists tests", () => {
     cy.deleteUser(email, password);
   });
 
+  it("Watched list", () => {
+    cy.visit("/users/" + userId);
+    cy.get(".section").contains("Watched").click();
+    cy.location("pathname").should("contain", "/lists/");
+    cy.get(".section").contains("Watched");
+  });
+
+  it("Watchlist list", () => {
+    cy.visit("/users/" + userId);
+    cy.get(".section").contains("Watchlist").click();
+    cy.location("pathname").should("contain", "/lists/");
+    cy.get(".section").contains("Watchlist");
+  });
+
   it("Add list 1", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);
@@ -65,7 +79,7 @@ describe("Movie lists tests", () => {
     cy.visit("/users/" + userId);
     cy.get(".section").contains("List 1").click();
     cy.get("h2").contains("List 1");
-    cy.get(`[alt="The Shawshank Redemption"]`);
+    cy.get(".movie-list>a", { timeout: 40000 }).should("have.attr", "href").and("include", "/movies/278");
 
     cy.get(".list-styles>a").eq(1).click();
     cy.contains("Framed in the 1940s for the double murder of his wife and her lover").should("be.visible");

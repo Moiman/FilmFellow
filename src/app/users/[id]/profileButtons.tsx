@@ -9,7 +9,7 @@ export const ProfileButtons = ({ ownProfile, userId }: ProfileButtonsProps) => {
   return (
     <div style={{ display: "inline-flex", marginTop: "40px" }}>
       {ownProfile ? (
-        <form action="/profile/settings">
+        <form action="/settings">
           <button type="submit">Go to settings</button>
         </form>
       ) : (

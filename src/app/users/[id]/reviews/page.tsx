@@ -4,6 +4,7 @@ import { findUserById } from "@/services/userService";
 
 import { Section } from "@/components/section";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
+import { findReviewsByUserId } from "@/services/reviewService";
 
 export default async function userReviews({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));
@@ -11,6 +12,7 @@ export default async function userReviews({ params }: { params: { id: string } }
   if (!user) {
     notFound();
   }
+  const userReviews = await findReviewsByUserId(user.id);
 
   return (
     <main>
@@ -22,7 +24,12 @@ export default async function userReviews({ params }: { params: { id: string } }
         }
       >
         <div className="review-thumbnail-wrapper">
-          <ReviewThumbnail /> <ReviewThumbnail /> <ReviewThumbnail /> <ReviewThumbnail /> <ReviewThumbnail />
+          {userReviews.map(userReview => (
+            <ReviewThumbnail
+              key={userReview.id}
+              userReview={userReview}
+            />
+          ))}
         </div>
       </Section>
     </main>

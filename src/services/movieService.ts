@@ -132,23 +132,43 @@ const getMovieByLimitTypeGenre = async (limit: number, type: string, genre: stri
     },
     take: limit,
     orderBy: orderBy,
-    include: {
-      genres: {
-        select: {
-          genre: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
+    select: {
+      id: true,
+      title: true,
+      poster_path: true,
     },
   });
 
-  const moviesWithRearrangedGenres = moviesPopularOrder.map(element => {
-    return { ...element, genres: element.genres.map(genre => genre.genre.name) };
+  return moviesPopularOrder;
+};
+
+export const getBestRatedPersonMovies = async (personId: number, take?: number) => {
+  const movies = await prisma.movies.findMany({
+    take: take,
+    select: {
+      id: true,
+      title: true,
+      poster_path: true,
+    },
+    where: {
+      OR: [
+        {
+          cast: {
+            some: { personId: personId },
+          },
+        },
+        {
+          crew: {
+            some: { personId: personId },
+          },
+        },
+      ],
+    },
+    orderBy: {
+      vote_average: "desc",
+    },
   });
-  return moviesWithRearrangedGenres;
+  return movies;
 };
 
 const getAllGenres = async () => {
@@ -270,6 +290,38 @@ const getMoviesByTitle = async (titlePart: string) => {
   return movies;
 };
 
+const getWatchProvidersByMovieId = async (movieId: number) => {
+  const providers = await prisma.movieProviders.findMany({
+    where: {
+      movieId: movieId,
+      iso_3166_1: "US",
+    },
+    select: {
+      provider_id: true,
+      watchProvider: {
+        select: {
+          provider_name: true,
+          logo_path: true,
+        },
+      },
+    },
+    orderBy: {
+      watchProvider: {
+        display_priority: "asc",
+      },
+    },
+    take: 6,
+  });
+
+  const modifiedProviders = providers.map(provider => ({
+    provider_id: provider.provider_id,
+    logo_path: provider.watchProvider.logo_path,
+    provider_name: provider.watchProvider.provider_name,
+  }));
+
+  return modifiedProviders;
+};
+
 export {
   getMovieById,
   getMovieReviewsById,
@@ -278,4 +330,5 @@ export {
   getMovieCrewById,
   getMovieCastById,
   getMoviesByTitle,
+  getWatchProvidersByMovieId,
 };

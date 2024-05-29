@@ -1,0 +1,41 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.yellow-icon {
+  stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
+.cyan-icon {
+  stroke: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+}
+
+.pink-icon {
+  stroke: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+}
+
+.light-icon {
+  stroke: abstracts.$primary-light;
+}
+
+.dark-icon {
+  stroke: abstracts.$primary-dark;
+}
+
+.grey-icon {
+  stroke: abstracts.$primary-grey;
+}
+
+.yellow-icon-filled {
+  stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+}
+
+.cyan-icon-filled {
+  stroke: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  fill: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+}
+
+.pink-icon-filled {
+  stroke: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  fill: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+}

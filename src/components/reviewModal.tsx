@@ -66,12 +66,11 @@ export const ReviewModal = ({
                 {review.user.username}
               </Link>
             </div>
-            <div>
+            <div className="star-rating">
               {[1, 2, 3, 4, 5].map(starRating => (
                 <Star
                   key={starRating}
-                  stroke={review?.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
-                  fill={review?.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
+                  className={review.rating && review.rating >= starRating ? "selected" : "not-selected"}
                   strokeWidth={2}
                   size={20}
                 />

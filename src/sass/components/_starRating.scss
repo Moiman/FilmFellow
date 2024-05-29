@@ -10,17 +10,15 @@
     background-color: transparent;
     padding: 0;
     margin: 0;
+  }
 
-    .selected {
-      stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-      fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-      cursor: pointer;
-    }
+  .selected {
+    stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
 
-    .not-selected {
-      stroke: abstracts.$primary-light;
-      fill: abstracts.$primary-light;
-      cursor: pointer;
-    }
+  .not-selected {
+    stroke: abstracts.$primary-light;
+    fill: abstracts.$primary-light;
   }
 }

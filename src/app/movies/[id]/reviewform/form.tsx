@@ -20,10 +20,9 @@ export default function ReviewForm({ movie }: Props) {
   const [contentInput, setContentInput] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const reviewHeader = (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div className="header-default-style">
       <h2 className="yellow-name-header">
-        <Link href={`/movies/${movie.id}`}>{movie.title} </Link>
-        Review
+        <Link href={`/movies/${movie.id}`}>{movie.title}</Link> review
       </h2>
       <button
         type="submit"

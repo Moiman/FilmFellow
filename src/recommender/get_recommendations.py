@@ -12,17 +12,26 @@ recommender = Flask(__name__)
 
 @recommender.route('/recommender/user', methods=['POST'])
 def user_recommendations():
+    """
+    Get recommendations for a user with given ratings and favourites.
+    """
     data = request.get_json()
     return jsonify(get_recommendations_for_user(data.get("ratings"), 
     data.get("favourites")))
 
 @recommender.route('/recommender/movie/existing', methods=['POST'])
 def existing_movie_recommendations():
+    """
+    Get recommendations for a movie with given TMDB id.
+    """
     data = request.get_json()
     return jsonify(get_recommendations_for_movie(data.get("TMDB_id")))
 
 @recommender.route('/recommender/movie/features', methods=['POST'])
 def recommendations_based_on_features():
+    """
+    Get recommendations for a movie based on it's features.
+    """
     data = request.get_json()
     return jsonify(get_recommendations_for_features(data.get("features")))
 

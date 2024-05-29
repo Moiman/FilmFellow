@@ -4,6 +4,7 @@
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="number"],
 textarea {
   width: 100%;
 
@@ -31,7 +32,8 @@ textarea::placeholder {
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+input[type="number"] {
   padding: 5px 10px;
 }
 
@@ -52,6 +54,7 @@ input:focus-visible {
 input[type="text"]:focus-visible,
 input[type="password"]:focus-visible,
 input[type="email"]:focus-visible,
+input[type="number"]:focus-visible,
 textarea:focus-visible {
   border: 1px solid map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");
   outline: 1px solid map-get(map-get(abstracts.$highlight-colors, "yellow"), "default");

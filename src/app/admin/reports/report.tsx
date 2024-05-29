@@ -57,17 +57,28 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
       setAllReports(reports =>
         reports.map(report => {
-          if (report.targetUserId === data.id && report.targetUser) {
-            return {
-              ...report,
+          let updatedReport = { ...report };
+          if (updatedReport.targetUser && updatedReport.targetUserId === data.id) {
+            updatedReport = {
+              ...updatedReport,
               targetUser: {
-                ...report.targetUser,
+                ...updatedReport.targetUser,
                 isActive: data.isActive,
                 banDuration: new Date(data.banDuration),
               },
             };
           }
-          return report;
+          if (updatedReport.creator && updatedReport.creatorId === data.id) {
+            updatedReport = {
+              ...updatedReport,
+              creator: {
+                ...updatedReport.creator,
+                isActive: data.isActive,
+                banDuration: new Date(data.banDuration),
+              },
+            };
+          }
+          return updatedReport;
         }),
       );
 
@@ -118,10 +129,14 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
       setAllReports(reports =>
         reports.map(report => {
-          if (report.targetUserId === data.id && report.targetUser) {
-            return { ...report, targetUser: { ...report.targetUser, isActive: data.isActive } };
+          let updatedReport = { ...report };
+          if (updatedReport.targetUser && updatedReport.targetUserId === data.id) {
+            updatedReport = { ...updatedReport, targetUser: { ...updatedReport.targetUser, isActive: data.isActive } };
           }
-          return report;
+          if (updatedReport.creator && updatedReport.creatorId === data.id) {
+            updatedReport = { ...updatedReport, creator: { ...updatedReport.creator, isActive: data.isActive } };
+          }
+          return updatedReport;
         }),
       );
       setError("");
@@ -204,9 +219,26 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       </div>
       <div>
         <label className="admin-panel-report-label">Reporter</label>
-        <Link href={`/users/${report.creatorId}`}>{report.creator?.username}</Link>
 
-        <p className={report.creator?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
+        <Link
+          
+          className={
+            report.creator?.isActive
+              ? "admin-panel-status-active reporter-status"
+              : "admin-panel-status-suspended reporter-status"
+          }
+          href={`/users/${report.creatorId}`}
+        >
+          {report.creator?.username}
+        </Link>
+
+        <p
+          className={
+            report.creator?.isActive
+              ? "admin-panel-status-active hide-reporter-status"
+              : "admin-panel-status-suspended hide-reporter-status"
+          }
+        >
           {report.creator?.isActive
             ? "Active"
             : "On suspension " +
@@ -219,17 +251,36 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       </div>
       <div>
         <label className="admin-panel-report-label">Target</label>
-        <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
-        {report.targetUserId !== null && (
-          <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
-            {report.targetUser?.isActive
-              ? "Active"
-              : "On suspension " +
-                (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
-          </p>
-        )}
+
+        <Link
+
+          className={
+            report.targetUser?.isActive
+              ? "admin-panel-status-active target-status"
+              : "admin-panel-status-suspended target-status"
+          }
+          href={`/users/${report.targetUserId}`}
+        >
+          {report.targetUser?.username}
+        </Link>
+
+        <p
+          className={
+            report.targetUser?.isActive
+              ? "admin-panel-status-active hide-target-status"
+              : "admin-panel-status-suspended hide-target-status"
+          }
+        >
+          {report.targetUser?.isActive
+            ? "Active"
+            : "On suspension " +
+              (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
+        </p>
+
         {(report.importedReviewId || report.reviewId) && (
           <>
+            {report.review ? <p>{report.review.movie.title}</p> : <p>{report.importedReview?.movie.title}</p>}
+
             <p
               className="admin-panel-review-paragraph"
               onClick={() => setOpenModal(true)}

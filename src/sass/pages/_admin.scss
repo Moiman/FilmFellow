@@ -240,6 +240,20 @@
   min-width: 100%;
 }
 
+.reporter-status:hover + .hide-reporter-status {
+  display: block;
+}
+.hide-reporter-status {
+  display: none;
+}
+
+.target-status:hover + .hide-target-status {
+  display: block;
+}
+.hide-target-status {
+  display: none;
+}
+
 .admin-panel-reports {
   @media only screen and (max-width: abstracts.$large-width) {
     .report-buttons {

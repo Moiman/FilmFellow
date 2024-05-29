@@ -98,6 +98,7 @@ const getReviewById = async (reviewId: string) => {
     },
     include: {
       reports: true,
+      movie: true,
     },
   });
 
@@ -123,6 +124,7 @@ const getReviewById = async (reviewId: string) => {
         },
       },
       reports: true,
+      movie: true,
     },
   });
   if (review) {

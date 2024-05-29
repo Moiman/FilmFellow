@@ -126,8 +126,8 @@ describe("Logged in movie page tests", () => {
     cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("be.visible");
     cy.get(".modal-content svg").eq(1).click();
     cy.contains("Do you want to rate Forrest Gump", { timeout: 1000 }).should("not.exist");
-    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#ffc700");
-    cy.get(".movie-rating svg").eq(2).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.get(".movie-rating svg").eq(1).should("have.class", "selected");
+    cy.get(".movie-rating svg").eq(2).should("have.class", "not-selected");
     cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
     cy.contains("Mark as watched").should("be.visible");
   });
@@ -135,10 +135,10 @@ describe("Logged in movie page tests", () => {
   it("Give stars", () => {
     cy.login(email, password);
     cy.visit("/movies/13");
-    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.get(".movie-rating svg").eq(1).should("have.class", "not-selected");
     cy.get(".movie-rating svg").eq(1).click();
-    cy.get(".movie-rating svg").eq(1).should("have.attr", "fill").should("eq", "#ffc700");
-    cy.get(".movie-rating svg").eq(2).should("have.attr", "fill").should("eq", "#eff2f2");
+    cy.get(".movie-rating svg").eq(1).should("have.class", "selected");
+    cy.get(".movie-rating svg").eq(2).should("have.class", "not-selected");
     cy.contains("Remove from watched", { timeout: 1000 }).should("be.visible").click();
     cy.contains("Mark as watched").should("be.visible");
   });
@@ -184,5 +184,99 @@ describe("Movie crew and cast tests", () => {
     cy.get(`img[alt="${crewMember.name}"]`).click();
     cy.location("pathname").should("eq", `/persons/${crewMember.id}`);
     cy.get("h2").contains(`${crewMember.name}`);
+  });
+});
+
+describe("Movie review tests", () => {
+  const user = {
+    email: "user@gmail.com",
+    username: "user",
+    password: "Password1!",
+  };
+  let userId = "";
+
+  before(() => {
+    cy.request({ method: "POST", url: "/api/users/register", body: user, failOnStatusCode: false }).should(response => {
+      expect(response.status).to.eq(200);
+      expect(response.body.email).to.equal(user.email);
+      userId = response.body.id;
+    });
+  });
+  after(() => {
+    cy.deleteUser(user.email, user.password);
+  });
+
+  it("Test review form header to redirect movie details on click", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278/reviewform");
+    cy.get(".yellow-name-header").find("a").contains("The Shawshank Redemption").click();
+
+    cy.location("pathname").should("eq", `/movies/278`);
+  });
+
+  it("Write review to movie", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+    cy.get("button").contains("Add review").click();
+    cy.location("pathname").should("eq", "/movies/278/reviewform");
+
+    cy.get("textarea").type("Making a test review to a movie");
+    cy.get("button[type=submit]").click();
+
+    cy.location("pathname").should("eq", `/movies/278`);
+  });
+
+  it("Click the username that has written review should redirect to user page", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+    cy.get(".review-grid-item").find("a").contains(user.username).click();
+    cy.location("pathname").should("eq", `/users/${userId}`);
+  });
+
+  it("View own written review on userpage", () => {
+    cy.login(user.email, user.password);
+    cy.visit(`/users/${userId}`);
+
+    cy.get(".review-grid-content").contains("Making a test review to a movie");
+  });
+
+  it("Click the moviename where user has written review should redirect to movie page", () => {
+    cy.login(user.email, user.password);
+    cy.visit(`/users/${userId}`);
+    cy.get(".review-header-item").find("a").contains("The Shawshank Redemption").click();
+
+    cy.location("pathname").should("eq", `/movies/278`);
+  });
+
+  it("Movie reviews exists and can be navigated to see all reviews", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+
+    cy.get(".section-padding").find(".section").eq(2).find("a").contains("See all").click();
+    cy.location("pathname").should("eq", "/movies/278/reviews");
+
+    cy.get(".review-grid")
+      .find(".review-grid-item")
+      .should("be.visible")
+      .find("p")
+      .contains("Making a test review to a movie");
+  });
+
+  it("Delete own review", () => {
+    cy.login(user.email, user.password);
+    cy.visit("/movies/278");
+    cy.get("h2").contains("The Shawshank Redemption");
+    cy.location("pathname").should("eq", "/movies/278");
+
+    cy.contains("Making a test review to a movie")
+      .parent({ timeout: 500 })
+      .get(".review-grid-footer-primary")
+      .find("button")
+      .click();
+
+    cy.contains("Making a test review to a movie").should("not.exist");
   });
 });

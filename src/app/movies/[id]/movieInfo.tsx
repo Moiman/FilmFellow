@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Film } from "react-feather";
+import { Film, Star } from "react-feather";
 
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 import { StarRating } from "./starRating";
@@ -93,12 +93,18 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
               />
             )}
           </div>
-          <div className="movie-basic-data">
-            <h2 className="h1">{movie.title}</h2>
 
-            <div className="movie-data-row">
+          <div className="movie-basic-data">
+            <div className="movie-genres">
+              {movie.genres.map(genre => (
+                <p key={genre}>{genre}</p>
+              ))}
+            </div>
+
+            <h2 className="h1">{movie.title}</h2>
+            <div className="movie-data-row cyan">
               {movie.directors.length > 0 ? (
-                <p className="yellow">
+                <p>
                   Directed by{" "}
                   {movie.directors
                     .map<React.ReactNode>(director => (
@@ -112,9 +118,9 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                     .reduce((links, directorLink) => [links, ", ", directorLink])}
                 </p>
               ) : null}
-              {movie.releaseYear ? <p className="cyan">{movie.releaseYear}</p> : null}
-              {movie.ageRestrictions ? <p className="cyan">{movie.ageRestrictions}</p> : null}
-              {movie.runtime ? <p className="cyan">{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
+              {movie.releaseYear ? <p>{movie.releaseYear}</p> : null}
+              {movie.ageRestrictions ? <p>{movie.ageRestrictions}</p> : null}
+              {movie.runtime ? <p>{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
             </div>
             <p className="movie-description">{movie.overview}</p>
           </div>

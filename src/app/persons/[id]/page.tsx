@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { User } from "react-feather";
 
 import { getPersonById } from "@/services/personsService";
 import { getMovieById } from "@/services/movieService";
@@ -54,7 +55,7 @@ export default async function Person({ params }: { params: { id: string } }) {
       <div className="person-content">
         <div className="person-wrapper">
           <div className="image-wrapper">
-            {person.profile_path && (
+            {person.profile_path ? (
               <Image
                 alt={`${person.name}`}
                 src={`https://image.tmdb.org/t/p/h632/${person.profile_path}`}
@@ -62,6 +63,8 @@ export default async function Person({ params }: { params: { id: string } }) {
                 sizes="100%"
                 priority={true}
               />
+            ) : (
+              <User />
             )}
             <div className="gradient" />
           </div>

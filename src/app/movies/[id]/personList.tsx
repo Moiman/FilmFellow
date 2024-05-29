@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { User } from "react-feather";
 
 type personListItem = {
   id: number;
@@ -30,7 +31,9 @@ export const PersonList = ({ persons }: personListProps) => {
                 height={250}
               />
             ) : (
-              <div className="profile-path-placeholder" />
+              <div className="profile-path-placeholder">
+                <User />
+              </div>
             )}
           </Link>
           <p className="person-name">{person.name}</p>

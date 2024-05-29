@@ -13,7 +13,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
 
   const reviewsHeader = (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div className="header-default-style">
       <h3>Reviews</h3>
       <div style={{ display: "grid", gridTemplateColumns: "auto auto", alignItems: "center", gap: "10px" }}>
         {session && (
@@ -37,7 +37,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
       <div className="section-padding">
         <Section
           header={
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="header-default-style">
               <h3>Cast</h3> <Link href={`${params.id}/cast`}>See all</Link>
             </div>
           }
@@ -47,7 +47,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
 
         <Section
           header={
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="header-default-style">
               <h3>Crew</h3> <Link href={`${params.id}/crew`}>See all</Link>
             </div>
           }

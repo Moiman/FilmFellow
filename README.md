@@ -33,7 +33,7 @@ This project was made as a reference group project that was part of Buutti Train
 
 ### Recommender model:<a name="model"></a>
 
-[Python](https://www.python.org/), [flask](https://flask.palletsprojects.com/en/3.0.x/), [gunicorn](https://gunicorn.org/) [numpy](https://numpy.org/), [sklearn](https://scikit-learn.org/stable/), [pandas](https://pandas.pydata.org/), [scipy](https://scipy.org/), [rapidfuzz](https://pypi.org/project/rapidfuzz/), [requests](https://pypi.org/project/requests/)
+[Python](https://www.python.org/), [flask](https://flask.palletsprojects.com/en/3.0.x/), [gunicorn](https://gunicorn.org/), [numpy](https://numpy.org/), [sklearn](https://scikit-learn.org/stable/), [pandas](https://pandas.pydata.org/), [scipy](https://scipy.org/), [rapidfuzz](https://pypi.org/project/rapidfuzz/), [requests](https://pypi.org/project/requests/)
 
 ## How to run project locally<a name="install"></a>
 
@@ -86,7 +86,7 @@ npm run dev
 npm run cypress:run_headless
 ```
 
-### Recommendations
+## Recommendations
 
 ```
 Movie recommendations are given with a Flask app. ML methods are used in the app to calculate similar movies based on ratings or movie features and user recommendations based on user's ratings and favourited movies. It has three endpoints for different kinds of recommendations. The recommender uses MovieLens dataset with roughly 80,000 movies and 30 million ratings.

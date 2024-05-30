@@ -10,12 +10,36 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
     const moviesArr = await getMovieByLimitTypeGenre(6, type, genre);
     return moviesArr;
   };
+  const getUserRecommendations = async (type: string, genre: string | undefined) => {
+    const response = await fetch("http://localhost:5000/recommender/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ratings: ratings,
+        favourites: favourites,
+      }),
+    });
+    const recommArr = await getMovieByLimitTypeGenre(6, type, genre, response.json());
+    return recommArr;
+  };
 
   return (
     <main>
       <GenreSelector selectedGenre={selectedGenre} />
 
       <div className="section-wrapper">
+        <Section
+          header={
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h2 className="h3">Recommendations</h2>
+              <Link href="/recommendations/user">See all</Link>
+            </div>
+          }
+        >
+          <MovieList movies={await getUserRecommendations("NEED TO EDIT!!!!!", selectedGenre)} />
+        </Section>
         <Section
           header={
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

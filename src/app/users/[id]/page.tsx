@@ -33,14 +33,14 @@ export default async function userProfile({ params }: { params: { id: string } }
   const userReviews = await findReviewsByUserId(user.id);
 
   const userFavoriteHeader = (
-    <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+    <div className="header-default-style">
       <h3 className="h5">{user.username}&rsquo;s favorites</h3>
       <Link href={`/users/${params.id}/favorites`}>See all</Link>
     </div>
   );
 
   const userReviewsHeader = (
-    <div style={{ display: "inline-flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+    <div className="header-default-style">
       <h3 className="h5">Latest reviews</h3>
       <Link href={`/users/${params.id}/reviews`}>See all</Link>
     </div>
@@ -66,12 +66,16 @@ export default async function userProfile({ params }: { params: { id: string } }
         {/* Thumbnails of user's latest reviews and link to all reviews */}
         <Section header={userReviewsHeader}>
           <div className="review-wrapper">
-            {userReviews.slice(0, 4).map(userReview => (
-              <ReviewThumbnail
-                key={userReview.id}
-                userReview={userReview}
-              />
-            ))}
+            {userReviews.length > 0 ? (
+              userReviews.slice(0, 4).map(userReview => (
+                <ReviewThumbnail
+                  key={userReview.id}
+                  userReview={userReview}
+                />
+              ))
+            ) : (
+              <p>No reviews yet.</p>
+            )}
           </div>
         </Section>
 

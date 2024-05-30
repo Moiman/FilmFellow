@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Section } from "@/components/section";
-import { fetchMovies } from "./movieFetches";
+import { getMovieByLimitTypeGenre } from "@/services/movieService";
 import { MovieList } from "@/components/movieList";
 import GenreSelector from "@/components/genreSelector";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
   const getPosters = async (type: string, genre: string | undefined) => {
-    const moviesArr = await fetchMovies(6, type, genre);
+    const moviesArr = await getMovieByLimitTypeGenre(6, type, genre);
     return moviesArr;
   };
 
@@ -18,7 +18,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
       <div className="section-wrapper">
         <Section
           header={
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="header-default-style">
               <h2 className="h3">New Movies</h2>
               <Link href="/new">See all</Link>
             </div>
@@ -28,7 +28,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
         </Section>
         <Section
           header={
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="header-default-style">
               <h2 className="h3">Popular Movies</h2>
               <Link href="/popular">See all</Link>
             </div>
@@ -38,7 +38,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
         </Section>
         <Section
           header={
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="header-default-style">
               <h2 className="h3">Best Rated Movies</h2>
               <Link href="/bestrated">See all</Link>
             </div>

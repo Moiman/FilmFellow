@@ -15,7 +15,7 @@
 
 ## About this project<a name="about"></a>
 
-Fullstack movie data application where users can find information about different movies with reviews and ratings. Movie data is fetched from [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started)
+Fullstack movie data application where users can find information about different movies with reviews and ratings and get recommendations. Movie data is fetched from [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started)
 
 <div align="center">
     <img src="screenshots/FilmFellow.png" width="600px"</img>
@@ -33,19 +33,19 @@ This project was made as a reference group project that was part of Buutti Train
 
 ### Recommender model:<a name="model"></a>
 
-[Python](https://www.python.org/), [numpy](https://numpy.org/), [sklearn](https://scikit-learn.org/stable/), [pandas](https://pandas.pydata.org/), [scipy](https://scipy.org/), [rapidfuzz](https://pypi.org/project/rapidfuzz/)
+[Python](https://www.python.org/), [flask](https://flask.palletsprojects.com/en/3.0.x/), [gunicorn](https://gunicorn.org/) [numpy](https://numpy.org/), [sklearn](https://scikit-learn.org/stable/), [pandas](https://pandas.pydata.org/), [scipy](https://scipy.org/), [rapidfuzz](https://pypi.org/project/rapidfuzz/), [requests](https://pypi.org/project/requests/)
 
 ## How to run project locally<a name="install"></a>
 
-### Start the database and run latest migration
+### Start the database and recommender and run latest migration
 
 ```
 Copy .env.example to .env in the root folder and inside ./src
 
-docker-compose up postgres
+docker compose up postgres recommender
 ```
 
-After database is running
+After database and recommender are running
 
 ```
 navigate to ./src
@@ -85,6 +85,15 @@ navigate ./src
 npm run dev
 npm run cypress:run_headless
 ```
+
+### Recommendations
+
+```
+Movie recommendations are given with a Flask app. ML methods are used in the app to calculate similar movies based on ratings or movie features and user recommendations based on user's ratings and favourited movies. It has three endpoints for different kinds of recommendations. The recommender uses MovieLens dataset with roughly 80,000 movies and 30 million ratings.
+
+https://grouplens.org/datasets/movielens/
+```
+
 
 ## Deployment<a name="deployment"></a>
 

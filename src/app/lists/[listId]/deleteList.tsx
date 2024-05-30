@@ -28,7 +28,7 @@ export const DeleteList = ({ id, name, userId }: { id: number; name: string; use
       onClick={deleteClick}
     >
       <Trash2
-        className="delete-button"
+        className="pink-icon"
         size={20}
       />
     </button>

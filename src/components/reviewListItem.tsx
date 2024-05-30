@@ -86,7 +86,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
             className="button-transparent"
           >
             <Trash2
-              color="black"
+              className="dark-icon"
               size={20}
             />
           </button>

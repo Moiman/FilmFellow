@@ -39,3 +39,45 @@
   stroke: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
   fill: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
+
+a,
+button {
+  .yellow-icon:hover {
+    stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+  }
+
+  .cyan-icon:hover {
+    stroke: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
+  }
+
+  .pink-icon:hover {
+    stroke: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
+  }
+
+  .light-icon:hover {
+    stroke: rgb(190, 190, 190);
+  }
+
+  .dark-icon:hover {
+    stroke: #000;
+  }
+
+  .grey-icon:hover {
+    stroke: rgb(150, 150, 150);
+  }
+
+  .yellow-icon-filled:hover {
+    stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+    fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+  }
+
+  .cyan-icon-filled:hover {
+    stroke: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
+    fill: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
+  }
+
+  .pink-icon-filled:hover {
+    stroke: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
+    fill: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
+  }
+}

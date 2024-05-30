@@ -21,7 +21,7 @@ export const RenameList = ({ id }: { id: number }) => {
       >
         <Edit
           size={20}
-          className="edit-button"
+          className="yellow-icon"
         />
       </button>
 

@@ -13,24 +13,10 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleEscapeKey = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         closeModal();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscapeKey);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [closeModal, isOpen]);
-
-  useEffect(() => {
-    const handleTabKey = (e: KeyboardEvent) => {
-      if (e.key === "Tab" && modalRef.current) {
+      } else if (e.key === "Tab" && modalRef.current) {
         const focusableElements = modalRef.current.querySelectorAll(
           'button:not([disabled]), [href]:not([aria-disabled="true"]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])',
         ) as NodeListOf<HTMLElement>;
@@ -58,7 +44,8 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
     };
 
     if (isOpen) {
-      document.addEventListener("keydown", handleTabKey);
+      document.addEventListener("keydown", handleKeyDown);
+
       const firstFocusable = modalRef.current?.querySelector(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       ) as HTMLElement;
@@ -66,9 +53,9 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
     }
 
     return () => {
-      document.removeEventListener("keydown", handleTabKey);
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [closeModal, isOpen]);
 
   return (
     isOpen && (

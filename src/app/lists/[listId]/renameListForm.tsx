@@ -74,7 +74,7 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
       <input
         type="text"
         id="listName"
-        placeholder="Rename your list..."
+        placeholder="e.g., Weekend Binge, Must-Watch Thrillers, Horror Movie Marathon"
         {...register("listName")}
         onChange={e => setInputValue(e.target.value)}
         required

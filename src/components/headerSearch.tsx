@@ -79,7 +79,7 @@ export const HeaderSearch = () => {
         type="text"
         data-cy="search-input"
         className="searchbar-input"
-        placeholder="Search for a movie..."
+        placeholder="Search movies by title..."
         onFocus={() => setIsOpen(true)}
         value={search}
         onChange={e => {

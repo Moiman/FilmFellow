@@ -63,7 +63,7 @@ export const NewListForm = ({ formAction }: Props) => {
       </div>
       <input
         type="text"
-        placeholder="Give list a name..."
+        placeholder="e.g., Weekend Binge, Must-Watch Thrillers, Horror Movie Marathon"
         {...register("listName")}
         onChange={e => setInputValue(e.target.value)}
         required

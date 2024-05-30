@@ -112,7 +112,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
 
         <textarea
           rows={5}
-          placeholder="Tell about yourself!"
+          placeholder="Tell us about yourself! What are your favorite movies? Any genres you love or avoid? Share your all-time favorite movie moments!"
           {...register("description")}
           value={userDescription}
           onChange={e => setUserDescription(e.currentTarget.value)}

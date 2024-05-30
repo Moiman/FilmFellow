@@ -111,6 +111,22 @@ describe("Admin report panel tests", () => {
     cy.location("pathname").should("eq", `/`);
   });
 
+  it("Try to report movie review that has been reported", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit("/movies/278");
+    cy.get(".review-grid").find(".review-grid-item").first().should("be.visible").find(".review-grid-content").click(),
+      { timeout: 500 };
+    cy.get("dialog").should("exist");
+    cy.get(".modal-box").find(".modal-content").contains("button", "Reported!").should("exist");
+  });
+
+  it("Click on movie name should navigate to moviepage", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit("/admin/reports");
+    cy.get(".admin-panel-reports-grid").first().find("div").eq(3).find("a").should("have.attr", "href", "/movies/278").click();
+    cy.location("pathname").should("eq", `/movies/278`);
+  });
+
   it("Delete reported review", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");

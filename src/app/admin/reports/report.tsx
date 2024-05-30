@@ -133,9 +133,11 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
           if (updatedReport.targetUser && updatedReport.targetUserId === data.id) {
             updatedReport = { ...updatedReport, targetUser: { ...updatedReport.targetUser, isActive: data.isActive } };
           }
+
           if (updatedReport.creator && updatedReport.creatorId === data.id) {
             updatedReport = { ...updatedReport, creator: { ...updatedReport.creator, isActive: data.isActive } };
           }
+
           return updatedReport;
         }),
       );
@@ -239,19 +241,20 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "auto" }}>
         <label className="admin-panel-report-label">Target</label>
-
-        <Link
-          className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}
-          href={`/users/${report.targetUserId}`}
-          title={
-            report.targetUser?.isActive
-              ? "Active"
-              : "On suspension " +
-                (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")
-          }
-        >
-          {report.targetUser?.username}
-        </Link>
+        {report.targetUserId !== null && (
+          <Link
+            className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}
+            href={`/users/${report.targetUserId}`}
+            title={
+              report.targetUser?.isActive
+                ? "Active"
+                : "On suspension " +
+                  (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")
+            }
+          >
+            {report.targetUser?.username}
+          </Link>
+        )}
         {(report.importedReviewId || report.reviewId) && (
           <>
             {report.review ? (

@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Flag } from "react-feather";
-import Link from "next/link";
 
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";

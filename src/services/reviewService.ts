@@ -98,7 +98,12 @@ const getReviewById = async (reviewId: string) => {
     },
     include: {
       reports: true,
-      movie: true,
+      movie: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
     },
   });
 
@@ -124,7 +129,12 @@ const getReviewById = async (reviewId: string) => {
         },
       },
       reports: true,
-      movie: true,
+      movie: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
     },
   });
   if (review) {

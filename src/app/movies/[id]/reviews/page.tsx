@@ -17,10 +17,9 @@ export default async function MovieReviews({ params }: { params: { id: string } 
     <main>
       <Section
         header={
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div className="header-default-style">
             <h2 className="yellow-name-header">
-              <Link href={`/movies/${params.id}`}>{movie.title} </Link>
-              Reviews
+              <Link href={`/movies/${params.id}`}>{movie.title}</Link> reviews
             </h2>
             {session && (
               <form action={`/movies/${params.id}/reviewform`}>

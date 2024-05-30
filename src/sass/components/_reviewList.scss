@@ -33,6 +33,10 @@
   .star-rating {
     min-width: fit-content;
   }
+
+  svg {
+    color: grey;
+  }
 }
 
 .review-header-item-secondary {
@@ -43,6 +47,10 @@
   gap: 10px;
   padding: 15px;
   background-color: abstracts.$primary-darkgrey;
+
+  svg {
+    color: grey;
+  }
 }
 
 .review-grid-modal-item {

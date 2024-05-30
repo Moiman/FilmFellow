@@ -45,7 +45,7 @@ describe("Movie lists tests", () => {
     cy.get(".section").contains("List 2").click();
     cy.location("pathname").should("contain", "/lists/");
     cy.get(".section").contains("List 2");
-    cy.get(".section .delete-button").click();
+    cy.get(".section .pink-icon").click();
     cy.location("pathname").should("eq", "/users/" + userId);
     cy.get(".section").last().should("contain", "List 1");
     cy.get(".section").last().should("not.contain", "List 2");

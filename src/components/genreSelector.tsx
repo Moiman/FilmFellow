@@ -18,7 +18,7 @@ export default async function GenreSelector({ selectedGenre }: { selectedGenre: 
           {genre.name === selectedGenre && (
             <Check
               size={20}
-              color="#ffc700"
+              className="yellow-icon"
             />
           )}
         </Link>
@@ -34,7 +34,7 @@ export default async function GenreSelector({ selectedGenre }: { selectedGenre: 
         {!selectedGenre && (
           <Check
             size={20}
-            color="#ffc700"
+            className="yellow-icon"
           />
         )}
       </Link>,

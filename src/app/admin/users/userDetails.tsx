@@ -248,7 +248,9 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
   return (
     <div className="admin-panel-user-list">
       <div className="admin-panel-user-data">
-        <Link href={`/users/${selectedUser.id}`}>{selectedUser.isActive ? <Smile /> : <Frown />}</Link>
+        <Link href={`/users/${selectedUser.id}`}>
+          {selectedUser.isActive ? <Smile className="grey-icon" /> : <Frown className="grey-icon" />}
+        </Link>
         <div className="username-and-email">
           <p className="username">{selectedUser.username}</p>
           <p>{selectedUser.email}</p>

@@ -7,6 +7,10 @@ import { toggleMovieList, getUsersOwnLists, createNewList } from "@/services/lis
 import { NewListForm } from "@/components/newListForm";
 import Modal from "@/components/modal";
 
+interface FormData {
+  listName: string;
+}
+
 export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [lists, setLists] = useState<Awaited<ReturnType<typeof getUsersOwnLists>>>([]);
@@ -31,18 +35,17 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
   };
 
   const newListAction = async (formData: FormData) => {
-    const name = formData.get("name");
-    if (name) {
-      const list = await createNewList(name.toString());
+    if (formData.listName) {
+      const list = await createNewList(formData.listName.toString());
       await toggleMovieList(movieId, list.id);
-      setLists(lists.concat({ id: list.id, name: name.toString(), isMovieInList: true }));
+      setLists(lists.concat({ id: list.id, name: formData.listName.toString(), isMovieInList: true }));
       setIsOpen(false);
 
       toast(
         <p>
-          List <span className="highlight-text">{name.toString()}</span> was created and updated
+          List <span className="highlight-text">{formData.listName.toString()}</span> was created and updated
         </p>,
-        { icon: <List />, className: "yellow-toast" },
+        { icon: <List />, className: "cyan-toast" },
       );
     }
   };

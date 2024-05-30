@@ -23,7 +23,6 @@
     width: 125px;
     height: auto;
     stroke-width: 1.5px;
-    color: grey;
     margin: auto;
   }
 
@@ -62,18 +61,6 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-  }
-
-  .pink > svg {
-    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
-  }
-
-  .yellow > svg {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-  }
-
-  .cyan > svg {
-    color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
   }
 }
 

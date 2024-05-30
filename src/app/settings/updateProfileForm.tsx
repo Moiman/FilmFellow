@@ -122,8 +122,8 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
 
       <h3 className="h5">Social Media</h3>
       <div className="profile-settings-social-media">
-        <div className="social-media-row pink">
-          <Twitter />
+        <div className="social-media-row">
+          <Twitter className="pink-icon" />
           <input
             type="text"
             placeholder="Your Twitter handle"
@@ -134,8 +134,8 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         </div>
         {errors.twitter && <p className="error-text">{errors.twitter.message}</p>}
 
-        <div className="social-media-row yellow">
-          <Instagram />
+        <div className="social-media-row">
+          <Instagram className="yellow-icon" />
           <input
             type="text"
             placeholder="Your Instagram handle"
@@ -146,7 +146,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         </div>
         {errors.instagram && <p className="error-text">{errors.instagram.message}</p>}
 
-        <div className="social-media-row cyan">
+        <div className="social-media-row">
           <Image
             src="/icons/tiktok_icon.svg"
             height={24}

@@ -59,7 +59,7 @@ export const ReviewModal = ({
             <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
               <Smile
                 size={30}
-                className="grey-icon"
+                className="user-icon"
               />
               <Link
                 className="h5"
@@ -118,7 +118,7 @@ export const ReviewModal = ({
           >
             <Smile
               size={30}
-              className="grey-icon"
+              className="user-icon"
             />
             <p className="h5">{importedReview?.author}</p>
           </div>

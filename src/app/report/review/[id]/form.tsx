@@ -60,9 +60,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
             onSubmit={handleReportSubmit}
             className="form"
           >
-            <p className="review-grid-content description">
-              {targetReview.content}
-            </p>
+            <p className="review-grid-content description">{targetReview.content}</p>
             <label htmlFor="about">Write your report here</label>
             <textarea
               id="about"

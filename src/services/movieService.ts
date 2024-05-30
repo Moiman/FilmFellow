@@ -116,6 +116,7 @@ const getMovieByLimitTypeGenre = async (
   } else if (type === "bestrated") {
     voteCountLimit = 300;
     orderBy.vote_average = "desc";
+  } else if (movieIds !== undefined) {
   } else {
     return [];
   }
@@ -144,6 +145,12 @@ const getMovieByLimitTypeGenre = async (
       poster_path: true,
     },
   });
+
+  if (movieIds !== undefined) {
+    return movies.toSorted((a, b) => {
+      return movieIds.indexOf(a.id) - movieIds.indexOf(b.id);
+    });
+  }
 
   return movies;
 };

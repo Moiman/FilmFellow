@@ -13,26 +13,26 @@ def feature_formatter(features: List[str]) -> List[str]:
     Returns:
         list of strings: The movie features in right format.
     """
-    
-    genres = ["drama", 
-              "comedy", 
-              "thriller", 
-              "romance", 
-              "action", 
-              "documentary", 
-              "horror", 
-              "crime", 
-              "adventure", 
-              "sci-fi", 
-              "animation", 
-              "children", 
-              "mystery", 
-              "fantasy", 
-              "war", 
-              "western", 
-              "film-noir", 
+
+    genres = ["drama",
+              "comedy",
+              "thriller",
+              "romance",
+              "action",
+              "documentary",
+              "horror",
+              "crime",
+              "adventure",
+              "sci-fi",
+              "animation",
+              "children",
+              "mystery",
+              "fantasy",
+              "war",
+              "western",
+              "film-noir",
               "imax"]
-    
+
     for i in range(len(features)):
         if features[i].lower() in genres:
             if features[i].lower() == "imax":
@@ -45,5 +45,5 @@ def feature_formatter(features: List[str]) -> List[str]:
                 features[i] = features[i].capitalize()
         else:
             features[i] = features[i].lower()
-            
+
     return features

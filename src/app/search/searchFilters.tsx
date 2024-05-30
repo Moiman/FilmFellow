@@ -18,8 +18,9 @@ export default function SearchFilters() {
   const handleFilter = (event: ChangeEvent<HTMLInputElement> | any, param: string) => {
     const current = new URLSearchParams(Array.from(searchParams.entries()));
     const value = event.target.value.trim();
+    console.log(event);
 
-    if (!value) {
+    if (!event.target.value || (!event.target.checked && event.target.type === "checkbox")) {
       current.delete(param);
     } else {
       current.set(param, event.target.value);

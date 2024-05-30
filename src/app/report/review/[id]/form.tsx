@@ -60,8 +60,8 @@ export default function ReportReviewForm({ targetReview }: Props) {
             onSubmit={handleReportSubmit}
             className="form"
           >
-            <p className="description">
-              {targetReview.content.length > 303 ? targetReview.content.slice(0, 300) + "..." : targetReview.content}
+            <p className="review-grid-content description">
+              {targetReview.content}
             </p>
             <label htmlFor="about">Write your report here</label>
             <textarea

@@ -123,7 +123,13 @@ describe("Admin report panel tests", () => {
   it("Click on movie name should navigate to moviepage", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");
-    cy.get(".admin-panel-reports-grid").first().find("div").eq(3).find("a").should("have.attr", "href", "/movies/278").click();
+    cy.get(".admin-panel-reports-grid")
+      .first()
+      .find("div")
+      .eq(3)
+      .find("a")
+      .should("have.attr", "href", "/movies/278")
+      .click();
     cy.location("pathname").should("eq", `/movies/278`);
   });
 

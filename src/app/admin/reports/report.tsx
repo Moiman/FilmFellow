@@ -57,28 +57,25 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
       setAllReports(reports =>
         reports.map(report => {
-          let updatedReport = { ...report };
-          if (updatedReport.targetUser && updatedReport.targetUserId === data.id) {
-            updatedReport = {
-              ...updatedReport,
-              targetUser: {
-                ...updatedReport.targetUser,
-                isActive: data.isActive,
-                banDuration: new Date(data.banDuration),
-              },
-            };
-          }
-          if (updatedReport.creator && updatedReport.creatorId === data.id) {
-            updatedReport = {
-              ...updatedReport,
-              creator: {
-                ...updatedReport.creator,
-                isActive: data.isActive,
-                banDuration: new Date(data.banDuration),
-              },
-            };
-          }
-          return updatedReport;
+          return {
+            ...report,
+            targetUser:
+              report.targetUser && report.targetUserId === data.id
+                ? {
+                    ...report.targetUser,
+                    isActive: data.isActive,
+                    banDuration: new Date(data.banDuration),
+                  }
+                : report.targetUser,
+            creator:
+              report.creator && report.creatorId === data.id
+                ? {
+                    ...report.creator,
+                    isActive: data.isActive,
+                    banDuration: new Date(data.banDuration),
+                  }
+                : report.creator,
+          };
         }),
       );
 
@@ -129,16 +126,23 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
       setAllReports(reports =>
         reports.map(report => {
-          let updatedReport = { ...report };
-          if (updatedReport.targetUser && updatedReport.targetUserId === data.id) {
-            updatedReport = { ...updatedReport, targetUser: { ...updatedReport.targetUser, isActive: data.isActive } };
-          }
-
-          if (updatedReport.creator && updatedReport.creatorId === data.id) {
-            updatedReport = { ...updatedReport, creator: { ...updatedReport.creator, isActive: data.isActive } };
-          }
-
-          return updatedReport;
+          return {
+            ...report,
+            targetUser:
+              report.targetUser && report.targetUserId === data.id
+                ? {
+                    ...report.targetUser,
+                    isActive: data.isActive,
+                  }
+                : report.targetUser,
+            creator:
+              report.creator && report.creatorId === data.id
+                ? {
+                    ...report.creator,
+                    isActive: data.isActive,
+                  }
+                : report.creator,
+          };
         }),
       );
       setError("");

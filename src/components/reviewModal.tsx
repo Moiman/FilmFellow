@@ -50,15 +50,17 @@ export const ReviewModal = ({
         <div className="review-grid-modal-item">
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto",
+              display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               gap: "10px",
             }}
           >
             <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-              <Smile size={30} />
+              <Smile
+                size={30}
+                className="grey-icon"
+              />
               <Link
                 className="h5"
                 href={"/users/" + review.user.id}
@@ -92,7 +94,10 @@ export const ReviewModal = ({
                   </button>
                 </form>
               ) : (
-                <button className="button-pink button-icon-text">
+                <button
+                  className="button-pink button-icon-text"
+                  disabled
+                >
                   <Flag size={16} />
                   Reported!
                 </button>
@@ -106,14 +111,15 @@ export const ReviewModal = ({
         <div className="review-grid-modal-item">
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto",
+              display: "inline-flex",
               alignItems: "center",
-              justifyContent: "flex-start",
               gap: "10px",
             }}
           >
-            <Smile size={30} />
+            <Smile
+              size={30}
+              className="grey-icon"
+            />
             <p className="h5">{importedReview?.author}</p>
           </div>
           <p className="review-modal-content description">{importedReview?.content}</p>
@@ -130,7 +136,10 @@ export const ReviewModal = ({
                   </button>
                 </form>
               ) : (
-                <button className="button-pink button-icon-text">
+                <button
+                  className="button-pink button-icon-text"
+                  disabled
+                >
                   <Flag size={16} />
                   Reported!
                 </button>

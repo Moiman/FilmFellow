@@ -32,7 +32,7 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
     const handleTabKey = (e: KeyboardEvent) => {
       if (e.key === "Tab" && modalRef.current) {
         const focusableElements = modalRef.current.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          'button:not([disabled]), [href]:not([aria-disabled="true"]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])',
         ) as NodeListOf<HTMLElement>;
 
         if (focusableElements.length === 0) {

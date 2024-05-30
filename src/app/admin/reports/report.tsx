@@ -237,7 +237,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         <label className="admin-panel-report-label">Date</label>
         <p>{showDate(report.created_at)}</p>
       </div>
-      <div style={{display: "grid", gridTemplateColumns: "auto"}}>
+      <div style={{ display: "grid", gridTemplateColumns: "auto" }}>
         <label className="admin-panel-report-label">Target</label>
 
         <Link

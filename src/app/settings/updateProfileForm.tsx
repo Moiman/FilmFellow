@@ -105,7 +105,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         <h3 className="h5">Description </h3>
 
         <div className="description-word-amount">
-          <p className={userDescription.length <= 255 ? "description" : "description pink"}>
+          <p className={userDescription.length <= 255 ? "description grey" : "description pink"}>
             {userDescription.length}/255
           </p>
         </div>

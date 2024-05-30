@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useState } from "react";
 
 type Props = {
   formAction: (formData: FormData) => void;
@@ -32,20 +33,41 @@ export const NewListForm = ({ formAction }: Props) => {
     formAction(formData);
   };
 
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <form
       className="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <label className="h4">
-        Create new list
-        <input
-          type="text"
-          placeholder="Give list a name..."
-          {...register("listName")}
-          required
-        />
-      </label>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+        }}
+      >
+        <label
+          className="h4"
+          htmlFor="listName"
+        >
+          Create new list
+        </label>
+
+        <p
+          style={{ marginBottom: "4px" }}
+          className={inputValue.length <= 50 ? "description grey" : "description pink"}
+        >
+          {inputValue.length}/50
+        </p>
+      </div>
+      <input
+        type="text"
+        placeholder="Give list a name..."
+        {...register("listName")}
+        onChange={e => setInputValue(e.target.value)}
+        required
+      />
       {errors.listName && <p className="error-message pink">{errors.listName.message}</p>}
       <button
         className="list-form-button"

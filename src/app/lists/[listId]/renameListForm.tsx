@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,6 +28,8 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
     resolver: yupResolver(validationSchema),
   });
 
+  const [inputValue, setInputValue] = useState("");
+
   const onSubmit = async (formData: FormData) => {
     await updateListName(id, formData.listName);
     toast(
@@ -46,15 +49,36 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
       className="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <label className="h4">
-        Rename list
-        <input
-          type="text"
-          placeholder="Rename your list..."
-          {...register("listName")}
-          required
-        />
-      </label>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+        }}
+      >
+        <label
+          className="h4"
+          htmlFor="listName"
+        >
+          Rename list
+        </label>
+
+        <p
+          style={{ marginBottom: "4px" }}
+          className={inputValue.length <= 50 ? "description grey" : "description pink"}
+        >
+          {inputValue.length}/50
+        </p>
+      </div>
+
+      <input
+        type="text"
+        id="listName"
+        placeholder="Rename your list..."
+        {...register("listName")}
+        onChange={e => setInputValue(e.target.value)}
+        required
+      />
       {errors.listName && <p className="error-message pink">{errors.listName.message}</p>}
       <button
         className="list-form-button"

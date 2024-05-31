@@ -11,6 +11,7 @@ import { createReview } from "@/services/reviewService";
 import { getMovieById } from "@/services/movieService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@/components/errorMessage";
 
 interface Props {
   movie: Movie;
@@ -116,7 +117,7 @@ export default function ReviewForm({ movie }: Props) {
                 {...register("content")}
                 onChange={e => setContentInput(e.target.value)}
               />
-              {errors.content && <p className="pink">{errors.content.message}</p>}
+              {errors.content && <ErrorMessage message={errors.content.message} />}
             </form>
           </div>
         </Section>

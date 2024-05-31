@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { Eye, EyeOff, Save } from "react-feather";
 
 import Modal from "@/components/modal";
+import { ErrorMessage } from "@/components/errorMessage";
 
 interface Props {
   user: User;
@@ -293,7 +294,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </div>
             <div>
               {error && <p className="error-text">{error}</p>}
-              {errorsUsername.username && <p className="error-text">{errorsUsername.username.message}</p>}
+              {errorsUsername.username && <ErrorMessage message={errorsUsername.username.message} />}
             </div>
           </form>
         ) : (
@@ -332,7 +333,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </div>
             <div>
               {error && <p className="error-text">{error}</p>}
-              {errorsEmail.email && <p className="error-text">{errorsEmail.email.message}</p>}
+              {errorsEmail.email && <ErrorMessage message={errorsEmail.email.message} />}
             </div>
           </form>
         ) : (
@@ -382,7 +383,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </div>
             <div>
               {error && <p className="error-text">{error}</p>}
-              {errorsPassword.password && <p className="error-text">{errorsPassword.password.message}</p>}
+              {errorsPassword.password && <ErrorMessage message={errorsPassword.password.message} />}
             </div>
           </form>
         ) : (

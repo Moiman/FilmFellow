@@ -8,6 +8,7 @@ import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { Section } from "@/components/section";
+import { ErrorMessage } from "@/components/errorMessage";
 
 interface RegisterFormData {
   username: string;
@@ -103,7 +104,7 @@ export default function Register() {
               {...register("email")}
               required
             />
-            {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
+            {errors?.email && <ErrorMessage message={errors.email.message} />}
             <label htmlFor="username">Username</label>
             <input
               id="username"
@@ -112,7 +113,7 @@ export default function Register() {
               required
               autoComplete="nickname"
             />
-            {errors?.username && <p className="error-text">{errors?.username?.message}</p>}
+            {errors?.username && <ErrorMessage message={errors.username.message} />}
             <label htmlFor="password">Password</label>
             <div className="form-group">
               <input
@@ -132,7 +133,7 @@ export default function Register() {
                 {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
-            {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
+            {errors?.password && <ErrorMessage message={errors.password.message} />}
             <label htmlFor="confirmPassword">Confirm Password</label>
             <div className="form-group">
               <input
@@ -152,7 +153,7 @@ export default function Register() {
                 {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
-            {errors?.confirmPassword && <p className="error-text">{errors?.confirmPassword?.message}</p>}
+            {errors?.confirmPassword && <ErrorMessage message={errors.confirmPassword.message} />}
             <button
               className="form-submit"
               type="submit"
@@ -167,7 +168,7 @@ export default function Register() {
               {error}
             </p>
             <div className="form-route-change">
-              <p>Already have an account? </p>
+              <p style={{ lineHeight: "0.9rem" }}>Already have an account? </p>
               <Link href="/login">Login</Link>
             </div>
           </form>

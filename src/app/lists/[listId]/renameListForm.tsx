@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Edit } from "react-feather";
 import { toast } from "react-toastify";
 import { updateListName } from "@/services/listService";
+import { ErrorMessage } from "@/components/errorMessage";
 
 interface FormData {
   listName: string;
@@ -80,7 +81,7 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
         onChange={e => setInputValue(e.target.value)}
         required
       />
-      {errors.listName && <p className="error-message pink">{errors.listName.message}</p>}
+      {errors.listName && <ErrorMessage message={errors.listName.message} />}
       <button
         className="list-form-button"
         type="submit"

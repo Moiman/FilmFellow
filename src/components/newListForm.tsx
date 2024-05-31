@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import { ErrorMessage } from "./errorMessage";
 
 type Props = {
   formAction: (formData: FormData) => void;
@@ -72,7 +73,7 @@ export const NewListForm = ({ formAction }: Props) => {
         onChange={e => setInputValue(e.target.value)}
         required
       />
-      {errors.listName && <p className="error-message pink">{errors.listName.message}</p>}
+      {errors.listName && <ErrorMessage message={errors.listName.message} />}
       <button
         className="list-form-button"
         type="submit"

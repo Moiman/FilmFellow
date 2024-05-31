@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Instagram, Save, Twitter } from "react-feather";
 
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
+import { ErrorMessage } from "@/components/errorMessage";
 
 interface UpdateProfileFormProps {
   userId: number;
@@ -117,7 +118,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
           value={userDescription}
           onChange={e => setUserDescription(e.currentTarget.value)}
         />
-        {errors.description && <p className="error-text">{errors.description.message}</p>}
+        {errors.description && <ErrorMessage message={errors.description.message} />}
       </div>
 
       <h3 className="h5">Social Media</h3>
@@ -132,7 +133,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
             onChange={e => setUserTwitter(e.currentTarget.value)}
           />
         </div>
-        {errors.twitter && <p className="error-text">{errors.twitter.message}</p>}
+        {errors.twitter && <ErrorMessage message={errors.twitter.message} />}
 
         <div className="social-media-row">
           <Instagram className="yellow-icon" />
@@ -144,7 +145,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
             onChange={e => setUserInstagram(e.currentTarget.value)}
           />
         </div>
-        {errors.instagram && <p className="error-text">{errors.instagram.message}</p>}
+        {errors.instagram && <ErrorMessage message={errors.instagram.message} />}
 
         <div className="social-media-row">
           <Image
@@ -162,7 +163,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
             onChange={e => setUserTiktok(e.currentTarget.value)}
           />
         </div>
-        {errors.tiktok && <p className="error-text">{errors.tiktok.message}</p>}
+        {errors.tiktok && <ErrorMessage message={errors.tiktok.message} />}
       </div>
       <div className="submit-button">
         <button type="submit">Save</button>

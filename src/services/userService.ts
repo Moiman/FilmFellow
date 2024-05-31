@@ -123,7 +123,7 @@ const changeUserStatusById = async (id: number, status: boolean, banDuration?: n
   if (banDuration) {
     const banEndDateInMS = new Date().getTime() + banDuration * 1000;
     const banEndDate = new Date(banEndDateInMS);
-    await prisma.users.update({
+    return await prisma.users.update({
       where: {
         id: id,
       },
@@ -131,9 +131,10 @@ const changeUserStatusById = async (id: number, status: boolean, banDuration?: n
         banDuration: banEndDate,
         isActive: status,
       },
+      select: selectUserFields,
     });
   } else {
-    await prisma.users.update({
+    return await prisma.users.update({
       where: {
         id: id,
       },
@@ -141,6 +142,7 @@ const changeUserStatusById = async (id: number, status: boolean, banDuration?: n
         banDuration: null,
         isActive: status,
       },
+      select: selectUserFields,
     });
   }
 };

@@ -6,10 +6,10 @@ import { getAllReports } from "@/services/reportService";
 
 export default async function AdminPanelReportsPage() {
   const session = await getServerSession(authOptions);
-  const reports = await getAllReports();
   if (!session || session.user.role !== "admin") {
     redirect("/");
   } else {
+    const reports = await getAllReports();
     return <AdminPanelReports reports={reports} />;
   }
 }

@@ -4,11 +4,12 @@ import * as yup from "yup";
 import { createUser, findUserByEmail, findUserByUsername } from "@/services/userService";
 
 const registerUserSchema = yup.object({
-  email: yup.string().trim().required("email is required").email("Must be a valid email"),
+  email: yup.string().trim().required("Email is required").email("Must be a valid email"),
   username: yup
     .string()
     .trim()
     .required("Username is required")
+    .matches(/^[^<>{};]*$/, "Username contains invalid characters")
     .min(2, "Username too short, minimum length is 2")
     .max(50, "Username too long, max length is 50"),
   password: yup
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     if (existingEmail) {
       return NextResponse.json(
-        { error: "User already exists with that email" },
+        { error: "User already exists with this email" },
         {
           status: 409,
         },
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
     const existingUsername = await findUserByUsername(data.username);
     if (existingUsername) {
       return NextResponse.json(
-        { error: "User already exists with that username" },
+        { error: "User already exists with this username" },
         {
           status: 409,
         },

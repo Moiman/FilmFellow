@@ -161,12 +161,8 @@ export default function Register() {
             >
               Register
             </button>
-            <p
-              className="error-text"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              {error}
-            </p>
+
+            {error !== "" && <ErrorMessage message={error} />}
             <div className="form-route-change">
               <p style={{ lineHeight: "0.9rem" }}>Already have an account? </p>
               <Link href="/login">Login</Link>

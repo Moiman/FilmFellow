@@ -108,12 +108,8 @@ export default function Login() {
             >
               Login
             </button>
-            <p
-              className="error-text"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              {error}
-            </p>
+
+            {error !== "" && <ErrorMessage message={error} />}
             <div className="form-route-change">
               <Link href="/register">Register</Link>
             </div>

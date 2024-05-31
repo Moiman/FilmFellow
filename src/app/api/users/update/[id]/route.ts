@@ -18,9 +18,8 @@ const updateUserSchema = yup.object({
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const data = await req.json();
     const session = await getServerSession(authOptions);
-    if (!session) {
+    if (!session || session.user.role !== Role.admin) {
       return NextResponse.json(
         { error: "Not Authorized" },
         {
@@ -36,9 +35,12 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     if (userId < 1) {
       return NextResponse.json({ error: "User id cant be under 1" }, { status: 400 });
     }
+
+    const data = await req.json();
     await updateUserSchema.validate(data, { abortEarly: false });
-    const { role, banDuration, isActive } = data;
-    if (!role && !banDuration && isActive === undefined) {
+    const { role, banDuration, isActive } = data as yup.InferType<typeof updateUserSchema>;
+
+    if (!role && banDuration === undefined && isActive === undefined) {
       return NextResponse.json(
         { error: "Missing role, banDuration or isActive" },
         {
@@ -48,6 +50,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 
     const user = await findUserById(userId);
+
     if (!user) {
       return NextResponse.json(
         { error: `Coundnt find user with id ${userId}` },
@@ -56,6 +59,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         },
       );
     }
+
     if (user.role === Role.admin) {
       return NextResponse.json(
         { error: `Cant change other admin details` },
@@ -64,33 +68,19 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         },
       );
     }
-    if (session.user.role === Role.admin) {
-      if (role) {
-        user.role = role;
-      }
 
-      if ((isActive === undefined && banDuration) || (isActive && banDuration)) {
-        return NextResponse.json(
-          { error: "Faulty values on ban" },
-          {
-            status: 400,
-          },
-        );
-      }
-
-      if (banDuration || isActive !== undefined) {
-        await changeUserStatusById(user.id, isActive, banDuration);
-      }
+    if (role) {
+      user.role = role;
       const updatedUser = await updateUser(userId, user);
       return NextResponse.json(updatedUser, { status: 200 });
-    } else {
-      return NextResponse.json(
-        { error: "Cant change other user details unless admin" },
-        {
-          status: 401,
-        },
-      );
     }
+
+    if (isActive === undefined || (isActive === true && banDuration)) {
+      return NextResponse.json({ error: "Faulty values on ban" }, { status: 400 });
+    }
+
+    const updatedUser = await changeUserStatusById(user.id, isActive, banDuration);
+    return NextResponse.json(updatedUser, { status: 200 });
   } catch (err) {
     if (err instanceof yup.ValidationError) {
       return NextResponse.json({ error: err }, { status: 400 });

@@ -11,13 +11,16 @@ interface FormData {
   listName: string;
 }
 
+const minLength = 3;
+const maxLength = 50;
+
 const validationSchema = yup.object().shape({
   listName: yup
     .string()
     .trim()
     .required("List name is required")
-    .min(3, "List name must be at least 3 characters")
-    .max(50, "List name cannot exceed 50 characters"),
+    .min(3, "List name must be at least " + minLength + " characters")
+    .max(maxLength, "List name cannot exceed " + maxLength + " characters"),
 });
 
 export const NewListForm = ({ formAction }: Props) => {
@@ -56,7 +59,7 @@ export const NewListForm = ({ formAction }: Props) => {
 
         <p
           style={{ marginBottom: "4px" }}
-          className={inputValue.length <= 50 ? "description grey" : "description pink"}
+          className={inputValue.length <= maxLength ? "description grey" : "description pink"}
         >
           {inputValue.length}/50
         </p>

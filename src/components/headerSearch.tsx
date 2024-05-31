@@ -89,12 +89,12 @@ export const HeaderSearch = () => {
           setResults([]);
         }}
       />
-      <button className="button-transparent">
+      <div style={{ display: "flex", alignItems: "center" }}>
         <Search
           className="searchbar-icon"
           size={20}
         />
-      </button>
+      </div>
 
       {isOpen && search.length > 0 && (
         <div className="searchbar-results">

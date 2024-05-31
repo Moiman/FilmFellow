@@ -101,3 +101,36 @@ export const setMovieRating = async (movieId: number, rating: number | null) => 
     },
   });
 };
+
+export const getUserOwnFavoritesAndRatings = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    throw "No session";
+  }
+
+  const favorites = await prisma.favorites.findMany({
+    where: {
+      userId: Number(session.user.id),
+    },
+    select: {
+      movieId: true,
+    },
+  });
+
+  const ratings = await prisma.watchedRatings.findMany({
+    where: {
+      userId: Number(session.user.id),
+      rating: { not: null },
+    },
+    select: {
+      movieId: true,
+      rating: true,
+    },
+  });
+
+  return {
+    ratings: ratings,
+    favorites: favorites.map(favorite => favorite.movieId),
+  };
+};

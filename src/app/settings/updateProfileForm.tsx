@@ -30,7 +30,7 @@ const validationSchema = yup.object().shape({
     .string()
     .trim()
     .max(255, "Description too long, max length is 255")
-    .matches(/^[a-zA-Z0-9\s.,'!&]*$/, "Description contains invalid characters")
+    .matches(/^[^<>{};]*$/, "Description contains invalid characters")
     .optional(),
   twitter: yup
     .string()

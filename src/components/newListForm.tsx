@@ -19,6 +19,7 @@ const validationSchema = yup.object().shape({
     .string()
     .trim()
     .required("List name is required")
+    .matches(/^[^<>{};]*$/, "List name contains invalid characters")
     .min(3, "List name must be at least " + minLength + " characters")
     .max(maxLength, "List name cannot exceed " + maxLength + " characters"),
 });

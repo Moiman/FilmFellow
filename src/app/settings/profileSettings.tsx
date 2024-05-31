@@ -39,6 +39,7 @@ const updateUsernameSchema = yup.object({
     .string()
     .trim()
     .required("Username is required")
+    .matches(/^[^<>{};]*$/, "Username contains invalid characters")
     .min(2, "Username too short, minimum length is 2")
     .max(50, "Username too long, max length is 50"),
 });

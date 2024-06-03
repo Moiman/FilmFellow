@@ -9,6 +9,7 @@ const createReport = async (
   content: string,
   reviewId: number | null,
   importedReviewId: string | null,
+  listId?: number | null,
 ) => {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -21,6 +22,7 @@ const createReport = async (
       content,
       reviewId,
       importedReviewId,
+      listId,
     },
   });
 
@@ -93,6 +95,13 @@ const getAllReports = async () => {
           id: true,
           content: true,
           movie: true,
+        },
+      },
+      list: {
+        select: {
+          id: true,
+          userId: true,
+          name: true,
         },
       },
     },

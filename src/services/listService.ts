@@ -285,6 +285,9 @@ export const getList = async (listId: string) => {
     return watchedList;
   } else {
     const id = Number(listId);
+    if (isNaN(id)) {
+      return null;
+    }
     const list = await prisma.lists.findUnique({
       where: {
         id: id,

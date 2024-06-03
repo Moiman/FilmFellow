@@ -28,11 +28,10 @@ model Users {
   reportTargets   Reports[]         @relation("TargetUser")
   WatchListMovies WatchListMovies[]
 
-
-  description  String    @default("") @db.VarChar(255) 
-  twitter      String    @default("") @db.VarChar(50) 
-  instagram    String    @default("") @db.VarChar(50) 
-  tiktok       String    @default("") @db.VarChar(50) 
+  description String @default("") @db.VarChar(255)
+  twitter     String @default("") @db.VarChar(50)
+  instagram   String @default("") @db.VarChar(50)
+  tiktok      String @default("") @db.VarChar(50)
 }
 
 model Favorites {
@@ -75,8 +74,8 @@ model Lists {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
+  user       Users        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  reports    Reports[]
   listMovies ListMovies[]
 }
 
@@ -357,12 +356,12 @@ model Reports {
   created_at       DateTime @default(now())
   targetUserId     Int?
   creatorId        Int
-  // lists will be added later
-  // listId    Int
+  listId           Int?
   reviewId         Int?
   importedReviewId String?
   done             Boolean  @default(false)
 
+  list           Lists?           @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   creator        Users?           @relation("Creator", fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   targetUser     Users?           @relation("TargetUser", fields: [targetUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   review         Reviews?         @relation(fields: [reviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)

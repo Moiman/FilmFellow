@@ -8,6 +8,7 @@ import { Dropdown } from "@/components/dropdown";
 import { deleteReportById, type getAllReports, markReportDone } from "@/services/reportService";
 import Modal from "@/components/modal";
 import { deleteReviewById } from "@/services/reviewService";
+import { changeUserStatusById } from "@/services/userService";
 
 interface Props {
   report: Reports[0];
@@ -29,50 +30,31 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
-      const banDetails = {
-        isActive: false,
-        banDuration: banDuration,
-      };
-
-      const response = await fetch(`/api/users/update/${report.targetUserId}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(banDetails),
-      });
-
-      if (!response.ok) {
-        setError(response.statusText);
-        throw response.status;
+      if (!report.targetUserId) {
+        setError("Missing target user");
+        return;
       }
 
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
-        throw data.error;
-      }
+      const bannedUser = await changeUserStatusById(report.targetUserId, false, banDuration);
 
       setAllReports(reports =>
         reports.map(report => {
           return {
             ...report,
             targetUser:
-              report.targetUser && report.targetUserId === data.id
+              report.targetUser && report.targetUserId === bannedUser.id
                 ? {
                     ...report.targetUser,
-                    isActive: data.isActive,
-                    banDuration: new Date(data.banDuration),
+                    isActive: bannedUser.isActive,
+                    banDuration: bannedUser.banDuration,
                   }
                 : report.targetUser,
             creator:
-              report.creator && report.creatorId === data.id
+              report.creator && report.creatorId === bannedUser.id
                 ? {
                     ...report.creator,
-                    isActive: data.isActive,
-                    banDuration: new Date(data.banDuration),
+                    isActive: bannedUser.isActive,
+                    banDuration: bannedUser.banDuration,
                   }
                 : report.creator,
           };
@@ -84,7 +66,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       toast(
         <p>
           {report.targetUser?.username} was blocked
-          {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
+          {bannedUser.banDuration ? " until " + bannedUser.banDuration.toDateString() : " forever"}
         </p>,
         {
           icon: <Tool />,
@@ -92,54 +74,39 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         },
       );
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Internal server error");
+      }
     }
   };
 
   const handleUnBanSubmit = async () => {
     try {
-      const banDetails = {
-        isActive: true,
-        banDuration: null,
-      };
-
-      const response = await fetch(`/api/users/update/${report.targetUserId}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(banDetails),
-      });
-
-      if (!response.ok) {
-        setError(response.statusText);
-        throw response.status;
+      if (!report.targetUserId) {
+        setError("Missing target user");
+        return;
       }
 
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
-        throw data.error;
-      }
+      const unbannedUser = await changeUserStatusById(report.targetUserId, true, null);
 
       setAllReports(reports =>
         reports.map(report => {
           return {
             ...report,
             targetUser:
-              report.targetUser && report.targetUserId === data.id
+              report.targetUser && report.targetUserId === unbannedUser.id
                 ? {
                     ...report.targetUser,
-                    isActive: data.isActive,
+                    isActive: unbannedUser.isActive,
                   }
                 : report.targetUser,
             creator:
-              report.creator && report.creatorId === data.id
+              report.creator && report.creatorId === unbannedUser.id
                 ? {
                     ...report.creator,
-                    isActive: data.isActive,
+                    isActive: unbannedUser.isActive,
                   }
                 : report.creator,
           };
@@ -147,12 +114,16 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       );
       setError("");
 
-      toast(<p>{report.targetUser?.username} was unblocked</p>, {
+      toast(<p>{unbannedUser.username} was unblocked</p>, {
         icon: <Tool />,
         className: "yellow-toast",
       });
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Internal server error");
+      }
     }
   };
 

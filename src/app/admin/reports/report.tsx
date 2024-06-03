@@ -84,12 +84,12 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
   const handleUnBanSubmit = async () => {
     try {
-      const banDetails = {
-        isActive: true,
-        banDuration: null,
-      };
+      if (!report.targetUserId) {
+        setError("Missing target user");
+        return;
+      }
 
-      const unbannedUser = await changeUserStatusById(2, true, null);
+      const unbannedUser = await changeUserStatusById(report.targetUserId, true, null);
 
       setAllReports(reports =>
         reports.map(report => {

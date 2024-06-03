@@ -1,7 +1,11 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { ErrorMessage } from "@/components/errorMessage";
 import { toast } from "react-toastify";
 import { Flag } from "react-feather";
 
@@ -15,9 +19,32 @@ interface Props {
 
 export type Review = NonNullable<Awaited<ReturnType<typeof getReviewById>>>;
 
+interface FormData {
+  report: string;
+}
+
+const maxLength = 500;
+
+const validationSchema = yup.object().shape({
+  report: yup
+    .string()
+    .trim()
+    .required("Report is required")
+    .max(maxLength, "Report cannot exceed " + maxLength + " characters"),
+});
+
 export default function ReportReviewForm({ targetReview }: Props) {
-  const [reportInput, setReportInput] = useState("");
   const router = useRouter();
+  const [reportInput, setReportInput] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
+  });
+
   const sectionHeader = (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <h4>
@@ -32,14 +59,12 @@ export default function ReportReviewForm({ targetReview }: Props) {
     </div>
   );
 
-  const handleReportSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async (data: FormData) => {
     if (targetReview) {
       if ("author" in targetReview) {
-        await createReport(null, reportInput, null, targetReview.id);
+        await createReport(null, data.report.trim(), null, targetReview.id);
       } else {
-        await createReport(Number(targetReview.userId), reportInput, targetReview.id, null);
+        await createReport(Number(targetReview.userId), data.report.trim(), targetReview.id, null);
       }
     }
 
@@ -58,7 +83,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
       <div className="section-wrapper">
         <Section header={sectionHeader}>
           <form
-            onSubmit={handleReportSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="form"
           >
             <p
@@ -68,16 +93,29 @@ export default function ReportReviewForm({ targetReview }: Props) {
             >
               {targetReview.content}
             </p>
-            <label htmlFor="report">Write your report here</label>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <label
+                htmlFor="content"
+                className="h6"
+              >
+                Write your report here
+              </label>
+              <p
+                style={{ marginBottom: "0" }}
+                className={reportInput.length <= maxLength ? "description grey" : "description pink"}
+              >
+                {reportInput.length}/{maxLength}
+              </p>
+            </div>
             <textarea
               id="report"
-              name="report"
               placeholder="Please describe the reason for your report..."
-              required
               rows={10}
               value={reportInput}
+              {...register("report")}
               onChange={e => setReportInput(e.target.value)}
             />
+            {errors.report && <ErrorMessage message={errors.report.message} />}
             <button
               className="form-submit"
               type="submit"

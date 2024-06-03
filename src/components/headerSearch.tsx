@@ -80,6 +80,7 @@ export const HeaderSearch = () => {
         data-cy="search-input"
         className="searchbar-input"
         placeholder="Search movies by title..."
+        aria-label="Search movies by title"
         onFocus={() => setIsOpen(true)}
         value={search}
         onChange={e => {

@@ -273,7 +273,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                       className="button-pink"
                       onClick={handleDeleteReview}
                     >
-                      Delete Review
+                      Delete review
                     </button>
                   </div>
                 </div>
@@ -308,7 +308,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                 ))}
               </Dropdown>
             ) : (
-              report.targetUser !== null && <button onClick={handleUnBanSubmit}>Lift Ban</button>
+              report.targetUser !== null && <button onClick={handleUnBanSubmit}>Lift ban</button>
             )}
             <button
               className="button-pink"

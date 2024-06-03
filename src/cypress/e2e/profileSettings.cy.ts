@@ -257,7 +257,7 @@ describe("Profile page tests", () => {
       .click(),
       { timeout: 500 };
     cy.get("dialog").should("exist");
-    cy.get(".modal-box").find(".modal-content").contains("button", "Delete Account").click();
+    cy.get(".modal-box").find(".modal-content").contains("button", "Delete account").click();
     cy.location("pathname").should("eq", "/");
     cy.contains("Login").should("be.visible");
     cy.contains("Register").should("be.visible");

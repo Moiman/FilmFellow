@@ -300,7 +300,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
               ))}
             </Dropdown>
           ) : (
-            <button onClick={handleUnBanSubmit}>Lift Ban</button>
+            <button onClick={handleUnBanSubmit}>Lift ban</button>
           )}
           <button
             onClick={openDeleteModal}

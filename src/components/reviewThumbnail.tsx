@@ -44,8 +44,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
               key={starRating}
-              stroke={userReview.rating && userReview.rating >= starRating ? "#ffc700" : "#eff2f2"}
-              fill={userReview.rating && userReview.rating >= starRating ? "#ffc700" : "#eff2f2"}
+              className={userReview.rating && userReview.rating >= starRating ? "selected" : "not-selected"}
               strokeWidth={2}
               size={20}
             />
@@ -66,7 +65,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
             className="button-transparent"
           >
             <Trash2
-              color="black"
+              className="dark-icon"
               size={20}
             />
           </button>

@@ -61,22 +61,6 @@
     align-items: center;
   }
 
-  .edit-button {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
-  }
-
-  .edit-button:hover {
-    color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
-  }
-
-  .delete-button {
-    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
-  }
-
-  .delete-button:hover {
-    color: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
-  }
-
   .list-styles {
     display: flex;
     gap: 15px;

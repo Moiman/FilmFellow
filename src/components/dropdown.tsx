@@ -78,12 +78,12 @@ export const Dropdown = ({
           {!isOpen ? (
             <ChevronDown
               size={20}
-              color={"#ffc700"}
+              className="yellow-icon"
             />
           ) : (
             <ChevronUp
               size={20}
-              color={"#ffc700"}
+              className="yellow-icon"
             />
           )}
         </button>

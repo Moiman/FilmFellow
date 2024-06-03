@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { X } from "react-feather";
 
 interface Props {
@@ -10,17 +10,52 @@ interface Props {
 }
 
 const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         closeModal();
+      } else if (e.key === "Tab" && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button:not([disabled]), [href]:not([aria-disabled="true"]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])',
+        ) as NodeListOf<HTMLElement>;
+
+        if (focusableElements.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
       }
     };
-    document.addEventListener("keydown", handleKeyDown);
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+
+      const firstFocusable = modalRef.current?.querySelector(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      ) as HTMLElement;
+      firstFocusable?.focus();
+    }
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [closeModal]);
+  }, [closeModal, isOpen]);
 
   return (
     isOpen && (
@@ -32,6 +67,7 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
           <div
             onMouseDown={e => e.stopPropagation()}
             className="modal-box"
+            ref={modalRef}
           >
             <div className="modal-title">
               <button
@@ -39,7 +75,7 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
                 className="button-transparent"
                 onClick={closeModal}
               >
-                <X color="#eff2f2" />
+                <X className="light-icon" />
               </button>
             </div>
             <div className="modal-content">{content}</div>

@@ -1,37 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
-import argon2 from "argon2";
 import * as yup from "yup";
 import { getServerSession } from "next-auth";
 import { Role } from "@prisma/client";
 import { authOptions } from "@/authOptions";
-import {
-  changeUserStatusById,
-  findUserByEmail,
-  findUserById,
-  findUserByUsername,
-  updateUser,
-} from "@/services/userService";
-
-interface Params {
-  id: string;
-}
+import { changeUserStatusById, findUserById, updateUser } from "@/services/userService";
 
 const updateUserSchema = yup.object({
-  email: yup.string().trim().optional().email("Must be a valid email"),
-  username: yup
-    .string()
-    .trim()
-    .optional()
-    .min(2, "Username too short, minimum length is 2")
-    .max(50, "Username too long, max length is 50"),
-  password: yup
-    .string()
-    .optional()
-    .min(6, "Must be at least 6 characters long")
-    .matches(/^(?=.*[a-z])/, "Password requires atleast 1 regural character")
-    .matches(/^(?=.*[A-Z])/, "Password requires atleast 1 capital character")
-    .matches(/^(?=.*[0-9])/, "Password requires atleast 1 number")
-    .matches(/^(?=.*[!@#$%^&*])/, "Password requires atleast 1 special character"),
   role: yup.string().optional().oneOf(Object.values(Role), "Role must be either admin, user or moderator"),
   isActive: yup.boolean().optional(),
   banDuration: yup
@@ -42,11 +16,10 @@ const updateUserSchema = yup.object({
     .max(2592000, "Highest ban duration is 30 days (2592000 seconds"),
 });
 
-export async function PUT(req: NextRequest, { params }: { params: Params }) {
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const data = await req.json();
     const session = await getServerSession(authOptions);
-    if (!session) {
+    if (!session || session.user.role !== Role.admin) {
       return NextResponse.json(
         { error: "Not Authorized" },
         {
@@ -62,11 +35,14 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
     if (userId < 1) {
       return NextResponse.json({ error: "User id cant be under 1" }, { status: 400 });
     }
+
+    const data = await req.json();
     await updateUserSchema.validate(data, { abortEarly: false });
-    const { email, username, password, role, banDuration, isActive } = data;
-    if (!email && !password && !username && !role && !banDuration && isActive === undefined) {
+    const { role, banDuration, isActive } = data as yup.InferType<typeof updateUserSchema>;
+
+    if (!role && banDuration === undefined && isActive === undefined) {
       return NextResponse.json(
-        { error: "Missing email, password, username, role, banDuration or isActive" },
+        { error: "Missing role, banDuration or isActive" },
         {
           status: 400,
         },
@@ -74,6 +50,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
     }
 
     const user = await findUserById(userId);
+
     if (!user) {
       return NextResponse.json(
         { error: `Coundnt find user with id ${userId}` },
@@ -82,6 +59,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         },
       );
     }
+
     if (user.role === Role.admin) {
       return NextResponse.json(
         { error: `Cant change other admin details` },
@@ -90,60 +68,19 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         },
       );
     }
-    if (session.user.role === Role.admin) {
-      if (email) {
-        const foundEmail = await findUserByEmail(email);
-        if (foundEmail) {
-          return NextResponse.json(
-            { error: "User already exists with that email" },
-            {
-              status: 409,
-            },
-          );
-        }
-        user.email = email;
-      }
-      if (password) {
-        user.password = await argon2.hash(password);
-      }
-      if (username) {
-        const foundUsername = await findUserByUsername(username);
-        if (foundUsername) {
-          return NextResponse.json(
-            { error: "User already exists with that username" },
-            {
-              status: 409,
-            },
-          );
-        }
-        user.username = username;
-      }
-      if (role) {
-        user.role = role;
-      }
 
-      if ((isActive === undefined && banDuration) || (isActive && banDuration)) {
-        return NextResponse.json(
-          { error: "Faulty values on ban" },
-          {
-            status: 400,
-          },
-        );
-      }
-
-      if (banDuration || isActive !== undefined) {
-        await changeUserStatusById(user.id, isActive, banDuration);
-      }
+    if (role) {
+      user.role = role;
       const updatedUser = await updateUser(userId, user);
       return NextResponse.json(updatedUser, { status: 200 });
-    } else {
-      return NextResponse.json(
-        { error: "Cant change other user details unless admin" },
-        {
-          status: 401,
-        },
-      );
     }
+
+    if (isActive === undefined || (isActive === true && banDuration)) {
+      return NextResponse.json({ error: "Faulty values on ban" }, { status: 400 });
+    }
+
+    const updatedUser = await changeUserStatusById(user.id, isActive, banDuration);
+    return NextResponse.json(updatedUser, { status: 200 });
   } catch (err) {
     if (err instanceof yup.ValidationError) {
       return NextResponse.json({ error: err }, { status: 400 });

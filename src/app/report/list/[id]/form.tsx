@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -16,7 +15,6 @@ interface Props {
 type List = NonNullable<Awaited<ReturnType<typeof getList>>>;
 
 export default function ReportListForm({ list }: Props) {
-  const [reportInput, setReportInput] = useState("");
   const router = useRouter();
   const sectionHeader = (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -39,17 +37,18 @@ export default function ReportListForm({ list }: Props) {
     </div>
   );
 
-  const handleReportSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await createReport(list.userId, reportInput, null, null, Number(list.id));
-    setReportInput("");
+  const handleReportSubmit = async (formData: FormData) => {
+    const about = formData.get("about");
+    if (about) {
+      await createReport(list.userId, about.toString(), null, null, Number(list.id));
 
-    toast(<p>Report was submitted</p>, {
-      icon: <Flag />,
-      className: "yellow-toast",
-    });
+      toast(<p>Report was submitted</p>, {
+        icon: <Flag />,
+        className: "yellow-toast",
+      });
 
-    router.push("/");
+      router.push("/");
+    }
   };
 
   return (
@@ -57,16 +56,15 @@ export default function ReportListForm({ list }: Props) {
       <div className="section-wrapper">
         <Section header={sectionHeader}>
           <form
-            onSubmit={handleReportSubmit}
+            action={handleReportSubmit}
             className="form"
           >
             <label htmlFor="about">Write your report here</label>
             <textarea
               id="about"
+              name="about"
               required
               rows={10}
-              value={reportInput}
-              onChange={e => setReportInput(e.target.value)}
             />
             <button
               className="form-submit"

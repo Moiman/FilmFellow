@@ -12,11 +12,11 @@ export const createNewList = async (name: string) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   if (!name && name.trim().length === 0) {
-    throw "Missing name";
+    throw new Error("Missing name");
   }
 
   validateFormData(listValidationSchema, { listName: name });
@@ -41,7 +41,7 @@ export const deleteList = async (id: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   await prisma.lists.delete({
@@ -163,7 +163,7 @@ export const getUsersOwnLists = async (movieId: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   const lists = await prisma.lists.findMany({
@@ -356,7 +356,7 @@ export const toggleMovieList = async (movieId: number, listId: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   const isInList = !!(await prisma.listMovies.findUnique({
@@ -390,11 +390,11 @@ export const updateListName = async (listId: number, newName: string) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   if (!newName && newName.trim().length === 0) {
-    throw "Missing name";
+    throw new Error("Missing name");
   }
 
   validateFormData(listValidationSchema, { listName: newName });

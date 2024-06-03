@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Film, Star } from "react-feather";
+import { Film } from "react-feather";
 
+import { errorToast } from "@/components/errorToast";
 import { setMovieRating, toggleIsWatched } from "@/services/watchedService";
 import { StarRating } from "./starRating";
 import { Favorite } from "./favorite";
@@ -22,39 +23,47 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
   const [watched, setWatched] = useState<boolean>(movie.isWatched);
 
   const setUserRating = async (stars: number | null) => {
-    if (!watched) {
-      toast(
-        <p>
-          <span className="highlight-text">{movie.title}</span> marked as watched
-        </p>,
-        { icon: <Film />, className: "cyan-toast" },
-      );
+    try {
+      const newRating = stars === rating ? null : stars;
+      setRating(newRating);
+      await setMovieRating(movie.id, newRating);
+      if (!watched) {
+        toast(
+          <p>
+            <span className="highlight-text">{movie.title}</span> marked as watched
+          </p>,
+          { icon: <Film />, className: "cyan-toast" },
+        );
+      }
+      setWatched(true);
+    } catch (err) {
+      errorToast(err);
     }
-    const newRating = stars === rating ? null : stars;
-    setRating(newRating);
-    await setMovieRating(movie.id, newRating);
-    setWatched(true);
   };
 
   const toggleWatched = async () => {
-    await toggleIsWatched(movie.id);
-    if (watched) {
-      setRating(null);
-      toast(
-        <p>
-          <span className="highlight-text">{movie.title}</span> removed from watched
-        </p>,
-        { icon: <Film />, className: "yellow-toast" },
-      );
-    } else {
-      toast(
-        <p>
-          <span className="highlight-text">{movie.title}</span> marked as watched
-        </p>,
-        { icon: <Film />, className: "cyan-toast" },
-      );
+    try {
+      await toggleIsWatched(movie.id);
+      if (watched) {
+        setRating(null);
+        toast(
+          <p>
+            <span className="highlight-text">{movie.title}</span> removed from watched
+          </p>,
+          { icon: <Film />, className: "yellow-toast" },
+        );
+      } else {
+        toast(
+          <p>
+            <span className="highlight-text">{movie.title}</span> marked as watched
+          </p>,
+          { icon: <Film />, className: "cyan-toast" },
+        );
+      }
+      setWatched(!watched);
+    } catch (err) {
+      errorToast(err);
     }
-    setWatched(!watched);
   };
 
   const minutesToHoursAndMinutesString = (totalMinutes: number): string => {

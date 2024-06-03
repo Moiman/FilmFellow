@@ -25,7 +25,7 @@ export const toggleIsFavorite = async (movieId: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return;
+    throw new Error("Unauthorized");
   }
 
   const isFavorite = await getIsFavorite(movieId);

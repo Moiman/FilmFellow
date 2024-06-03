@@ -44,7 +44,7 @@ export const AdminPanelReports = ({ reports }: { reports: Props }) => {
               key={report.id}
               report={report}
               setAllReports={setAllReports}
-            ></ReportComponent>
+            />
           ))}
         </Section>
       </div>

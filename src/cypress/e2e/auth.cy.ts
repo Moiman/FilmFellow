@@ -137,7 +137,7 @@ describe("Api update tests", () => {
   });
 
   it("Try to update user details with empty body", () => {
-    cy.login(firstNewUser.email, firstNewUser.password);
+    cy.login(admin.email, admin.password);
     cy.request({
       method: "PUT",
       url: `/api/users/update/${firstNewUserId}`,
@@ -145,18 +145,18 @@ describe("Api update tests", () => {
       body: {},
     }).should(response => {
       expect(response.status).to.eq(400);
-      expect(response.body.error).to.eq("Missing email, password, username, role, banDuration or isActive");
+      expect(response.body.error).to.eq("Missing role, banDuration or isActive");
     });
   });
 
   it("Try to update user details with faulty values", () => {
     const changeUserDetails = {
-      username: "t",
-      email: "testing",
-      password: "test",
+      role: "super-admin",
+      isActive: "extra-true",
+      banDuration: "test",
     };
 
-    cy.login(firstNewUser.email, firstNewUser.password);
+    cy.login(admin.email, admin.password);
     cy.request({
       method: "PUT",
       url: `/api/users/update/${firstNewUserId}`,
@@ -180,7 +180,7 @@ describe("Api update tests", () => {
       body: changeUserDetails,
     }).should(res => {
       expect(res.status).to.eq(401);
-      expect(res.body.error).to.eq("Cant change other user details unless admin");
+      expect(res.body.error).to.eq("Not Authorized");
     });
   });
 
@@ -197,7 +197,7 @@ describe("Api update tests", () => {
       body: changeUserDetails,
     }).should(res => {
       expect(res.status).to.eq(401);
-      expect(res.body.error).to.eq("Cant change other user details unless admin");
+      expect(res.body.error).to.eq("Not Authorized");
     });
   });
 
@@ -214,16 +214,16 @@ describe("Api update tests", () => {
       body: changeUserDetails,
     }).should(res => {
       expect(res.status).to.eq(401);
-      expect(res.body.error).to.eq("Cant change other user details unless admin");
+      expect(res.body.error).to.eq("Not Authorized");
     });
   });
 
-  it("Try to update username with false id", () => {
+  it("Try to update role with false id", () => {
     const changeuserDetails = {
-      username: "newusername",
+      role: "user",
     };
 
-    cy.login(firstNewUser.email, firstNewUser.password);
+    cy.login(admin.email, admin.password);
     cy.request({
       method: "PUT",
       url: `/api/users/update/${123456789}`,
@@ -231,7 +231,7 @@ describe("Api update tests", () => {
       body: changeuserDetails,
     }).should(res => {
       expect(res.status).to.eq(404);
-      expect(res.body.error).to.eq(`Coundnt find user with id ${123456789}`);
+      expect(res.body.error).to.eq("Coundnt find user with id 123456789");
     });
   });
 
@@ -248,7 +248,7 @@ describe("Api update tests", () => {
       body: changeUserDetails,
     }).should(res => {
       expect(res.status).to.eq(401);
-      expect(res.body.error).to.eq("Cant change other user details unless admin");
+      expect(res.body.error).to.eq("Not Authorized");
     });
   });
 
@@ -266,40 +266,6 @@ describe("Api update tests", () => {
     }).should(res => {
       expect(res.status).to.eq(400);
       expect(res.body.error.message).to.eq("Role must be either admin, user or moderator");
-    });
-  });
-
-  it("Try to change user username to something that already exist as admin", () => {
-    const changeUserDetails = {
-      username: firstNewUser.username,
-    };
-
-    cy.login(admin.email, admin.password);
-    cy.request({
-      method: "PUT",
-      url: `/api/users/update/${thirdNewUserId}`,
-      failOnStatusCode: false,
-      body: changeUserDetails,
-    }).should(res => {
-      expect(res.status).to.eq(409);
-      expect(res.body.error).to.eq("User already exists with that username");
-    });
-  });
-
-  it("Try to change user email to something that already exist as admin", () => {
-    const changeUserDetails = {
-      email: firstNewUser.email,
-    };
-
-    cy.login(admin.email, admin.password);
-    cy.request({
-      method: "PUT",
-      url: `/api/users/update/${thirdNewUserId}`,
-      failOnStatusCode: false,
-      body: changeUserDetails,
-    }).should(res => {
-      expect(res.status).to.eq(409);
-      expect(res.body.error).to.eq("User already exists with that email");
     });
   });
 
@@ -322,7 +288,7 @@ describe("Api update tests", () => {
 
   it("Try to change another admin details as admin", () => {
     const changeAdminDetails = {
-      username: "newusername",
+      role: "user",
     };
     cy.login(admin.email, admin.password);
     cy.request({
@@ -460,7 +426,6 @@ describe("Api update tests", () => {
 
   it("Change user details as admin", () => {
     const changeUserDetails = {
-      username: "newusername",
       role: "moderator",
     };
 
@@ -473,7 +438,6 @@ describe("Api update tests", () => {
     }).should(res => {
       expect(res.status).to.eq(200);
       expect(res.body.role).to.eq("moderator");
-      expect(res.body.username).to.eq("newusername");
     });
   });
 
@@ -513,10 +477,10 @@ describe("Api update tests", () => {
 
   it("Try to update user with negative id", () => {
     const changeUserDetails = {
-      username: secondNewUser.username,
+      role: "user",
     };
 
-    cy.login(firstNewUser.email, firstNewUser.password);
+    cy.login(admin.email, admin.password);
     cy.request({
       method: "PUT",
       url: `/api/users/update/${-123}`,
@@ -530,10 +494,10 @@ describe("Api update tests", () => {
 
   it("Try to update user with character as id", () => {
     const changeUserDetails = {
-      username: secondNewUser.username,
+      role: "user",
     };
 
-    cy.login(firstNewUser.email, firstNewUser.password);
+    cy.login(admin.email, admin.password);
     cy.request({
       method: "PUT",
       url: `/api/users/update/${"abcdef"}`,

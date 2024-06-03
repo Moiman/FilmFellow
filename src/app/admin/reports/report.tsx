@@ -291,7 +291,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                       className="button-pink"
                       onClick={handleDeleteReview}
                     >
-                      Delete Review
+                      Delete review
                     </button>
                   </div>
                 </div>
@@ -333,14 +333,14 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
               className="button-pink"
               onClick={handleDeleteReportSubmit}
             >
-              Delete Report
+              Delete report
             </button>
             {report.listId && (
               <button
                 className="button-pink"
                 onClick={handleDeleteListSubmit}
               >
-                Delete List
+                Delete list
               </button>
             )}
             {error && (
@@ -357,7 +357,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             className="button-pink"
             onClick={handleDeleteReportSubmit}
           >
-            Delete Report
+            Delete report
           </button>
           {error && (
             <div>

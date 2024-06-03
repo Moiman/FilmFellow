@@ -310,6 +310,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             />
           </>
         )}
+        {report.listId && <Link href={`/lists/${report.listId}`}>{report.list?.name}</Link>}
       </div>
 
       <div className="admin-panel-report-content report-description">

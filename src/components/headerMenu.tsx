@@ -28,7 +28,7 @@ export const HeaderMenu = () => {
 
   return (
     <>
-      <div className="sub-nav-narrow">
+      <nav className="sub-nav-narrow">
         <Dropdown
           maxHeight={0}
           width={100}
@@ -97,10 +97,10 @@ export const HeaderMenu = () => {
             </nav>
           )}
         </Dropdown>
-      </div>
+      </nav>
 
       {/* For w > 1024 sub-nav */}
-      <div className="sub-nav-wide highlight-nav">
+      <nav className="sub-nav-wide highlight-nav">
         <>
           {session ? (
             session.user.role === "admin" ? (
@@ -151,7 +151,7 @@ export const HeaderMenu = () => {
             </>
           )}
         </>
-      </div>
+      </nav>
     </>
   );
 };

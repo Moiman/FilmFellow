@@ -17,8 +17,6 @@ export default function SearchFilters() {
 
   const handleFilter = (event: ChangeEvent<HTMLInputElement> | any, param: string) => {
     const current = new URLSearchParams(Array.from(searchParams.entries()));
-    const value = event.target.value.trim();
-    console.log(event);
 
     if (!event.target.value || (!event.target.checked && event.target.type === "checkbox")) {
       current.delete(param);
@@ -43,7 +41,7 @@ export default function SearchFilters() {
 
   return (
     <div className="filter-wrapper">
-      <Filter title="genres">
+      <Filter title="Genres">
         <div className="genres">
           {genres.map((genre: { id: Key; name: string }) => (
             <div
@@ -77,7 +75,7 @@ export default function SearchFilters() {
           />
         </div>
       </Filter>
-      <Filter title="Counries">
+      <Filter title="Countries">
         {countries.map((country: { iso_3166_1: Key; english_name: string }) => (
           <div
             className="filter"

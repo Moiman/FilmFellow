@@ -34,7 +34,10 @@ export const HeaderMenu = () => {
           width={100}
           zIndex={20}
           button={
-            <button className="button-transparent">
+            <button
+              className="button-transparent"
+              aria-label="Menu"
+            >
               <Menu
                 data-cy="menu-icon"
                 style={{ strokeWidth: 1.5 }}
@@ -77,7 +80,7 @@ export const HeaderMenu = () => {
               ))
             )
           ) : (
-            <>
+            <nav>
               <Link
                 key="login"
                 href="/login"
@@ -91,7 +94,7 @@ export const HeaderMenu = () => {
               >
                 Register
               </Link>
-            </>
+            </nav>
           )}
         </Dropdown>
       </div>
@@ -108,6 +111,7 @@ export const HeaderMenu = () => {
                     key={link.href}
                     href={link.href}
                     className={currentPath === link.href ? "active-icon" : ""}
+                    aria-label={link.text}
                   >
                     {link.icon}
                   </Link>
@@ -121,6 +125,7 @@ export const HeaderMenu = () => {
                     key={link.href}
                     href={link.href}
                     className={currentPath === link.href ? "active-icon" : ""}
+                    aria-label={link.text}
                   >
                     {link.icon}
                   </Link>

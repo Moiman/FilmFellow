@@ -23,6 +23,7 @@ export default function ReportForm({ targetUser }: Props) {
         <Link
           className="h4"
           href={`/users/${targetUser?.id}`}
+          aria-label={`User you are reporting`}
         >
           {targetUser?.username}
         </Link>
@@ -51,9 +52,10 @@ export default function ReportForm({ targetUser }: Props) {
             onSubmit={handleReportSubmit}
             className="form"
           >
-            <label htmlFor="about">Write your report here</label>
+            <label htmlFor="report">Write your report here</label>
             <textarea
-              id="about"
+              id="report"
+              placeholder="Please describe the reason for your report..."
               required
               rows={10}
               value={reportInput}
@@ -63,7 +65,7 @@ export default function ReportForm({ targetUser }: Props) {
               className="form-submit"
               type="submit"
             >
-              Submit Report
+              Submit report
             </button>
           </form>
         </Section>

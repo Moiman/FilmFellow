@@ -35,14 +35,24 @@ export default async function userProfile({ params }: { params: { id: string } }
   const userFavoriteHeader = (
     <div className="header-default-style">
       <h3 className="h5">{user.username}&rsquo;s favorites</h3>
-      <Link href={`/users/${params.id}/favorites`}>See all</Link>
+      <Link
+        href={`/users/${params.id}/favorites`}
+        aria-label={`Sell all ${user.username}'s favorite movies`}
+      >
+        See all
+      </Link>
     </div>
   );
 
   const userReviewsHeader = (
     <div className="header-default-style">
       <h3 className="h5">Latest reviews</h3>
-      <Link href={`/users/${params.id}/reviews`}>See all</Link>
+      <Link
+        href={`/users/${params.id}/reviews`}
+        aria-label={`Sell all reviews by ${user.username}`}
+      >
+        See all
+      </Link>
     </div>
   );
 

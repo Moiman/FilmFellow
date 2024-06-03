@@ -73,6 +73,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
       <button
         onClick={() => setOpenReviewModal(true)}
         className="review-grid-content description button-review"
+        aria-label="Open full review"
       >
         <p>{review.content}</p>
       </button>
@@ -87,6 +88,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
           <button
             onClick={handleDeleteReview}
             className="button-transparent"
+            aria-label="Delete review"
           >
             <Trash2
               className="dark-icon"

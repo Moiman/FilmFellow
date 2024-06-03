@@ -43,6 +43,12 @@ export const Dropdown = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -51,10 +57,12 @@ export const Dropdown = ({
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyPress);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyPress);
     };
   }, [isOpen]);
 
@@ -68,22 +76,30 @@ export const Dropdown = ({
       }}
     >
       {button ? (
-        <div onClick={() => setIsOpen(!isOpen)}>{button}</div>
+        <div
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen ? true : false}
+        >
+          {button}
+        </div>
       ) : (
         <button
           className="dropdown-header"
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen ? true : false}
         >
           {selected ? selected : "Choose one"}
           {!isOpen ? (
             <ChevronDown
               size={20}
               className="yellow-icon"
+              alt-label="Expand"
             />
           ) : (
             <ChevronUp
               size={20}
               className="yellow-icon"
+              alt-label="Collapse"
             />
           )}
         </button>

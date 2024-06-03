@@ -21,7 +21,12 @@ export default async function Movie({ params }: { params: { id: string } }) {
             <button type="submit">Add review</button>
           </form>
         )}
-        <Link href={`${params.id}/reviews`}>See all</Link>
+        <Link
+          href={`${params.id}/reviews`}
+          alt-label="See all reviews"
+        >
+          See all
+        </Link>
       </div>
     </div>
   );
@@ -38,7 +43,13 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <Section
           header={
             <div className="header-default-style">
-              <h3>Cast</h3> <Link href={`${params.id}/cast`}>See all</Link>
+              <h3>Cast</h3>{" "}
+              <Link
+                href={`${params.id}/cast`}
+                alt-label="See all cast members"
+              >
+                See all
+              </Link>
             </div>
           }
         >
@@ -48,7 +59,13 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <Section
           header={
             <div className="header-default-style">
-              <h3>Crew</h3> <Link href={`${params.id}/crew`}>See all</Link>
+              <h3>Crew</h3>{" "}
+              <Link
+                href={`${params.id}/crew`}
+                alt-label="See all crew members"
+              >
+                See all
+              </Link>
             </div>
           }
         >

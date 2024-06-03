@@ -105,6 +105,7 @@ export const HeaderSearch = () => {
               className="movie-result"
               key={movie.id}
               onClick={resetSearch}
+              aria-label={movie.title}
             >
               <Image
                 alt={movie.title}

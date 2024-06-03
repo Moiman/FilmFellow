@@ -14,6 +14,8 @@ export const StarRating = ({ rating, setRating, size = 30 }: Props) => {
           key={starRating}
           onClick={() => setRating(starRating)}
           className="star-rating-button"
+          aria-label={`Rate ${starRating} of 5 stars`}
+          aria-pressed={rating === starRating ? "true" : "false"}
         >
           <Star
             className={rating && rating >= starRating ? "selected" : "not-selected"}

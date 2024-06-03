@@ -34,6 +34,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
 
   const handleReportSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (targetReview) {
       if ("author" in targetReview) {
         await createReport(null, reportInput, null, targetReview.id);
@@ -60,10 +61,18 @@ export default function ReportReviewForm({ targetReview }: Props) {
             onSubmit={handleReportSubmit}
             className="form"
           >
-            <p className="review-grid-content description">{targetReview.content}</p>
-            <label htmlFor="about">Write your report here</label>
+            <p
+              id="reviewContent"
+              aria-description="Review you are reporting"
+              className="description reported-review"
+            >
+              {targetReview.content}
+            </p>
+            <label htmlFor="report">Write your report here</label>
             <textarea
-              id="about"
+              id="report"
+              name="report"
+              placeholder="Please describe the reason for your report..."
               required
               rows={10}
               value={reportInput}
@@ -73,7 +82,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
               className="form-submit"
               type="submit"
             >
-              Submit Report
+              Submit report
             </button>
           </form>
         </Section>

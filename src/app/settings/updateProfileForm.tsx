@@ -117,6 +117,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
           {...register("description")}
           value={userDescription}
           onChange={e => setUserDescription(e.currentTarget.value)}
+          aria-label="Description"
         />
         {errors.description && <ErrorMessage message={errors.description.message} />}
       </div>
@@ -127,10 +128,11 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
           <Twitter className="pink-icon" />
           <input
             type="text"
-            placeholder="Your Twitter handle"
+            placeholder="Your Twitter username"
             {...register("twitter")}
             value={userTwitter}
             onChange={e => setUserTwitter(e.currentTarget.value)}
+            aria-label="Twitter username"
           />
         </div>
         {errors.twitter && <ErrorMessage message={errors.twitter.message} />}
@@ -139,10 +141,11 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
           <Instagram className="yellow-icon" />
           <input
             type="text"
-            placeholder="Your Instagram handle"
+            placeholder="Your Instagram username"
             {...register("instagram")}
             value={userInstagram}
             onChange={e => setUserInstagram(e.currentTarget.value)}
+            aria-label="Instagram username"
           />
         </div>
         {errors.instagram && <ErrorMessage message={errors.instagram.message} />}
@@ -157,10 +160,11 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
           />
           <input
             type="text"
-            placeholder="Your TikTok handle"
+            placeholder="Your TikTok username"
             {...register("tiktok")}
             value={userTiktok}
             onChange={e => setUserTiktok(e.currentTarget.value)}
+            aria-label="Tiktok username"
           />
         </div>
         {errors.tiktok && <ErrorMessage message={errors.tiktok.message} />}

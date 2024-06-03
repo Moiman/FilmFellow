@@ -22,7 +22,10 @@ export const PersonList = ({ persons }: personListProps) => {
           key={person.job ? person.id + person.job : person.id}
           className="person-wrapper"
         >
-          <Link href={`/persons/${person.id}`}>
+          <Link
+            href={`/persons/${person.id}`}
+            aria-label={`${person.name}`}
+          >
             {person.profilePath ? (
               <Image
                 src={`https://image.tmdb.org/t/p/h632/${person.profilePath}`}

@@ -309,6 +309,7 @@ export const ProfileSettings = ({ user }: Props) => {
                   setActivePassword(false);
                   resetAllFields();
                 }}
+                aria-label="Edit username"
               >
                 Edit
               </button>
@@ -349,6 +350,7 @@ export const ProfileSettings = ({ user }: Props) => {
                   setActivePassword(false);
                   resetAllFields();
                 }}
+                aria-label="Edit e-mail"
               >
                 Edit
               </button>
@@ -399,6 +401,7 @@ export const ProfileSettings = ({ user }: Props) => {
                   setActivePassword(!activePassword);
                   resetAllFields();
                 }}
+                aria-label="Edit password"
               >
                 Edit
               </button>
@@ -428,14 +431,7 @@ export const ProfileSettings = ({ user }: Props) => {
                     If you delete your account, all your lists, reviews and other data will be destroyed permanently.
                   </p>
 
-                  {error && (
-                    <p
-                      className="error-text"
-                      style={{ display: "flex", justifyContent: "center", padding: "5px" }}
-                    >
-                      {error}
-                    </p>
-                  )}
+                  {error !== "" && <ErrorMessage message={error} />}
                 </div>
                 <div className="modal-buttons">
                   <button
@@ -449,7 +445,7 @@ export const ProfileSettings = ({ user }: Props) => {
                     className="button-pink"
                     onClick={handleDelete}
                   >
-                    Delete Account
+                    Delete account
                   </button>
                 </div>
               </div>

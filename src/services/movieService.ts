@@ -305,14 +305,14 @@ const getMoviesByTitle = async (titlePart: string) => {
 
 const getCountries = async () => {
   const countries = await prisma.countries.findMany({
-    select: { iso_3166_1: true, english_name: true, native_name: true },
+    select: { iso_3166_1: true, english_name: true },
   });
   return countries;
 };
 
 const getLanguages = async () => {
   const languages = await prisma.languages.findMany({
-    select: { iso_639_1: true, english_name: true, name: true },
+    select: { iso_639_1: true, english_name: true },
   });
   return languages;
 };

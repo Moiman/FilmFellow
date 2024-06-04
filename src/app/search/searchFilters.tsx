@@ -26,16 +26,16 @@ export default function SearchFilters({
   const pathName = usePathname();
   const searchParams = useSearchParams();
 
-  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>, currentParams: string) => {
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
+  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>, params: string) => {
+    const currentParams = new URLSearchParams(Array.from(searchParams.entries()));
 
     if (!event.target.value || (!event.target.checked && event.target.type === "checkbox")) {
-      current.delete(currentParams);
+      currentParams.delete(params);
     } else {
-      current.set(currentParams, event.target.value);
+      currentParams.set(params, event.target.value);
     }
 
-    const search = current.toString();
+    const search = currentParams.toString();
     const query = search ? `?${search}` : "";
     router.push(`${pathName}${query}`);
   };
@@ -44,20 +44,19 @@ export default function SearchFilters({
     <div className="filter-wrapper">
       <Filter title="Genres">
         <div className="genres">
-          {genres &&
-            genres.map(genre => (
-              <div
-                className="filter"
-                key={genre.id}
-              >
-                <input
-                  type="checkbox"
-                  id={genre.name}
-                  onChange={e => handleFilter(e, genre.name)}
-                />
-                <p>{genre.name}</p>
-              </div>
-            ))}
+          {genres.map(genre => (
+            <div
+              className="filter"
+              key={genre.id}
+            >
+              <input
+                type="checkbox"
+                id={genre.name}
+                onChange={e => handleFilter(e, genre.name)}
+              />
+              <p>{genre.name}</p>
+            </div>
+          ))}
         </div>
       </Filter>
       <Filter title="Release year">
@@ -78,38 +77,36 @@ export default function SearchFilters({
         </div>
       </Filter>
       <Filter title="Countries">
-        {countries &&
-          countries.map(country => (
-            <div
-              className="filter"
+        {countries.map(country => (
+          <div
+            className="filter"
+            key={country.iso_3166_1}
+          >
+            <input
+              type="checkbox"
+              name={country.english_name}
               key={country.iso_3166_1}
-            >
-              <input
-                type="checkbox"
-                name={country.english_name}
-                key={country.iso_3166_1}
-                onChange={e => handleFilter(e, country.english_name)}
-              />
-              <p>{country.english_name}</p>
-            </div>
-          ))}
+              onChange={e => handleFilter(e, country.english_name)}
+            />
+            <p>{country.english_name}</p>
+          </div>
+        ))}
       </Filter>
       <Filter title="Languages">
-        {languages &&
-          languages.map(language => (
-            <div
-              className="filter"
+        {languages.map(language => (
+          <div
+            className="filter"
+            key={language.iso_639_1}
+          >
+            <input
+              type="checkbox"
+              name={language.english_name}
               key={language.iso_639_1}
-            >
-              <input
-                type="checkbox"
-                name={language.english_name}
-                key={language.iso_639_1}
-                onChange={e => handleFilter(e, language.english_name)}
-              />
-              <p>{language.english_name}</p>
-            </div>
-          ))}
+              onChange={e => handleFilter(e, language.english_name)}
+            />
+            <p>{language.english_name}</p>
+          </div>
+        ))}
       </Filter>
       <Filter title="Budget">
         <div className="filter">
@@ -126,7 +123,7 @@ export default function SearchFilters({
             placeholder="Max"
             onChange={e => handleFilter(e, e.target.name)}
           />
-          <p>USD</p>
+          <p>$</p>
         </div>
       </Filter>
       <Filter title="Movie length">

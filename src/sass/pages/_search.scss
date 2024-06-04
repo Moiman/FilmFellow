@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 0px 10px;
+    padding: 5px 10px;
     cursor: pointer;
   }
 
@@ -22,12 +22,10 @@
   }
 
   .filter-content {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: auto;
     max-height: 200px;
-
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    padding: 10px;
 
     .genres {
       display: grid;
@@ -55,8 +53,10 @@
       fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
     }
   }
+}
 
-  .filter-content::-webkit-scrollbar {
-    display: none;
+@media only screen and (max-width: abstracts.$medium-width) {
+  .filter-wrapper {
+    width: 100%;
   }
 }

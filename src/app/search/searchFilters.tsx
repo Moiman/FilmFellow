@@ -125,6 +125,7 @@ export default function SearchFilters() {
             placeholder="Max"
             onChange={e => handleFilter(e, e.target.name)}
           />
+          <p>USD</p>
         </div>
       </Filter>
       <Filter title="Movie length">
@@ -132,9 +133,10 @@ export default function SearchFilters() {
           <input
             type="number"
             name="movieLength"
-            placeholder="Minutes"
+            placeholder="0"
             onChange={e => handleFilter(e, e.target.name)}
           />
+          <p>minutes</p>
         </div>
       </Filter>
       <Filter title="Rating">

@@ -7,15 +7,15 @@ export default function Filter({ children, title }: { children: ReactNode; title
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div>
+    <>
       <div
         className="filter-header"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <h4 className="filter-title">{title}</h4>
-        <div className="filter-Chevron">{isOpen ? <ChevronUp /> : <ChevronDown />}</div>
+        <h3 className="h5">{title}</h3>
+        <div className="filter-chevron yellow">{isOpen ? <ChevronUp /> : <ChevronDown />}</div>
       </div>
-      <div className="filter-content">{isOpen ? children : null}</div>
-    </div>
+      {isOpen && <div className="filter-content">{children}</div>}
+    </>
   );
 }

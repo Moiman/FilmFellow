@@ -1,12 +1,12 @@
 "use server";
 
-import * as yup from "yup";
 import { authOptions } from "@/authOptions";
-import prisma from "@/db";
-import { validationSchema } from "@/schemas/userSchema";
-import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
 import { revalidatePath } from "next/cache";
+import prisma from "@/db";
+import { Role } from "@prisma/client";
+import * as yup from "yup";
+import { validationSchema } from "@/schemas/userSchema";
 
 export interface User {
   username: string;

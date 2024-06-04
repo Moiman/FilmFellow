@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { ErrorMessage } from "./errorMessage";
 import { validationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
+import { ErrorMessage } from "./errorMessage";
 
 type Props = {
   formAction: (formData: FormData) => void;

@@ -13,7 +13,7 @@ export default function Filter({ children, title }: { children: ReactNode; title
         onClick={() => setIsOpen(!isOpen)}
       >
         <h3 className="h5">{title}</h3>
-        <div className="filter-chevron yellow">{isOpen ? <ChevronUp /> : <ChevronDown />}</div>
+        {isOpen ? <ChevronUp className="yellow" /> : <ChevronDown className="yellow" />}
       </div>
       {isOpen && <div className="filter-content">{children}</div>}
     </>

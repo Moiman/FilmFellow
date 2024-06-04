@@ -70,7 +70,7 @@ export default function ReportListForm({ list }: Props) {
               className="form-submit"
               type="submit"
             >
-              Submit Report
+              Submit report
             </button>
           </form>
         </Section>

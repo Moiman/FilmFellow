@@ -46,10 +46,12 @@ export default async function Layout({ params, children }: { params: { listId: s
                 <form action={`/report/list/${list.id}`}>
                   <button
                     type="submit"
-                    className="button-pink button-icon-text"
+                    className="button-transparent"
                   >
-                    <Flag size={16} />
-                    Report
+                    <Flag
+                      className="pink-icon"
+                      size={20}
+                    />
                   </button>
                 </form>
               </div>

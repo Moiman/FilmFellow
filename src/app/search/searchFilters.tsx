@@ -1,27 +1,38 @@
 "use client";
 
-import { Key, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { getAllGenres, getCountries, getLanguages } from "@/services/movieService";
+
 import RatingStars from "./ratingStars";
 import Filter from "./filter";
 
-export default function SearchFilters() {
+export default function SearchFilters({
+  genres,
+  countries,
+  languages,
+}: {
+  genres: { id: number; name: string }[];
+  countries: {
+    iso_3166_1: string;
+    english_name: string;
+    native_name: string;
+  }[];
+  languages: {
+    name: string;
+    iso_639_1: string;
+    english_name: string;
+  }[];
+}) {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
 
-  const [genres, setGenres] = useState<{ id: number; name: string }[]>();
-  const [countries, setCountries] = useState<{ iso_3166_1: string; english_name: string; native_name: string }[]>();
-  const [languages, setLanguages] = useState<{ name: string; english_name: string; iso_639_1: string }[]>();
-
-  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>, param: string) => {
+  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>, currentParams: string) => {
     const current = new URLSearchParams(Array.from(searchParams.entries()));
 
     if (!event.target.value || (!event.target.checked && event.target.type === "checkbox")) {
-      current.delete(param);
+      current.delete(currentParams);
     } else {
-      current.set(param, event.target.value);
+      current.set(currentParams, event.target.value);
     }
 
     const search = current.toString();
@@ -29,22 +40,12 @@ export default function SearchFilters() {
     router.push(`${pathName}${query}`);
   };
 
-  useEffect(() => {
-    const fetch = async () => {
-      setGenres(await getAllGenres());
-      setCountries(await getCountries());
-      setLanguages(await getLanguages());
-    };
-
-    fetch();
-  }, []);
-
   return (
     <div className="filter-wrapper">
       <Filter title="Genres">
         <div className="genres">
           {genres &&
-            genres.map((genre: { id: Key; name: string }) => (
+            genres.map(genre => (
               <div
                 className="filter"
                 key={genre.id}
@@ -78,7 +79,7 @@ export default function SearchFilters() {
       </Filter>
       <Filter title="Countries">
         {countries &&
-          countries.map((country: { iso_3166_1: Key; english_name: string }) => (
+          countries.map(country => (
             <div
               className="filter"
               key={country.iso_3166_1}
@@ -95,7 +96,7 @@ export default function SearchFilters() {
       </Filter>
       <Filter title="Languages">
         {languages &&
-          languages.map((language: { iso_639_1: Key; english_name: string }) => (
+          languages.map(language => (
             <div
               className="filter"
               key={language.iso_639_1}
@@ -141,26 +142,13 @@ export default function SearchFilters() {
       </Filter>
       <Filter title="Rating">
         <div>
-          <RatingStars
-            stars={1}
-            inputHandler={handleFilter}
-          />
-          <RatingStars
-            stars={2}
-            inputHandler={handleFilter}
-          />
-          <RatingStars
-            stars={3}
-            inputHandler={handleFilter}
-          />
-          <RatingStars
-            stars={4}
-            inputHandler={handleFilter}
-          />
-          <RatingStars
-            stars={5}
-            inputHandler={handleFilter}
-          />
+          {[1, 2, 3, 4, 5].map(stars => (
+            <RatingStars
+              key={stars}
+              stars={stars}
+              inputHandler={handleFilter}
+            />
+          ))}
         </div>
       </Filter>
     </div>

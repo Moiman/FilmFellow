@@ -12,6 +12,7 @@
     "coverage": "vitest run --coverage",
     "cypress:open": "cypress open",
     "cypress:run_headless": "cypress run",
+    "cypress:test": "cypress run --spec cypress/e2e/search.cy.ts",
     "cypress:component": "cypress run --component",
     "prisma:migration": "prisma migrate dev",
     "prisma:seed": "prisma db seed",

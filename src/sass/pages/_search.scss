@@ -7,6 +7,7 @@
   width: 300px;
 
   .filter-header {
+    border-bottom: 1px solid abstracts.$primary-dark;
     background-color: abstracts.$primary-darkgrey;
     display: flex;
     align-items: center;
@@ -17,8 +18,10 @@
   }
 
   .filter-chevron {
-    justify-self: end;
     align-self: center;
+  }
+  .filter-content:not(:last-child) {
+    border-bottom: 1px solid abstracts.$primary-dark;
   }
 
   .filter-content {

@@ -62,14 +62,14 @@ export default function SearchFilters() {
         <div className="filter">
           <input
             onChange={e => handleFilter(e, e.target.name)}
-            name="ReleaseYearMin"
+            name="releaseYearMin"
             type="number"
             placeholder="Min"
           />
           <p>-</p>
           <input
             onChange={e => handleFilter(e, e.target.name)}
-            name="ReleaseYearMax"
+            name="releaseYearMax"
             type="number"
             placeholder="Max"
           />
@@ -83,6 +83,7 @@ export default function SearchFilters() {
           >
             <input
               type="checkbox"
+              name={country.english_name}
               key={country.iso_3166_1}
               onClick={e => handleFilter(e, country.english_name)}
             />
@@ -98,6 +99,7 @@ export default function SearchFilters() {
           >
             <input
               type="checkbox"
+              name={language.english_name}
               key={language.iso_639_1}
               onClick={e => handleFilter(e, language.english_name)}
             />

@@ -6,7 +6,7 @@ export default function RatingStars({ stars, inputHandler }: { stars: number; in
     <div className="filter">
       <input
         type="checkbox"
-        name="rating"
+        name={`rating${stars}`}
         onChange={e => inputHandler(e, `rating${stars}`)}
       />
       {data.map(star => (

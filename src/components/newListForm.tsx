@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useState } from "react";
 import { ErrorMessage } from "./errorMessage";
+import { validationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
 
 type Props = {
   formAction: (formData: FormData) => void;
@@ -11,19 +11,6 @@ type Props = {
 interface FormData {
   listName: string;
 }
-
-const minLength = 3;
-const maxLength = 50;
-
-const validationSchema = yup.object().shape({
-  listName: yup
-    .string()
-    .trim()
-    .required("List name is required")
-    .matches(/^[^<>{};]*$/, "List name contains invalid characters")
-    .min(3, "List name must be at least " + minLength + " characters")
-    .max(maxLength, "List name cannot exceed " + maxLength + " characters"),
-});
 
 export const NewListForm = ({ formAction }: Props) => {
   const {
@@ -34,16 +21,12 @@ export const NewListForm = ({ formAction }: Props) => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = (formData: FormData) => {
-    formAction(formData);
-  };
-
   const [inputValue, setInputValue] = useState("");
 
   return (
     <form
       className="form"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(formAction)}
     >
       <div
         style={{
@@ -61,9 +44,13 @@ export const NewListForm = ({ formAction }: Props) => {
 
         <p
           style={{ marginBottom: "4px" }}
-          className={inputValue.length <= maxLength ? "description grey" : "description pink"}
+          className={
+            inputValue.length <= listMaxLength && inputValue.length >= listMinLength
+              ? "description grey"
+              : "description pink"
+          }
         >
-          {inputValue.length}/50
+          {inputValue.length}/{listMaxLength}
         </p>
       </div>
       <input

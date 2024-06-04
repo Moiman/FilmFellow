@@ -1,25 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Edit } from "react-feather";
 import { toast } from "react-toastify";
 import { updateListName } from "@/services/listService";
 import { ErrorMessage } from "@/components/errorMessage";
+import { validationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
 
 interface FormData {
   listName: string;
 }
-
-const validationSchema = yup.object().shape({
-  listName: yup
-    .string()
-    .trim()
-    .required("List name is required")
-    .matches(/^[^<>{};]*$/, "List name contains invalid characters")
-    .min(3, "List name must be at least 3 characters")
-    .max(50, "List name cannot exceed 50 characters"),
-});
 
 export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id: number }) => {
   const {
@@ -34,6 +24,7 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
 
   const onSubmit = async (formData: FormData) => {
     await updateListName(id, formData.listName);
+
     toast(
       <p>
         List was renamed to <span className="highlight-text">{formData.listName}</span>
@@ -43,6 +34,7 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
         className: "yellow-toast",
       },
     );
+
     closeModal();
   };
 
@@ -67,9 +59,13 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
 
         <p
           style={{ marginBottom: "4px" }}
-          className={inputValue.length <= 50 ? "description grey" : "description pink"}
+          className={
+            inputValue.length <= listMaxLength && inputValue.length >= listMinLength
+              ? "description grey"
+              : "description pink"
+          }
         >
-          {inputValue.length}/50
+          {inputValue.length}/{listMaxLength}
         </p>
       </div>
 

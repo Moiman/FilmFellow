@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
+import { validationSchema } from "@/schemas/listSchema";
 
 export const createNewList = async (name: string) => {
   const session = await getServerSession(authOptions);
@@ -14,6 +15,12 @@ export const createNewList = async (name: string) => {
 
   if (!name && name.trim().length === 0) {
     throw "Missing name";
+  }
+
+  try {
+    await validationSchema.validate({ listName: name });
+  } catch (validationError: any) {
+    throw validationError.message;
   }
 
   const list = await prisma.lists.create({
@@ -372,6 +379,12 @@ export const updateListName = async (listId: number, newName: string) => {
 
   if (!newName && newName.trim().length === 0) {
     throw "Missing name";
+  }
+
+  try {
+    await validationSchema.validate({ listName: newName });
+  } catch (validationError: any) {
+    throw validationError.message;
   }
 
   const updatedList = await prisma.lists.update({

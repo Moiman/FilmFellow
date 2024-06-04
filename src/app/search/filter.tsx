@@ -8,13 +8,13 @@ export default function Filter({ children, title }: { children: ReactNode; title
 
   return (
     <>
-      <div
+      <button
         className="filter-header"
         onClick={() => setIsOpen(!isOpen)}
       >
         <h3 className="h5">{title}</h3>
         {isOpen ? <ChevronUp className="yellow" /> : <ChevronDown className="yellow" />}
-      </div>
+      </button>
       {isOpen && <div className="filter-content">{children}</div>}
     </>
   );

@@ -1,10 +1,12 @@
 import * as yup from "yup";
 
+export const descriptionMax = 255;
+
 export const validationSchema = yup.object().shape({
   description: yup
     .string()
     .trim()
-    .max(255, "Description too long, max length is 255")
+    .max(descriptionMax, "Description too long, max length is " + descriptionMax)
     .matches(/^[^<>{};]*$/, "Description contains invalid characters")
     .optional(),
   twitter: yup

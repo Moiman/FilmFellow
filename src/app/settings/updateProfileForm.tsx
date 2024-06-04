@@ -9,7 +9,7 @@ import { Instagram, Save, Twitter } from "react-feather";
 
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
 import { ErrorMessage } from "@/components/errorMessage";
-import { validationSchema } from "@/schemas/userSchema";
+import { validationSchema, descriptionMax } from "@/schemas/userSchema";
 
 interface UpdateProfileFormProps {
   userId: number;
@@ -73,8 +73,8 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         <h3 className="h5">Description </h3>
 
         <div className="description-word-amount">
-          <p className={userDescription.length <= 255 ? "description grey" : "description pink"}>
-            {userDescription.length}/255
+          <p className={userDescription.length <= descriptionMax ? "description grey" : "description pink"}>
+            {userDescription.length}/ {descriptionMax}
           </p>
         </div>
 

@@ -1,4 +1,6 @@
 "use server";
+
+import * as yup from "yup";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
@@ -13,10 +15,12 @@ const createReview = async (movieId: number, content: string, rating?: number | 
 
   try {
     await validationSchema.validate({ content: content });
-  } catch (validationError: any) {
-    throw validationError.message;
+  } catch (validationError) {
+    if (validationError instanceof yup.ValidationError) {
+      throw new Error(validationError.message);
+    }
+    throw new Error("An unexpected error occurred");
   }
-
   const newReview = await prisma.reviews.create({
     data: {
       userId: Number(session.user.id),

@@ -1,4 +1,6 @@
 "use server";
+
+import * as yup from "yup";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import { Role } from "@prisma/client";
@@ -18,8 +20,11 @@ const createReport = async (
 
   try {
     await validationSchema.validate({ report: content });
-  } catch (validationError: any) {
-    throw validationError.message;
+  } catch (validationError) {
+    if (validationError instanceof yup.ValidationError) {
+      throw new Error(validationError.message);
+    }
+    throw new Error("An unexpected error occurred");
   }
 
   const newReport = await prisma.reports.create({

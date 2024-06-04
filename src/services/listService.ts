@@ -1,11 +1,11 @@
 "use server";
 
+import * as yup from "yup";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
 import { validationSchema } from "@/schemas/listSchema";
-
 export const createNewList = async (name: string) => {
   const session = await getServerSession(authOptions);
 
@@ -19,8 +19,11 @@ export const createNewList = async (name: string) => {
 
   try {
     await validationSchema.validate({ listName: name });
-  } catch (validationError: any) {
-    throw validationError.message;
+  } catch (validationError) {
+    if (validationError instanceof yup.ValidationError) {
+      throw new Error(validationError.message);
+    }
+    throw new Error("An unexpected error occurred");
   }
 
   const list = await prisma.lists.create({
@@ -383,8 +386,11 @@ export const updateListName = async (listId: number, newName: string) => {
 
   try {
     await validationSchema.validate({ listName: newName });
-  } catch (validationError: any) {
-    throw validationError.message;
+  } catch (validationError) {
+    if (validationError instanceof yup.ValidationError) {
+      throw new Error(validationError.message);
+    }
+    throw new Error("An unexpected error occurred");
   }
 
   const updatedList = await prisma.lists.update({

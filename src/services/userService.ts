@@ -1,5 +1,6 @@
 "use server";
 
+import * as yup from "yup";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
 import { validationSchema } from "@/schemas/userSchema";
@@ -188,8 +189,11 @@ const updateDescriptionAndSocialMedia = async (
         instagram: instagram,
         tiktok: tiktok,
       });
-    } catch (validationError: any) {
-      throw validationError.message;
+    } catch (validationError) {
+      if (validationError instanceof yup.ValidationError) {
+        throw new Error(validationError.message);
+      }
+      throw new Error("An unexpected error occurred");
     }
 
     await prisma.users.update({

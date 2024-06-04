@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import { Role } from "@prisma/client";
 import prisma from "@/db";
+import { validationSchema } from "@/schemas/reportSchema";
 
 const createReport = async (
   targetUserId: number | null,
@@ -14,6 +15,13 @@ const createReport = async (
   if (!session) {
     throw "Invalid session";
   }
+
+  try {
+    await validationSchema.validate({ report: content });
+  } catch (validationError: any) {
+    throw validationError.message;
+  }
+
   const newReport = await prisma.reports.create({
     data: {
       creatorId: Number(session.user.id),

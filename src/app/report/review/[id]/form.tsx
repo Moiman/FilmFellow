@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { ErrorMessage } from "@/components/errorMessage";
 import { toast } from "react-toastify";
 import { Flag } from "react-feather";
@@ -12,6 +11,7 @@ import { Flag } from "react-feather";
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import { getReviewById } from "@/services/reviewService";
+import { validationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 
 interface Props {
   targetReview: Review;
@@ -22,16 +22,6 @@ export type Review = NonNullable<Awaited<ReturnType<typeof getReviewById>>>;
 interface FormData {
   report: string;
 }
-
-const maxLength = 500;
-
-const validationSchema = yup.object().shape({
-  report: yup
-    .string()
-    .trim()
-    .required("Report is required")
-    .max(maxLength, "Report cannot exceed " + maxLength + " characters"),
-});
 
 export default function ReportReviewForm({ targetReview }: Props) {
   const router = useRouter();
@@ -102,9 +92,13 @@ export default function ReportReviewForm({ targetReview }: Props) {
               </label>
               <p
                 style={{ marginBottom: "0" }}
-                className={reportInput.length <= maxLength ? "description grey" : "description pink"}
+                className={
+                  reportInput.length <= reportMaxLength && reportInput.length >= reportMinLength
+                    ? "description grey"
+                    : "description pink"
+                }
               >
-                {reportInput.length}/{maxLength}
+                {reportInput.length}/{reportMaxLength}
               </p>
             </div>
             <textarea

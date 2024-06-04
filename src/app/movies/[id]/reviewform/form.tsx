@@ -2,16 +2,18 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import * as yup from "yup";
-import { Star } from "react-feather";
-import { toast } from "react-toastify";
-import { StarRating } from "@/app/movies/[id]/starRating";
-import { Section } from "@/components/section";
-import { createReview } from "@/services/reviewService";
-import { getMovieById } from "@/services/movieService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Star } from "react-feather";
+import { toast } from "react-toastify";
+
+import { StarRating } from "@/app/movies/[id]/starRating";
+import { Section } from "@/components/section";
 import { ErrorMessage } from "@/components/errorMessage";
+
+import { createReview } from "@/services/reviewService";
+import { getMovieById } from "@/services/movieService";
+import { reviewMaxLength, reviewMinLength, validationSchema } from "@/schemas/reviewSchema";
 
 interface Props {
   movie: Movie;
@@ -22,19 +24,6 @@ type Movie = NonNullable<Awaited<ReturnType<typeof getMovieById>>>;
 interface FormData {
   content: string;
 }
-
-const minLength = 10;
-const maxLength = 5000;
-
-const validationSchema = yup.object().shape({
-  content: yup
-    .string()
-    .trim()
-    .required("Review is required")
-    .min(minLength, "Review must be at least " + minLength + " characters")
-    .max(maxLength, "Review cannot exceed " + maxLength + " characters"),
-});
-
 export default function ReviewForm({ movie }: Props) {
   const router = useRouter();
 
@@ -104,9 +93,13 @@ export default function ReviewForm({ movie }: Props) {
                 </label>
                 <p
                   style={{ marginBottom: "0" }}
-                  className={contentInput.length <= maxLength ? "description grey" : "description pink"}
+                  className={
+                    contentInput.length <= reviewMaxLength && contentInput.length >= reviewMinLength
+                      ? "description grey"
+                      : "description pink"
+                  }
                 >
-                  {contentInput.length}/{maxLength}
+                  {contentInput.length}/{reviewMaxLength}
                 </p>
               </div>
               <textarea

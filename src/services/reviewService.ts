@@ -3,12 +3,20 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
+import { validationSchema } from "@/schemas/reviewSchema";
 
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     throw "Invalid session";
   }
+
+  try {
+    await validationSchema.validate({ content: content });
+  } catch (validationError: any) {
+    throw validationError.message;
+  }
+
   const newReview = await prisma.reviews.create({
     data: {
       userId: Number(session.user.id),

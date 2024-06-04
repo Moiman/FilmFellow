@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Flag } from "react-feather";
@@ -12,6 +11,7 @@ import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import type { User } from "next-auth";
 import { ErrorMessage } from "@/components/errorMessage";
+import { validationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 
 interface Props {
   targetUser: User | null;
@@ -20,16 +20,6 @@ interface Props {
 interface FormData {
   report: string;
 }
-
-const maxLength = 500;
-
-const validationSchema = yup.object().shape({
-  report: yup
-    .string()
-    .trim()
-    .required("Report is required")
-    .max(maxLength, "Report cannot exceed " + maxLength + " characters"),
-});
 
 export default function ReportForm({ targetUser }: Props) {
   const router = useRouter();
@@ -87,9 +77,13 @@ export default function ReportForm({ targetUser }: Props) {
               </label>
               <p
                 style={{ marginBottom: "0" }}
-                className={reportInput.length <= maxLength ? "description grey" : "description pink"}
+                className={
+                  reportInput.length <= reportMaxLength && reportInput.length >= reportMinLength
+                    ? "description grey"
+                    : "description pink"
+                }
               >
-                {reportInput.length}/{maxLength}
+                {reportInput.length}/{reportMaxLength}
               </p>
             </div>
             <textarea

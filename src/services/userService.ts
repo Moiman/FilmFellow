@@ -2,6 +2,7 @@
 
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
+import { validationSchema } from "@/schemas/userSchema";
 import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
 import { revalidatePath } from "next/cache";
@@ -180,6 +181,17 @@ const updateDescriptionAndSocialMedia = async (
   const session = await getServerSession(authOptions);
 
   if (userId === session?.user.id) {
+    try {
+      await validationSchema.validate({
+        description: description,
+        twitter: twitter,
+        instagram: instagram,
+        tiktok: tiktok,
+      });
+    } catch (validationError: any) {
+      throw validationError.message;
+    }
+
     await prisma.users.update({
       where: {
         id: userId,

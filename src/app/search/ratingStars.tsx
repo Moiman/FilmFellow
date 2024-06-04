@@ -1,6 +1,13 @@
+import { ChangeEvent } from "react";
 import { Star } from "react-feather";
 
-export default function RatingStars({ stars, inputHandler }: { stars: number; inputHandler: any }) {
+export default function RatingStars({
+  stars,
+  inputHandler,
+}: {
+  stars: number;
+  inputHandler: (event: ChangeEvent<HTMLInputElement>, param: string) => void;
+}) {
   const data = Array.from({ length: stars }, (_, index) => index);
   return (
     <div className="filter">

@@ -65,7 +65,7 @@ describe("Movie lists tests", () => {
     cy.visit("/movies/278");
     cy.contains("Add to list").should("be.visible").click();
     cy.get(".dropdown-menu").should("be.visible").contains("Add to new list").click();
-    cy.get("dialog input[name='listName']").should("be.visible").type("List 3");
+    cy.get("dialog input[name='listName']").should("be.visible").clear().type("List 3");
     cy.get("dialog button[type='submit']").click();
     cy.contains("Add to list").should("be.visible").click();
     cy.get(".dropdown-menu").should("be.visible").contains("List 3").click();

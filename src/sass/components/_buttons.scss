@@ -21,6 +21,11 @@ button:hover {
   background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
 }
 
+button:disabled {
+  background-color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  color: rgb(131, 117, 56);
+}
+
 .button-pink {
   background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
@@ -29,12 +34,22 @@ button:hover {
   background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
 }
 
+.button-pink:disabled {
+  background-color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  color: rgb(122, 50, 104);
+}
+
 .button-cyan {
   background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
 }
 
 .button-cyan:hover {
   background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
+}
+
+.button-cyan:disabled {
+  background-color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+  color: rgb(38, 128, 128);
 }
 
 button:focus {
@@ -61,6 +76,20 @@ button:focus-visible {
   .button-transparent-text {
     opacity: 50%;
   }
+}
+
+.button-review {
+  display: flex;
+  background-color: transparent;
+  padding: 0;
+  color: abstracts.$primary-light;
+  border-radius: 0;
+  text-align: left;
+  height: 100%;
+}
+
+.button-review:hover {
+  background-color: transparent;
 }
 
 .button-icon-text {

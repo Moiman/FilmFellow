@@ -14,6 +14,18 @@
   border-radius: abstracts.$default-border-radius abstracts.$default-border-radius 0 0;
   border: 1px solid abstracts.$primary-dark;
   border-bottom: 0;
+
+  .header-default-style {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    button {
+      min-width: fit-content;
+    }
+  }
 }
 
 .section-content {

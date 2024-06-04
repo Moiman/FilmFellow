@@ -4,6 +4,7 @@ import { authOptions } from "@/authOptions";
 import prisma from "@/db";
 import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
+import { revalidatePath } from "next/cache";
 
 export interface User {
   username: string;
@@ -100,7 +101,7 @@ const deleteUserById = async (id: number) => {
 const getAllUsers = async () => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    return [];
+    throw new Error("Unauthorized");
   }
   const users = await prisma.users.findMany({
     select: selectUserFields,
@@ -120,10 +121,16 @@ const updateUserLastVisited = async (id: number, last_visited: Date) => {
 };
 
 const changeUserStatusById = async (id: number, status: boolean, banDuration?: number | null) => {
+  const session = await getServerSession(authOptions);
+  if (!session || session.user.role !== Role.admin) {
+    throw new Error("Unauthorized");
+  }
+
+  revalidatePath("/admin");
   if (banDuration) {
     const banEndDateInMS = new Date().getTime() + banDuration * 1000;
     const banEndDate = new Date(banEndDateInMS);
-    await prisma.users.update({
+    return await prisma.users.update({
       where: {
         id: id,
       },
@@ -131,9 +138,10 @@ const changeUserStatusById = async (id: number, status: boolean, banDuration?: n
         banDuration: banEndDate,
         isActive: status,
       },
+      select: selectUserFields,
     });
   } else {
-    await prisma.users.update({
+    return await prisma.users.update({
       where: {
         id: id,
       },
@@ -141,6 +149,7 @@ const changeUserStatusById = async (id: number, status: boolean, banDuration?: n
         banDuration: null,
         isActive: status,
       },
+      select: selectUserFields,
     });
   }
 };

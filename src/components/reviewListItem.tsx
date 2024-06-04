@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Smile, Star, Trash2 } from "react-feather";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { Smile, Star, Trash2 } from "react-feather";
 import { deleteReviewById, getAllReviewsForMovie } from "@/services/reviewService";
 import { ReviewModal } from "./reviewModal";
 
@@ -35,6 +36,10 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
 
   const handleDeleteReview = async () => {
     await deleteReviewById(Number(review?.id));
+    toast(<p>Your review was deleted</p>, {
+      icon: <Trash2 strokeWidth={2.5} />,
+      className: "pink-toast",
+    });
   };
 
   return review ? (
@@ -50,12 +55,11 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
             {review.user.username}
           </Link>
         </div>
-        <div>
+        <div className="star-rating">
           {[1, 2, 3, 4, 5].map(starRating => (
             <Star
               key={starRating}
-              stroke={review.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
-              fill={review.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
+              className={review.rating && review.rating >= starRating ? "selected" : "not-selected"}
               strokeWidth={2}
               size={20}
             />
@@ -63,12 +67,12 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         </div>
       </div>
 
-      <p
+      <button
         onClick={() => setOpenReviewModal(true)}
-        className="review-grid-content description"
+        className="review-grid-content description button-review"
       >
-        {review.content.length > 303 ? review.content.slice(0, 300) + "..." : review.content}
-      </p>
+        <p>{review.content}</p>
+      </button>
       <ReviewModal
         reviewReported={checkIfReviewReported()}
         review={review}
@@ -76,14 +80,13 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         setIsModalOpen={setOpenReviewModal}
       />
       {ownReview && (
-        <div className="review-grid-footer-primary">
+        <div className="review-grid-footer bg-yellow">
           <button
             onClick={handleDeleteReview}
             className="button-transparent"
           >
             <Trash2
-              color="black"
-              style={{ marginLeft: "10px" }}
+              className="dark-icon"
               size={20}
             />
           </button>
@@ -96,33 +99,26 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
         <Smile size={30} />
         <p
           className="h5"
-          style={{ lineHeight: "2.1rem" }}
+          style={{ lineHeight: "2rem" }}
         >
           {importedReview?.author}
         </p>
       </div>
 
-      <p
+      <button
         onClick={() => setOpenImportedReviewModal(true)}
-        className="review-grid-content description"
+        className="review-grid-content description button-review"
       >
-        {importedReview?.content.length! > 303
-          ? importedReview?.content.slice(0, 300) + "..."
-          : importedReview?.content}
-      </p>
+        <p>{importedReview?.content}</p>
+      </button>
       <ReviewModal
         importedReviewReported={checkIfImportedReviewReported()}
         importedReview={importedReview}
         isModalOpen={openImportedReviewModal}
         setIsModalOpen={setOpenImportedReviewModal}
       />
-      <div className="review-grid-footer-secondary">
-        <p
-          className="yellow"
-          style={{ marginLeft: "10px" }}
-        >
-          Imported from TMDB
-        </p>
+      <div className="review-grid-footer bg-dark">
+        <p className="yellow">Imported from TMDB</p>
       </div>
     </div>
   );

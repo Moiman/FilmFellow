@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Flag } from "react-feather";
@@ -12,14 +13,22 @@ interface Props {
   targetReview: Review;
 }
 
-export type Review = Awaited<ReturnType<typeof getReviewById>>;
+export type Review = NonNullable<Awaited<ReturnType<typeof getReviewById>>>;
 
 export default function ReportReviewForm({ targetReview }: Props) {
   const [reportInput, setReportInput] = useState("");
   const router = useRouter();
   const sectionHeader = (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <h4>Report about review </h4>
+      <h4>
+        Report about review in movie{" "}
+        <Link
+          className="h4"
+          href={`/movies/${targetReview.movieId}`}
+        >
+          {targetReview.movie.title}
+        </Link>
+      </h4>
     </div>
   );
 
@@ -51,6 +60,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
             onSubmit={handleReportSubmit}
             className="form"
           >
+            <p className="review-grid-content description">{targetReview.content}</p>
             <label htmlFor="about">Write your report here</label>
             <textarea
               id="about"

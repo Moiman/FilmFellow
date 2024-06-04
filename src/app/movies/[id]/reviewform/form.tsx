@@ -20,10 +20,9 @@ export default function ReviewForm({ movie }: Props) {
   const [contentInput, setContentInput] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const reviewHeader = (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div className="header-default-style">
       <h2 className="yellow-name-header">
-        <Link href={`/movies/${movie.id}`}>{movie.title} </Link>
-        Review
+        <Link href={`/movies/${movie.id}`}>{movie.title}</Link> review
       </h2>
       <button
         type="submit"
@@ -39,8 +38,8 @@ export default function ReviewForm({ movie }: Props) {
     await createReview(Number(movie?.id), contentInput.trim(), rating);
     setContentInput("");
 
-    toast(<p>Review was submitted</p>, {
-      icon: <Star />,
+    toast(<p>Your review was submitted</p>, {
+      icon: <Star className="yellow-icon-filled" />,
       className: "yellow-toast",
     });
     router.push("/movies/" + movie?.id);

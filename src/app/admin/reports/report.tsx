@@ -8,6 +8,7 @@ import { Dropdown } from "@/components/dropdown";
 import { deleteReportById, type getAllReports, markReportDone } from "@/services/reportService";
 import Modal from "@/components/modal";
 import { deleteReviewById } from "@/services/reviewService";
+import { changeUserStatusById } from "@/services/userService";
 
 interface Props {
   report: Reports[0];
@@ -29,45 +30,34 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
   const handleBanSubmit = async (banDuration: number | null) => {
     try {
-      const banDetails = {
-        isActive: false,
-        banDuration: banDuration,
-      };
-
-      const response = await fetch(`/api/users/update/${report.targetUserId}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(banDetails),
-      });
-
-      if (!response.ok) {
-        setError(response.statusText);
-        throw response.status;
+      if (!report.targetUserId) {
+        setError("Missing target user");
+        return;
       }
 
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
-        throw data.error;
-      }
+      const bannedUser = await changeUserStatusById(report.targetUserId, false, banDuration);
 
       setAllReports(reports =>
         reports.map(report => {
-          if (report.targetUserId === data.id && report.targetUser) {
-            return {
-              ...report,
-              targetUser: {
-                ...report.targetUser,
-                isActive: data.isActive,
-                banDuration: new Date(data.banDuration),
-              },
-            };
-          }
-          return report;
+          return {
+            ...report,
+            targetUser:
+              report.targetUser && report.targetUserId === bannedUser.id
+                ? {
+                    ...report.targetUser,
+                    isActive: bannedUser.isActive,
+                    banDuration: bannedUser.banDuration,
+                  }
+                : report.targetUser,
+            creator:
+              report.creator && report.creatorId === bannedUser.id
+                ? {
+                    ...report.creator,
+                    isActive: bannedUser.isActive,
+                    banDuration: bannedUser.banDuration,
+                  }
+                : report.creator,
+          };
         }),
       );
 
@@ -76,7 +66,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       toast(
         <p>
           {report.targetUser?.username} was blocked
-          {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
+          {bannedUser.banDuration ? " until " + bannedUser.banDuration.toDateString() : " forever"}
         </p>,
         {
           icon: <Tool />,
@@ -84,54 +74,56 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         },
       );
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Internal server error");
+      }
     }
   };
 
   const handleUnBanSubmit = async () => {
     try {
-      const banDetails = {
-        isActive: true,
-        banDuration: null,
-      };
-
-      const response = await fetch(`/api/users/update/${report.targetUserId}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(banDetails),
-      });
-
-      if (!response.ok) {
-        setError(response.statusText);
-        throw response.status;
+      if (!report.targetUserId) {
+        setError("Missing target user");
+        return;
       }
 
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
-        throw data.error;
-      }
+      const unbannedUser = await changeUserStatusById(report.targetUserId, true, null);
 
       setAllReports(reports =>
         reports.map(report => {
-          if (report.targetUserId === data.id && report.targetUser) {
-            return { ...report, targetUser: { ...report.targetUser, isActive: data.isActive } };
-          }
-          return report;
+          return {
+            ...report,
+            targetUser:
+              report.targetUser && report.targetUserId === unbannedUser.id
+                ? {
+                    ...report.targetUser,
+                    isActive: unbannedUser.isActive,
+                  }
+                : report.targetUser,
+            creator:
+              report.creator && report.creatorId === unbannedUser.id
+                ? {
+                    ...report.creator,
+                    isActive: unbannedUser.isActive,
+                  }
+                : report.creator,
+          };
         }),
       );
       setError("");
 
-      toast(<p>{report.targetUser?.username} was unblocked</p>, {
+      toast(<p>{unbannedUser.username} was unblocked</p>, {
         icon: <Tool />,
         className: "yellow-toast",
       });
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Internal server error");
+      }
     }
   };
 
@@ -204,32 +196,48 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       </div>
       <div>
         <label className="admin-panel-report-label">Reporter</label>
-        <Link href={`/users/${report.creatorId}`}>{report.creator?.username}</Link>
 
-        <p className={report.creator?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
-          {report.creator?.isActive
-            ? "Active"
-            : "On suspension " +
-              (report.creator?.banDuration ? "until " + report.creator.banDuration.toDateString() : "forever")}
-        </p>
+        <Link
+          className={report.creator?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}
+          href={`/users/${report.creatorId}`}
+          title={
+            report.creator?.isActive
+              ? "Active"
+              : "On suspension " +
+                (report.creator?.banDuration ? "until " + report.creator.banDuration.toDateString() : "forever")
+          }
+        >
+          {report.creator?.username}
+        </Link>
       </div>
       <div>
         <label className="admin-panel-report-label">Date</label>
         <p>{showDate(report.created_at)}</p>
       </div>
-      <div>
+      <div style={{ display: "grid", gridTemplateColumns: "auto" }}>
         <label className="admin-panel-report-label">Target</label>
-        <Link href={`/users/${report.targetUserId}`}>{report.targetUser?.username}</Link>
         {report.targetUserId !== null && (
-          <p className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}>
-            {report.targetUser?.isActive
-              ? "Active"
-              : "On suspension " +
-                (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")}
-          </p>
+          <Link
+            className={report.targetUser?.isActive ? "admin-panel-status-active" : "admin-panel-status-suspended"}
+            href={`/users/${report.targetUserId}`}
+            title={
+              report.targetUser?.isActive
+                ? "Active"
+                : "On suspension " +
+                  (report.targetUser?.banDuration ? "until " + report.targetUser.banDuration.toDateString() : "forever")
+            }
+          >
+            {report.targetUser?.username}
+          </Link>
         )}
         {(report.importedReviewId || report.reviewId) && (
           <>
+            {report.review ? (
+              <Link href={`/movies/${report.review.movie.id}`}>{report.review.movie.title}</Link>
+            ) : (
+              <Link href={`/movies/${report.importedReview?.movie.id}`}>{report.importedReview?.movie.title}</Link>
+            )}
+
             <p
               className="admin-panel-review-paragraph"
               onClick={() => setOpenModal(true)}

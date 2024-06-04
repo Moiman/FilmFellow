@@ -50,15 +50,17 @@ export const ReviewModal = ({
         <div className="review-grid-modal-item">
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto",
+              display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               gap: "10px",
             }}
           >
             <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-              <Smile size={30} />
+              <Smile
+                size={30}
+                className="grey-icon"
+              />
               <Link
                 className="h5"
                 href={"/users/" + review.user.id}
@@ -66,19 +68,18 @@ export const ReviewModal = ({
                 {review.user.username}
               </Link>
             </div>
-            <div>
+            <div className="star-rating">
               {[1, 2, 3, 4, 5].map(starRating => (
                 <Star
                   key={starRating}
-                  stroke={review?.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
-                  fill={review?.rating && review.rating >= starRating ? "#ffc700" : "#eff2f2"}
+                  className={review.rating && review.rating >= starRating ? "selected" : "not-selected"}
                   strokeWidth={2}
                   size={20}
                 />
               ))}
             </div>
           </div>
-          <p className="review-grid-content description">{review.content}</p>
+          <p className="review-modal-content description">{review.content}</p>
 
           {session && session.user.id !== review.user.id && (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -93,7 +94,10 @@ export const ReviewModal = ({
                   </button>
                 </form>
               ) : (
-                <button className="button-pink button-icon-text">
+                <button
+                  className="button-pink button-icon-text"
+                  disabled
+                >
                   <Flag size={16} />
                   Reported!
                 </button>
@@ -107,17 +111,18 @@ export const ReviewModal = ({
         <div className="review-grid-modal-item">
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto",
+              display: "inline-flex",
               alignItems: "center",
-              justifyContent: "flex-start",
               gap: "10px",
             }}
           >
-            <Smile size={30} />
+            <Smile
+              size={30}
+              className="grey-icon"
+            />
             <p className="h5">{importedReview?.author}</p>
           </div>
-          <p className="review-grid-content description">{importedReview?.content}</p>
+          <p className="review-modal-content description">{importedReview?.content}</p>
           {session && (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               {!importedReviewReported ? (
@@ -131,7 +136,10 @@ export const ReviewModal = ({
                   </button>
                 </form>
               ) : (
-                <button className="button-pink button-icon-text">
+                <button
+                  className="button-pink button-icon-text"
+                  disabled
+                >
                   <Flag size={16} />
                   Reported!
                 </button>

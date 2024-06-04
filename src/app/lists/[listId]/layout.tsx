@@ -8,6 +8,7 @@ import { Section } from "@/components/section";
 import { getList } from "@/services/listService";
 import { DeleteList } from "./deleteList";
 import { RenameList } from "./renameList";
+import { getIsListReported } from "@/services/reportService";
 
 export default async function Layout({ params, children }: { params: { listId: string }; children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -18,6 +19,8 @@ export default async function Layout({ params, children }: { params: { listId: s
   if (!list) {
     notFound();
   }
+
+  const isReported = await getIsListReported(Number(list.id));
 
   return (
     <main className="list">
@@ -41,7 +44,7 @@ export default async function Layout({ params, children }: { params: { listId: s
               </div>
             )}
 
-            {session && session.user.id !== list.userId && !Number.isNaN(id) && (
+            {session && session.user.id !== list.userId && !Number.isNaN(id) && !isReported && (
               <div className="list-edit">
                 <form action={`/report/list/${list.id}`}>
                   <button

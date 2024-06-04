@@ -74,7 +74,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
 
         <div className="description-word-amount">
           <p className={userDescription.length <= descriptionMax ? "description grey" : "description pink"}>
-            {userDescription.length}/ {descriptionMax}
+            {userDescription.length}/{descriptionMax}
           </p>
         </div>
 

@@ -111,7 +111,7 @@ describe("Admin report panel tests", () => {
     cy.login(reportDummyUser.email, reportDummyUser.password);
     cy.visit("/users/" + reportDummyUserId);
     cy.get(".section").contains("Add new list").click();
-    cy.get("dialog input[name='name']").should("be.visible").type("testlist");
+    cy.get("dialog input[name='listName']").should("be.visible").type("testlist");
     cy.get("dialog button[type='submit']").click();
     cy.get(".section").contains("testlist");
   });

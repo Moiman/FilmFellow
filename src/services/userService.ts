@@ -283,6 +283,37 @@ const getIsUserAlreadyFriend = async (friendId: number) => {
 
   return friend;
 };
+
+const getIsFriendshipMutual = async (friendId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const mutualFriend = !!(await prisma.users.findFirst({
+    where: {
+      id: Number(session.user.id),
+      AND: [
+        {
+          friends: {
+            some: {
+              id: friendId,
+            },
+          },
+        },
+        {
+          friendsOf: {
+            some: {
+              id: friendId,
+            },
+          },
+        },
+      ],
+    },
+  }));
+
+  return mutualFriend;
+};
+
 export {
   createUser,
   findUserByEmail,
@@ -299,4 +330,5 @@ export {
   getUserFriends,
   removeFriend,
   getIsUserAlreadyFriend,
+  getIsFriendshipMutual,
 };

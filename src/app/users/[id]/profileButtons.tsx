@@ -1,7 +1,7 @@
 import { Flag } from "react-feather";
 import { getIsUserReported } from "@/services/reportService";
 import { FriendsButton } from "@/components/friendsButton";
-import { getIsUserAlreadyFriend, getUserFriends } from "@/services/userService";
+import { getIsFriendshipMutual, getIsUserAlreadyFriend, getUserFriends } from "@/services/userService";
 
 interface ProfileButtonsProps {
   ownProfile: boolean;
@@ -12,7 +12,9 @@ export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps
   const isReported = await getIsUserReported(userId);
   const friends = await getUserFriends();
   const isFriend = await getIsUserAlreadyFriend(userId);
+  const mutualFriend = await getIsFriendshipMutual(userId);
   console.log(friends);
+  console.log(mutualFriend);
   return (
     <div style={{ display: "inline-flex", marginTop: "40px" }}>
       {ownProfile ? (

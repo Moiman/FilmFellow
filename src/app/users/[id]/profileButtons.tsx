@@ -17,7 +17,7 @@ export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps
       ) : (
         <>
           <button className="button-cyan">Add to friends</button>
-          {!isReported && (
+          {!isReported ? (
             <form action={`/report/user/${userId}`}>
               <button
                 type="submit"
@@ -27,6 +27,14 @@ export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps
                 Report
               </button>
             </form>
+          ) : (
+            <button
+              className="button-pink button-icon-text"
+              disabled
+            >
+              <Flag size={16} />
+              Reported
+            </button>
           )}
         </>
       )}

@@ -194,6 +194,95 @@ const updateDescriptionAndSocialMedia = async (
   }
 };
 
+const addFriend = async (friendId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const newFriend = await prisma.users.update({
+    where: { id: Number(session.user.id) },
+    data: {
+      friends: {
+        connect: { id: friendId },
+      },
+    },
+    select: selectUserFields,
+  });
+  revalidatePath("/users/" + session.user.id);
+  return newFriend;
+};
+const getUserFriends = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const userFriends = await prisma.users.findFirst({
+    where: {
+      id: Number(session.user.id),
+    },
+    select: {
+      friends: {
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          twitter: true,
+          instagram: true,
+          description: true,
+          tiktok: true,
+        },
+      },
+      friendsOf: {
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          twitter: true,
+          instagram: true,
+          description: true,
+          tiktok: true,
+        },
+      },
+    },
+  });
+  return userFriends;
+};
+const removeFriend = async (friendId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const removedFriend = await prisma.users.update({
+    where: { id: Number(session.user.id) },
+    data: {
+      friends: {
+        disconnect: { id: friendId },
+      },
+    },
+    select: selectUserFields,
+  });
+  revalidatePath("/users/" + session.user.id);
+  return removedFriend;
+};
+
+const getIsUserAlreadyFriend = async (friendId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const friend = !!(await prisma.users.findFirst({
+    where: {
+      id: Number(session.user.id),
+      friends: {
+        some: {
+          id: friendId,
+        },
+      },
+    },
+  }));
+
+  return friend;
+};
 export {
   createUser,
   findUserByEmail,
@@ -206,4 +295,8 @@ export {
   changeUserStatusById,
   getDescriptionAndSocialMedia,
   updateDescriptionAndSocialMedia,
+  addFriend,
+  getUserFriends,
+  removeFriend,
+  getIsUserAlreadyFriend,
 };

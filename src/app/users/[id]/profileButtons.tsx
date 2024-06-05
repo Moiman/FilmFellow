@@ -1,5 +1,7 @@
 import { Flag } from "react-feather";
 import { getIsUserReported } from "@/services/reportService";
+import { FriendsButton } from "@/components/friendsButton";
+import { getIsUserAlreadyFriend, getUserFriends } from "@/services/userService";
 
 interface ProfileButtonsProps {
   ownProfile: boolean;
@@ -8,6 +10,9 @@ interface ProfileButtonsProps {
 
 export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps) => {
   const isReported = await getIsUserReported(userId);
+  const friends = await getUserFriends();
+  const isFriend = await getIsUserAlreadyFriend(userId);
+  console.log(friends);
   return (
     <div style={{ display: "inline-flex", marginTop: "40px" }}>
       {ownProfile ? (
@@ -16,7 +21,10 @@ export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps
         </form>
       ) : (
         <>
-          <button className="button-cyan">Add to friends</button>
+          <FriendsButton
+            userId={userId}
+            friends={isFriend}
+          />
           <form action={`/report/user/${userId}`}>
             <button
               type="submit"

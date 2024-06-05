@@ -20,6 +20,8 @@ model Users {
   isActive     Boolean   @default(true)
   banDuration  DateTime?
 
+  friends         Users[]           @relation("Friends")
+  friendsOf       Users[]           @relation("Friends")
   reviews         Reviews[]
   favorites       Favorites[]
   watchedRatings  WatchedRatings[]

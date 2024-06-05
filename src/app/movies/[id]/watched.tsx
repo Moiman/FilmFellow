@@ -28,7 +28,7 @@ export const Watched = ({ watched, toggleWatched, setUserRating, movieTitle }: P
       <button
         className={watched ? "button-pink" : ""}
         onClick={handleClick}
-        aria-label={watched ? `Remove ${movieTitle} from watched list` : `Mark ${movieTitle} as watched`}
+        aria-label={watched ? `Remove ${movieTitle} from watched` : `Mark ${movieTitle} as watched`}
       >
         {watched ? "Remove from watched" : "Mark as watched"}
       </button>

@@ -69,7 +69,7 @@ export default async function Person({ params }: { params: { id: string } }) {
         <Section
           header={
             <div className="known-for-header">
-              <h4>Known for...</h4>{" "}
+              <h4>Known for...</h4>
               <Link
                 href={"/persons/" + params.id + "/movies"}
                 aria-label={`See all ${person.name} movies`}

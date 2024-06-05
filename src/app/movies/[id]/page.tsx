@@ -43,7 +43,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <Section
           header={
             <div className="header-default-style">
-              <h3>Cast</h3>{" "}
+              <h3>Cast</h3>
               <Link
                 href={`${params.id}/cast`}
                 aria-label="See all cast members"
@@ -59,7 +59,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
         <Section
           header={
             <div className="header-default-style">
-              <h3>Crew</h3>{" "}
+              <h3>Crew</h3>
               <Link
                 href={`${params.id}/crew`}
                 aria-label="See all crew members"

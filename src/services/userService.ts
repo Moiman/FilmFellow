@@ -211,14 +211,15 @@ const addFriend = async (friendId: number) => {
   revalidatePath("/users/" + session.user.id);
   return newFriend;
 };
-const getUserFriends = async () => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
+const getUserFriends = async (userId: number) => {
+  // const session = await getServerSession(authOptions);
+  // if (!session) {
+  //   throw new Error("Unauthorized");
+  // }
   const userFriends = await prisma.users.findFirst({
     where: {
-      id: Number(session.user.id),
+      // id: Number(session.user.id),
+      id: userId
     },
     select: {
       friends: {

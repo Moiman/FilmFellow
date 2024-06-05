@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { authOptions } from "@/authOptions";
-import { getDescriptionAndSocialMedia } from "@/services/userService";
+import { getDescriptionAndSocialMedia, getUserFriends } from "@/services/userService";
 import { getServerSession } from "next-auth";
 import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
+import Link from "next/link";
 
 export const ProfileInfo = async ({ userId }: { userId: number }) => {
   const session = await getServerSession(authOptions);
@@ -12,6 +13,9 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
   if (!user) {
     return null;
   }
+
+  const friends = await getUserFriends(userId);
+  console.log(friends);
 
   return (
     <div className="profile-info">
@@ -59,27 +63,37 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
         </div>
       )}
 
-      {/* Hide until implemented
       <div className="full-width">
         <div className="profile-friend-list">
           <div className="friends-title">
             <h3 className="h5">Friends</h3>
             <Link href={`/users/${userId}/friends`}>See all</Link>
           </div>
-
-          <div className="friends-wrapper">
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-          </div>
+          {userId === session?.user.id ? (
+            <div className="friends-wrapper">
+              {friends?.friends.map(friend => (
+                <button
+                  className="button-friend"
+                  key={friend.id}
+                >
+                  <Link href={`/users/${friend.id}`}>{friend.username}</Link>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="friends-wrapper">
+              {friends?.friendsOf.map(friend => (
+                <button
+                  className="button-friend"
+                  key={friend.id}
+                >
+                  <Link href={`/users/${friend.id}`}>{friend.username}</Link>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-    */}
 
       {session && (
         <ProfileButtons
@@ -90,3 +104,13 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
     </div>
   );
 };
+/*
+<button className="button-friend" />
+            <button className="button-friend" />
+            <button className="button-friend" />
+            <button className="button-friend" />
+            <button className="button-friend" />
+            <button className="button-friend" />
+            <button className="button-friend" />
+            <button className="button-friend" />
+*/

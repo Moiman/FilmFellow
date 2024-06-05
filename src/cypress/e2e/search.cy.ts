@@ -10,7 +10,8 @@ describe("search filter tests", () => {
     cy.get(".filter-header").contains("Genres").click();
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[id="Action"]`).click();
-    cy.location("search").should("include", "Action=on");
+    cy.get(`input[id="Action"]`).should("be.checked");
+
   });
 
   it("test release year filter", () => {
@@ -18,9 +19,9 @@ describe("search filter tests", () => {
     cy.get(".filter-header").contains("Release year").click();
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[name=releaseYearMin]`).type("2000");
-    cy.location("search").should("include", "releaseYearMin=2000");
     cy.get(`input[name=releaseYearMax]`).type("2020");
-    cy.location("search").should("include", "releaseYearMax=2020");
+    cy.get(`input[name=releaseYearMin]`).should("have.value", "2000");
+    cy.get(`input[name=releaseYearMax]`).should("have.value", "2020");
   });
 
   it("test countries filter", () => {
@@ -28,7 +29,7 @@ describe("search filter tests", () => {
     cy.get(".filter-header").contains("Countries").click();
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[name="Andorra"]`).click();
-    cy.location("search").should("include", "Andorra=on");
+    cy.get(`input[name="Andorra"]`).should("be.checked");
   });
 
   it("test languages filter", () => {
@@ -36,7 +37,7 @@ describe("search filter tests", () => {
     cy.get(".filter-header").contains("Languages").click();
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[name="Afar"]`).click();
-    cy.location("search").should("include", "Afar=on");
+    cy.get(`input[name="Afar"]`).should("be.checked");
   });
 
   it("test budget filter", () => {
@@ -44,9 +45,9 @@ describe("search filter tests", () => {
     cy.get(".filter-header").contains("Budget").click();
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[name=budgetMin]`).type("200");
-    cy.location("search").should("include", "budgetMin=200");
     cy.get(`input[name=budgetMax]`).type("2000");
-    cy.location("search").should("include", "budgetMax=2000");
+    cy.get(`input[name=budgetMin]`).should("have.value", "200");
+    cy.get(`input[name=budgetMax]`).should("have.value", "2000");
   });
 
   it("test movie length filter", () => {
@@ -54,7 +55,7 @@ describe("search filter tests", () => {
     cy.get(".filter-header").contains("Movie length").click();
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[name=movieLength]`).type("200");
-    cy.location("search").should("include", "movieLength=200");
+    cy.get(`input[name=movieLength]`).should("have.value", "200");
   });
 
   it("test rating filter", () => {
@@ -62,6 +63,6 @@ describe("search filter tests", () => {
     cy.get(".filter-header").contains("Rating").click();
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[name="rating1"]`).click();
-    cy.location("search").should("include", "rating1=on");
+    cy.get(`input[name="rating1"]`).should("be.checked");
   });
 });

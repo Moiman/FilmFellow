@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { findUserById } from "@/services/userService";
+import { findUserById, getUserFriends } from "@/services/userService";
 import { notFound } from "next/navigation";
 
 import { Section } from "@/components/section";
+import { FriendsList } from "@/components/friendsList";
 
 export default async function userFriends({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));
@@ -10,6 +11,8 @@ export default async function userFriends({ params }: { params: { id: string } }
   if (!user) {
     notFound();
   }
+
+  const friends = await getUserFriends(Number(params.id));
 
   return (
     <main>
@@ -20,7 +23,7 @@ export default async function userFriends({ params }: { params: { id: string } }
           </h2>
         }
       >
-        <></>
+        <FriendsList friends={friends?.friends} />
       </Section>
     </main>
   );

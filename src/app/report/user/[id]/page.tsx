@@ -13,8 +13,8 @@ export default async function ReportPage({ params }: { params: { id: string } })
   if (!user) {
     notFound();
   }
-  const isReported = await getIsUserReported(user.id);
-  if (!session || isReported || session.user.id === targetUserId) {
+
+  if (!session || (await getIsUserReported(user.id)) || session.user.id === targetUserId) {
     redirect(`/users/${targetUserId}`);
   } else {
     return <ReportForm targetUser={user} />;

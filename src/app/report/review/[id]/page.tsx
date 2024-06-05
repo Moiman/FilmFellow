@@ -12,9 +12,9 @@ export default async function ReportReviewPage({ params }: { params: { id: strin
   if (!review) {
     notFound();
   }
-  const isReported = review.reports.filter(report => report.creatorId === session?.user.id);
+  const isReported = review.reports.some(report => report.creatorId === session?.user.id);
 
-  if (!session || isReported.length > 0) {
+  if (!session || isReported) {
     redirect(`/movies/${review.movieId}`);
   } else {
     return <ReportReviewForm targetReview={review} />;

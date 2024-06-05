@@ -11,13 +11,13 @@ from recommender_codes.user.get_recommendations_for_all_ratings import \
 import scipy.sparse
 import random
 
-def get_recommendations_for_user(ratings: Dict[int, float], favourites:
+def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     List[int]) -> List[int]:
     """
     Gives recommendations for a user with movie ratings and favourited movies.
 
     Args:
-        ratings (dict: int:float): The given ratings as TMDB id: rating value
+        ratings (dict: str:float): The given ratings as TMDB id: rating value
         pairs.
         favourites (list: int): The list of favourited movies as TMDB ids.
     Returns:
@@ -29,7 +29,7 @@ def get_recommendations_for_user(ratings: Dict[int, float], favourites:
     try:
         ratings = dict(map(lambda item: (int(item[0]), item[1]), ratings.items()))
     except ValueError:
-        print("All the values are not convertable to integers!")
+        print("All the ids are not convertable to integers!")
         ratings = {}
 
     TMDB_ids = np.load("Recommender_files/user/TMDB_ids.npy")

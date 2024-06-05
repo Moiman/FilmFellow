@@ -34,7 +34,7 @@ def top_rated(ratings: Dict[int, int], favourites: List[int]) -> List[int]:
         top_ratings = top_25_percent_rating
 
     for movie in ratings:
-        if ratings[movie] > top_ratings:
+        if ratings[movie] >= top_ratings:
             top_rated.append(movie)
 
     top_rated.extend(favourites)

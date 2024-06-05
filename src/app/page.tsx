@@ -2,7 +2,11 @@ import Link from "next/link";
 import { Section } from "@/components/section";
 import { getMovieByLimitTypeGenre } from "@/services/movieService";
 import { MovieList } from "@/components/movieList";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
 import GenreSelector from "@/components/genreSelector";
+import { getUserRecommendations } from "@/recommender/getUserRecommendations";
+import { isRecommendations } from "@/recommender/isRecommendations";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
@@ -10,36 +14,25 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
     const moviesArr = await getMovieByLimitTypeGenre(6, type, genre);
     return moviesArr;
   };
-  const getUserRecommendations = async (ratings: Record<number, number>, favourites: number[]) => {
-    const response = await fetch("http://localhost:5000/recommender/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ratings: ratings,
-        favourites: favourites,
-      }),
-    });
-    const recommArr = await getMovieByLimitTypeGenre(6, "", selectedGenre, await response.json());
-    return recommArr;
-  };
+  const session = await getServerSession(authOptions);
 
   return (
     <main>
       <GenreSelector selectedGenre={selectedGenre} />
 
       <div className="section-wrapper">
-        <Section
-          header={
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <h2 className="h3">Recommendations</h2>
-              <Link href="/recommendations/user">See all</Link>
-            </div>
-          }
-        >
-          <MovieList movies={await getUserRecommendations({ 118: 4, 564: 2.5, 12159: 3, 49521: 5 }, [121, 122, 564])} />
-        </Section>
+        {session && (await isRecommendations()) && (
+          <Section
+            header={
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <h2 className="h3">Recommendations</h2>
+                <Link href="/recommendations">See all</Link>
+              </div>
+            }
+          >
+            <MovieList movies={await getUserRecommendations(selectedGenre, 6)} />
+          </Section>
+        )}
         <Section
           header={
             <div className="header-default-style">

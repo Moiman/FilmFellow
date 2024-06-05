@@ -85,7 +85,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
             </p>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <label
-                htmlFor="content"
+                htmlFor="report"
                 className="h6"
               >
                 Write your report here

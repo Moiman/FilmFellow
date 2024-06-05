@@ -1,9 +1,8 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
 import RatingStars from "./ratingStars";
 import Filter from "./filter";
+import { useState } from "react";
 
 export default function SearchFilters({
   genres,
@@ -20,22 +19,14 @@ export default function SearchFilters({
     english_name: string;
   }[];
 }) {
-  const router = useRouter();
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
+  const [filterParams, setFilterParams] = useState({});
 
-  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>, params: string) => {
-    const currentParams = new URLSearchParams(Array.from(searchParams.entries()));
-
-    if (!event.target.value || (!event.target.checked && event.target.type === "checkbox")) {
-      currentParams.delete(params);
-    } else {
-      currentParams.set(params, event.target.value);
-    }
-
-    const search = currentParams.toString();
-    const query = search ? `?${search}` : "";
-    router.push(`${pathName}${query}`);
+  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFilterParams((prevState: any) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
@@ -50,7 +41,8 @@ export default function SearchFilters({
               <input
                 type="checkbox"
                 id={genre.name}
-                onChange={e => handleFilter(e, genre.name)}
+                name={genre.name}
+                onChange={e => handleFilter(e)}
               />
               <p>{genre.name}</p>
             </div>
@@ -60,14 +52,14 @@ export default function SearchFilters({
       <Filter title="Release year">
         <div className="filter">
           <input
-            onChange={e => handleFilter(e, e.target.name)}
+            onChange={e => handleFilter(e)}
             name="releaseYearMin"
             type="number"
             placeholder="Min"
           />
           <p>-</p>
           <input
-            onChange={e => handleFilter(e, e.target.name)}
+            onChange={e => handleFilter(e)}
             name="releaseYearMax"
             type="number"
             placeholder="Max"
@@ -84,7 +76,7 @@ export default function SearchFilters({
               type="checkbox"
               name={country.english_name}
               key={country.iso_3166_1}
-              onChange={e => handleFilter(e, country.english_name)}
+              onChange={e => handleFilter(e)}
             />
             <p>{country.english_name}</p>
           </div>
@@ -100,7 +92,7 @@ export default function SearchFilters({
               type="checkbox"
               name={language.english_name}
               key={language.iso_639_1}
-              onChange={e => handleFilter(e, language.english_name)}
+              onChange={e => handleFilter(e)}
             />
             <p>{language.english_name}</p>
           </div>
@@ -112,14 +104,14 @@ export default function SearchFilters({
             type="number"
             name="budgetMin"
             placeholder="Min"
-            onChange={e => handleFilter(e, e.target.name)}
+            onChange={e => handleFilter(e)}
           />
           <p>-</p>
           <input
             type="number"
             name="budgetMax"
             placeholder="Max"
-            onChange={e => handleFilter(e, e.target.name)}
+            onChange={e => handleFilter(e)}
           />
           <p>$</p>
         </div>
@@ -130,7 +122,7 @@ export default function SearchFilters({
             type="number"
             name="movieLength"
             placeholder="0"
-            onChange={e => handleFilter(e, e.target.name)}
+            onChange={e => handleFilter(e)}
           />
           <p>minutes</p>
         </div>

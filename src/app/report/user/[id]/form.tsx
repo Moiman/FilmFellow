@@ -10,7 +10,7 @@ import { createReport } from "@/services/reportService";
 import type { User } from "next-auth";
 
 interface Props {
-  targetUser: User | null;
+  targetUser: User;
 }
 
 export default function ReportForm({ targetUser }: Props) {
@@ -22,9 +22,9 @@ export default function ReportForm({ targetUser }: Props) {
         Report about user{" "}
         <Link
           className="h4"
-          href={`/users/${targetUser?.id}`}
+          href={`/users/${targetUser.id}`}
         >
-          {targetUser?.username}
+          {targetUser.username}
         </Link>
       </h4>
     </div>
@@ -32,15 +32,15 @@ export default function ReportForm({ targetUser }: Props) {
 
   const handleReportSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createReport(Number(targetUser?.id), reportInput, null, null);
+    await createReport(Number(targetUser.id), reportInput, null, null);
     setReportInput("");
 
-    toast(<p>Report about {targetUser?.username} was submitted</p>, {
+    toast(<p>Report about {targetUser.username} was submitted</p>, {
       icon: <Flag />,
       className: "yellow-toast",
     });
 
-    router.push("/users/" + targetUser?.id);
+    router.push("/users/" + targetUser.id);
   };
 
   return (

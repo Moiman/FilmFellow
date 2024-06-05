@@ -136,9 +136,12 @@ export const ReviewModal = ({
                   </button>
                 </form>
               ) : (
-                <button className="button-pink button-icon-text">
+                <button
+                  className="button-pink button-icon-text"
+                  aria-label="Review reported"
+                >
                   <Flag size={16} />
-                  Review reported!
+                  Reported
                 </button>
               )}
             </div>

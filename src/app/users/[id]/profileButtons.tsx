@@ -10,10 +10,8 @@ interface ProfileButtonsProps {
 
 export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps) => {
   const isReported = await getIsUserReported(userId);
-  const friends = await getUserFriends(userId);
   const isFriend = await getIsUserAlreadyFriend(userId);
   const mutualFriend = await getIsFriendshipMutual(userId);
-  console.log(friends);
   console.log(mutualFriend);
   return (
     <div style={{ display: "inline-flex", marginTop: "40px" }}>

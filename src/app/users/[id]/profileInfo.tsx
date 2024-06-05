@@ -69,29 +69,17 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
             <h3 className="h5">Friends</h3>
             <Link href={`/users/${userId}/friends`}>See all</Link>
           </div>
-          {userId === session?.user.id ? (
-            <div className="friends-wrapper">
-              {friends?.friends.map(friend => (
-                <button
-                  className="button-friend"
-                  key={friend.id}
-                >
-                  <Link href={`/users/${friend.id}`}>{friend.username}</Link>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <div className="friends-wrapper">
-              {friends?.friendsOf.map(friend => (
-                <button
-                  className="button-friend"
-                  key={friend.id}
-                >
-                  <Link href={`/users/${friend.id}`}>{friend.username}</Link>
-                </button>
-              ))}
-            </div>
-          )}
+
+          <div className="friends-wrapper">
+            {friends?.friends.map(friend => (
+              <button
+                className="button-friend"
+                key={friend.id}
+              >
+                <Link href={`/users/${friend.id}`}>{friend.username}</Link>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -104,13 +92,3 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
     </div>
   );
 };
-/*
-<button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-*/

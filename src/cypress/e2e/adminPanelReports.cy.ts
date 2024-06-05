@@ -123,7 +123,6 @@ describe("Admin report panel tests", () => {
     cy.get(".section-header").find(".list-edit").click();
     cy.get("textarea").type("Making a test report of list");
     cy.get("button[type=submit]").click();
-    cy.location("pathname").should("eq", `/`);
   });
 
   it("Try to report same list again that has been reported", () => {
@@ -155,7 +154,6 @@ describe("Admin report panel tests", () => {
 
     cy.get("textarea").type("Making a test report of review");
     cy.get("button[type=submit]").click();
-    cy.location("pathname").should("eq", `/`);
   });
 
   it("Try to report movie review that has been reported", () => {

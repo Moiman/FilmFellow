@@ -47,7 +47,7 @@ export default function ReportListForm({ list }: Props) {
         className: "yellow-toast",
       });
 
-      router.push("/");
+      router.push("/lists/" + list.id);
     }
   };
 

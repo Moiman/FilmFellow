@@ -53,7 +53,7 @@ export const deleteListByAdmin = async (id: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session || session.user.role !== Role.admin) {
-    throw "Unauthorized";
+    throw new Error("Unauthorized");
   }
 
   const deletedList = await prisma.lists.delete({

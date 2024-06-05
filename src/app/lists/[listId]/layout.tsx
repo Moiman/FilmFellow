@@ -20,10 +20,6 @@ export default async function Layout({ params, children }: { params: { listId: s
     notFound();
   }
 
-  let isReported;
-  if (session) {
-    isReported = await getIsListReported(Number(list.id));
-  }
   return (
     <main className="list">
       <Section
@@ -46,21 +42,24 @@ export default async function Layout({ params, children }: { params: { listId: s
               </div>
             )}
 
-            {session && session.user.id !== list.userId && !Number.isNaN(id) && !isReported && (
-              <div className="list-edit">
-                <form action={`/report/list/${list.id}`}>
-                  <button
-                    type="submit"
-                    className="button-transparent"
-                  >
-                    <Flag
-                      className="pink-icon"
-                      size={20}
-                    />
-                  </button>
-                </form>
-              </div>
-            )}
+            {session &&
+              session.user.id !== list.userId &&
+              !Number.isNaN(id) &&
+              !(await getIsListReported(Number(list.id))) && (
+                <div className="list-edit">
+                  <form action={`/report/list/${list.id}`}>
+                    <button
+                      type="submit"
+                      className="button-transparent"
+                    >
+                      <Flag
+                        className="pink-icon"
+                        size={20}
+                      />
+                    </button>
+                  </form>
+                </div>
+              )}
 
             <div className="highlight-nav list-styles">
               <Link href={`/lists/${list.id}/`}>

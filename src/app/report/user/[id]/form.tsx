@@ -40,7 +40,7 @@ export default function ReportForm({ targetUser }: Props) {
       className: "yellow-toast",
     });
 
-    router.push("/");
+    router.push("/users/" + targetUser?.id);
   };
 
   return (

@@ -117,7 +117,7 @@ describe("Admin report panel tests", () => {
     cy.get(".review-grid").find(".review-grid-item").first().should("be.visible").find(".review-grid-content").click(),
       { timeout: 500 };
     cy.get("dialog").should("exist");
-    cy.get(".modal-box").find(".modal-content").contains("button", "Review reported!").should("exist");
+    cy.get(".modal-box").find(".modal-content").contains("button", "Reported").should("exist");
   });
 
   it("Click on movie name should navigate to moviepage", () => {

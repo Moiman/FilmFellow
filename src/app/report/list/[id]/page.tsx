@@ -13,8 +13,8 @@ export default async function ReportListPage({ params }: { params: { id: string 
   if (!list) {
     notFound();
   }
-  const isReported = await getIsListReported(Number(list.id));
-  if (!session || isReported || list.userId === Number(session.user.id)) {
+
+  if (!session || (await getIsListReported(Number(list.id))) || list.userId === session.user.id) {
     redirect(`/lists/${list.id}`);
   } else {
     return <ReportListForm list={list} />;

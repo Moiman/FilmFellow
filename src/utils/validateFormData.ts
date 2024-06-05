@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const validateFormData = async (schema: any, formData: any) => {
+export const validateFormData = async (schema: yup.AnyObjectSchema, formData: Record<string, string | number>) => {
   try {
     await schema.validate(formData);
   } catch (validationError) {

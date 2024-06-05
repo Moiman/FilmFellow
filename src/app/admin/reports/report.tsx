@@ -9,6 +9,7 @@ import { deleteReportById, type getAllReports, markReportDone } from "@/services
 import Modal from "@/components/modal";
 import { deleteReviewById } from "@/services/reviewService";
 import { changeUserStatusById } from "@/services/userService";
+import { deleteListByAdmin } from "@/services/listService";
 
 interface Props {
   report: Reports[0];
@@ -156,6 +157,23 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
     }
   };
 
+  const handleDeleteListSubmit = async () => {
+    try {
+      if (report.listId) {
+        const response = await deleteListByAdmin(report.listId);
+        setAllReports(reports => reports.filter(report => report.listId !== response.id));
+        setError("");
+
+        toast(<p>List was deleted</p>, {
+          icon: <Trash2 />,
+          className: "yellow-toast",
+        });
+      }
+    } catch (error) {
+      setError("Internal server error");
+    }
+  };
+
   const handleDeleteReview = async () => {
     try {
       if (report.reviewId) {
@@ -281,6 +299,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             />
           </>
         )}
+        {report.listId && <Link href={`/lists/${report.listId}`}>{report.list?.name}</Link>}
       </div>
 
       <div className="admin-panel-report-content report-description">
@@ -314,8 +333,16 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
               className="button-pink"
               onClick={handleDeleteReportSubmit}
             >
-              Delete
+              Delete report
             </button>
+            {report.listId && (
+              <button
+                className="button-pink"
+                onClick={handleDeleteListSubmit}
+              >
+                Delete list
+              </button>
+            )}
             {error && (
               <div>
                 <p className="error-text">{error}</p>
@@ -330,7 +357,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             className="button-pink"
             onClick={handleDeleteReportSubmit}
           >
-            Delete
+            Delete report
           </button>
           {error && (
             <div>

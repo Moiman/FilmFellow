@@ -14,7 +14,7 @@ import { ErrorMessage } from "@/components/errorMessage";
 import { validationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 
 interface Props {
-  targetUser: User | null;
+  targetUser: User;
 }
 
 interface FormData {
@@ -42,7 +42,7 @@ export default function ReportForm({ targetUser }: Props) {
           href={`/users/${targetUser?.id}`}
           aria-label={`User you are reporting`}
         >
-          {targetUser?.username}
+          {targetUser.username}
         </Link>
       </h4>
     </div>
@@ -52,12 +52,12 @@ export default function ReportForm({ targetUser }: Props) {
     await createReport(Number(targetUser?.id), data.report.trim(), null, null);
     setReportInput("");
 
-    toast(<p>Report about {targetUser?.username} was submitted</p>, {
+    toast(<p>Report about {targetUser.username} was submitted</p>, {
       icon: <Flag />,
       className: "yellow-toast",
     });
 
-    router.push("/");
+    router.push("/users/" + targetUser.id);
   };
 
   return (

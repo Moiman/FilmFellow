@@ -212,7 +212,7 @@
 .admin-panel-reports-grid {
   min-width: fit-content;
   display: grid;
-  grid-template-columns: 75px 1fr 1fr 1fr 2fr 100px;
+  grid-template-columns: 75px 1fr 1fr 1fr 2fr 125px;
   align-items: center;
   justify-content: space-evenly;
   padding: 10px 0px;
@@ -225,7 +225,7 @@
 
 .admin-panel-section-header {
   display: grid;
-  grid-template-columns: 75px 1fr 1fr 1fr 2fr 100px;
+  grid-template-columns: 75px 1fr 1fr 1fr 2fr 125px;
   min-width: fit-content;
   justify-content: space-around;
   gap: 10px;

@@ -65,7 +65,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
       className: "yellow-toast",
     });
 
-    router.push("/");
+    router.push("/movies/" + targetReview.movieId);
   };
 
   return (

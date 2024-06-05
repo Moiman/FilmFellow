@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { authOptions } from "@/authOptions";
 import ReportForm from "./form";
 import { findUserById } from "@/services/userService";
+import { getIsUserReported } from "@/services/reportService";
 
 export default async function ReportPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
@@ -12,8 +13,9 @@ export default async function ReportPage({ params }: { params: { id: string } })
   if (!user) {
     notFound();
   }
-  if (!session) {
-    redirect("/");
+
+  if (!session || (await getIsUserReported(user.id)) || session.user.id === targetUserId) {
+    redirect(`/users/${targetUserId}`);
   } else {
     return <ReportForm targetUser={user} />;
   }

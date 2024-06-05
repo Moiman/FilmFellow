@@ -9,6 +9,7 @@ const createReport = async (
   content: string,
   reviewId: number | null,
   importedReviewId: string | null,
+  listId?: number | null,
 ) => {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -21,6 +22,7 @@ const createReport = async (
       content,
       reviewId,
       importedReviewId,
+      listId,
     },
   });
 
@@ -95,6 +97,13 @@ const getAllReports = async () => {
           movie: true,
         },
       },
+      list: {
+        select: {
+          id: true,
+          userId: true,
+          name: true,
+        },
+      },
     },
     orderBy: { created_at: "desc" },
   });
@@ -102,4 +111,34 @@ const getAllReports = async () => {
   return reports;
 };
 
-export { createReport, markReportDone, deleteReportById, getAllReports };
+const getIsUserReported = async (targetUserId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const reported = !!(await prisma.reports.findFirst({
+    where: {
+      creatorId: Number(session.user.id),
+      targetUserId: targetUserId,
+    },
+  }));
+
+  return reported;
+};
+
+const getIsListReported = async (listId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const reported = !!(await prisma.reports.findFirst({
+    where: {
+      creatorId: Number(session.user.id),
+      listId: listId,
+    },
+  }));
+
+  return reported;
+};
+
+export { createReport, markReportDone, deleteReportById, getAllReports, getIsUserReported, getIsListReported };

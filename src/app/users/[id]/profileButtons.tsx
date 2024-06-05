@@ -1,11 +1,13 @@
 import { Flag } from "react-feather";
+import { getIsUserReported } from "@/services/reportService";
 
 interface ProfileButtonsProps {
   ownProfile: boolean;
   userId: number;
 }
 
-export const ProfileButtons = ({ ownProfile, userId }: ProfileButtonsProps) => {
+export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps) => {
+  const isReported = await getIsUserReported(userId);
   return (
     <div style={{ display: "inline-flex", marginTop: "40px" }}>
       {ownProfile ? (
@@ -19,9 +21,10 @@ export const ProfileButtons = ({ ownProfile, userId }: ProfileButtonsProps) => {
             <button
               type="submit"
               className="button-pink button-icon-text"
+              disabled={isReported}
             >
               <Flag size={16} />
-              Report
+              {isReported ? "Reported" : "Report"}
             </button>
           </form>
         </>

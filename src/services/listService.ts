@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
+import { Role } from "@prisma/client";
 
 export const createNewList = async (name: string) => {
   const session = await getServerSession(authOptions);
@@ -46,6 +47,21 @@ export const deleteList = async (id: number) => {
     },
   });
   revalidatePath("/users/" + session.user.id);
+};
+
+export const deleteListByAdmin = async (id: number) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== Role.admin) {
+    throw new Error("Unauthorized");
+  }
+
+  const deletedList = await prisma.lists.delete({
+    where: {
+      id: id,
+    },
+  });
+  return deletedList;
 };
 
 export const getUserLists = async (userId: number) => {
@@ -285,6 +301,9 @@ export const getList = async (listId: string) => {
     return watchedList;
   } else {
     const id = Number(listId);
+    if (isNaN(id)) {
+      return null;
+    }
     const list = await prisma.lists.findUnique({
       where: {
         id: id,

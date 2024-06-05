@@ -50,6 +50,12 @@ describe("Admin report panel tests", () => {
     cy.get("button[type=submit]").click();
   });
 
+  it("Try to report same user again that has been reported", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit(`/users/${reportDummyUserId}`);
+    cy.contains("button", "Report").should("not.exist");
+  });
+
   it("Ban user from the admin report panel", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");
@@ -120,6 +126,13 @@ describe("Admin report panel tests", () => {
     cy.location("pathname").should("eq", `/`);
   });
 
+  it("Try to report same list again that has been reported", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit(`/users/${reportDummyUserId}`);
+    cy.get(".list-name").contains("p", "testlist").click();
+    cy.get(".section-header").find(".list-edit").should("not.exist");
+  });
+
   it("Click on list name should navigate to list", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");
@@ -178,13 +191,14 @@ describe("Admin report panel tests", () => {
       .should("be.visible")
       .contains("button", "Delete review")
       .click();
-    cy.get(".admin-panel-reports-grid").should("have.length", 2);
+    cy.get(".section-content").children().should("not.have.text", "Making a test report of review");
   });
 
   it("Delete reported list", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");
     cy.get(".report-buttons").contains("button", "Delete list").first().click();
+    cy.get(".section-content").children().should("not.have.text", "Making a test report of list");
   });
 
   it("Delete report", () => {
@@ -192,7 +206,7 @@ describe("Admin report panel tests", () => {
     cy.visit("/admin/reports");
     cy.get('[data-cy="admin-search-input"]').click().type(reportDummyUser.username);
     cy.get(".admin-panel-reports-grid").contains("button", "Delete report").click();
-    cy.get(".admin-panel-reports-grid").should("have.length", 1);
+    cy.get(".admin-panel-reports-grid").should("have.length", 0);
   });
 
   it("Delete user", () => {

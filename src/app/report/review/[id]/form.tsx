@@ -40,7 +40,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
       <h4>
         Report about review in movie{" "}
         <Link
-          className="h4"
+          className="h4 yellow"
           href={`/movies/${targetReview.movieId}`}
         >
           {targetReview.movie.title}

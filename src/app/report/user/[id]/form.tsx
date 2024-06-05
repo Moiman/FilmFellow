@@ -38,7 +38,7 @@ export default function ReportForm({ targetUser }: Props) {
       <h4>
         Report about user{" "}
         <Link
-          className="h4"
+          className="h4 yellow"
           href={`/users/${targetUser?.id}`}
           aria-label={`User you are reporting`}
         >

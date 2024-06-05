@@ -139,6 +139,7 @@ export const ReviewModal = ({
                 <button
                   className="button-pink button-icon-text"
                   aria-label="Review reported"
+                  disabled={true}
                 >
                   <Flag size={16} />
                   Reported

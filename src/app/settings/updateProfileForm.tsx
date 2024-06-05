@@ -9,7 +9,7 @@ import { Instagram, Save, Twitter } from "react-feather";
 
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
 import { ErrorMessage } from "@/components/errorMessage";
-import { validationSchema, descriptionMax } from "@/schemas/userSchema";
+import { userValidationSchema, descriptionMax } from "@/schemas/userSchema";
 
 interface UpdateProfileFormProps {
   userId: number;
@@ -38,7 +38,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(userValidationSchema),
   });
 
   const onSubmit = async (formData: FormData) => {

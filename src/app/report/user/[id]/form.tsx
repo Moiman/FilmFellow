@@ -11,7 +11,7 @@ import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import type { User } from "next-auth";
 import { ErrorMessage } from "@/components/errorMessage";
-import { validationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
+import { reportValidationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 
 interface Props {
   targetUser: User;
@@ -30,7 +30,7 @@ export default function ReportForm({ targetUser }: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(reportValidationSchema),
   });
 
   const sectionHeader = (
@@ -93,6 +93,7 @@ export default function ReportForm({ targetUser }: Props) {
               value={reportInput}
               {...register("report")}
               onChange={e => setReportInput(e.target.value)}
+              autoFocus
             />
             {errors.report && <ErrorMessage message={errors.report.message} />}
             <button

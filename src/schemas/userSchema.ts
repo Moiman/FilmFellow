@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const descriptionMax = 255;
 
-export const validationSchema = yup.object().shape({
+export const userValidationSchema = yup.object().shape({
   description: yup
     .string()
     .trim()

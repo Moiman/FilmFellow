@@ -7,7 +7,7 @@ import { Flag } from "react-feather";
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import { getList } from "@/services/listService";
-import { validationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
+import { reportValidationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
@@ -54,7 +54,7 @@ export default function ReportListForm({ list }: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(reportValidationSchema),
   });
 
   const onSubmit = async (data: FormData) => {
@@ -102,6 +102,7 @@ export default function ReportListForm({ list }: Props) {
               rows={10}
               {...register("report")}
               onChange={e => setReportInput(e.target.value)}
+              autoFocus
             />
             {errors.report && <ErrorMessage message={errors.report.message} />}
             <button

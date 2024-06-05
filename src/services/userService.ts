@@ -5,8 +5,8 @@ import { getServerSession } from "next-auth/next";
 import { revalidatePath } from "next/cache";
 import prisma from "@/db";
 import { Role } from "@prisma/client";
-import * as yup from "yup";
-import { validationSchema } from "@/schemas/userSchema";
+import { userValidationSchema } from "@/schemas/userSchema";
+import { validateFormData } from "@/utils/validateFormData";
 
 export interface User {
   username: string;
@@ -182,19 +182,7 @@ const updateDescriptionAndSocialMedia = async (
   const session = await getServerSession(authOptions);
 
   if (userId === session?.user.id) {
-    try {
-      await validationSchema.validate({
-        description: description,
-        twitter: twitter,
-        instagram: instagram,
-        tiktok: tiktok,
-      });
-    } catch (validationError) {
-      if (validationError instanceof yup.ValidationError) {
-        throw new Error(validationError.message);
-      }
-      throw new Error("An unexpected error occurred");
-    }
+    validateFormData(userValidationSchema, { description, twitter, instagram, tiktok });
 
     await prisma.users.update({
       where: {

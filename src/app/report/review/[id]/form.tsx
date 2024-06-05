@@ -11,7 +11,7 @@ import { Flag } from "react-feather";
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import { getReviewById } from "@/services/reviewService";
-import { validationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
+import { reportValidationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 
 interface Props {
   targetReview: Review;
@@ -32,7 +32,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(reportValidationSchema),
   });
 
   const sectionHeader = (
@@ -108,6 +108,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
               value={reportInput}
               {...register("report")}
               onChange={e => setReportInput(e.target.value)}
+              autoFocus
             />
             {errors.report && <ErrorMessage message={errors.report.message} />}
             <button

@@ -3,7 +3,7 @@ import * as yup from "yup";
 export const reportMinLength = 10;
 export const reportMaxLength = 500;
 
-export const validationSchema = yup.object().shape({
+export const reportValidationSchema = yup.object().shape({
   report: yup
     .string()
     .trim()

@@ -3,7 +3,7 @@ import * as yup from "yup";
 export const listMinLength = 3;
 export const listMaxLength = 50;
 
-export const validationSchema = yup.object().shape({
+export const listValidationSchema = yup.object().shape({
   listName: yup
     .string()
     .trim()

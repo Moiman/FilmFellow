@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { validationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
+import { listValidationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
 import { ErrorMessage } from "./errorMessage";
 
 type Props = {
@@ -18,7 +18,7 @@ export const NewListForm = ({ formAction }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(listValidationSchema),
   });
 
   const [inputValue, setInputValue] = useState("");

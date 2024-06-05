@@ -13,7 +13,7 @@ import { ErrorMessage } from "@/components/errorMessage";
 
 import { createReview } from "@/services/reviewService";
 import { getMovieById } from "@/services/movieService";
-import { reviewMaxLength, reviewMinLength, validationSchema } from "@/schemas/reviewSchema";
+import { reviewMaxLength, reviewMinLength, reviewValidationSchema } from "@/schemas/reviewSchema";
 
 interface Props {
   movie: Movie;
@@ -35,7 +35,7 @@ export default function ReviewForm({ movie }: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(reviewValidationSchema),
   });
 
   const reviewHeader = (

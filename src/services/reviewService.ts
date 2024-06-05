@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
-import * as yup from "yup";
-import { validationSchema } from "@/schemas/reviewSchema";
+import { validateFormData } from "@/utils/validateFormData";
+import { reviewValidationSchema } from "@/schemas/reviewSchema";
 
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
@@ -13,14 +13,8 @@ const createReview = async (movieId: number, content: string, rating?: number | 
     throw "Invalid session";
   }
 
-  try {
-    await validationSchema.validate({ content: content });
-  } catch (validationError) {
-    if (validationError instanceof yup.ValidationError) {
-      throw new Error(validationError.message);
-    }
-    throw new Error("An unexpected error occurred");
-  }
+  validateFormData(reviewValidationSchema, { review: content });
+
   const newReview = await prisma.reviews.create({
     data: {
       userId: Number(session.user.id),

@@ -5,7 +5,7 @@ import { Edit } from "react-feather";
 import { toast } from "react-toastify";
 import { updateListName } from "@/services/listService";
 import { ErrorMessage } from "@/components/errorMessage";
-import { validationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
+import { listValidationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
 
 interface FormData {
   listName: string;
@@ -17,7 +17,7 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(listValidationSchema),
   });
 
   const [inputValue, setInputValue] = useState("");

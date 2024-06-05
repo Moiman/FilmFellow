@@ -14,10 +14,8 @@ export default function SearchFilters({
   countries: {
     iso_3166_1: string;
     english_name: string;
-    native_name: string;
   }[];
   languages: {
-    name: string;
     iso_639_1: string;
     english_name: string;
   }[];

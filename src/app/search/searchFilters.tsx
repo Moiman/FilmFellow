@@ -19,14 +19,23 @@ export default function SearchFilters({
     english_name: string;
   }[];
 }) {
-  const [filterParams, setFilterParams] = useState({});
+  const [filterParams, setFilterParams] = useState<Record<string, string | number | boolean>>({});
 
   const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFilterParams((prevState: any) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (event.target.type === "checkbox") {
+      const { name, checked } = event.target;
+
+      setFilterParams(prevState => ({
+        ...prevState,
+        [name]: checked,
+      }));
+    } else {
+      const { name, value } = event.target;
+      setFilterParams(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   return (

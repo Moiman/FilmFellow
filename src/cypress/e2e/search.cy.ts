@@ -11,7 +11,6 @@ describe("search filter tests", () => {
     cy.get(".filter-content").should("be.visible");
     cy.get(`input[id="Action"]`).click();
     cy.get(`input[id="Action"]`).should("be.checked");
-
   });
 
   it("test release year filter", () => {

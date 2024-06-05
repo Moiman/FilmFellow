@@ -17,25 +17,16 @@ export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps
       ) : (
         <>
           <button className="button-cyan">Add to friends</button>
-          {!isReported ? (
-            <form action={`/report/user/${userId}`}>
-              <button
-                type="submit"
-                className="button-pink button-icon-text"
-              >
-                <Flag size={16} />
-                Report
-              </button>
-            </form>
-          ) : (
+          <form action={`/report/user/${userId}`}>
             <button
+              type="submit"
               className="button-pink button-icon-text"
-              disabled
+              disabled={isReported}
             >
               <Flag size={16} />
-              Reported
+              {isReported ? "Reported" : "Report"}
             </button>
-          )}
+          </form>
         </>
       )}
     </div>

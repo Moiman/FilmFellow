@@ -53,7 +53,7 @@ describe("Admin report panel tests", () => {
   it("Try to report same user again that has been reported", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit(`/users/${reportDummyUserId}`);
-    cy.contains("button", "Report").should("not.exist");
+    cy.contains("button", "Reported").should("exist");
   });
 
   it("Ban user from the admin report panel", () => {

@@ -20,8 +20,10 @@ export default async function Layout({ params, children }: { params: { listId: s
     notFound();
   }
 
-  const isReported = await getIsListReported(Number(list.id));
-
+  let isReported;
+  if (session) {
+    isReported = await getIsListReported(Number(list.id));
+  }
   return (
     <main className="list">
       <Section

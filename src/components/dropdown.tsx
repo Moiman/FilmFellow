@@ -93,13 +93,13 @@ export const Dropdown = ({
             <ChevronDown
               size={20}
               className="yellow-icon"
-              alt-label="Expand"
+              aria-label="Expand"
             />
           ) : (
             <ChevronUp
               size={20}
               className="yellow-icon"
-              alt-label="Collapse"
+              aria-label="Collapse"
             />
           )}
         </button>

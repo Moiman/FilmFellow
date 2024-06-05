@@ -23,7 +23,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
         )}
         <Link
           href={`${params.id}/reviews`}
-          alt-label="See all reviews"
+          aria-label="See all reviews"
         >
           See all
         </Link>
@@ -46,7 +46,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
               <h3>Cast</h3>{" "}
               <Link
                 href={`${params.id}/cast`}
-                alt-label="See all cast members"
+                aria-label="See all cast members"
               >
                 See all
               </Link>
@@ -62,7 +62,7 @@ export default async function Movie({ params }: { params: { id: string } }) {
               <h3>Crew</h3>{" "}
               <Link
                 href={`${params.id}/crew`}
-                alt-label="See all crew members"
+                aria-label="See all crew members"
               >
                 See all
               </Link>

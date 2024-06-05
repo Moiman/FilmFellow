@@ -88,11 +88,9 @@ npm run cypress:run_headless
 
 ## Recommendations
 
-```
 Movie recommendations are given with a Flask app. ML methods are used in the app to calculate similar movies based on ratings or movie features and user recommendations based on user's ratings and favourited movies. It has three endpoints for different kinds of recommendations. The recommender uses MovieLens dataset with roughly 80,000 movies and 30 million ratings.
 
 https://grouplens.org/datasets/movielens/
-```
 
 
 ## Deployment<a name="deployment"></a>

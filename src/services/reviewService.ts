@@ -10,7 +10,7 @@ import { reviewValidationSchema } from "@/schemas/reviewSchema";
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
 
   validateFormData(reviewValidationSchema, { review: content });
@@ -30,8 +30,9 @@ const createReview = async (movieId: number, content: string, rating?: number | 
 const deleteReviewById = async (reviewId: number | string) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
   if (typeof reviewId === "number") {
     const deletedReview = await prisma.reviews.delete({
       where: {

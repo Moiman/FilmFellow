@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Modal from "@/components/modal";
 import { StarRating } from "./starRating";
+import { errorToast } from "@/components/errorToast";
 
 interface Props {
   watched: boolean;
@@ -15,9 +16,13 @@ export const Watched = ({ watched, toggleWatched, setUserRating, movieTitle }: P
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async () => {
-    await toggleWatched();
-    if (!watched) {
-      setIsOpen(true);
+    try {
+      await toggleWatched();
+      if (!watched) {
+        setIsOpen(true);
+      }
+    } catch (err) {
+      errorToast(err);
     }
   };
 

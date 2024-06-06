@@ -26,7 +26,7 @@ export const toggleWatchlist = async (movieId: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw Error("No session");
+    throw new Error("Unauthorized");
   }
 
   const userId = Number(session.user.id);

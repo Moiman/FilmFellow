@@ -26,7 +26,7 @@ export const toggleIsWatched = async (movieId: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return;
+    throw new Error("Unauthorized");
   }
 
   const isWatched = await getIsWatched(movieId);
@@ -79,7 +79,7 @@ export const setMovieRating = async (movieId: number, rating: number | null) => 
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return;
+    throw new Error("Unauthorized");
   }
 
   const userId = Number(session.user.id);
@@ -106,7 +106,7 @@ export const getUserOwnFavoritesAndRatings = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "No session";
+    throw new Error("Unauthorized");
   }
 
   const favorites = await prisma.favorites.findMany({

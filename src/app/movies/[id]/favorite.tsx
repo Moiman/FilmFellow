@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { Heart } from "react-feather";
 
 import { toggleIsFavorite } from "@/services/favoriteService";
+import { errorToast } from "@/components/errorToast";
 
 interface Props {
   isFavorite: boolean;
@@ -52,8 +53,7 @@ export const Favorite = ({ movieId, isFavorite, movieTitle }: Props) => {
         );
       }
     } catch (err) {
-      console.error("Failed to favorite movie", movieId);
-      toast.error(<p>Something went wrong!</p>);
+      errorToast(err);
     }
   };
 

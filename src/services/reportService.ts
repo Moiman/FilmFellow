@@ -16,7 +16,7 @@ const createReport = async (
 ) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
 
   validateFormData(reportValidationSchema, { report: content });
@@ -38,8 +38,9 @@ const createReport = async (
 const markReportDone = async (reportId: number, done: boolean) => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
   const markedReport = await prisma.reports.update({
     where: { id: reportId },
     data: {
@@ -53,8 +54,9 @@ const markReportDone = async (reportId: number, done: boolean) => {
 const deleteReportById = async (reportId: number) => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
   const deletedReport = await prisma.reports.delete({
     where: {
       id: reportId,
@@ -67,8 +69,9 @@ const deleteReportById = async (reportId: number) => {
 const getAllReports = async () => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    return [];
+    throw new Error("Unauthorized");
   }
+
   const reports = await prisma.reports.findMany({
     include: {
       creator: {

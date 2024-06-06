@@ -58,7 +58,7 @@ export default async function userProfile({ params }: { params: { id: string } }
     </div>
   );
 
-  if (user.banDuration !== null && session?.user.role !== "admin" && user.id !== session?.user.id) {
+  if (!user.isActive && session?.user.role !== "admin" && user.id !== session?.user.id) {
     return (
       <main style={{ display: "inline-flex", gap: "10px", alignItems: "center", justifyContent: "center" }}>
         <AlertCircle />

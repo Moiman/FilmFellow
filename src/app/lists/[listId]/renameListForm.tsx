@@ -9,6 +9,7 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
   const [inputValue, setInputValue] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     await updateListName(id, inputValue);
 
     toast(

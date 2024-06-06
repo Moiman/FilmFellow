@@ -66,7 +66,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
       toast(
         <p>
-          {report.targetUser?.username} was blocked
+          {report.targetUser?.username} was banned
           {bannedUser.banDuration ? " until " + bannedUser.banDuration.toDateString() : " forever"}
         </p>,
         {
@@ -115,7 +115,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       );
       setError("");
 
-      toast(<p>{unbannedUser.username} was unblocked</p>, {
+      toast(<p>{unbannedUser.username} was unbanned</p>, {
         icon: <Tool />,
         className: "yellow-toast",
       });
@@ -314,7 +314,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             {report.targetUser?.isActive ? (
               <Dropdown
                 zIndex={5}
-                button={<button>Block user</button>}
+                button={<button>Ban user</button>}
               >
                 {banOptions.map(option => (
                   <button

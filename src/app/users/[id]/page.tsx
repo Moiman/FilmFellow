@@ -14,6 +14,7 @@ import { ProfileInfo } from "./profileInfo";
 import { ListButton } from "./listButton";
 import { findReviewsByUserId } from "@/services/reviewService";
 import { NewListModal } from "./newListModal";
+import { AlertCircle } from "react-feather";
 
 export function shuffleArray(array: any[]) {
   return array.slice().sort(() => Math.random() - 0.5);
@@ -29,6 +30,7 @@ export default async function userProfile({ params }: { params: { id: string } }
   if (!user) {
     notFound();
   }
+
   const favorites = await findUserFavoritesById(userId);
   const userReviews = await findReviewsByUserId(user.id);
 
@@ -55,6 +57,15 @@ export default async function userProfile({ params }: { params: { id: string } }
       </Link>
     </div>
   );
+
+  if (user.banDuration !== null && session?.user.role !== "admin" && user.id !== session?.user.id) {
+    return (
+      <main style={{ display: "inline-flex", gap: "10px", alignItems: "center", justifyContent: "center" }}>
+        <AlertCircle />
+        <p>This user is currently banned.</p>
+      </main>
+    );
+  }
 
   return (
     <main className="sidebar-main">

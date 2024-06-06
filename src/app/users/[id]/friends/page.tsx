@@ -20,7 +20,7 @@ export default async function userFriends({ params }: { params: { id: string } }
           </h2>
         }
       >
-        <></>
+        <p>No friends yet.</p>
       </Section>
     </main>
   );

@@ -24,12 +24,16 @@ export default async function userReviews({ params }: { params: { id: string } }
         }
       >
         <div className="review-grid">
-          {userReviews.map(userReview => (
-            <ReviewThumbnail
-              key={userReview.id}
-              userReview={userReview}
-            />
-          ))}
+          {userReviews.length > 0 ? (
+            userReviews.map(userReview => (
+              <ReviewThumbnail
+                key={userReview.id}
+                userReview={userReview}
+              />
+            ))
+          ) : (
+            <p>No reviews yet.</p>
+          )}
         </div>
       </Section>
     </main>

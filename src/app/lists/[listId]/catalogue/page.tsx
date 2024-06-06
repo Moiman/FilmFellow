@@ -11,5 +11,5 @@ export default async function CataloguePage({ params }: { params: { listId: stri
 
   const movies = list.listMovies.map(movie => movie.movie);
 
-  return <MovieCatalogue movies={movies} />;
+  return <>{movies.length > 0 ? <MovieCatalogue movies={movies} /> : <p>No movies yet</p>}</>;
 }

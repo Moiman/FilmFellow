@@ -35,6 +35,7 @@ export default function ReportForm({ targetUser }: Props) {
   );
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     await createReport(Number(targetUser?.id), reportInput.trim(), null, null);
 
     setReportInput("");
@@ -52,7 +53,7 @@ export default function ReportForm({ targetUser }: Props) {
       <div className="section-wrapper">
         <Section header={sectionHeader}>
           <form
-            onSubmit={e => onSubmit(e)}
+            onSubmit={onSubmit}
             className="form"
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

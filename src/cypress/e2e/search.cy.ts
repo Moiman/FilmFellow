@@ -53,8 +53,10 @@ describe("search filter tests", () => {
     cy.visit("/search");
     cy.get(".filter-header").contains("Movie length").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[name=movieLength]`).type("200");
-    cy.get(`input[name=movieLength]`).should("have.value", "200");
+    cy.get(`input[name=movieLengthMin]`).type("200");
+    cy.get(`input[name=movieLengthMin]`).should("have.value", "200");
+    cy.get(`input[name=movieLengthMax]`).type("200");
+    cy.get(`input[name=movieLengthMax]`).should("have.value", "200");
   });
 
   it("test rating filter", () => {

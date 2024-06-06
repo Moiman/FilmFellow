@@ -19,55 +19,55 @@ export default function SearchFilters({
     english_name: string;
   }[];
 }) {
-  const [filterParams, setFilterParams] = useState<{ genre: String[]; country: String[]; language: String[] }>({
-    genre: [],
-    country: [],
-    language: [],
+  const [filterParams, setFilterParams] = useState<{ genres: String[]; countries: String[]; languages: String[] }>({
+    genres: [],
+    countries: [],
+    languages: [],
   });
 
-  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>, test: string) => {
-    if (test === "genre") {
+  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>, category: string) => {
+    if (category === "genres") {
       if (!event.target.checked) {
         setFilterParams(prevState => ({
           ...prevState,
-          genre: prevState.genre.filter(genre => genre !== event.target.name),
+          genres: prevState.genres.filter(genres => genres !== event.target.name),
         }));
       } else {
         setFilterParams(prevState => ({
           ...prevState,
-          genre: [...prevState.genre, event.target.name],
+          genres: [...prevState.genres, event.target.name],
         }));
       }
     }
 
-    if (test === "country") {
+    if (category === "countries") {
       if (!event.target.checked) {
         setFilterParams(prevState => ({
           ...prevState,
-          country: prevState.country.filter(country => country !== event.target.name),
+          countries: prevState.countries.filter(countries => countries !== event.target.name),
         }));
       } else {
         setFilterParams(prevState => ({
           ...prevState,
-          country: [...prevState.country, event.target.name],
+          countries: [...prevState.countries, event.target.name],
         }));
       }
     }
-    if (test === "language") {
+    if (category === "languages") {
       if (!event.target.checked) {
         setFilterParams(prevState => ({
           ...prevState,
-          language: prevState.language.filter(language => language !== event.target.name),
+          languages: prevState.languages.filter(languages => languages !== event.target.name),
         }));
       } else {
         setFilterParams(prevState => ({
           ...prevState,
-          language: [...prevState.language, event.target.name],
+          languages: [...prevState.languages, event.target.name],
         }));
       }
     }
 
-    if (test === "") {
+    if (category === "") {
       if (event.target.type === "checkbox") {
         const { name, checked } = event.target;
         setFilterParams(prevState => ({
@@ -84,7 +84,6 @@ export default function SearchFilters({
     }
   };
 
-  console.log(filterParams);
   return (
     <div className="filter-wrapper">
       <Filter title="Genres">
@@ -98,7 +97,7 @@ export default function SearchFilters({
                 type="checkbox"
                 id={genre.name}
                 name={genre.name}
-                onChange={e => handleFilter(e, "genre")}
+                onChange={e => handleFilter(e, "genres")}
               />
               <p>{genre.name}</p>
             </div>
@@ -176,8 +175,15 @@ export default function SearchFilters({
         <div className="filter">
           <input
             type="number"
-            name="movieLength"
-            placeholder="0"
+            name="movieLengthMin"
+            placeholder="Min"
+            onChange={e => handleFilter(e, "")}
+          />
+          <p>-</p>
+          <input
+            type="number"
+            name="movieLengthMax"
+            placeholder="Max"
             onChange={e => handleFilter(e, "")}
           />
           <p>minutes</p>

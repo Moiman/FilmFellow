@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Film, Star } from "react-feather";
+import { Star } from "react-feather";
 import { toggleWatchlist } from "@/services/watchlistService";
+import { errorToast } from "@/components/errorToast";
 
 type Props = {
   isInWatchlist: boolean;
@@ -15,18 +16,22 @@ export const Watchlist = ({ movieId, isInWatchlist, title }: Props) => {
   const [watchlist, setWatchlist] = useState<boolean>(isInWatchlist);
 
   const handleClick = async () => {
-    const isInWatchlist = await toggleWatchlist(movieId);
-    setWatchlist(isInWatchlist);
+    try {
+      const isInWatchlist = await toggleWatchlist(movieId);
+      setWatchlist(isInWatchlist);
 
-    toast(
-      <p>
-        <span className="highlight-text">{title}</span> {watchlist ? "removed from watchlist" : "added to watchlist"}
-      </p>,
-      {
-        icon: <Star className={watchlist ? "yellow-icon-filled" : "cyan-icon-filled"} />,
-        className: watchlist ? "yellow-toast" : "cyan-toast",
-      },
-    );
+      toast(
+        <p>
+          <span className="highlight-text">{title}</span> {watchlist ? "removed from watchlist" : "added to watchlist"}
+        </p>,
+        {
+          icon: <Star className={watchlist ? "yellow-icon-filled" : "cyan-icon-filled"} />,
+          className: watchlist ? "yellow-toast" : "cyan-toast",
+        },
+      );
+    } catch (err) {
+      errorToast(err);
+    }
   };
 
   return (

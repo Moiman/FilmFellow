@@ -306,7 +306,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
             onClick={openDeleteModal}
             className="button-pink"
           >
-            Delete
+            Delete user
           </button>
 
           <button

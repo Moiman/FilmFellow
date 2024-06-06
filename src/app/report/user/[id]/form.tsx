@@ -75,8 +75,10 @@ export default function ReportForm({ targetUser }: Props) {
             </div>
             <textarea
               id="report"
+              name="report"
               placeholder="Please describe the reason for your report..."
               rows={10}
+              required
               value={reportInput}
               minLength={reportMinLength}
               maxLength={reportMaxLength}

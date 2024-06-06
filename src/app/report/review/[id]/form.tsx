@@ -94,6 +94,7 @@ export default function ReportReviewForm({ targetReview }: Props) {
               name="report"
               placeholder="Please describe the reason for your report..."
               rows={10}
+              required
               value={reportInput}
               minLength={reportMinLength}
               maxLength={reportMaxLength}

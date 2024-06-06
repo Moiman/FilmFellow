@@ -38,7 +38,7 @@ describe("Admin report panel tests", () => {
     cy.contains("button", "Report").click();
     cy.location("pathname").should("eq", `/report/user/${reportDummyUserId}`);
     cy.get("button[type=submit]").click();
-    cy.get("p").should("contain", "Report is required");
+    cy.get("#report:invalid").should("have.length", 1);
   });
 
   it("Write report about another user", () => {

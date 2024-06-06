@@ -1,4 +1,6 @@
 "use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -7,21 +9,13 @@ import { Flag } from "react-feather";
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import { getList } from "@/services/listService";
-import { reportValidationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
-import { ErrorMessage } from "@/components/errorMessage";
+import { reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 
 interface Props {
   list: List;
 }
 
 type List = NonNullable<Awaited<ReturnType<typeof getList>>>;
-
-interface FormData {
-  report: string;
-}
 
 export default function ReportListForm({ list }: Props) {
   const router = useRouter();
@@ -49,25 +43,19 @@ export default function ReportListForm({ list }: Props) {
     </div>
   );
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(reportValidationSchema),
-  });
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const onSubmit = async (data: FormData) => {
-    if (data.report) {
-      await createReport(list.userId, data.report.toString(), null, null, Number(list.id));
+    await createReport(list.userId, reportInput, null, null, Number(list.id));
 
-      toast(<p>Report was submitted</p>, {
-        icon: <Flag />,
-        className: "yellow-toast",
-      });
+    setReportInput("");
 
-      router.push("/lists/" + list.id);
-    }
+    toast(<p>Report was submitted</p>, {
+      icon: <Flag />,
+      className: "yellow-toast",
+    });
+
+    router.push("/lists/" + list.id);
   };
 
   return (
@@ -75,7 +63,7 @@ export default function ReportListForm({ list }: Props) {
       <div className="section-wrapper">
         <Section header={sectionHeader}>
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={e => onSubmit(e)}
             className="form"
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -98,13 +86,14 @@ export default function ReportListForm({ list }: Props) {
             </div>
             <textarea
               id="report"
+              name="report"
               required
               rows={10}
-              {...register("report")}
+              minLength={reportMinLength}
+              maxLength={reportMaxLength}
               onChange={e => setReportInput(e.target.value)}
               autoFocus
             />
-            {errors.report && <ErrorMessage message={errors.report.message} />}
             <button
               className="form-submit"
               type="submit"

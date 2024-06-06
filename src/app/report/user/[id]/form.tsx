@@ -1,37 +1,23 @@
 "use client";
+
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Flag } from "react-feather";
 
 import { Section } from "@/components/section";
 import { createReport } from "@/services/reportService";
 import type { User } from "next-auth";
-import { ErrorMessage } from "@/components/errorMessage";
-import { reportValidationSchema, reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
+import { reportMaxLength, reportMinLength } from "@/schemas/reportSchema";
 
 interface Props {
   targetUser: User;
 }
 
-interface FormData {
-  report: string;
-}
-
 export default function ReportForm({ targetUser }: Props) {
   const router = useRouter();
   const [reportInput, setReportInput] = useState("");
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(reportValidationSchema),
-  });
 
   const sectionHeader = (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -48,8 +34,9 @@ export default function ReportForm({ targetUser }: Props) {
     </div>
   );
 
-  const onSubmit = async (data: FormData) => {
-    await createReport(Number(targetUser?.id), data.report.trim(), null, null);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    await createReport(Number(targetUser?.id), reportInput.trim(), null, null);
+
     setReportInput("");
 
     toast(<p>Report about {targetUser.username} was submitted</p>, {
@@ -65,7 +52,7 @@ export default function ReportForm({ targetUser }: Props) {
       <div className="section-wrapper">
         <Section header={sectionHeader}>
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={e => onSubmit(e)}
             className="form"
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -91,11 +78,11 @@ export default function ReportForm({ targetUser }: Props) {
               placeholder="Please describe the reason for your report..."
               rows={10}
               value={reportInput}
-              {...register("report")}
+              minLength={reportMinLength}
+              maxLength={reportMaxLength}
               onChange={e => setReportInput(e.target.value)}
               autoFocus
             />
-            {errors.report && <ErrorMessage message={errors.report.message} />}
             <button
               className="form-submit"
               type="submit"

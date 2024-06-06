@@ -1,32 +1,17 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { listValidationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
-import { ErrorMessage } from "./errorMessage";
+import { listMaxLength, listMinLength } from "@/schemas/listSchema";
 
 type Props = {
   formAction: (formData: FormData) => void;
 };
 
-interface FormData {
-  listName: string;
-}
-
 export const NewListForm = ({ formAction }: Props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(listValidationSchema),
-  });
-
   const [inputValue, setInputValue] = useState("");
 
   return (
     <form
       className="form"
-      onSubmit={handleSubmit(formAction)}
+      action={formAction}
     >
       <div
         style={{
@@ -55,12 +40,13 @@ export const NewListForm = ({ formAction }: Props) => {
       </div>
       <input
         type="text"
+        name="listName"
         placeholder="e.g., Weekend Binge, Must-Watch Thrillers, Horror Movie Marathon"
-        {...register("listName")}
+        maxLength={listMaxLength}
+        minLength={listMinLength}
         onChange={e => setInputValue(e.target.value)}
         required
       />
-      {errors.listName && <ErrorMessage message={errors.listName.message} />}
       <button
         className="list-form-button"
         type="submit"

@@ -1,19 +1,17 @@
 "use client";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Star } from "react-feather";
 import { toast } from "react-toastify";
 
 import { StarRating } from "@/app/movies/[id]/starRating";
 import { Section } from "@/components/section";
-import { ErrorMessage } from "@/components/errorMessage";
 
 import { createReview } from "@/services/reviewService";
 import { getMovieById } from "@/services/movieService";
-import { reviewMaxLength, reviewMinLength, reviewValidationSchema } from "@/schemas/reviewSchema";
+import { reviewMaxLength, reviewMinLength } from "@/schemas/reviewSchema";
 
 interface Props {
   movie: Movie;
@@ -21,22 +19,11 @@ interface Props {
 
 type Movie = NonNullable<Awaited<ReturnType<typeof getMovieById>>>;
 
-interface FormData {
-  content: string;
-}
 export default function ReviewForm({ movie }: Props) {
   const router = useRouter();
 
   const [contentInput, setContentInput] = useState("");
   const [rating, setRating] = useState<number | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(reviewValidationSchema),
-  });
 
   const reviewHeader = (
     <div className="header-default-style">
@@ -52,14 +39,19 @@ export default function ReviewForm({ movie }: Props) {
     </div>
   );
 
-  const onSubmit = async (data: FormData) => {
-    await createReview(Number(movie?.id), data.content.trim(), rating);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    await createReview(Number(movie?.id), contentInput.trim(), rating);
+
     setContentInput("");
     setRating(null);
+
     toast(<p>Your review was submitted</p>, {
       icon: <Star className="yellow-icon-filled" />,
       className: "yellow-toast",
     });
+
     router.push("/movies/" + movie?.id);
   };
 
@@ -79,7 +71,7 @@ export default function ReviewForm({ movie }: Props) {
               size={40}
             />
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={e => onSubmit(e)}
               id="review-form"
               className="form"
               style={{ padding: "0" }}
@@ -104,13 +96,14 @@ export default function ReviewForm({ movie }: Props) {
               </div>
               <textarea
                 id="content"
+                name="content"
                 required
                 rows={10}
+                minLength={reviewMinLength}
+                maxLength={reviewMaxLength}
                 placeholder="Share your thoughts! Was the storyline captivating? How was the acting? Did the special effects blow you away? Would you recommend it to a friend?"
-                {...register("content")}
                 onChange={e => setContentInput(e.target.value)}
               />
-              {errors.content && <ErrorMessage message={errors.content.message} />}
             </form>
           </div>
         </Section>

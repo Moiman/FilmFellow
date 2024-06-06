@@ -1,33 +1,19 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Edit } from "react-feather";
 import { toast } from "react-toastify";
-import { updateListName } from "@/services/listService";
-import { ErrorMessage } from "@/components/errorMessage";
-import { listValidationSchema, listMaxLength, listMinLength } from "@/schemas/listSchema";
 
-interface FormData {
-  listName: string;
-}
+import { updateListName } from "@/services/listService";
+import { listMaxLength, listMinLength } from "@/schemas/listSchema";
 
 export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id: number }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(listValidationSchema),
-  });
-
   const [inputValue, setInputValue] = useState("");
 
-  const onSubmit = async (formData: FormData) => {
-    await updateListName(id, formData.listName);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    await updateListName(id, inputValue);
 
     toast(
       <p>
-        List was renamed to <span className="highlight-text">{formData.listName}</span>
+        List was renamed to <span className="highlight-text">{inputValue}</span>
       </p>,
       {
         icon: <Edit strokeWidth={2.5} />,
@@ -41,7 +27,7 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
   return (
     <form
       className="form"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={e => onSubmit(e)}
     >
       <div
         style={{
@@ -71,13 +57,14 @@ export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id:
 
       <input
         type="text"
+        name="listName"
         id="listName"
+        maxLength={listMaxLength}
+        minLength={listMinLength}
         placeholder="e.g., Weekend Binge, Must-Watch Thrillers, Horror Movie Marathon"
-        {...register("listName")}
         onChange={e => setInputValue(e.target.value)}
         required
       />
-      {errors.listName && <ErrorMessage message={errors.listName.message} />}
       <button
         className="list-form-button"
         type="submit"

@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
 import Link from "next/link";
+import { FriendListButton } from "@/components/friendListButton";
 
 export const ProfileInfo = async ({ userId }: { userId: number }) => {
   const session = await getServerSession(authOptions);
@@ -15,7 +16,6 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
   }
 
   const friends = await getUserFriends(userId);
-  console.log(friends);
 
   return (
     <div className="profile-info">
@@ -89,12 +89,11 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
 
           <div className="friends-wrapper">
             {friends?.friends.map(friend => (
-              <button
-                className="button-friend"
+              <FriendListButton
                 key={friend.id}
-              >
-                <Link href={`/users/${friend.id}`}>{friend.username}</Link>
-              </button>
+                userId={userId}
+                friend={friend}
+              />
             ))}
           </div>
         </div>

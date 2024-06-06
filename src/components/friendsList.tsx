@@ -29,7 +29,6 @@ export const FriendsList = ({ friends }: friendListProps) => {
             </div>
           </Link>
           <p className="person-name">{friend.username}</p>
-          <p className="person-title">{friend.email}</p>
         </div>
       ))}
     </div>

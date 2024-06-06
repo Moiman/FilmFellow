@@ -216,14 +216,9 @@ const addFriend = async (friendId: number) => {
   return newFriend;
 };
 const getUserFriends = async (userId: number) => {
-  // const session = await getServerSession(authOptions);
-  // if (!session) {
-  //   throw new Error("Unauthorized");
-  // }
   const userFriends = await prisma.users.findFirst({
     where: {
-      // id: Number(session.user.id),
-      id: userId
+      id: userId,
     },
     select: {
       friends: {
@@ -289,34 +284,60 @@ const getIsUserAlreadyFriend = async (friendId: number) => {
   return friend;
 };
 
-const getIsFriendshipMutual = async (friendId: number) => {
+const getIsFriendshipMutual = async (friendId: number, userId: number) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     throw new Error("Unauthorized");
   }
-  const mutualFriend = !!(await prisma.users.findFirst({
-    where: {
-      id: Number(session.user.id),
-      AND: [
-        {
-          friends: {
-            some: {
-              id: friendId,
+  if (friendId === Number(session.user.id)) {
+    const mutualFriend = !!(await prisma.users.findFirst({
+      where: {
+        id: userId,
+        AND: [
+          {
+            friends: {
+              some: {
+                id: Number(session.user.id),
+              },
             },
           },
-        },
-        {
-          friendsOf: {
-            some: {
-              id: friendId,
+          {
+            friendsOf: {
+              some: {
+                id: Number(session.user.id),
+              },
             },
           },
-        },
-      ],
-    },
-  }));
+        ],
+      },
+    }));
 
-  return mutualFriend;
+    return mutualFriend;
+  } else {
+    const mutualFriend = !!(await prisma.users.findFirst({
+      where: {
+        id: friendId,
+        AND: [
+          {
+            friends: {
+              some: {
+                id: Number(session.user.id),
+              },
+            },
+          },
+          {
+            friendsOf: {
+              some: {
+                id: Number(session.user.id),
+              },
+            },
+          },
+        ],
+      },
+    }));
+
+    return mutualFriend;
+  }
 };
 
 export {

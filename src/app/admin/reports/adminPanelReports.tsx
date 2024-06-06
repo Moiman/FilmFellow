@@ -39,13 +39,17 @@ export const AdminPanelReports = ({ reports }: { reports: Props }) => {
           />
         </div>
         <Section header={sectionHeader}>
-          {filteredResults.map(report => (
-            <ReportComponent
-              key={report.id}
-              report={report}
-              setAllReports={setAllReports}
-            />
-          ))}
+          {filteredResults.length > 0 ? (
+            filteredResults.map(report => (
+              <ReportComponent
+                key={report.id}
+                report={report}
+                setAllReports={setAllReports}
+              />
+            ))
+          ) : (
+            <p>No reports yet.</p>
+          )}
         </Section>
       </div>
     </main>

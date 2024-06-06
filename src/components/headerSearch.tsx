@@ -123,7 +123,7 @@ export const HeaderSearch = () => {
           {!loading && results.length === 0 && <p className="searching-results">No results found.</p>}
 
           <Link
-            href="/"
+            href="/search"
             className="searchbar-page-link"
             onClick={resetSearch}
           >

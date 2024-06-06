@@ -14,6 +14,7 @@ export const MovieList = ({ movies }: { movies: MovieListItem[] }) => {
         <Link
           key={movie.id}
           href={"/movies/" + movie.id}
+          aria-label={movie.title}
         >
           {movie.poster_path ? (
             <Image

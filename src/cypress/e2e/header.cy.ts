@@ -41,14 +41,14 @@ describe("Header tests", () => {
 
     it("Search movies", () => {
       cy.visit("/");
-      cy.get('header input[placeholder="Search for a movie..."]').type("Interstellar");
+      cy.get('header input[placeholder="Search movies by title..."]').type("Interstellar");
       cy.get('header [data-cy="search-input"]').should("have.value", "Interstellar");
       cy.get("a.movie-result").contains("Interstellar");
 
-      cy.get('header input[placeholder="Search for a movie..."]').clear();
+      cy.get('header input[placeholder="Search movies by title..."]').clear();
       cy.get("a.movie-results").should("not.exist");
 
-      cy.get('header input[placeholder="Search for a movie..."]').type("Lord of the Rings");
+      cy.get('header input[placeholder="Search movies by title..."]').type("Lord of the Rings");
       cy.get('header [data-cy="search-input"]').should("have.value", "Lord of the Rings");
       cy.get("a.movie-result").contains("Lord of the Rings");
 
@@ -108,14 +108,14 @@ describe("Header tests", () => {
 
       it("Search movies", () => {
         cy.visit("/");
-        cy.get('header input[placeholder="Search for a movie..."]').type("Interstellar");
+        cy.get('header input[placeholder="Search movies by title..."]').type("Interstellar");
         cy.get('header [data-cy="search-input"]').should("have.value", "Interstellar");
         cy.get("a.movie-result").contains("Interstellar");
 
-        cy.get('header input[placeholder="Search for a movie..."]').clear();
+        cy.get('header input[placeholder="Search movies by title..."]').clear();
         cy.get("a.movie-results").should("not.exist");
 
-        cy.get('header input[placeholder="Search for a movie..."]').type("Lord of the Rings");
+        cy.get('header input[placeholder="Search movies by title..."]').type("Lord of the Rings");
         cy.get('header [data-cy="search-input"]').should("have.value", "Lord of the Rings");
         cy.get("a.movie-result").contains("Lord of the Rings");
 

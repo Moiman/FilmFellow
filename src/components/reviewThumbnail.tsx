@@ -63,6 +63,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
           <button
             onClick={handleDeleteReview}
             className="button-transparent"
+            aria-label="Delete review"
           >
             <Trash2
               className="dark-icon"
@@ -119,7 +120,7 @@ export const ReviewThumbnail = ({ userReview }: Props) => {
                 ) : (
                   <button className="button-pink button-icon-text">
                     <Flag size={16} />
-                    Reported!
+                    Review reported!
                   </button>
                 )}
               </div>

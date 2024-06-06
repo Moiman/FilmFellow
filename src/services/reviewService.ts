@@ -1,14 +1,20 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
+import { validateFormData } from "@/utils/validateFormData";
+import { reviewValidationSchema } from "@/schemas/reviewSchema";
 
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     throw "Invalid session";
   }
+
+  validateFormData(reviewValidationSchema, { review: content });
+
   const newReview = await prisma.reviews.create({
     data: {
       userId: Number(session.user.id),

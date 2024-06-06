@@ -51,6 +51,7 @@ export default async function Layout({ params, children }: { params: { listId: s
                     <button
                       type="submit"
                       className="button-transparent"
+                      aria-label="Report this list"
                     >
                       <Flag
                         className="pink-icon"
@@ -62,13 +63,22 @@ export default async function Layout({ params, children }: { params: { listId: s
               )}
 
             <div className="highlight-nav list-styles">
-              <Link href={`/lists/${list.id}/`}>
+              <Link
+                href={`/lists/${list.id}/`}
+                aria-label="List layout"
+              >
                 <Grid size={20} />
               </Link>
-              <Link href={`/lists/${list.id}/grid`}>
+              <Link
+                href={`/lists/${list.id}/grid`}
+                aria-label="Grid layout"
+              >
                 <Columns size={20} />
               </Link>
-              <Link href={`/lists/${list.id}/catalogue`}>
+              <Link
+                href={`/lists/${list.id}/catalogue`}
+                aria-label="Catalogue layout"
+              >
                 <Table size={20} />
               </Link>
             </div>

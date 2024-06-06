@@ -49,6 +49,7 @@ export const Sidebar = ({ children, iconPosition, defaultOpen }: SidebarProps) =
           data-testid="toggle-button"
           style={{ padding: 0 }}
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Collapse" : "Expand"}
         >
           {renderIcon()}
         </button>

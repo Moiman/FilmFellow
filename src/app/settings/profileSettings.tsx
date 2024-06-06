@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { Eye, EyeOff, Save } from "react-feather";
 
 import Modal from "@/components/modal";
+import { ErrorMessage } from "@/components/errorMessage";
 
 interface Props {
   user: User;
@@ -39,6 +40,7 @@ const updateUsernameSchema = yup.object({
     .string()
     .trim()
     .required("Username is required")
+    .matches(/^[^<>{};]*$/, "Username contains invalid characters")
     .min(2, "Username too short, minimum length is 2")
     .max(50, "Username too long, max length is 50"),
 });
@@ -292,7 +294,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </div>
             <div>
               {error && <p className="error-text">{error}</p>}
-              {errorsUsername.username && <p className="error-text">{errorsUsername.username.message}</p>}
+              {errorsUsername.username && <ErrorMessage message={errorsUsername.username.message} />}
             </div>
           </form>
         ) : (
@@ -307,6 +309,7 @@ export const ProfileSettings = ({ user }: Props) => {
                   setActivePassword(false);
                   resetAllFields();
                 }}
+                aria-label="Edit username"
               >
                 Edit
               </button>
@@ -331,7 +334,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </div>
             <div>
               {error && <p className="error-text">{error}</p>}
-              {errorsEmail.email && <p className="error-text">{errorsEmail.email.message}</p>}
+              {errorsEmail.email && <ErrorMessage message={errorsEmail.email.message} />}
             </div>
           </form>
         ) : (
@@ -347,6 +350,7 @@ export const ProfileSettings = ({ user }: Props) => {
                   setActivePassword(false);
                   resetAllFields();
                 }}
+                aria-label="Edit e-mail"
               >
                 Edit
               </button>
@@ -381,7 +385,7 @@ export const ProfileSettings = ({ user }: Props) => {
             </div>
             <div>
               {error && <p className="error-text">{error}</p>}
-              {errorsPassword.password && <p className="error-text">{errorsPassword.password.message}</p>}
+              {errorsPassword.password && <ErrorMessage message={errorsPassword.password.message} />}
             </div>
           </form>
         ) : (
@@ -397,6 +401,7 @@ export const ProfileSettings = ({ user }: Props) => {
                   setActivePassword(!activePassword);
                   resetAllFields();
                 }}
+                aria-label="Edit password"
               >
                 Edit
               </button>
@@ -426,14 +431,7 @@ export const ProfileSettings = ({ user }: Props) => {
                     If you delete your account, all your lists, reviews and other data will be destroyed permanently.
                   </p>
 
-                  {error && (
-                    <p
-                      className="error-text"
-                      style={{ display: "flex", justifyContent: "center", padding: "5px" }}
-                    >
-                      {error}
-                    </p>
-                  )}
+                  {error !== "" && <ErrorMessage message={error} />}
                 </div>
                 <div className="modal-buttons">
                   <button
@@ -447,7 +445,7 @@ export const ProfileSettings = ({ user }: Props) => {
                     className="button-pink"
                     onClick={handleDelete}
                   >
-                    Delete Account
+                    Delete account
                   </button>
                 </div>
               </div>

@@ -7,7 +7,7 @@ export default function NotFound() {
       <h3 className="h6">Oops! It seems like you&rsquo;ve stumbled upon a missing scene.</h3>
 
       <Link href="/">
-        <button>Go back to home</button>
+        <button>Go back to homepage</button>
       </Link>
     </main>
   );

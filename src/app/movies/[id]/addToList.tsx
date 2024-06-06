@@ -31,7 +31,8 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
   };
 
   const newListAction = async (formData: FormData) => {
-    const name = formData.get("name");
+    const name = formData.get("listName");
+
     if (name) {
       const list = await createNewList(name.toString());
       await toggleMovieList(movieId, list.id);
@@ -42,7 +43,7 @@ export const AddToList = ({ movieId, movieTitle }: { movieId: number; movieTitle
         <p>
           List <span className="highlight-text">{name.toString()}</span> was created and updated
         </p>,
-        { icon: <List />, className: "yellow-toast" },
+        { icon: <List />, className: "cyan-toast" },
       );
     }
   };

@@ -31,6 +31,7 @@ export const MovieWatchProviders = ({
             <Link
               href="https://www.justwatch.com/"
               style={{ display: "flex", alignItems: "center" }}
+              aria-label="Find streaming providers on JustWatch"
             >
               <Image
                 src="/logos/justwatch_logo.svg"

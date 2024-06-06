@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
 import { Role } from "@prisma/client";
+import { validateFormData } from "@/utils/validateFormData";
+import { listValidationSchema } from "@/schemas/listSchema";
 
 export const createNewList = async (name: string) => {
   const session = await getServerSession(authOptions);
@@ -16,6 +18,8 @@ export const createNewList = async (name: string) => {
   if (!name && name.trim().length === 0) {
     throw "Missing name";
   }
+
+  validateFormData(listValidationSchema, { listName: name });
 
   const list = await prisma.lists.create({
     data: {
@@ -392,6 +396,8 @@ export const updateListName = async (listId: number, newName: string) => {
   if (!newName && newName.trim().length === 0) {
     throw "Missing name";
   }
+
+  validateFormData(listValidationSchema, { listName: newName });
 
   const updatedList = await prisma.lists.update({
     where: {

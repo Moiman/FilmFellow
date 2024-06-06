@@ -26,6 +26,7 @@ export const DeleteList = ({ id, name, userId }: { id: number; name: string; use
     <button
       className="button-transparent"
       onClick={deleteClick}
+      aria-label="Delete list"
     >
       <Trash2
         className="pink-icon"

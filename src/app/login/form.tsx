@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "react-feather";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Section } from "@/components/section";
+import { ErrorMessage } from "@/components/errorMessage";
 
 interface LoginFormData {
   email: string;
@@ -80,7 +81,7 @@ export default function Login() {
               required
               autoComplete="username"
             />
-            {errors?.email && <p className="error-text">{errors?.email?.message}</p>}
+            {errors?.email && <ErrorMessage message={errors.email.message} />}
             <label htmlFor="password">Password</label>
             <div className="form-group">
               <input
@@ -99,7 +100,7 @@ export default function Login() {
                 {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
-            {errors?.password && <p className="error-text">{errors?.password?.message}</p>}
+            {errors?.password && <ErrorMessage message={errors.password.message} />}
             <button
               className="form-submit"
               type="submit"
@@ -107,12 +108,8 @@ export default function Login() {
             >
               Login
             </button>
-            <p
-              className="error-text"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              {error}
-            </p>
+
+            {error !== "" && <ErrorMessage message={error} />}
             <div className="form-route-change">
               <Link href="/register">Register</Link>
             </div>

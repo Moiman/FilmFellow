@@ -1,0 +1,68 @@
+@use "sass:map";
+@use "../abstracts" as abstracts;
+
+.filter-wrapper {
+  background-color: abstracts.$primary-grey;
+  min-height: 100%;
+  width: 300px;
+
+  .filter-header {
+    border-bottom: 1px solid abstracts.$primary-dark;
+    background-color: abstracts.$primary-darkgrey;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 5px 10px;
+    margin: 0;
+    border-radius: 0;
+    color: abstracts.$primary-light;
+  }
+
+  .filter-chevron {
+    align-self: center;
+  }
+  .filter-content:not(:last-child) {
+    border-bottom: 1px solid abstracts.$primary-dark;
+  }
+
+  .filter-content {
+    overflow-y: auto;
+    height: auto;
+    max-height: 200px;
+    padding: 10px;
+
+    .genres {
+      display: grid;
+      grid-template-columns: auto auto;
+      padding: 3px;
+    }
+
+    .filter {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px;
+    }
+
+    input[type="number"] {
+      max-width: 100px;
+    }
+
+    input[type="text"] {
+      max-width: 40%;
+    }
+
+    .selected {
+      stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+      fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+    }
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .filter-wrapper {
+    width: 100%;
+  }
+}

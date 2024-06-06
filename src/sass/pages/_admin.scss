@@ -104,9 +104,10 @@
     flex: 1;
     display: flex;
     justify-content: flex-end;
+    max-width: 125px;
 
     button {
-      min-width: 125px;
+      width: 100%;
     }
   }
 

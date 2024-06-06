@@ -19,7 +19,7 @@ export const createNewList = async (name: string) => {
     throw "Missing name";
   }
 
-  validateFormData(listValidationSchema, name);
+  validateFormData(listValidationSchema, { listName: name });
 
   const list = await prisma.lists.create({
     data: {

@@ -1,8 +1,11 @@
 "use server";
+
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import { Role } from "@prisma/client";
 import prisma from "@/db";
+import { reportValidationSchema } from "@/schemas/reportSchema";
+import { validateFormData } from "@/utils/validateFormData";
 
 const createReport = async (
   targetUserId: number | null,
@@ -15,6 +18,9 @@ const createReport = async (
   if (!session) {
     throw "Invalid session";
   }
+
+  validateFormData(reportValidationSchema, { report: content });
+
   const newReport = await prisma.reports.create({
     data: {
       creatorId: Number(session.user.id),

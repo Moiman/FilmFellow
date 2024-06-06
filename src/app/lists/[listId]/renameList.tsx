@@ -18,6 +18,7 @@ export const RenameList = ({ id }: { id: number }) => {
       <button
         className="button-transparent"
         onClick={() => setIsOpen(true)}
+        aria-label="Edit list name"
       >
         <Edit
           size={20}

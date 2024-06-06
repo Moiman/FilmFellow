@@ -251,3 +251,20 @@ input[type="range"]::-moz-range-thumb {
 .form-group {
   position: relative;
 }
+
+.error-message {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  margin: 5px 0;
+  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  line-height: 1rem;
+}
+
+.reported-review {
+  max-height: 250px;
+  overflow: auto;
+  padding: 20px;
+  background-color: rgba(abstracts.$primary-dark, 0.25);
+  border-radius: abstracts.$default-border-radius;
+}

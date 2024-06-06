@@ -160,3 +160,7 @@ p {
 .pink {
   color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
+
+.grey {
+  color: grey;
+}

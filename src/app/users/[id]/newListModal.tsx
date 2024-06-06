@@ -12,7 +12,8 @@ export const NewListModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const newListAction = async (formData: FormData) => {
-    const name = formData.get("name");
+    const name = formData.get("listName");
+
     if (name) {
       await createNewList(name.toString());
       setIsOpen(false);

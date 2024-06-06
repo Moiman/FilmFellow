@@ -32,6 +32,13 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          href="/icon.ico"
+          sizes="any"
+        />
+      </head>
       <body className={`${poppins.variable} ${roboto.variable}`}>
         <SessionProvider session={session}>
           <Header />

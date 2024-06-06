@@ -36,7 +36,7 @@ describe("Registration tests", () => {
     cy.get('input[name="password"]').type("Password1!");
     cy.get('input[name="confirmPassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
-    cy.contains("User already exists with that email").should("be.visible");
+    cy.contains("User already exists with this email").should("be.visible");
   });
 
   it("Try to register new user with username that already exists", () => {
@@ -47,7 +47,7 @@ describe("Registration tests", () => {
     cy.get('input[name="password"]').type("Password1!");
     cy.get('input[name="confirmPassword"]').type("Password1!");
     cy.get('button[type="submit"]').click();
-    cy.contains("User already exists with that username").should("be.visible");
+    cy.contains("User already exists with this username").should("be.visible");
   });
 });
 
@@ -65,7 +65,7 @@ describe("Login tests", () => {
     cy.get('input[name="email"]').type("any@gmail.com");
     cy.get('input[name="password"]').type("Password1!");
     cy.get('button[type="submit"]').click();
-    cy.contains("Credentials doesnt match").should("be.visible");
+    cy.contains("Credentials don't match").should("be.visible");
   });
 
   it(

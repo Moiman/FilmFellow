@@ -4,7 +4,7 @@ import argon2 from "argon2";
 import { changeUserStatusById, findUserByEmail, updateUserLastVisited } from "@/services/userService";
 
 const loginUserSchema = yup.object({
-  email: yup.string().trim().required("email is required").email("Must be a valid email"),
+  email: yup.string().trim().required("Email is required").email("Must be a valid email"),
   password: yup.string().required("Password is required").min(6, "Password must be at least 6 characters long"),
 });
 
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       await updateUserLastVisited(existingUser.id, new Date());
       return NextResponse.json(loggedInUser, { status: 200 });
     } else {
-      return NextResponse.json({ error: "Credentials doesnt match" }, { status: 400 });
+      return NextResponse.json({ error: "Credentials don't match" }, { status: 400 });
     }
   } catch (err) {
     if (err instanceof yup.ValidationError) {

@@ -1,10 +1,12 @@
 "use server";
 
 import { authOptions } from "@/authOptions";
-import prisma from "@/db";
-import { Role } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
 import { revalidatePath } from "next/cache";
+import prisma from "@/db";
+import { Role } from "@prisma/client";
+import { userValidationSchema } from "@/schemas/userSchema";
+import { validateFormData } from "@/utils/validateFormData";
 
 export interface User {
   username: string;
@@ -180,6 +182,8 @@ const updateDescriptionAndSocialMedia = async (
   const session = await getServerSession(authOptions);
 
   if (userId === session?.user.id) {
+    validateFormData(userValidationSchema, { description, twitter, instagram, tiktok });
+
     await prisma.users.update({
       where: {
         id: userId,

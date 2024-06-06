@@ -57,7 +57,7 @@ describe("User profile tests", () => {
     cy.get("h2").contains(email);
     cy.get('button[type="submit"]').contains("Go to settings").click();
     cy.get("h2").contains("Settings");
-    cy.get("textarea").clear().type("This is a description with *&^ special characters.");
+    cy.get("textarea").clear().type("This is a description with >* special characters.");
     cy.get('button[type="submit"]').contains("Save").click();
 
     cy.get("p").contains("Description contains invalid characters");

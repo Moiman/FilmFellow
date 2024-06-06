@@ -55,7 +55,12 @@ export default async function Person({ params }: { params: { id: string } }) {
         </div>
         {person.homepage && (
           <div className="person-website">
-            <Link href={person.homepage}>Homepage</Link>
+            <Link
+              href={person.homepage}
+              aria-label={`${person.name}'s homepage`}
+            >
+              Homepage
+            </Link>
           </div>
         )}
       </div>
@@ -64,7 +69,13 @@ export default async function Person({ params }: { params: { id: string } }) {
         <Section
           header={
             <div className="known-for-header">
-              <h4>Known for...</h4> <Link href={"/persons/" + params.id + "/movies"}>See all</Link>
+              <h4>Known for...</h4>
+              <Link
+                href={"/persons/" + params.id + "/movies"}
+                aria-label={`See all ${person.name} movies`}
+              >
+                See all
+              </Link>
             </div>
           }
         >

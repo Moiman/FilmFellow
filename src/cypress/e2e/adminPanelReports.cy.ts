@@ -38,7 +38,7 @@ describe("Admin report panel tests", () => {
     cy.contains("button", "Report").click();
     cy.location("pathname").should("eq", `/report/user/${reportDummyUserId}`);
     cy.get("button[type=submit]").click();
-    cy.get("#about:invalid").should("have.length", 1);
+    cy.get("#report:invalid").should("have.length", 1);
   });
 
   it("Write report about another user", () => {
@@ -70,7 +70,7 @@ describe("Admin report panel tests", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");
     cy.get('[data-cy="admin-search-input"]').click().type(reportDummyUser.username);
-    cy.get(".admin-panel-reports-grid").find("button").contains("Lift Ban").click();
+    cy.get(".admin-panel-reports-grid").find("button").contains("Lift ban").click();
     cy.get(".admin-panel-status-active").should("exist");
   });
 
@@ -111,7 +111,7 @@ describe("Admin report panel tests", () => {
     cy.login(reportDummyUser.email, reportDummyUser.password);
     cy.visit("/users/" + reportDummyUserId);
     cy.get(".section").contains("Add new list").click();
-    cy.get("dialog input[name='name']").should("be.visible").type("testlist");
+    cy.get("dialog input[name='listName']").should("be.visible").type("testlist");
     cy.get("dialog button[type='submit']").click();
     cy.get(".section").contains("testlist");
   });
@@ -162,7 +162,7 @@ describe("Admin report panel tests", () => {
     cy.get(".review-grid").find(".review-grid-item").first().should("be.visible").find(".review-grid-content").click(),
       { timeout: 500 };
     cy.get("dialog").should("exist");
-    cy.get(".modal-box").find(".modal-content").contains("button", "Reported!").should("exist");
+    cy.get(".modal-box").find(".modal-content").contains("button", "Reported").should("exist");
   });
 
   it("Click on movie name should navigate to moviepage", () => {

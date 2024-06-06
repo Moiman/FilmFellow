@@ -31,7 +31,7 @@ describe("Movie lists tests", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);
     cy.get(".section").contains("Add new list").click();
-    cy.get("dialog input[name='name']").should("be.visible").type("List 1");
+    cy.get("dialog input[name='listName']").should("be.visible").type("List 1");
     cy.get("dialog button[type='submit']").click();
     cy.get(".section").contains("List 1");
   });
@@ -40,7 +40,7 @@ describe("Movie lists tests", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);
     cy.get(".section").contains("Add new list").click();
-    cy.get("dialog input[name='name']").should("be.visible").type("List 2");
+    cy.get("dialog input[name='listName']").should("be.visible").type("List 2");
     cy.get("dialog button[type='submit']").click();
     cy.get(".section").contains("List 2").click();
     cy.location("pathname").should("contain", "/lists/");
@@ -65,7 +65,7 @@ describe("Movie lists tests", () => {
     cy.visit("/movies/278");
     cy.contains("Add to list").should("be.visible").click();
     cy.get(".dropdown-menu").should("be.visible").contains("Add to new list").click();
-    cy.get("dialog input[name='name']").should("be.visible").type("List 3");
+    cy.get("dialog input[name='listName']").should("be.visible").clear().type("List 3");
     cy.get("dialog button[type='submit']").click();
     cy.contains("Add to list").should("be.visible").click();
     cy.get(".dropdown-menu").should("be.visible").contains("List 3").click();
@@ -96,7 +96,7 @@ describe("Movie lists tests", () => {
     cy.get(".section").contains("List 1").click();
     cy.get("h2").contains("List 1");
     cy.get(".list-edit>button").eq(0).click();
-    cy.get("dialog input[name='name']").type("New List Name");
+    cy.get("dialog input[name='listName']").type("New List Name");
     cy.get("button").contains("Rename").click();
     cy.get("h2").contains("New List Name");
   });

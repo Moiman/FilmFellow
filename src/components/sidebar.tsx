@@ -35,7 +35,7 @@ export const Sidebar = ({ children, iconPosition, defaultOpen }: SidebarProps) =
         : ChevronLeft;
     return (
       <IconComponent
-        color="#ffc700"
+        className="yellow"
         size={20}
       />
     );

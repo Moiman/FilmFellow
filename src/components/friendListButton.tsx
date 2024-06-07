@@ -1,26 +1,19 @@
-import { getIsFriendshipMutual } from "@/services/userService";
 import Link from "next/link";
 
 interface Friend {
   id: number;
-  email: string;
   username: string;
-  twitter: string;
-  instagram: string;
-  description: string;
-  tiktok: string;
+  _count: { friends: number };
 }
 
 interface Props {
   friend: Friend;
-  userId: number;
 }
 
-export const FriendListButton = async ({ friend, userId }: Props) => {
-  const mutualFriend = await getIsFriendshipMutual(friend.id, userId);
-
+export const FriendListButton = async ({ friend }: Props) => {
+  const mutualFriend = friend._count.friends > 0 ? true : false;
   return (
-    <button className={mutualFriend ? "button-friend" : ""}>
+    <button className={mutualFriend ? "button-friend" : "button-friend-mutual"}>
       <Link href={`/users/${friend.id}`}>{friend.username}</Link>
     </button>
   );

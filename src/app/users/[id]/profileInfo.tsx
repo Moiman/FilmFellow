@@ -91,7 +91,6 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
             {friends?.friends.map(friend => (
               <FriendListButton
                 key={friend.id}
-                userId={userId}
                 friend={friend}
               />
             ))}

@@ -216,6 +216,10 @@ const addFriend = async (friendId: number) => {
   return newFriend;
 };
 const getUserFriends = async (userId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
   const userFriends = await prisma.users.findFirst({
     where: {
       id: userId,
@@ -224,23 +228,14 @@ const getUserFriends = async (userId: number) => {
       friends: {
         select: {
           id: true,
-          email: true,
           username: true,
-          twitter: true,
-          instagram: true,
-          description: true,
-          tiktok: true,
-        },
-      },
-      friendsOf: {
-        select: {
-          id: true,
-          email: true,
-          username: true,
-          twitter: true,
-          instagram: true,
-          description: true,
-          tiktok: true,
+          _count: {
+            select: {
+              friends: {
+                where: { id: userId },
+              },
+            },
+          },
         },
       },
     },
@@ -284,62 +279,6 @@ const getIsUserAlreadyFriend = async (friendId: number) => {
   return friend;
 };
 
-const getIsFriendshipMutual = async (friendId: number, userId: number) => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
-  if (friendId === Number(session.user.id)) {
-    const mutualFriend = !!(await prisma.users.findFirst({
-      where: {
-        id: userId,
-        AND: [
-          {
-            friends: {
-              some: {
-                id: Number(session.user.id),
-              },
-            },
-          },
-          {
-            friendsOf: {
-              some: {
-                id: Number(session.user.id),
-              },
-            },
-          },
-        ],
-      },
-    }));
-
-    return mutualFriend;
-  } else {
-    const mutualFriend = !!(await prisma.users.findFirst({
-      where: {
-        id: friendId,
-        AND: [
-          {
-            friends: {
-              some: {
-                id: Number(session.user.id),
-              },
-            },
-          },
-          {
-            friendsOf: {
-              some: {
-                id: Number(session.user.id),
-              },
-            },
-          },
-        ],
-      },
-    }));
-
-    return mutualFriend;
-  }
-};
-
 export {
   createUser,
   findUserByEmail,
@@ -356,5 +295,4 @@ export {
   getUserFriends,
   removeFriend,
   getIsUserAlreadyFriend,
-  getIsFriendshipMutual,
 };

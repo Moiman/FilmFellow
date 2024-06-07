@@ -3,12 +3,8 @@ import { User } from "react-feather";
 
 type friendListItem = {
   id: number;
-  email: string;
   username: string;
-  twitter: string;
-  instagram: string;
-  description: string;
-  tiktok: string;
+  _count: { friends: number };
 };
 
 interface friendListProps {

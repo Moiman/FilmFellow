@@ -110,7 +110,7 @@ export const HeaderMenu = () => {
                     onClick={link.text === "Logout" ? () => signOut() : undefined}
                     key={link.href}
                     href={link.href}
-                    className={currentPath === link.href ? "active-icon" : ""}
+                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
                     aria-label={link.text}
                   >
                     {link.icon}
@@ -124,7 +124,7 @@ export const HeaderMenu = () => {
                     onClick={link.text === "Logout" ? () => signOut() : undefined}
                     key={link.href}
                     href={link.href}
-                    className={currentPath === link.href ? "active-icon" : ""}
+                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
                     aria-label={link.text}
                   >
                     {link.icon}

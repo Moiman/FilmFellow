@@ -15,11 +15,12 @@ const createReport = async (
   listId?: number | null,
 ) => {
   const session = await getServerSession(authOptions);
+
   if (!session) {
     throw new Error("Unauthorized");
   }
 
-  validateFormData(reportValidationSchema, { report: content });
+  await validateFormData(reportValidationSchema, { report: content });
 
   const newReport = await prisma.reports.create({
     data: {

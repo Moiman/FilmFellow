@@ -2,13 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
-import { Table, Grid, Columns, Flag } from "react-feather";
+import { Flag } from "react-feather";
 
 import { Section } from "@/components/section";
 import { getList } from "@/services/listService";
 import { DeleteList } from "./deleteList";
 import { RenameList } from "./renameList";
 import { getIsListReported } from "@/services/reportService";
+import ListStyleLinks from "./listStyleLinks";
 
 export default async function Layout({ params, children }: { params: { listId: string }; children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -63,24 +64,7 @@ export default async function Layout({ params, children }: { params: { listId: s
               )}
 
             <div className="highlight-nav list-styles">
-              <Link
-                href={`/lists/${list.id}/`}
-                aria-label="List layout"
-              >
-                <Grid size={20} />
-              </Link>
-              <Link
-                href={`/lists/${list.id}/grid`}
-                aria-label="Grid layout"
-              >
-                <Columns size={20} />
-              </Link>
-              <Link
-                href={`/lists/${list.id}/catalogue`}
-                aria-label="Catalogue layout"
-              >
-                <Table size={20} />
-              </Link>
+              <ListStyleLinks listId={list.id} />
             </div>
           </div>
         }

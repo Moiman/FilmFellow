@@ -19,7 +19,7 @@ export const createNewList = async (name: string) => {
     throw new Error("Missing name");
   }
 
-  validateFormData(listValidationSchema, { listName: name });
+  await validateFormData(listValidationSchema, { listName: name });
 
   const list = await prisma.lists.create({
     data: {
@@ -397,7 +397,7 @@ export const updateListName = async (listId: number, newName: string) => {
     throw new Error("Missing name");
   }
 
-  validateFormData(listValidationSchema, { listName: newName });
+  await validateFormData(listValidationSchema, { listName: newName });
 
   const updatedList = await prisma.lists.update({
     where: {
@@ -412,5 +412,6 @@ export const updateListName = async (listId: number, newName: string) => {
 
   revalidatePath("/users/" + session.user.id);
   revalidatePath(`/lists/${listId}`);
+
   return updatedList;
 };

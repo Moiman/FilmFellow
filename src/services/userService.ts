@@ -182,7 +182,7 @@ const updateDescriptionAndSocialMedia = async (
   const session = await getServerSession(authOptions);
 
   if (userId === session?.user.id) {
-    validateFormData(userValidationSchema, { description, twitter, instagram, tiktok });
+    await validateFormData(userValidationSchema, { description, twitter, instagram, tiktok });
 
     await prisma.users.update({
       where: {

@@ -11,5 +11,9 @@ export default async function ListPage({ params }: { params: { listId: string } 
 
   const movies = list.listMovies.map(movie => movie.movie);
 
-  return <MovieList movies={movies} />;
+  if (movies.length > 0) {
+    return <MovieList movies={movies} />;
+  } else {
+    return <p>No movies yet</p>;
+  }
 }

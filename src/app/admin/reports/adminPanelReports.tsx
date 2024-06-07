@@ -26,28 +26,30 @@ export const AdminPanelReports = ({ reports }: { reports: Props }) => {
     </div>
   );
   return (
-    <main>
-      <div className="admin-panel-reports">
-        <div className="admin-searchbar">
-          <input
-            data-cy="admin-search-input"
-            className="admin-searchbar-input"
-            type="text"
-            placeholder="Search user..."
-            value={searchInput}
-            onChange={e => setSearchInput(e.target.value)}
-          />
-        </div>
-        <Section header={sectionHeader}>
-          {filteredResults.map(report => (
+    <div className="admin-panel-reports admin-panel-content">
+      <div className="admin-searchbar">
+        <input
+          data-cy="admin-search-input"
+          className="admin-searchbar-input"
+          type="text"
+          placeholder="Search user..."
+          value={searchInput}
+          onChange={e => setSearchInput(e.target.value)}
+        />
+      </div>
+      <Section header={sectionHeader}>
+        {filteredResults.length > 0 ? (
+          filteredResults.map(report => (
             <ReportComponent
               key={report.id}
               report={report}
               setAllReports={setAllReports}
             />
-          ))}
-        </Section>
-      </div>
-    </main>
+          ))
+        ) : (
+          <p>No reports yet.</p>
+        )}
+      </Section>
+    </div>
   );
 };

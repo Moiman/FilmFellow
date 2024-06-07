@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Star } from "react-feather";
 
 interface Props {
@@ -10,6 +10,10 @@ interface Props {
 export const StarRating = ({ rating, setRating, size = 30 }: Props) => {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState<number | null>(rating);
+
+  useEffect(() => {
+    setCurrentRating(rating);
+  }, [rating]);
 
   const handleMouseOver = (starRating: number) => {
     setCurrentRating(null);

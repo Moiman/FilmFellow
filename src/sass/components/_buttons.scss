@@ -15,6 +15,9 @@ button {
   margin: 4px;
 
   cursor: pointer;
+
+  transition: 0.1s;
+  transition-timing-function: ease-in-out;
 }
 
 button:hover {
@@ -72,10 +75,6 @@ button:focus-visible {
 
 .button-transparent:hover {
   background-color: transparent;
-
-  .button-transparent-text {
-    opacity: 50%;
-  }
 }
 
 .button-review {
@@ -96,4 +95,31 @@ button:focus-visible {
   display: inline-flex;
   gap: 2px;
   align-content: center;
+}
+
+.pink-icon-hover:hover {
+  svg {
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+    fill: map.get(map.get(abstracts.$highlight-colors, "pink"), "default") !important;
+    stroke: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
+  }
+}
+
+.yellow-icon-hover:hover {
+  svg {
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+    fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default") !important;
+    stroke: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  }
+}
+
+.white-icon-hover:hover {
+  svg {
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+    fill: abstracts.$primary-light !important;
+    stroke: abstracts.$primary-light;
+  }
 }

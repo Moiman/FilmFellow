@@ -61,6 +61,8 @@ a {
 
 a:hover {
   color: rgba(abstracts.$primary-light, 0.75);
+  transition: 0.1s;
+  transition-timing-function: ease-in-out;
 }
 
 a:active {

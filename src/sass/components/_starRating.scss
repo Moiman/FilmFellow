@@ -18,6 +18,12 @@
     fill: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
   }
 
+  .selected:hover {
+    transform: scale(110%);
+    transition: 0.1s;
+    transition-timing-function: ease-in-out;
+  }
+
   .not-selected {
     stroke: abstracts.$primary-light;
     fill: abstracts.$primary-light;

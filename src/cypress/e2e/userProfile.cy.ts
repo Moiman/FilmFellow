@@ -121,4 +121,57 @@ describe("User profile tests", () => {
       "TikTok username can only contain letters, numbers, periods, and underscores, with a maximum length of 24 characters",
     );
   });
+
+  it("Add friend", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit("/users/" + userId);
+
+    cy.get(".profile-info").contains("button", "Add to friends").click();
+    cy.get(".profile-info").should("contain", "Remove friend");
+  });
+
+  it("Added friend should be seen on own profile", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit("/");
+    cy.get("*[aria-label='Profile']").click({ force:true });
+    cy.location("pathname").should("eq", `/users/1`);
+    cy.get(".profile-friend-list")
+      .find(".friends-wrapper")
+      .should("be.visible")
+      .children()
+      .find("a")
+      .should("have.attr", "href", `/users/${userId}`);
+  });
+
+  it("Mutual friendship should show different classname on friend", () => {
+    cy.login(email, password);
+    cy.visit("/users/1");
+
+    cy.get(".profile-info").contains("button", "Add to friends").click();
+    cy.get(".profile-info").should("contain", "Remove friend");
+    cy.get(".profile-friend-list")
+      .find(".friends-wrapper")
+      .should("be.visible")
+      .children()
+      .should("have.class", "button-friend-mutual");
+  });
+
+  it("Remove friend", () => {
+    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.visit("/users/" + userId);
+
+    cy.get(".profile-info").contains("button", "Remove friend").click();
+    cy.get(".profile-info").should("contain", "Add to friends");
+    cy.get(".profile-friend-list").find(".friends-wrapper").should("be.visible").children().should("have.length", 1);
+  });
+
+  it("Check user friends on show all friend list", () => {
+    cy.login(email, password);
+    cy.visit("/users/" + userId);
+
+    cy.get(".friends-title").find("a").contains("See all").click();
+    cy.location("pathname").should("eq", `/users/${userId}/friends`);
+    cy.get(".section-header").find("h2").should("exist").find("a").should("have.attr", "href", `/users/${userId}`);
+    cy.get(".person-list").children().find("p").contains("admin");
+  });
 });

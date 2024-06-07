@@ -6,7 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { LogOut, Menu, Tool, User } from "react-feather";
 
 import { Dropdown } from "./dropdown";
-import { Links } from "./headerLinks";
+import { links } from "./headerLinks";
 
 export const HeaderMenu = () => {
   const { data: session } = useSession();
@@ -31,7 +31,7 @@ export const HeaderMenu = () => {
       <div className="sub-nav-narrow">
         <Dropdown
           maxHeight={0}
-          width={100}
+          width={150}
           zIndex={20}
           button={
             <button className="button-transparent">
@@ -43,7 +43,15 @@ export const HeaderMenu = () => {
           }
           buttonAlign="right"
         >
-          {Links.map(link => (
+          {session && (
+            <Link
+              href={"/recommendations"}
+              className="dropdown-item"
+            >
+              {"Recommendations"}
+            </Link>
+          )}
+          {links.map(link => (
             <Link
               key={link.href}
               href={link.href}

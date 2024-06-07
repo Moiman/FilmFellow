@@ -9,6 +9,7 @@ import { getUserRecommendations } from "@/recommender/getUserRecommendations";
 export default async function New({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
   const session = await getServerSession(authOptions);
+  const recommendations = await getUserRecommendations(selectedGenre, 18);
 
   if (!session) {
     notFound();
@@ -19,7 +20,7 @@ export default async function New({ searchParams }: { searchParams?: { genre: st
       <GenreSelector selectedGenre={selectedGenre} />
       <div className="section-wrapper">
         <Section header={"Recommendations"}>
-          <MovieList movies={await getUserRecommendations(selectedGenre, 18)} />
+          {recommendations.length === 0 ? <p>No recommendations yet.</p> : <MovieList movies={recommendations} />}
         </Section>
       </div>
     </main>

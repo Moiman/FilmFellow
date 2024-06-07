@@ -216,10 +216,6 @@ const addFriend = async (friendId: number) => {
   return newFriend;
 };
 const getUserFriends = async (userId: number) => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
   const userFriends = await prisma.users.findFirst({
     where: {
       id: userId,
@@ -240,6 +236,7 @@ const getUserFriends = async (userId: number) => {
       },
     },
   });
+
   return userFriends;
 };
 const removeFriend = async (friendId: number) => {

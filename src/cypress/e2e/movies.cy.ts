@@ -221,7 +221,6 @@ describe("Movie review tests", () => {
     cy.get("button").contains("Add review").click();
     cy.location("pathname").should("eq", "/movies/278/reviewform");
 
-    cy.get("textarea").type("Making a test review to a movie");
     cy.get("button[type=submit]").click();
 
     cy.location("pathname").should("eq", `/movies/278`);
@@ -242,7 +241,7 @@ describe("Movie review tests", () => {
     cy.get(".review-grid-content").contains("Making a test review to a movie");
   });
 
-  it("Click the moviename where user has written review should redirect to movie page", () => {
+  it("Click the movie name where user has written review should redirect to movie page", () => {
     cy.login(user.email, user.password);
     cy.visit(`/users/${userId}`);
     cy.get(".review-header-item").find("a").contains("The Shawshank Redemption").click();

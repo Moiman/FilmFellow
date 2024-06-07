@@ -13,7 +13,7 @@ const createReview = async (movieId: number, content: string, rating?: number | 
     throw new Error("Unauthorized");
   }
 
-  await validateFormData(reviewValidationSchema, { review: content });
+  await validateFormData(reviewValidationSchema, { content });
 
   const newReview = await prisma.reviews.create({
     data: {

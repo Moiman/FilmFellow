@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { findUserById, getUserFriends } from "@/services/userService";
 import { notFound } from "next/navigation";
+import { findUserById, getUserFriends } from "@/services/userService";
 
 import { Section } from "@/components/section";
 import { FriendsList } from "@/components/friendsList";

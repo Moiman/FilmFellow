@@ -1,10 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Twitter, Instagram, Smile, Frown } from "react-feather";
+import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import { getDescriptionAndSocialMedia, getUserFriends } from "@/services/userService";
-import { getServerSession } from "next-auth";
-import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
-import Link from "next/link";
 import { FriendListButton } from "@/components/friendListButton";
 
 export const ProfileInfo = async ({ userId }: { userId: number }) => {

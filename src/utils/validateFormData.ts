@@ -6,7 +6,8 @@ export const validateFormData = async (schema: yup.AnyObjectSchema, formData: Re
   } catch (validationError) {
     if (validationError instanceof yup.ValidationError) {
       throw new Error(validationError.message);
+    } else {
+      throw new Error("An unexpected error occurred.");
     }
-    throw new Error("An unexpected error occurred");
   }
 };

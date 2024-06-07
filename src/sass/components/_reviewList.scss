@@ -39,6 +39,20 @@
   }
 }
 
+.review-grid-item:hover {
+  background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+
+  .review-header-item,
+  .review-header-item-secondary,
+  .review-grid-footer.bg-dark {
+    background-color: rgba(abstracts.$primary-dark, 0.5);
+  }
+
+  .review-grid-footer.bg-yellow {
+    background-color: map-get(map-get(abstracts.$highlight-colors, "yellow"), "hover");
+  }
+}
+
 .review-header-item-secondary {
   display: grid;
   grid-template-columns: auto auto;
@@ -89,7 +103,7 @@
 }
 
 .bg-dark {
-  background-color: abstracts.$primary-dark;
+  background-color: abstracts.$primary-darkgrey;
 }
 
 @media only screen and (max-width: abstracts.$large-width) {

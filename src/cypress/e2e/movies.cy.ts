@@ -221,6 +221,7 @@ describe("Movie review tests", () => {
     cy.get("button").contains("Add review").click();
     cy.location("pathname").should("eq", "/movies/278/reviewform");
 
+    cy.get("textarea").type("Making a test review to a movie");
     cy.get("button[type=submit]").click();
 
     cy.location("pathname").should("eq", `/movies/278`);

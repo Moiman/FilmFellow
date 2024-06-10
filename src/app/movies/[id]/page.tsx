@@ -26,7 +26,9 @@ export default async function Movie({ params }: { params: { id: string } }) {
       </div>
     </div>
   );
+
   const movie = await getMovie(params.id);
+
   if (!movie) {
     notFound();
   }

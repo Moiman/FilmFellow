@@ -1,5 +1,5 @@
 "use client";
-import { addFriend, removeFriend } from "@/services/userService";
+import { addFriend, removeFriend } from "@/services/friendService";
 
 interface Props {
   userId: number;

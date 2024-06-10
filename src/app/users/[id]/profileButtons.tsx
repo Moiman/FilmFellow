@@ -1,7 +1,7 @@
 import { Flag } from "react-feather";
 import { getIsUserReported } from "@/services/reportService";
 import { FriendsButton } from "@/components/friendsButton";
-import { getIsUserAlreadyFriend } from "@/services/userService";
+import { getIsUserAlreadyFriend } from "@/services/friendService";
 
 interface ProfileButtonsProps {
   ownProfile: boolean;

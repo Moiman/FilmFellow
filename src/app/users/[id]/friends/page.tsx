@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { findUserById, getUserFriends } from "@/services/userService";
+import { findUserById } from "@/services/userService";
+import { getUserFriends } from "@/services/friendService";
 
 import { Section } from "@/components/section";
 import { FriendsList } from "@/components/friendsList";
@@ -23,7 +24,7 @@ export default async function userFriends({ params }: { params: { id: string } }
           </h2>
         }
       >
-        <FriendsList friends={friends?.friends} />
+        {friends?.friends.length !== 0 ? <FriendsList friends={friends?.friends} /> : <p>No friends yet</p>}
       </Section>
     </main>
   );

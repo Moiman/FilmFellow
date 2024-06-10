@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
-import { getDescriptionAndSocialMedia, getUserFriends } from "@/services/userService";
+import { getDescriptionAndSocialMedia } from "@/services/userService";
+import { getUserFriends } from "@/services/friendService";
 import { ProfileButtons } from "./profileButtons";
 import { FriendListButton } from "@/components/friendListButton";
 
@@ -79,24 +80,25 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
           </div>
         </div>
       )}
+      {friends?.friends.length !== 0 && (
+        <div className="full-width">
+          <div className="profile-friend-list">
+            <div className="friends-title">
+              <h3 className="h5">Friends</h3>
+              <Link href={`/users/${userId}/friends`}>See all</Link>
+            </div>
 
-      <div className="full-width">
-        <div className="profile-friend-list">
-          <div className="friends-title">
-            <h3 className="h5">Friends</h3>
-            <Link href={`/users/${userId}/friends`}>See all</Link>
-          </div>
-
-          <div className="friends-wrapper">
-            {friends?.friends.map(friend => (
-              <FriendListButton
-                key={friend.id}
-                friend={friend}
-              />
-            ))}
+            <div className="friends-wrapper">
+              {friends?.friends.slice(0, 4).map(friend => (
+                <FriendListButton
+                  key={friend.id}
+                  friend={friend}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {session && (
         <ProfileButtons

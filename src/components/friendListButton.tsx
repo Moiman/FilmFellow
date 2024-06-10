@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-interface Friend {
+export interface Friend {
   id: number;
   username: string;
   _count: { friends: number };

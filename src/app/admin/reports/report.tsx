@@ -9,6 +9,7 @@ import { deleteReportById, type getAllReports, markReportDone } from "@/services
 import Modal from "@/components/modal";
 import { deleteReviewById } from "@/services/reviewService";
 import { changeUserStatusById } from "@/services/userService";
+import { deleteListByAdmin } from "@/services/listService";
 
 interface Props {
   report: Reports[0];
@@ -65,7 +66,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
 
       toast(
         <p>
-          {report.targetUser?.username} was blocked
+          {report.targetUser?.username} was banned
           {bannedUser.banDuration ? " until " + bannedUser.banDuration.toDateString() : " forever"}
         </p>,
         {
@@ -114,7 +115,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
       );
       setError("");
 
-      toast(<p>{unbannedUser.username} was unblocked</p>, {
+      toast(<p>{unbannedUser.username} was unbanned</p>, {
         icon: <Tool />,
         className: "yellow-toast",
       });
@@ -151,6 +152,23 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
         icon: <Trash2 />,
         className: "yellow-toast",
       });
+    } catch (error) {
+      setError("Internal server error");
+    }
+  };
+
+  const handleDeleteListSubmit = async () => {
+    try {
+      if (report.listId) {
+        const response = await deleteListByAdmin(report.listId);
+        setAllReports(reports => reports.filter(report => report.listId !== response.id));
+        setError("");
+
+        toast(<p>List was deleted</p>, {
+          icon: <Trash2 />,
+          className: "yellow-toast",
+        });
+      }
     } catch (error) {
       setError("Internal server error");
     }
@@ -273,7 +291,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                       className="button-pink"
                       onClick={handleDeleteReview}
                     >
-                      Delete Review
+                      Delete review
                     </button>
                   </div>
                 </div>
@@ -281,6 +299,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             />
           </>
         )}
+        {report.listId && <Link href={`/lists/${report.listId}`}>{report.list?.name}</Link>}
       </div>
 
       <div className="admin-panel-report-content report-description">
@@ -295,7 +314,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             {report.targetUser?.isActive ? (
               <Dropdown
                 zIndex={5}
-                button={<button>Block user</button>}
+                button={<button>Ban user</button>}
               >
                 {banOptions.map(option => (
                   <button
@@ -308,14 +327,22 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
                 ))}
               </Dropdown>
             ) : (
-              report.targetUser !== null && <button onClick={handleUnBanSubmit}>Lift Ban</button>
+              report.targetUser !== null && <button onClick={handleUnBanSubmit}>Lift ban</button>
             )}
             <button
               className="button-pink"
               onClick={handleDeleteReportSubmit}
             >
-              Delete
+              Delete report
             </button>
+            {report.listId && (
+              <button
+                className="button-pink"
+                onClick={handleDeleteListSubmit}
+              >
+                Delete list
+              </button>
+            )}
             {error && (
               <div>
                 <p className="error-text">{error}</p>
@@ -330,7 +357,7 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
             className="button-pink"
             onClick={handleDeleteReportSubmit}
           >
-            Delete
+            Delete report
           </button>
           {error && (
             <div>

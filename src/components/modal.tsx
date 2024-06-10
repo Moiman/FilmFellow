@@ -59,7 +59,10 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
 
   return (
     isOpen && (
-      <dialog open={true}>
+      <dialog
+        open={true}
+        aria-modal="true"
+      >
         <div
           onMouseDown={closeModal}
           className="modal-background"

@@ -78,7 +78,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
       setError("");
       toast(
         <p>
-          {selectedUser.username} was blocked
+          {selectedUser.username} was banned
           {banDuration ? " until " + new Date(data.banDuration).toDateString() : " forever"}
         </p>,
         {
@@ -128,7 +128,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
         }),
       );
       setError("");
-      toast(<p>{selectedUser.username} was unblocked</p>, {
+      toast(<p>{selectedUser.username} was unbanned</p>, {
         icon: <Tool />,
         className: "yellow-toast",
       });
@@ -249,7 +249,17 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
     <div className="admin-panel-user-list">
       <div className="admin-panel-user-data">
         <Link href={`/users/${selectedUser.id}`}>
-          {selectedUser.isActive ? <Smile className="grey-icon" /> : <Frown className="grey-icon" />}
+          {selectedUser.isActive ? (
+            <Smile
+              className="user-icon"
+              aria-label="Active user"
+            />
+          ) : (
+            <Frown
+              className="user-icon"
+              aria-label="Suspended user"
+            />
+          )}
         </Link>
         <div className="username-and-email">
           <p className="username">{selectedUser.username}</p>
@@ -277,7 +287,7 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
             <Dropdown
               buttonAlign="right"
               zIndex={5}
-              button={<button className="block-button">Block user</button>}
+              button={<button className="block-button">Ban user</button>}
             >
               {banOptions.map(option => (
                 <button
@@ -290,13 +300,13 @@ export const UserDetails = ({ selectedUser, setAllUsers }: Props) => {
               ))}
             </Dropdown>
           ) : (
-            <button onClick={handleUnBanSubmit}>Lift Ban</button>
+            <button onClick={handleUnBanSubmit}>Lift ban</button>
           )}
           <button
             onClick={openDeleteModal}
             className="button-pink"
           >
-            Delete
+            Delete user
           </button>
 
           <button

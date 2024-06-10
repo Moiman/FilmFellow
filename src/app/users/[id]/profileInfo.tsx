@@ -15,7 +15,17 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
 
   return (
     <div className="profile-info">
-      {user.isActive ? <Smile className="profile-picture" /> : <Frown className="profile-picture" />}
+      {user.isActive ? (
+        <Smile
+          className="profile-picture user-icon"
+          aria-label="Active user"
+        />
+      ) : (
+        <Frown
+          className="profile-picture user-icon"
+          aria-label="Suspended user"
+        />
+      )}
       <h2 className="h3">{user.username}</h2>
 
       <div className="full-width">
@@ -31,14 +41,20 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
           <div className="profile-social-media">
             {user.twitter && (
               <div>
-                <Twitter color="#d75eb5" />
+                <Twitter
+                  className="pink-icon"
+                  aria-label="Twitter"
+                />
                 <p>{user.twitter}</p>
               </div>
             )}
 
             {user.instagram && (
               <div>
-                <Instagram color="#ffc700" />
+                <Instagram
+                  className="yellow-icon"
+                  aria-label="Instagram"
+                />
                 <p>{user.instagram}</p>
               </div>
             )}
@@ -51,6 +67,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
                   width={24}
                   alt="Tiktok"
                   style={{ overflow: "hidden" }}
+                  aria-label="Tiktok"
                 />
                 <p>{user.tiktok}</p>
               </div>

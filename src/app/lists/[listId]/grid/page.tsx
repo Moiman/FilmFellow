@@ -11,5 +11,9 @@ export default async function GridPage({ params }: { params: { listId: string } 
 
   const movies = list.listMovies.map(movie => movie.movie);
 
-  return <MovieGrid movies={movies} />;
+  if (movies.length > 0) {
+    return <MovieGrid movies={movies} />;
+  } else {
+    return <p>No movies yet</p>;
+  }
 }

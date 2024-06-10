@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Instagram, Save, Twitter } from "react-feather";
 
 import { updateDescriptionAndSocialMedia } from "@/services/userService";
+import { ErrorMessage } from "@/components/errorMessage";
+import { userValidationSchema, descriptionMax } from "@/schemas/userSchema";
 
 interface UpdateProfileFormProps {
   userId: number;
@@ -25,39 +26,6 @@ interface FormData {
   tiktok?: string;
 }
 
-const validationSchema = yup.object().shape({
-  description: yup
-    .string()
-    .trim()
-    .max(255, "Description too long, max length is 255")
-    .matches(/^[a-zA-Z0-9\s.,'!&]*$/, "Description contains invalid characters")
-    .optional(),
-  twitter: yup
-    .string()
-    .trim()
-    .matches(
-      /^\w{0,15}$/,
-      "Twitter username can only contain letters, numbers, and underscores, with a maximum length of 15 characters",
-    )
-    .optional(),
-  instagram: yup
-    .string()
-    .trim()
-    .matches(
-      /^[a-zA-Z0-9.]{0,30}$/,
-      "Instagram username can only contain numbers, letters, and periods, with a maximum length of 30 characters",
-    )
-    .optional(),
-  tiktok: yup
-    .string()
-    .trim()
-    .matches(
-      /^[a-zA-Z0-9._]{0,24}$/,
-      "TikTok username can only contain letters, numbers, periods, and underscores, with a maximum length of 24 characters",
-    )
-    .optional(),
-});
-
 export const UpdateProfileForm = ({ userId, description, twitter, instagram, tiktok }: UpdateProfileFormProps) => {
   const [userDescription, setUserDescription] = useState<string>(description);
 
@@ -70,7 +38,7 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(userValidationSchema),
   });
 
   const onSubmit = async (formData: FormData) => {
@@ -105,48 +73,51 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
         <h3 className="h5">Description </h3>
 
         <div className="description-word-amount">
-          <p className={userDescription.length <= 255 ? "description" : "description pink"}>
-            {userDescription.length}/255
+          <p className={userDescription.length <= descriptionMax ? "description grey" : "description pink"}>
+            {userDescription.length}/{descriptionMax}
           </p>
         </div>
 
         <textarea
           rows={5}
-          placeholder="Tell about yourself!"
+          placeholder="Tell us about yourself! What are your favorite movies? Any genres you love or avoid? Share your all-time favorite movie moments!"
           {...register("description")}
           value={userDescription}
           onChange={e => setUserDescription(e.currentTarget.value)}
+          aria-label="Description"
         />
-        {errors.description && <p className="error-text">{errors.description.message}</p>}
+        {errors.description && <ErrorMessage message={errors.description.message} />}
       </div>
 
       <h3 className="h5">Social Media</h3>
       <div className="profile-settings-social-media">
-        <div className="social-media-row pink">
-          <Twitter />
+        <div className="social-media-row">
+          <Twitter className="pink-icon" />
           <input
             type="text"
-            placeholder="Your Twitter handle"
+            placeholder="Your Twitter username"
             {...register("twitter")}
             value={userTwitter}
             onChange={e => setUserTwitter(e.currentTarget.value)}
+            aria-label="Twitter username"
           />
         </div>
-        {errors.twitter && <p className="error-text">{errors.twitter.message}</p>}
+        {errors.twitter && <ErrorMessage message={errors.twitter.message} />}
 
-        <div className="social-media-row yellow">
-          <Instagram />
+        <div className="social-media-row">
+          <Instagram className="yellow-icon" />
           <input
             type="text"
-            placeholder="Your Instagram handle"
+            placeholder="Your Instagram username"
             {...register("instagram")}
             value={userInstagram}
             onChange={e => setUserInstagram(e.currentTarget.value)}
+            aria-label="Instagram username"
           />
         </div>
-        {errors.instagram && <p className="error-text">{errors.instagram.message}</p>}
+        {errors.instagram && <ErrorMessage message={errors.instagram.message} />}
 
-        <div className="social-media-row cyan">
+        <div className="social-media-row">
           <Image
             src="/icons/tiktok_icon.svg"
             height={24}
@@ -156,13 +127,14 @@ export const UpdateProfileForm = ({ userId, description, twitter, instagram, tik
           />
           <input
             type="text"
-            placeholder="Your TikTok handle"
+            placeholder="Your TikTok username"
             {...register("tiktok")}
             value={userTiktok}
             onChange={e => setUserTiktok(e.currentTarget.value)}
+            aria-label="Tiktok username"
           />
         </div>
-        {errors.tiktok && <p className="error-text">{errors.tiktok.message}</p>}
+        {errors.tiktok && <ErrorMessage message={errors.tiktok.message} />}
       </div>
       <div className="submit-button">
         <button type="submit">Save</button>

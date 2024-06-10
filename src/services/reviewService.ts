@@ -1,14 +1,20 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
+import { validateFormData } from "@/utils/validateFormData";
+import { reviewValidationSchema } from "@/schemas/reviewSchema";
 
 const createReview = async (movieId: number, content: string, rating?: number | null) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
+  await validateFormData(reviewValidationSchema, { content });
+
   const newReview = await prisma.reviews.create({
     data: {
       userId: Number(session.user.id),
@@ -24,8 +30,9 @@ const createReview = async (movieId: number, content: string, rating?: number | 
 const deleteReviewById = async (reviewId: number | string) => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
   if (typeof reviewId === "number") {
     const deletedReview = await prisma.reviews.delete({
       where: {

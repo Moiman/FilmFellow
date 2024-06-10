@@ -1,19 +1,27 @@
 "use server";
+
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import { Role } from "@prisma/client";
 import prisma from "@/db";
+import { reportValidationSchema } from "@/schemas/reportSchema";
+import { validateFormData } from "@/utils/validateFormData";
 
 const createReport = async (
   targetUserId: number | null,
   content: string,
   reviewId: number | null,
   importedReviewId: string | null,
+  listId?: number | null,
 ) => {
   const session = await getServerSession(authOptions);
+
   if (!session) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
+  await validateFormData(reportValidationSchema, { report: content });
+
   const newReport = await prisma.reports.create({
     data: {
       creatorId: Number(session.user.id),
@@ -21,6 +29,7 @@ const createReport = async (
       content,
       reviewId,
       importedReviewId,
+      listId,
     },
   });
 
@@ -30,8 +39,9 @@ const createReport = async (
 const markReportDone = async (reportId: number, done: boolean) => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
   const markedReport = await prisma.reports.update({
     where: { id: reportId },
     data: {
@@ -45,8 +55,9 @@ const markReportDone = async (reportId: number, done: boolean) => {
 const deleteReportById = async (reportId: number) => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    throw "Invalid session";
+    throw new Error("Unauthorized");
   }
+
   const deletedReport = await prisma.reports.delete({
     where: {
       id: reportId,
@@ -59,8 +70,9 @@ const deleteReportById = async (reportId: number) => {
 const getAllReports = async () => {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== Role.admin) {
-    return [];
+    throw new Error("Unauthorized");
   }
+
   const reports = await prisma.reports.findMany({
     include: {
       creator: {
@@ -95,6 +107,13 @@ const getAllReports = async () => {
           movie: true,
         },
       },
+      list: {
+        select: {
+          id: true,
+          userId: true,
+          name: true,
+        },
+      },
     },
     orderBy: { created_at: "desc" },
   });
@@ -102,4 +121,34 @@ const getAllReports = async () => {
   return reports;
 };
 
-export { createReport, markReportDone, deleteReportById, getAllReports };
+const getIsUserReported = async (targetUserId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const reported = !!(await prisma.reports.findFirst({
+    where: {
+      creatorId: Number(session.user.id),
+      targetUserId: targetUserId,
+    },
+  }));
+
+  return reported;
+};
+
+const getIsListReported = async (listId: number) => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  const reported = !!(await prisma.reports.findFirst({
+    where: {
+      creatorId: Number(session.user.id),
+      listId: listId,
+    },
+  }));
+
+  return reported;
+};
+
+export { createReport, markReportDone, deleteReportById, getAllReports, getIsUserReported, getIsListReported };

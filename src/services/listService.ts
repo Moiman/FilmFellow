@@ -4,17 +4,22 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
 import prisma from "@/db";
+import { Role } from "@prisma/client";
+import { validateFormData } from "@/utils/validateFormData";
+import { listValidationSchema } from "@/schemas/listSchema";
 
 export const createNewList = async (name: string) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   if (!name && name.trim().length === 0) {
-    throw "Missing name";
+    throw new Error("Missing name");
   }
+
+  await validateFormData(listValidationSchema, { listName: name });
 
   const list = await prisma.lists.create({
     data: {
@@ -36,7 +41,7 @@ export const deleteList = async (id: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   await prisma.lists.delete({
@@ -46,6 +51,21 @@ export const deleteList = async (id: number) => {
     },
   });
   revalidatePath("/users/" + session.user.id);
+};
+
+export const deleteListByAdmin = async (id: number) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== Role.admin) {
+    throw new Error("Unauthorized");
+  }
+
+  const deletedList = await prisma.lists.delete({
+    where: {
+      id: id,
+    },
+  });
+  return deletedList;
 };
 
 export const getUserLists = async (userId: number) => {
@@ -143,7 +163,7 @@ export const getUsersOwnLists = async (movieId: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   const lists = await prisma.lists.findMany({
@@ -285,6 +305,9 @@ export const getList = async (listId: string) => {
     return watchedList;
   } else {
     const id = Number(listId);
+    if (isNaN(id)) {
+      return null;
+    }
     const list = await prisma.lists.findUnique({
       where: {
         id: id,
@@ -333,7 +356,7 @@ export const toggleMovieList = async (movieId: number, listId: number) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   const isInList = !!(await prisma.listMovies.findUnique({
@@ -367,12 +390,14 @@ export const updateListName = async (listId: number, newName: string) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw "Not logged in";
+    throw new Error("Unauthorized");
   }
 
   if (!newName && newName.trim().length === 0) {
-    throw "Missing name";
+    throw new Error("Missing name");
   }
+
+  await validateFormData(listValidationSchema, { listName: newName });
 
   const updatedList = await prisma.lists.update({
     where: {
@@ -387,5 +412,6 @@ export const updateListName = async (listId: number, newName: string) => {
 
   revalidatePath("/users/" + session.user.id);
   revalidatePath(`/lists/${listId}`);
+
   return updatedList;
 };

@@ -79,7 +79,8 @@ export const HeaderSearch = () => {
         type="text"
         data-cy="search-input"
         className="searchbar-input"
-        placeholder="Search for a movie..."
+        placeholder="Search movies by title..."
+        aria-label="Search movies by title"
         onFocus={() => setIsOpen(true)}
         value={search}
         onChange={e => {
@@ -89,12 +90,12 @@ export const HeaderSearch = () => {
           setResults([]);
         }}
       />
-      <button className="button-transparent">
+      <div style={{ display: "flex", alignItems: "center" }}>
         <Search
           className="searchbar-icon"
           size={20}
         />
-      </button>
+      </div>
 
       {isOpen && search.length > 0 && (
         <div className="searchbar-results">
@@ -105,6 +106,7 @@ export const HeaderSearch = () => {
               className="movie-result"
               key={movie.id}
               onClick={resetSearch}
+              aria-label={movie.title}
             >
               <Image
                 alt={movie.title}
@@ -121,7 +123,7 @@ export const HeaderSearch = () => {
           {!loading && results.length === 0 && <p className="searching-results">No results found.</p>}
 
           <Link
-            href="/"
+            href="/search"
             className="searchbar-page-link"
             onClick={resetSearch}
           >

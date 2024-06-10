@@ -46,7 +46,10 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
     <div className="review-grid-item">
       <div className="review-header-item">
         <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-          <Smile size={30} />
+          <Smile
+            size={30}
+            className="user-icon"
+          />
 
           <Link
             className="h5"
@@ -70,6 +73,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
       <button
         onClick={() => setOpenReviewModal(true)}
         className="review-grid-content description button-review"
+        aria-label="Open full review"
       >
         <p>{review.content}</p>
       </button>
@@ -84,6 +88,7 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
           <button
             onClick={handleDeleteReview}
             className="button-transparent"
+            aria-label="Delete review"
           >
             <Trash2
               className="dark-icon"
@@ -96,7 +101,10 @@ export const ReviewListItem = ({ review, importedReview, ownReview }: Props) => 
   ) : (
     <div className="review-grid-item">
       <div className="review-header-item-secondary">
-        <Smile size={30} />
+        <Smile
+          size={30}
+          className="user-icon"
+        />
         <p
           className="h5"
           style={{ lineHeight: "2rem" }}

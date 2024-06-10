@@ -2,12 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
-import { Table, Grid, Columns } from "react-feather";
+import { Flag } from "react-feather";
 
 import { Section } from "@/components/section";
 import { getList } from "@/services/listService";
 import { DeleteList } from "./deleteList";
 import { RenameList } from "./renameList";
+import { getIsListReported } from "@/services/reportService";
+import ListStyleLinks from "./listStyleLinks";
 
 export default async function Layout({ params, children }: { params: { listId: string }; children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -41,16 +43,28 @@ export default async function Layout({ params, children }: { params: { listId: s
               </div>
             )}
 
+            {session &&
+              session.user.id !== list.userId &&
+              !Number.isNaN(id) &&
+              !(await getIsListReported(Number(list.id))) && (
+                <div className="list-edit">
+                  <form action={`/report/list/${list.id}`}>
+                    <button
+                      type="submit"
+                      className="button-transparent"
+                      aria-label="Report this list"
+                    >
+                      <Flag
+                        className="pink-icon"
+                        size={20}
+                      />
+                    </button>
+                  </form>
+                </div>
+              )}
+
             <div className="highlight-nav list-styles">
-              <Link href={`/lists/${list.id}/`}>
-                <Grid size={20} />
-              </Link>
-              <Link href={`/lists/${list.id}/grid`}>
-                <Columns size={20} />
-              </Link>
-              <Link href={`/lists/${list.id}/catalogue`}>
-                <Table size={20} />
-              </Link>
+              <ListStyleLinks listId={list.id} />
             </div>
           </div>
         }

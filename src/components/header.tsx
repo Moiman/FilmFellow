@@ -10,6 +10,7 @@ export const Header = () => {
       <Link
         href="/"
         className="logo"
+        aria-label="Link to homepage"
       >
         <h1 className="h4">
           🍿<span className="site-name">FilmFellow</span>

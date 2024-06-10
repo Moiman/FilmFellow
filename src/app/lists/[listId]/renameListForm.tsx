@@ -1,43 +1,69 @@
+import { useState } from "react";
 import { Edit } from "react-feather";
 import { toast } from "react-toastify";
 
 import { updateListName } from "@/services/listService";
+import { listMaxLength, listMinLength } from "@/schemas/listSchema";
 
 export const RenameListForm = ({ closeModal, id }: { closeModal: () => void; id: number }) => {
-  const renameList = async (formData: FormData) => {
-    const name = formData.get("name");
+  const [inputValue, setInputValue] = useState("");
 
-    if (name) {
-      await updateListName(id, name.toString());
-      toast(
-        <p>
-          List was renamed to <span className="highlight-text">{name.toString()}</span>
-        </p>,
-        {
-          icon: <Edit strokeWidth={2.5} />,
-          className: "yellow-toast",
-        },
-      );
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await updateListName(id, inputValue);
 
-      closeModal();
-    }
+    toast(
+      <p>
+        List was renamed to <span className="highlight-text">{inputValue}</span>
+      </p>,
+      {
+        icon: <Edit strokeWidth={2.5} />,
+        className: "yellow-toast",
+      },
+    );
+
+    closeModal();
   };
 
   return (
     <form
       className="form"
-      action={renameList}
+      onSubmit={e => onSubmit(e)}
     >
-      <label
-        className="h4"
-        htmlFor="name"
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+        }}
       >
-        Rename list
-      </label>
+        <label
+          className="h4"
+          htmlFor="listName"
+        >
+          Rename list
+        </label>
+
+        <p
+          style={{ marginBottom: "4px" }}
+          className={
+            inputValue.length <= listMaxLength && inputValue.length >= listMinLength
+              ? "description grey"
+              : "description pink"
+          }
+        >
+          {inputValue.length}/{listMaxLength}
+        </p>
+      </div>
+
       <input
         type="text"
-        name="name"
-        placeholder="Give list a new name..."
+        name="listName"
+        id="listName"
+        maxLength={listMaxLength}
+        minLength={listMinLength}
+        placeholder="e.g., Weekend Binge, Must-Watch Thrillers, Horror Movie Marathon"
+        onChange={e => setInputValue(e.target.value)}
         required
       />
       <button

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Modal from "@/components/modal";
 import { StarRating } from "./starRating";
+import { errorToast } from "@/components/errorToast";
 
 interface Props {
   watched: boolean;
@@ -15,9 +16,13 @@ export const Watched = ({ watched, toggleWatched, setUserRating, movieTitle }: P
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async () => {
-    await toggleWatched();
-    if (!watched) {
-      setIsOpen(true);
+    try {
+      await toggleWatched();
+      if (!watched) {
+        setIsOpen(true);
+      }
+    } catch (err) {
+      errorToast(err);
     }
   };
 
@@ -28,6 +33,7 @@ export const Watched = ({ watched, toggleWatched, setUserRating, movieTitle }: P
       <button
         className={watched ? "button-pink" : ""}
         onClick={handleClick}
+        aria-label={watched ? `Remove ${movieTitle} from watched` : `Mark ${movieTitle} as watched`}
       >
         {watched ? "Remove from watched" : "Mark as watched"}
       </button>
@@ -53,6 +59,7 @@ export const Watched = ({ watched, toggleWatched, setUserRating, movieTitle }: P
             <button
               onClick={closeModal}
               className="button-pink"
+              aria-label="Mark the movie as watched without leaving a rating"
             >
               No thanks!
             </button>

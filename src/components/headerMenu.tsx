@@ -28,13 +28,16 @@ export const HeaderMenu = () => {
 
   return (
     <>
-      <div className="sub-nav-narrow">
+      <nav className="sub-nav-narrow">
         <Dropdown
           maxHeight={0}
           width={150}
           zIndex={20}
           button={
-            <button className="button-transparent">
+            <button
+              className="button-transparent"
+              aria-label="Menu"
+            >
               <Menu
                 data-cy="menu-icon"
                 style={{ strokeWidth: 1.5 }}
@@ -85,7 +88,7 @@ export const HeaderMenu = () => {
               ))
             )
           ) : (
-            <>
+            <nav>
               <Link
                 key="login"
                 href="/login"
@@ -99,13 +102,13 @@ export const HeaderMenu = () => {
               >
                 Register
               </Link>
-            </>
+            </nav>
           )}
         </Dropdown>
-      </div>
+      </nav>
 
       {/* For w > 1024 sub-nav */}
-      <div className="sub-nav-wide highlight-nav">
+      <nav className="sub-nav-wide highlight-nav">
         <>
           {session ? (
             session.user.role === "admin" ? (
@@ -115,7 +118,8 @@ export const HeaderMenu = () => {
                     onClick={link.text === "Logout" ? () => signOut() : undefined}
                     key={link.href}
                     href={link.href}
-                    className={currentPath === link.href ? "active-icon" : ""}
+                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
+                    aria-label={link.text}
                   >
                     {link.icon}
                   </Link>
@@ -128,7 +132,8 @@ export const HeaderMenu = () => {
                     onClick={link.text === "Logout" ? () => signOut() : undefined}
                     key={link.href}
                     href={link.href}
-                    className={currentPath === link.href ? "active-icon" : ""}
+                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
+                    aria-label={link.text}
                   >
                     {link.icon}
                   </Link>
@@ -154,7 +159,7 @@ export const HeaderMenu = () => {
             </>
           )}
         </>
-      </div>
+      </nav>
     </>
   );
 };

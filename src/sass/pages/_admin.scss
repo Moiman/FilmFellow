@@ -49,8 +49,7 @@
 
 .admin-panel-user-list {
   display: flex;
-  border-bottom: 1px solid;
-  border-color: abstracts.$primary-darkgrey;
+  border-bottom: 1px solid abstracts.$primary-darkgrey;
   padding: 10px 20px;
   width: 100%;
   gap: 20px;
@@ -98,16 +97,24 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 10px;
   width: 100%;
 
-  * {
-    max-width: 150px;
-    width: 100%;
-    text-wrap: nowrap;
+  *:not(button) {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 125px;
+
+    button {
+      width: 100%;
+    }
   }
 
-  div {
-    margin-right: 4px;
+  button {
+    width: 125px;
+    margin: 0;
+    text-wrap: nowrap;
   }
 }
 
@@ -118,6 +125,10 @@
 
   .admin-panel-user-data {
     grid-template-columns: 90px 150px 200px;
+  }
+
+  .admin-panel-user-buttons {
+    display: grid;
   }
 }
 
@@ -131,13 +142,7 @@
   }
 
   .admin-panel-user-buttons {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-
-    button {
-      padding: 5px;
-    }
   }
 }
 
@@ -212,7 +217,7 @@
 .admin-panel-reports-grid {
   min-width: fit-content;
   display: grid;
-  grid-template-columns: 75px 1fr 1fr 1fr 2fr 100px;
+  grid-template-columns: 75px 1fr 1fr 1fr 2fr 125px;
   align-items: center;
   justify-content: space-evenly;
   padding: 10px 0px;
@@ -225,27 +230,51 @@
 
 .admin-panel-section-header {
   display: grid;
-  grid-template-columns: 75px 1fr 1fr 1fr 2fr 100px;
+  grid-template-columns: 75px 1fr 1fr 1fr 2fr 125px;
   min-width: fit-content;
   justify-content: space-around;
   gap: 10px;
 }
+
 .admin-panel-report-content {
   word-wrap: break-word;
   min-width: 100%;
+
+  .description {
+    margin: 0;
+  }
+}
+
+.report-buttons {
+  display: grid;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+
+  * {
+    width: 125px;
+    margin: 0;
+  }
 }
 
 .admin-panel-reports {
   @media only screen and (max-width: abstracts.$large-width) {
     .report-buttons {
       display: inline-flex;
-      gap: 4px;
 
       * {
-        margin: 0;
-        min-width: fit-content;
+        max-width: 125px;
+
+        button {
+          min-width: 100%;
+        }
+      }
+
+      button {
+        min-width: 125px;
       }
     }
+
     .admin-panel-reports-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
       align-items: flex-start;
@@ -254,6 +283,7 @@
     .report-description {
       grid-area: 2 / 1 / 2 / 5;
     }
+
     input {
       margin: 0;
     }
@@ -265,9 +295,11 @@
 
     .description {
       grid-column: 1 / span 4;
+
       label {
         text-align: left;
       }
+
       p {
         text-align: left;
       }
@@ -276,6 +308,7 @@
     .section-header {
       display: none;
     }
+
     .admin-panel-report-label {
       display: block;
       font-size: abstracts.$h5-font-size;

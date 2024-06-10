@@ -45,7 +45,7 @@
   .review-header-item,
   .review-header-item-secondary,
   .review-grid-footer.bg-dark {
-    background-color: rgba(abstracts.$primary-dark, 0.5);
+    background-color: rgba(abstracts.$primary-dark, 0.65);
   }
 
   .review-grid-footer.bg-yellow {
@@ -95,6 +95,10 @@
 
   button:focus {
     outline: 2px solid abstracts.$primary-dark;
+  }
+
+  button:hover {
+    opacity: 0.5;
   }
 }
 

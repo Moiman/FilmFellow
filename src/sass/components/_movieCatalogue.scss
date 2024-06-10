@@ -52,6 +52,7 @@
   }
 
   .movie:hover {
+    color: abstracts.$primary-light;
     background-color: rgba(abstracts.$primary-darkgrey, 0.5);
 
     *:first-child {
@@ -74,6 +75,7 @@
       grid-template-columns: repeat(4, 1fr);
       border: 1px solid abstracts.$primary-dark;
       border-radius: abstracts.$default-border-radius;
+      transition: 0s;
 
       *:first-child {
         grid-area: 1 / 1 / 1 / 6;
@@ -83,7 +85,7 @@
       }
 
       *:first-child:hover {
-        background-color: rgba(abstracts.$primary-darkgrey, 0.5);
+        background-color: rgba(abstracts.$primary-dark, 0.75);
       }
     }
   }

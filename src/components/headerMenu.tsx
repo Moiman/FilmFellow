@@ -7,7 +7,7 @@ import { LogOut, Menu, Tool, User } from "react-feather";
 
 import { Dropdown } from "./dropdown";
 import { Links } from "./headerLinks";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 
 interface Props {
   session: Session | null;

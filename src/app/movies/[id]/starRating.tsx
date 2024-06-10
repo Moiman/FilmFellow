@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Star } from "react-feather";
 
 interface Props {
@@ -8,12 +7,6 @@ interface Props {
 }
 
 export const StarRating = ({ rating, setRating, size = 30 }: Props) => {
-  const [currentRating, setCurrentRating] = useState<number | null>(rating);
-
-  useEffect(() => {
-    setCurrentRating(rating);
-  }, [rating]);
-
   return (
     <div className="star-rating">
       {[1, 2, 3, 4, 5].map(starRating => (
@@ -25,7 +18,7 @@ export const StarRating = ({ rating, setRating, size = 30 }: Props) => {
           aria-pressed={rating === starRating ? "true" : "false"}
         >
           <Star
-            className={currentRating !== null && currentRating >= starRating ? "selected" : "not-selected"}
+            className={rating !== null && rating >= starRating ? "selected" : "not-selected"}
             strokeWidth={2}
             size={size}
           />

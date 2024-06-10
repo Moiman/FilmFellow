@@ -15,7 +15,9 @@ export const FriendsList = ({ friends }: friendListProps) => {
           className="person-wrapper"
         >
           <Link href={`/users/${friend.id}`}>
-            <div className={friend._count.friends > 0 ? "profile-path-placeholder-friends": "profile-path-placeholder"}>
+            <div
+              className={friend._count.friends > 0 ? "profile-path-placeholder-friends" : "profile-path-placeholder"}
+            >
               <User />
             </div>
           </Link>

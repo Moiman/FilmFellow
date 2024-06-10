@@ -132,9 +132,10 @@ describe("User profile tests", () => {
 
   it("Added friend should be seen on own profile", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
-    // cy.visit("/");
+     // cy.visit("/");
     cy.visit("/users/1");
     // cy.get("*[aria-label='Profile']").click({ force:true });
+    // cy.wait(2000);
     cy.location("pathname").should("eq", `/users/1`);
     cy.get(".profile-friend-list")
       .find(".friends-wrapper")
@@ -175,5 +176,16 @@ describe("User profile tests", () => {
     cy.location("pathname").should("eq", `/users/${userId}/friends`);
     cy.get(".section-header").find("h2").should("exist").find("a").should("have.attr", "href", `/users/${userId}`);
     cy.get(".person-list").children().find("p").contains("admin");
+  });
+
+  it("Click on friend should navigate to friend profile", () => {
+    cy.login(email, password);
+    cy.visit("/users/" + userId);
+
+    cy.get(".friends-title").find("a").contains("See all").click();
+    cy.location("pathname").should("eq", `/users/${userId}/friends`);
+    cy.get(".section-header").find("h2").should("exist").find("a").should("have.attr", "href", `/users/${userId}`);
+    cy.get(".person-list").children().first().click();
+    cy.location("pathname").should("eq", `/users/1`);
   });
 });

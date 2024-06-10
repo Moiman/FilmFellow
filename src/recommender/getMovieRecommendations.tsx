@@ -34,7 +34,9 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
     });
     data = await response.json();
   }
-  console.log(data);
   const recommArr = await getMovieByLimitTypeGenre(numRecos, "", undefined, data);
+  if (recommArr.length === 0) {
+    return [];
+  }
   return recommArr;
 };

@@ -30,7 +30,10 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
               </div>
             }
           >
-            <MovieList movies={await getUserRecommendations(selectedGenre, 6)} />
+            <MovieList
+              movies={await getUserRecommendations(selectedGenre, 6)}
+              emptyText="No recommendations yet"
+            />
           </Section>
         )}
         <Section

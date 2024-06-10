@@ -82,7 +82,10 @@ export default async function Movie({ params }: { params: { id: string } }) {
         </Section>
 
         <Section header="Similar movies">
-          <MovieList movies={await getMovieRecommendations(movie.id, 6)} />
+          <MovieList
+            movies={await getMovieRecommendations(movie.id, 6)}
+            emptyText="No similar movies"
+          />
         </Section>
       </div>
     </main>

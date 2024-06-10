@@ -20,7 +20,10 @@ export default async function New({ searchParams }: { searchParams?: { genre: st
       <GenreSelector selectedGenre={selectedGenre} />
       <div className="section-wrapper">
         <Section header={"Recommendations"}>
-          {recommendations.length === 0 ? <p>No recommendations yet.</p> : <MovieList movies={recommendations} />}
+          <MovieList
+            movies={recommendations}
+            emptyText="No recommendations yet"
+          />
         </Section>
       </div>
     </main>

@@ -18,7 +18,7 @@ export const StarRating = ({ rating, setRating, size = 30 }: Props) => {
           aria-pressed={rating === starRating ? "true" : "false"}
         >
           <Star
-            className={rating !== null && rating >= starRating ? "selected" : "not-selected"}
+            className={rating && rating >= starRating ? "selected" : "not-selected"}
             strokeWidth={2}
             size={size}
           />

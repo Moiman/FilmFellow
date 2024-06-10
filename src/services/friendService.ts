@@ -33,30 +33,7 @@ const addFriend = async (friendId: number) => {
   revalidatePath("/users/" + session.user.id);
   return newFriend;
 };
-const getUserFriends = async (userId: number) => {
-  const userFriends = await prisma.users.findFirst({
-    where: {
-      id: userId,
-    },
-    select: {
-      friends: {
-        select: {
-          id: true,
-          username: true,
-          _count: {
-            select: {
-              friends: {
-                where: { id: userId },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
 
-  return userFriends;
-};
 const removeFriend = async (friendId: number) => {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -94,4 +71,4 @@ const getIsUserAlreadyFriend = async (friendId: number) => {
   return friend;
 };
 
-export { addFriend, getUserFriends, removeFriend, getIsUserAlreadyFriend };
+export { addFriend, removeFriend, getIsUserAlreadyFriend };

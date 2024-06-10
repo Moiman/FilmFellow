@@ -3,8 +3,7 @@ import Link from "next/link";
 import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
-import { getDescriptionAndSocialMedia } from "@/services/userService";
-import { getUserFriends } from "@/services/friendService";
+import { findUserById, getDescriptionAndSocialMedia } from "@/services/userService";
 import { ProfileButtons } from "./profileButtons";
 import { FriendListButton } from "@/components/friendListButton";
 
@@ -16,7 +15,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
     return null;
   }
 
-  const friends = await getUserFriends(userId);
+  const userDetails = await findUserById(userId);
 
   return (
     <div className="profile-info">
@@ -80,7 +79,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
           </div>
         </div>
       )}
-      {friends?.friends.length !== 0 && (
+      {userDetails?.friends.length !== 0 && (
         <div className="full-width">
           <div className="profile-friend-list">
             <div className="friends-title">
@@ -89,7 +88,7 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
             </div>
 
             <div className="friends-wrapper">
-              {friends?.friends.slice(0, 4).map(friend => (
+              {userDetails?.friends.slice(0, 4).map(friend => (
                 <FriendListButton
                   key={friend.id}
                   friend={friend}

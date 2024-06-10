@@ -58,6 +58,17 @@
 .admin-panel-review-paragraph {
   cursor: pointer;
   color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "default");
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  border-radius: abstracts.$default-border-radius;
+}
+
+.admin-panel-review-paragraph:hover {
+  color: map.get(map.get(abstracts.$highlight-colors, "yellow"), "hover");
+  background-color: transparent;
 }
 
 .admin-panel-user-data {
@@ -206,8 +217,16 @@
   color: map.get(map.get(abstracts.$highlight-colors, "pink"), "default");
 }
 
+.admin-panel-status-suspended:hover {
+  color: map.get(map.get(abstracts.$highlight-colors, "pink"), "hover");
+}
+
 .admin-panel-status-active {
   color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "default");
+}
+
+.admin-panel-status-active:hover {
+  color: map.get(map.get(abstracts.$highlight-colors, "cyan"), "hover");
 }
 
 .admin-panel-report-label {

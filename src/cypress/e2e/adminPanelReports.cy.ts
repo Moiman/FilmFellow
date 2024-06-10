@@ -181,7 +181,7 @@ describe("Admin report panel tests", () => {
   it("Delete reported review", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
     cy.visit("/admin/reports");
-    cy.get(".admin-panel-review-paragraph").contains("p", "Show reported review").click();
+    cy.get(".admin-panel-review-paragraph").contains("button", "Show reported review").click();
     cy.get("dialog").should("exist");
     cy.get(".modal-box")
       .find(".review-grid-modal-item")

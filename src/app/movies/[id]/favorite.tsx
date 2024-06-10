@@ -59,7 +59,7 @@ export const Favorite = ({ movieId, isFavorite, movieTitle }: Props) => {
 
   return (
     <button
-      className={favorite ? "button-transparent pink" : "button-transparent"}
+      className={favorite ? "button-transparent white-icon-hover pink " : "button-transparent pink-icon-hover"}
       onClick={handleFavoriteClick}
     >
       <Heart size={24} />

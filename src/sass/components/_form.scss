@@ -183,17 +183,15 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .form {
-  padding: 25px;
+  padding: 10px 15px;
   background-color: abstracts.$primary-grey;
   display: grid;
 }
 
 .form-submit {
-  font-weight: 600;
-  font-size: 1.25rem;
-  font-family: abstracts.$default-title-font;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  font-size: 1rem;
+  width: 100%;
+  margin: 15px auto;
 }
 
 .form-main {
@@ -209,19 +207,17 @@ input[type="range"]::-moz-range-thumb {
 .form-main-text {
   display: flex;
   justify-content: center;
-  font-weight: 600;
-  margin-top: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .form-route-change {
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: center;
+
   a {
     text-decoration: underline;
   }
+
   p {
     font-family: abstracts.$default-title-font;
     font-size: abstracts.$a-font-size;

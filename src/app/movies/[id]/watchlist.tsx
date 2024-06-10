@@ -36,7 +36,7 @@ export const Watchlist = ({ movieId, isInWatchlist, title }: Props) => {
 
   return (
     <button
-      className={watchlist ? "button-transparent yellow" : "button-transparent"}
+      className={watchlist ? "button-transparent white-icon-hover yellow" : "button-transparent yellow-icon-hover"}
       onClick={handleClick}
       aria-label={watchlist ? `Remove ${title} from watchlist` : `Add ${title} to watchlist`}
     >

@@ -127,9 +127,9 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
                     .reduce((links, directorLink) => [links, ", ", directorLink])}
                 </p>
               ) : null}
-              {movie.releaseYear ? <p>{movie.releaseYear}</p> : null}
-              {movie.ageRestrictions ? <p>{movie.ageRestrictions}</p> : null}
-              {movie.runtime ? <p>{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
+              {movie.releaseYear ? <p title="Release year">{movie.releaseYear}</p> : null}
+              {movie.ageRestrictions ? <p title="Content rating">{movie.ageRestrictions}</p> : null}
+              {movie.runtime ? <p title="Runtime">{minutesToHoursAndMinutesString(movie.runtime)}</p> : null}
             </div>
             <p className="movie-description">{movie.overview}</p>
           </div>

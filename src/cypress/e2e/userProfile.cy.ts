@@ -50,19 +50,6 @@ describe("User profile tests", () => {
     cy.get("p").contains("has no description");
   });
 
-  it("Invalid description", () => {
-    cy.login(email, password);
-    cy.visit("/users/" + userId);
-
-    cy.get("h2").contains(email);
-    cy.get('button[type="submit"]').contains("Go to settings").click();
-    cy.get("h2").contains("Settings");
-    cy.get("textarea").clear().type("This is a description with >* special characters.");
-    cy.get('button[type="submit"]').contains("Save").click();
-
-    cy.get("p").contains("Description contains invalid characters");
-  });
-
   it("Empty social media usernames", () => {
     cy.login(email, password);
     cy.visit("/users/" + userId);

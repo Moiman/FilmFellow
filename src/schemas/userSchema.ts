@@ -7,7 +7,6 @@ export const userValidationSchema = yup.object().shape({
     .string()
     .trim()
     .max(descriptionMax, "Description too long, max length is " + descriptionMax)
-    .matches(/^[^<>{};]*$/, "Description contains invalid characters")
     .optional(),
   twitter: yup
     .string()

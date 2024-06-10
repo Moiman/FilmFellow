@@ -256,12 +256,12 @@ export const ReportComponent = ({ report, setAllReports }: Props) => {
               <Link href={`/movies/${report.importedReview?.movie.id}`}>{report.importedReview?.movie.title}</Link>
             )}
 
-            <p
+            <button
               className="admin-panel-review-paragraph"
               onClick={() => setOpenModal(true)}
             >
               Show reported review
-            </p>
+            </button>
             <Modal
               isOpen={openModal}
               closeModal={closeReviewDeleteModal}

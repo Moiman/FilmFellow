@@ -18,7 +18,9 @@ interface Props {
 export const AdminPanelUsers = ({ users }: Props) => {
   const [allUsers, setAllUsers] = useState(users);
   const [searchInput, setSearchInput] = useState("");
-  const filteredResults = searchInput ? allUsers.filter(user => user.username.startsWith(searchInput)) : allUsers;
+  const filteredResults = searchInput
+    ? allUsers.filter(user => user.username.toLowerCase().startsWith(searchInput))
+    : allUsers;
   return (
     <div className="admin-panel-content">
       <div className="admin-searchbar">
@@ -28,7 +30,7 @@ export const AdminPanelUsers = ({ users }: Props) => {
           className="admin-searchbar-input"
           placeholder="Search user..."
           value={searchInput}
-          onChange={e => setSearchInput(e.target.value)}
+          onChange={e => setSearchInput(e.target.value.toLowerCase())}
         />
       </div>
       <div className="admin-panel-user-wrapper">

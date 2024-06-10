@@ -82,6 +82,7 @@ export default function Register() {
       reset();
       setError("");
       router.push("/");
+      router.refresh();
     }
   };
   const registerHeader = (

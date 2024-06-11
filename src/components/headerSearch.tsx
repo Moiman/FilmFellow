@@ -113,7 +113,7 @@ export const HeaderSearch = () => {
             className="searchbar-page-link"
             onClick={resetSearch}
           >
-            Didn&rsquo;t find what you&rsquo;re looking for? Try advanced search.
+            Couldn&rsquo;t find what you&rsquo;re looking for? Try advanced search.
           </Link>
         </div>
       )}

@@ -21,6 +21,9 @@ export const searchMovies = async (sortBy: string, filterParams: FilterParams) =
   const countries = filterParams.countries;
   const languages = filterParams.languages;
 
+  const minDate = filterParams.releaseYearMin ? new Date(Number(filterParams.releaseYearMin), 0, 1) : undefined;
+  const maxDate = filterParams.releaseYearMax ? new Date(Number(filterParams.releaseYearMax), 0, 1) : undefined;
+
   const movies = await prisma.movies.findMany({
     where: {
       title: { contains: filterParams.title, mode: "insensitive" },
@@ -63,6 +66,10 @@ export const searchMovies = async (sortBy: string, filterParams: FilterParams) =
       runtime: {
         gte: filterParams.movieLengthMin ? Number(filterParams.movieLengthMin) : undefined,
         lte: filterParams.movieLengthMax ? Number(filterParams.movieLengthMax) : undefined,
+      },
+      release_date: {
+        gte: minDate,
+        lte: maxDate,
       },
       vote_count: { gte: voteCountLimit },
     },

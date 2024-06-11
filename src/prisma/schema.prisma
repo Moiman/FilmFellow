@@ -244,6 +244,8 @@ model MovieCast {
 
   person Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
   movie  Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@index([movieId, personId])
 }
 
 model MovieCrew {
@@ -256,6 +258,8 @@ model MovieCrew {
 
   person Persons @relation(fields: [personId], references: [id], onDelete: Cascade)
   movie  Movies  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@index([movieId, personId])
 }
 
 model Persons {

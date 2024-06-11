@@ -67,7 +67,7 @@ export const HeaderMenu = () => {
             session.user.role === "admin" ? (
               SubNavLinks.map(link => (
                 <Link
-                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                   key={link.href}
                   href={link.href}
                   className="dropdown-item"
@@ -78,7 +78,7 @@ export const HeaderMenu = () => {
             ) : (
               SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
                 <Link
-                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                   key={link.href}
                   href={link.href}
                   className="dropdown-item"
@@ -115,7 +115,7 @@ export const HeaderMenu = () => {
               <>
                 {SubNavLinks.map(link => (
                   <Link
-                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                     key={link.href}
                     href={link.href}
                     className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
@@ -129,7 +129,7 @@ export const HeaderMenu = () => {
               <>
                 {SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
                   <Link
-                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                     key={link.href}
                     href={link.href}
                     className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}

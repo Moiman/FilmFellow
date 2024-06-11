@@ -3,10 +3,10 @@ import { addFriend, removeFriend } from "@/services/friendService";
 
 interface Props {
   userId: number;
-  friends: boolean;
+  isFriend: boolean;
 }
 
-export const FriendsButton = ({ userId, friends }: Props) => {
+export const FriendsButton = ({ userId, isFriend }: Props) => {
   const addFriendHandler = async () => {
     await addFriend(userId);
   };
@@ -14,7 +14,7 @@ export const FriendsButton = ({ userId, friends }: Props) => {
     await removeFriend(userId);
   };
 
-  return friends ? (
+  return isFriend ? (
     <button
       className="button-pink"
       onClick={removeFriendHandler}

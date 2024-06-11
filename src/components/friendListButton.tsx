@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const FriendListButton = async ({ friend }: Props) => {
-  const mutualFriend = friend._count.friends > 0 ? true : false;
+  const mutualFriend = friend._count.friends > 0;
 
   return (
     <button className={mutualFriend ? "button-friend-mutual" : "button-friend"}>

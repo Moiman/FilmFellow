@@ -21,7 +21,7 @@ export const ProfileButtons = async ({ ownProfile, userId }: ProfileButtonsProps
         <>
           <FriendsButton
             userId={userId}
-            friends={isFriend}
+            isFriend={isFriend}
           />
           <form action={`/report/user/${userId}`}>
             <button

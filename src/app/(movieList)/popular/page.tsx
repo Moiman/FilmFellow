@@ -11,7 +11,7 @@ export default async function New({ searchParams }: { searchParams?: { genre: st
       <GenreSelector selectedGenre={selectedGenre} />
       <div className="section-wrapper">
         <Section header={"Popular"}>
-          <MovieList movies={await getMovieByLimitTypeGenre(18, "popular", selectedGenre)} />
+          <MovieList movies={await getMovieByLimitTypeGenre(36, "popular", selectedGenre)} />
         </Section>
       </div>
     </main>

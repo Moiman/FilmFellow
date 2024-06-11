@@ -137,7 +137,7 @@ const getMovieByLimitTypeGenre = async (
       poster_path: { not: null },
       id: { in: movieIds },
     },
-    take: limit,
+    take: movieIds ? undefined : limit,
     orderBy: orderBy,
     select: {
       id: true,
@@ -147,9 +147,11 @@ const getMovieByLimitTypeGenre = async (
   });
 
   if (movieIds !== undefined) {
-    return movies.toSorted((a, b) => {
-      return movieIds.indexOf(a.id) - movieIds.indexOf(b.id);
-    });
+    return movies
+      .toSorted((a, b) => {
+        return movieIds.indexOf(a.id) - movieIds.indexOf(b.id);
+      })
+      .slice(0, limit);
   }
 
   return movies;

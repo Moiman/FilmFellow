@@ -7,7 +7,7 @@ import type { Session } from "next-auth";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 
 import { Dropdown } from "./dropdown";
-import { Links } from "./headerLinks";
+import { links } from "./headerLinks";
 
 interface Props {
   session: Session | null;
@@ -40,7 +40,7 @@ export const HeaderMenu = ({ session }: Props) => {
       <nav className="sub-nav-narrow">
         <Dropdown
           maxHeight={0}
-          width={100}
+          width={150}
           zIndex={20}
           button={
             <button
@@ -55,7 +55,15 @@ export const HeaderMenu = ({ session }: Props) => {
           }
           buttonAlign="right"
         >
-          {Links.map(link => (
+          {session && (
+            <Link
+              href={"/recommendations"}
+              className="dropdown-item"
+            >
+              {"Recommendations"}
+            </Link>
+          )}
+          {links.map(link => (
             <Link
               key={link.href}
               href={link.href}
@@ -68,7 +76,7 @@ export const HeaderMenu = ({ session }: Props) => {
             session.user.role === "admin" ? (
               SubNavLinks.map(link => (
                 <Link
-                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                   key={link.href}
                   href={link.href}
                   className="dropdown-item"
@@ -79,7 +87,7 @@ export const HeaderMenu = ({ session }: Props) => {
             ) : (
               SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
                 <Link
-                  onClick={link.text === "Logout" ? () => signOut() : undefined}
+                  onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                   key={link.href}
                   href={link.href}
                   className="dropdown-item"
@@ -116,7 +124,7 @@ export const HeaderMenu = ({ session }: Props) => {
               <>
                 {SubNavLinks.map(link => (
                   <Link
-                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                     key={link.href}
                     href={link.href}
                     className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
@@ -130,7 +138,7 @@ export const HeaderMenu = ({ session }: Props) => {
               <>
                 {SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
                   <Link
-                    onClick={link.text === "Logout" ? () => signOut() : undefined}
+                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
                     key={link.href}
                     href={link.href}
                     className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}

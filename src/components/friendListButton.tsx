@@ -11,10 +11,10 @@ interface Props {
 }
 
 export const FriendListButton = async ({ friend }: Props) => {
-  const mutualFriend = friend._count.friends > 0;
+  const isMutualFriend = friend._count.friends > 0;
 
   return (
-    <button className={mutualFriend ? "button-friend-mutual" : "button-friend"}>
+    <button className={isMutualFriend ? "button-friend-mutual" : "button-friend"}>
       <Link href={`/users/${friend.id}`}>{friend.username}</Link>
     </button>
   );

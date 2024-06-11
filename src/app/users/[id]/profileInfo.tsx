@@ -77,7 +77,7 @@ export const ProfileInfo = async ({ userId, friends }: { userId: number; friends
           </div>
         </div>
       )}
-      {friends.length !== 0 && (
+      {friends.length > 0 && (
         <div className="full-width">
           <div className="profile-friend-list">
             <div className="friends-title">

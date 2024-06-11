@@ -9,7 +9,7 @@ interface friendListProps {
 export const FriendsList = ({ friends }: friendListProps) => {
   return (
     <div className="person-list">
-      {friends?.map(friend => (
+      {friends.map(friend => (
         <div
           key={friend.id}
           className="person-wrapper"

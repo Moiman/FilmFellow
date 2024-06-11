@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { LogOut, Menu, Tool, User } from "react-feather";
+import { LogOut, Menu, Search, Tool, User } from "react-feather";
 
 import { Dropdown } from "./dropdown";
 import { Links } from "./headerLinks";
@@ -14,11 +14,16 @@ export const HeaderMenu = () => {
 
   const SubNavLinks = [
     {
+      icon: <Search style={{ strokeWidth: 1.5 }} />,
+      text: "Search",
+      href: "/search",
+    },
+    { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: `/users/${session?.user.id}` },
+    {
       icon: <Tool style={{ strokeWidth: 1.5 }} />,
       text: "Admin",
       href: "/admin/users",
     },
-    { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: `/users/${session?.user.id}` },
     {
       icon: <LogOut style={{ strokeWidth: 1.5 }} />,
       text: "Logout",

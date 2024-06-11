@@ -9,11 +9,12 @@ import { getUserRecommendations } from "@/recommender/getUserRecommendations";
 export default async function New({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
   const session = await getServerSession(authOptions);
-  const recommendations = await getUserRecommendations(selectedGenre, 18);
 
   if (!session) {
     notFound();
   }
+
+  const recommendations = await getUserRecommendations(selectedGenre, 32);
 
   return (
     <main>

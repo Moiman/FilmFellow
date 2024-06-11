@@ -16,7 +16,7 @@ export const MovieList = ({
 }) => {
   return (
     <div className="movie-list">
-      {movies.length !== 0 ? (
+      {movies.length > 0 ? (
         movies.map(movie => (
           <Link
             key={movie.id}

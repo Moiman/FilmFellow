@@ -1,7 +1,7 @@
 import { getMovieById, getMovieByLimitTypeGenre } from "@/services/movieService";
 
 export const getMovieRecommendations = async (id: number, numRecos: number) => {
-  let movieData = await getMovieById(id);
+  const movieData = await getMovieById(id);
   let data = [];
   if (!movieData) {
     return [];
@@ -16,7 +16,7 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
     }),
   });
   data = await response.json();
-  if (data.length === 0) {
+  if (!data) {
     const response = await fetch("http://localhost:5000/recommender/movie/features", {
       method: "POST",
       headers: {
@@ -35,8 +35,5 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
     data = await response.json();
   }
   const recommArr = await getMovieByLimitTypeGenre(numRecos, "", undefined, data);
-  if (recommArr.length === 0) {
-    return [];
-  }
   return recommArr;
 };

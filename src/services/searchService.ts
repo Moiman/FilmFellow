@@ -39,9 +39,8 @@ export const searchMovies = async (sortBy: string, filterParams: FilterParams) =
       spokenLanguages: {
         some: {
           language: {
-            name: {
+            iso_639_1: {
               in: languages.length ? languages : undefined,
-              mode: "insensitive",
             },
           },
         },

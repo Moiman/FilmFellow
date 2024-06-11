@@ -6,7 +6,7 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
   if (!movieData) {
     return [];
   }
-  const response = await fetch("http://localhost:5000/recommender/movie/existing", {
+  const response = await fetch("http://recommender:5000/recommender/movie/existing", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
   });
   data = await response.json();
   if (!data) {
-    const response = await fetch("http://localhost:5000/recommender/movie/features", {
+    const response = await fetch("http://recommender:5000/recommender/movie/features", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

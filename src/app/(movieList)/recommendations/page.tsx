@@ -4,7 +4,7 @@ import GenreSelector from "@/components/genreSelector";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import { notFound } from "next/navigation";
-import { getUserRecommendations } from "@/recommender/getUserRecommendations";
+import { getUserRecommendations } from "@/services/getUserRecommendations";
 
 export default async function New({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;

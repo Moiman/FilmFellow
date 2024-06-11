@@ -5,6 +5,7 @@ services:
     restart: always
     ports:
       - $PG_PORT:$PG_PORT
+    env_file: ".env"
     environment:
       POSTGRES_USER: $PG_USERNAME
       POSTGRES_PASSWORD: $PG_PASSWORD
@@ -18,16 +19,18 @@ services:
       retries: 10
 
   filmfellow:
+    env_file: ".env"
     build: ./src
     restart: always
     environment:
+      NEXTAUTH_URL: filmfellow:3000
       NEXTAUTH_SECRET: generatesecretkey
       DATABASE_URL: $DATABASE_URL
     ports:
       - $FRONTEND_PORT:$FRONTEND_PORT
 
   recommender:
-    build: ./src/recommender
+    build: ./recommender
     restart: always
     ports:
       - 5000:5000

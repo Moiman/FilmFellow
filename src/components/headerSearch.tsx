@@ -3,13 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search } from "react-feather";
 
 import { getMoviesByTitle } from "@/services/movieService";
-
-// PLACEHOLDER LOGIC: Currently returns best rated movies that includes searched word in title
-// Searches at maximum every 1 seconds so search isn't spammed on every input change
-// "See all results" takes currently nowhere as there is no search page yet
 
 export const HeaderSearch = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -20,22 +15,19 @@ export const HeaderSearch = () => {
   const searchBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const searchDelay = setTimeout(() => {
-      const getMovies = async () => {
-        if (search.trim() === "") {
-          setLoading(false);
-          return;
-        }
+    const getMovies = () => {
+      if (search.trim() === "") {
+        setLoading(false);
+        return;
+      }
 
-        getMoviesByTitle(search).then(movies => {
-          setResults(movies);
-          setLoading(false);
-        });
-      };
+      getMoviesByTitle(search).then(movies => {
+        setResults(movies);
+        setLoading(false);
+      });
+    };
 
-      getMovies();
-    }, 1000);
-    return () => clearTimeout(searchDelay);
+    getMovies();
   }, [search]);
 
   useEffect(() => {
@@ -90,12 +82,6 @@ export const HeaderSearch = () => {
           setResults([]);
         }}
       />
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Search
-          className="searchbar-icon"
-          size={20}
-        />
-      </div>
 
       {isOpen && search.length > 0 && (
         <div className="searchbar-results">
@@ -131,7 +117,7 @@ export const HeaderSearch = () => {
             className="searchbar-page-link"
             onClick={resetSearch}
           >
-            See all results for &quot;{search}&quot;
+            Couldn&rsquo;t find what you&rsquo;re looking for? Try advanced search.
           </Link>
         </div>
       )}

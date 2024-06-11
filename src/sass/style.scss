@@ -32,6 +32,10 @@ main.sidebar-main {
   padding: 0;
 }
 
+.hidden {
+  display: none;
+}
+
 @media only screen and (max-width: abstracts.$large-width) {
   main {
     padding: 20px;

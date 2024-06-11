@@ -61,8 +61,46 @@
   }
 }
 
+.search-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & > * {
+    min-width: 50%;
+  }
+
+  .admin-searchbar {
+    margin: 0;
+    width: 100%;
+  }
+
+  input {
+    position: relative;
+    border-radius: 40px;
+    width: 100%;
+  }
+}
+
+.search-results {
+  padding: 10px;
+  background-color: abstracts.$primary-darkgrey;
+  border-radius: abstracts.$default-border-radius;
+  border: 1px solid abstracts.$primary-dark;
+  box-shadow: abstracts.$default-shadow;
+}
+
+.search-results-wrapper {
+  width: 100%;
+  padding: 0 40px 40px 40px;
+}
+
 @media only screen and (max-width: abstracts.$medium-width) {
   .filter-wrapper {
     width: 100%;
+  }
+
+  .search-results-wrapper {
+    padding: 0 20px 20px 20px;
   }
 }

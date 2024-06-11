@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { User } from "react-feather";
+import { User, UserCheck } from "react-feather";
 import type { Friend } from "./friendListButton";
 
 interface friendListProps {
@@ -15,11 +15,7 @@ export const FriendsList = ({ friends }: friendListProps) => {
           className="person-wrapper"
         >
           <Link href={`/users/${friend.id}`}>
-            <div
-              className={friend._count.friends > 0 ? "profile-path-placeholder-friends" : "profile-path-placeholder"}
-            >
-              <User />
-            </div>
+            <div className={"profile-path-placeholder"}>{friend._count.friends > 0 ? <UserCheck /> : <User />}</div>
           </Link>
           <p className="person-name">{friend.username}</p>
         </div>

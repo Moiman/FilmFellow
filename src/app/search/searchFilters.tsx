@@ -28,6 +28,7 @@ export type FilterParams = {
   releaseYearMin?: string;
   ratingMin?: string;
   ratingMax?: string;
+  title?: string;
 };
 
 export default function SearchFilters({ genres, countries, languages }: Props) {
@@ -85,7 +86,10 @@ export default function SearchFilters({ genres, countries, languages }: Props) {
 
   return (
     <>
-      <div className="filter-wrapper">
+      <div
+        className="filter-wrapper"
+        style={{ minWidth: "300px" }}
+      >
         <Filter title="Genres">
           <div className="genres">
             {genres.map(genre => (
@@ -210,7 +214,9 @@ export default function SearchFilters({ genres, countries, languages }: Props) {
           </div>
         </Filter>
       </div>
-      <SearchMovies filterParams={filterParams} />
+      <div className="search-results-wrapper">
+        <SearchMovies filterParams={filterParams} />
+      </div>
     </>
   );
 }

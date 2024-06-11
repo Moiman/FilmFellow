@@ -23,6 +23,7 @@ export const searchMovies = async (sortBy: string, filterParams: FilterParams) =
 
   const movies = await prisma.movies.findMany({
     where: {
+      title: { contains: filterParams.title, mode: "insensitive" },
       genres: {
         some: {
           genre: {
@@ -65,7 +66,7 @@ export const searchMovies = async (sortBy: string, filterParams: FilterParams) =
       },
       vote_count: { gte: voteCountLimit },
     },
-    take: 12,
+    take: 36,
     orderBy: orderBy,
     select: {
       id: true,

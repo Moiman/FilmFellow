@@ -25,7 +25,7 @@ export const MovieList = ({ movies }: { movies: MovieListItem[] }) => {
               priority
             />
           ) : (
-            <div style={{ backgroundColor: "grey", width: "100%", aspectRatio: "2/3" }} />
+            <div className="poster-path-placeholder">{movie.title}</div>
           )}
         </Link>
       ))}

@@ -6,14 +6,7 @@ import prisma from "@/db";
 
 const selectUserFields = {
   id: true,
-  email: true,
   username: true,
-  role: true,
-  created_at: true,
-  updated_at: true,
-  last_visited: true,
-  isActive: true,
-  banDuration: true,
 };
 
 const addFriend = async (friendId: number) => {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { User } from "react-feather";
-import { Friend } from "./friendListButton";
+import type { Friend } from "./friendListButton";
 
 interface friendListProps {
   friends: Friend[] | undefined;

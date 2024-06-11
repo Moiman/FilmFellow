@@ -58,6 +58,7 @@ export default function Login() {
       reset();
       setError("");
       router.push("/");
+      router.refresh();
     }
   };
   const loginHeader = (

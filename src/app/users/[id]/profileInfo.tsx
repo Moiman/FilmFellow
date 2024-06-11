@@ -1,11 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Twitter, Instagram, Smile, Frown } from "react-feather";
+import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import { getDescriptionAndSocialMedia } from "@/services/userService";
-import { getServerSession } from "next-auth";
-import { Twitter, Instagram, Smile, Frown } from "react-feather";
 import { ProfileButtons } from "./profileButtons";
+import { Friend, FriendListButton } from "@/components/friendListButton";
 
-export const ProfileInfo = async ({ userId }: { userId: number }) => {
+export const ProfileInfo = async ({ userId, friends }: { userId: number; friends: Friend[] }) => {
   const session = await getServerSession(authOptions);
   const user = await getDescriptionAndSocialMedia(userId);
 
@@ -75,28 +77,25 @@ export const ProfileInfo = async ({ userId }: { userId: number }) => {
           </div>
         </div>
       )}
+      {friends.length > 0 && (
+        <div className="full-width">
+          <div className="profile-friend-list">
+            <div className="friends-title">
+              <h3 className="h5">Friends</h3>
+              <Link href={`/users/${userId}/friends`}>See all</Link>
+            </div>
 
-      {/* Hide until implemented
-      <div className="full-width">
-        <div className="profile-friend-list">
-          <div className="friends-title">
-            <h3 className="h5">Friends</h3>
-            <Link href={`/users/${userId}/friends`}>See all</Link>
-          </div>
-
-          <div className="friends-wrapper">
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
-            <button className="button-friend" />
+            <div className="friends-wrapper">
+              {friends.slice(0, 4).map(friend => (
+                <FriendListButton
+                  key={friend.id}
+                  friend={friend}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    */}
+      )}
 
       {session && (
         <ProfileButtons

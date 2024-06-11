@@ -2,14 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import type { Session } from "next-auth";
 import { LogOut, Menu, Search, Tool, User } from "react-feather";
 
 import { Dropdown } from "./dropdown";
 import { Links } from "./headerLinks";
 
-export const HeaderMenu = () => {
-  const { data: session } = useSession();
+interface Props {
+  session: Session | null;
+}
+
+export const HeaderMenu = ({ session }: Props) => {
   const currentPath = usePathname();
 
   const SubNavLinks = [

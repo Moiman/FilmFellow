@@ -1,10 +1,12 @@
 import Link from "next/link";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
 import { HeaderSearch } from "./headerSearch";
 import { HeaderLinks } from "./headerLinks";
 import { HeaderMenu } from "./headerMenu";
 
-export const Header = () => {
+export const Header = async () => {
+  const session = await getServerSession(authOptions);
   return (
     <header>
       <Link
@@ -19,7 +21,7 @@ export const Header = () => {
 
       <HeaderLinks />
       <HeaderSearch />
-      <HeaderMenu />
+      <HeaderMenu session={session} />
     </header>
   );
 };

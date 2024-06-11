@@ -57,6 +57,21 @@ const findUserById = async (id: number) => {
     where: {
       id: id,
     },
+    include: {
+      friends: {
+        select: {
+          id: true,
+          username: true,
+          _count: {
+            select: {
+              friends: {
+                where: { id: id },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   return user;

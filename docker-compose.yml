@@ -22,6 +22,7 @@ services:
     restart: always
     environment:
       NEXTAUTH_SECRET: generatesecretkey
+      DATABASE_URL: $DATABASE_URL
     ports:
       - $FRONTEND_PORT:$FRONTEND_PORT
 

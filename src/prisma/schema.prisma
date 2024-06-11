@@ -20,6 +20,8 @@ model Users {
   isActive     Boolean   @default(true)
   banDuration  DateTime?
 
+  friends         Users[]           @relation("Friends")
+  friendsOf       Users[]           @relation("Friends")
   reviews         Reviews[]
   favorites       Favorites[]
   watchedRatings  WatchedRatings[]
@@ -233,7 +235,8 @@ model Languages {
 }
 
 model MovieCast {
-  credit_id String @id
+  id        Int    @id @default(autoincrement())
+  credit_id String
   movieId   Int
   personId  Int
   character String
@@ -244,7 +247,8 @@ model MovieCast {
 }
 
 model MovieCrew {
-  credit_id  String @id
+  id         Int    @id @default(autoincrement())
+  credit_id  String
   movieId    Int
   personId   Int
   department String

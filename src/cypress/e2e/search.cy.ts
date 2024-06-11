@@ -1,69 +1,76 @@
 describe("search filter tests", () => {
-  it("visit site and confirm sidebar is visible", () => {
+  beforeEach(() => {
     cy.visit("/search");
+  });
+
+  it("visit site and confirm sidebar is visible", () => {
     cy.location("pathname").should("eq", "/search");
     cy.get(".filter-wrapper").should("be.visible");
   });
 
   it("test genre filter", () => {
-    cy.visit("/search");
     cy.get(".filter-header").contains("Genres").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[id="Action"]`).click();
-    cy.get(`input[id="Action"]`).should("be.checked");
+    cy.get("p").contains("Horror").parent().children("input").click().should("be.checked");
+    cy.get(`a[href="/movies/539"]`).should("exist");
   });
 
   it("test release year filter", () => {
-    cy.visit("/search");
     cy.get(".filter-header").contains("Release year").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[name=releaseYearMin]`).type("2000");
-    cy.get(`input[name=releaseYearMax]`).type("2020");
-    cy.get(`input[name=releaseYearMin]`).should("have.value", "2000");
-    cy.get(`input[name=releaseYearMax]`).should("have.value", "2020");
+    cy.get(`input[name=releaseYearMin]`).type("1992");
+    cy.get(`input[name=releaseYearMax]`).type("1994");
+    cy.get(`input[name=releaseYearMin]`).should("have.value", "1992");
+    cy.get(`input[name=releaseYearMax]`).should("have.value", "1994");
+    cy.get(`a[href="/movies/424"]`).should("exist");
   });
 
   it("test countries filter", () => {
-    cy.visit("/search");
     cy.get(".filter-header").contains("Countries").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[name="Andorra"]`).click();
-    cy.get(`input[name="Andorra"]`).should("be.checked");
+    cy.get("p").contains("Ecuador").parent().children("input").click().should("be.checked");
+    cy.get(`a[href="/movies/644479"]`).should("exist");
   });
 
   it("test languages filter", () => {
-    cy.visit("/search");
     cy.get(".filter-header").contains("Languages").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[name="Afar"]`).click();
-    cy.get(`input[name="Afar"]`).should("be.checked");
+    cy.get("p").contains("Turkish").parent().children("input").click().should("be.checked");
+    cy.get(`a[href="/movies/637920"]`).should("exist");
   });
 
   it("test budget filter", () => {
-    cy.visit("/search");
     cy.get(".filter-header").contains("Budget").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[name=budgetMin]`).type("200");
-    cy.get(`input[name=budgetMax]`).type("2000");
-    cy.get(`input[name=budgetMin]`).should("have.value", "200");
-    cy.get(`input[name=budgetMax]`).should("have.value", "2000");
+    cy.get(`input[name=budgetMin]`).type("500000");
+    cy.get(`input[name=budgetMax]`).type("1000000");
+    cy.get(`input[name=budgetMin]`).should("have.value", "500000");
+    cy.get(`input[name=budgetMax]`).should("have.value", "1000000");
+    cy.get(`a[href="/movies/539"]`).should("exist");
   });
 
   it("test movie length filter", () => {
-    cy.visit("/search");
     cy.get(".filter-header").contains("Movie length").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[name=movieLengthMin]`).type("200");
-    cy.get(`input[name=movieLengthMin]`).should("have.value", "200");
-    cy.get(`input[name=movieLengthMax]`).type("200");
-    cy.get(`input[name=movieLengthMax]`).should("have.value", "200");
+    cy.get(`input[name=movieLengthMin]`).type("120");
+    cy.get(`input[name=movieLengthMin]`).should("have.value", "120");
+    cy.get(`input[name=movieLengthMax]`).type("121");
+    cy.get(`input[name=movieLengthMax]`).should("have.value", "121");
+    cy.get(`a[href="/movies/670"]`).should("exist");
   });
 
   it("test rating filter", () => {
-    cy.visit("/search");
     cy.get(".filter-header").contains("Rating").click();
     cy.get(".filter-content").should("be.visible");
-    cy.get(`input[name="rating1"]`).click();
-    cy.get(`input[name="rating1"]`).should("be.checked");
+    cy.get(`input[name=ratingMin]`).type("8.2");
+    cy.get(`input[name=ratingMin]`).should("have.value", "8.2");
+    cy.get(`input[name=ratingMax]`).type("8.2");
+    cy.get(`input[name=ratingMax]`).should("have.value", "8.2");
+    cy.get(`a[href="/movies/315162"]`).should("exist");
+  });
+
+  it("test searchbar", () => {
+    cy.get(".admin-searchbar").type("Lord of the rings");
+    cy.get("img").should("have.length.at.least", 3);
   });
 });

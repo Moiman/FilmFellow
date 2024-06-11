@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../abstracts/" as abstracts;
 
 .profile-info {
@@ -88,6 +89,19 @@
 
       .button-friend:hover {
         background-color: rgb(105, 105, 105);
+        transform: scale(105%);
+      }
+
+      .button-friend-mutual {
+        background-color: map-get(map-get(abstracts.$highlight-colors, "pink"), "default");
+        padding: 0;
+        margin: 2px;
+        aspect-ratio: 1;
+        border-radius: 50px;
+      }
+
+      .button-friend-mutual:hover {
+        background-color: map-get(map-get(abstracts.$highlight-colors, "pink"), "hover");
         transform: scale(105%);
       }
     }

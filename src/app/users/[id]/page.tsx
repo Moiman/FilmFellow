@@ -71,7 +71,10 @@ export default async function userProfile({ params }: { params: { id: string } }
     <main className="sidebar-main">
       {/* Sidebar with basic user data and friend list */}
       <Sidebar iconPosition="right">
-        <ProfileInfo userId={user.id} />
+        <ProfileInfo
+          userId={user.id}
+          friends={user.friends}
+        />
       </Sidebar>
 
       <div className="profile-section-wrapper">

@@ -3,7 +3,7 @@ fetch("http://0.0.0.0:5000/recommender/movie/existing", {
   headers: {
     "Content-Type": "application/json",
   },
-  body: JSON.stringify({ TMDB_id: 121 }),
+  body: JSON.stringify({ TMDB_id: 671 }),
 })
   .then(response => response.json())
   .then(result => {

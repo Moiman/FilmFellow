@@ -7,28 +7,38 @@ type MovieListItem = {
   poster_path: string | null;
 };
 
-export const MovieList = ({ movies }: { movies: MovieListItem[] }) => {
+export const MovieList = ({
+  movies,
+  emptyText = "No movies available",
+}: {
+  movies: MovieListItem[];
+  emptyText?: string;
+}) => {
   return (
     <div className="movie-list">
-      {movies.map(movie => (
-        <Link
-          key={movie.id}
-          href={"/movies/" + movie.id}
-          aria-label={movie.title}
-        >
-          {movie.poster_path ? (
-            <Image
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              width={500}
-              height={500}
-              alt={movie.title}
-              priority
-            />
-          ) : (
-            <div className="poster-path-placeholder">{movie.title}</div>
-          )}
-        </Link>
-      ))}
+      {movies.length > 0 ? (
+        movies.map(movie => (
+          <Link
+            key={movie.id}
+            href={"/movies/" + movie.id}
+            aria-label={movie.title}
+          >
+            {movie.poster_path ? (
+              <Image
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                width={500}
+                height={500}
+                alt={movie.title}
+                priority
+              />
+            ) : (
+             <div className="poster-path-placeholder">{movie.title}</div>
+            )}
+          </Link>
+        ))
+      ) : (
+        <p>{emptyText}</p>
+      )}
     </div>
   );
 };

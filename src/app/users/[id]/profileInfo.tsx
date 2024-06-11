@@ -7,7 +7,7 @@ import { getDescriptionAndSocialMedia } from "@/services/userService";
 import { ProfileButtons } from "./profileButtons";
 import { Friend, FriendListButton } from "@/components/friendListButton";
 
-export const ProfileInfo = async ({ userId, friends }: { userId: number, friends: Friend[] }) => {
+export const ProfileInfo = async ({ userId, friends }: { userId: number; friends: Friend[] }) => {
   const session = await getServerSession(authOptions);
   const user = await getDescriptionAndSocialMedia(userId);
 

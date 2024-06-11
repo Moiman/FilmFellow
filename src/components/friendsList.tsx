@@ -3,7 +3,7 @@ import { User, UserCheck } from "react-feather";
 import type { Friend } from "./friendListButton";
 
 interface friendListProps {
-  friends: Friend[] | undefined;
+  friends: Friend[];
 }
 
 export const FriendsList = ({ friends }: friendListProps) => {

@@ -21,7 +21,7 @@ export default async function userFriends({ params }: { params: { id: string } }
           </h2>
         }
       >
-        {user.friends.length !== 0 ? <FriendsList friends={user?.friends} /> : <p>No friends yet</p>}
+        {user.friends.length !== 0 ? <FriendsList friends={user.friends} /> : <p>No friends yet</p>}
       </Section>
     </main>
   );

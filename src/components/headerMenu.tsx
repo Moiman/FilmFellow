@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import type { Session } from "next-auth";
 import { LogOut, Menu, Tool, User } from "react-feather";
 
 import { Dropdown } from "./dropdown";
 import { Links } from "./headerLinks";
-import type { Session } from "next-auth";
 
 interface Props {
   session: Session | null;

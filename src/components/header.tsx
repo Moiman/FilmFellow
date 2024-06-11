@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
 import { HeaderSearch } from "./headerSearch";
 import { HeaderLinks } from "./headerLinks";
 import { HeaderMenu } from "./headerMenu";
-import { authOptions } from "@/authOptions";
 
 export const Header = async () => {
   const session = await getServerSession(authOptions);

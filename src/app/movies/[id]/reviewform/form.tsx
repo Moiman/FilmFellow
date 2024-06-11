@@ -30,12 +30,6 @@ export default function ReviewForm({ movie }: Props) {
       <h2 className="yellow-name-header">
         <Link href={`/movies/${movie.id}`}>{movie.title}</Link> review
       </h2>
-      <button
-        type="submit"
-        form="review-form"
-      >
-        Send review
-      </button>
     </div>
   );
 
@@ -64,7 +58,7 @@ export default function ReviewForm({ movie }: Props) {
     <main className="form-main">
       <div className="section-wrapper">
         <Section header={reviewHeader}>
-          <div style={{ display: "grid", gap: "15px" }}>
+          <div style={{ display: "grid", gap: "10px" }}>
             <StarRating
               rating={rating}
               setRating={setUserRating}
@@ -104,6 +98,13 @@ export default function ReviewForm({ movie }: Props) {
                 placeholder="Share your thoughts! Was the storyline captivating? How was the acting? Did the special effects blow you away? Would you recommend it to a friend?"
                 onChange={e => setContentInput(e.target.value)}
               />
+              <button
+                type="submit"
+                form="review-form"
+                className="form-submit"
+              >
+                Send review
+              </button>
             </form>
           </div>
         </Section>

@@ -242,7 +242,7 @@ describe("Movie review tests", () => {
     cy.get(".review-grid-content").contains("Making a test review to a movie");
   });
 
-  it("Click the moviename where user has written review should redirect to movie page", () => {
+  it("Click the movie name where user has written review should redirect to movie page", () => {
     cy.login(user.email, user.password);
     cy.visit(`/users/${userId}`);
     cy.get(".review-header-item").find("a").contains("The Shawshank Redemption").click();

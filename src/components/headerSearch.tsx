@@ -94,12 +94,16 @@ export const HeaderSearch = () => {
               onClick={resetSearch}
               aria-label={movie.title}
             >
-              <Image
-                alt={movie.title}
-                src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
-                width={35}
-                height={50}
-              />
+              {movie.poster_path ? (
+                <Image
+                  alt={movie.title}
+                  src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
+                  width={35}
+                  height={50}
+                />
+              ) : (
+                <div style={{ width: 35, height: 50, background: "grey" }} />
+              )}
               <div className="result-title">
                 <span>{movie.title}</span> ({movie.release_date?.getFullYear()})
               </div>

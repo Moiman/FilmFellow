@@ -12,7 +12,8 @@ export const AdminPanelReports = ({ reports }: { reports: Props }) => {
   const filteredResults = searchInput
     ? allReports.filter(
         report =>
-          report.creator?.username.startsWith(searchInput) || report.targetUser?.username.startsWith(searchInput),
+          report.creator?.username.toLowerCase().startsWith(searchInput) ||
+          report.targetUser?.username.toLowerCase().startsWith(searchInput),
       )
     : allReports;
   const sectionHeader = (
@@ -34,7 +35,7 @@ export const AdminPanelReports = ({ reports }: { reports: Props }) => {
           type="text"
           placeholder="Search user..."
           value={searchInput}
-          onChange={e => setSearchInput(e.target.value)}
+          onChange={e => setSearchInput(e.target.value.toLowerCase())}
         />
       </div>
       <Section header={sectionHeader}>

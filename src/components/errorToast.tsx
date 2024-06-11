@@ -15,7 +15,7 @@ export const errorToast = (error: unknown) => {
   } else {
     toast(
       <p>
-        <span className="highlight-text">Unkown error</span> {}
+        <span className="highlight-text">Unknown error</span> {}
       </p>,
       {
         icon: <AlertTriangle className={"pink-icon-filled"} />,

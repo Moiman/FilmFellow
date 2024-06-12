@@ -65,18 +65,18 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
         print("None of the movies are in the MovieLens data!")
         return []
 
-    MovieLens_to_TMDB = np.load(
-        "Recommender_files/user/MovieLens_to_TMDB.npy",
-        allow_pickle=True).item()
-    TMDB_to_MovieLens = np.load(
-        "Recommender_files/user/TMDB_to_MovieLens.npy",
-        allow_pickle=True).item()
-    movie_id_to_index_con = np.load(
-        "Recommender_files/user/content_based_filtering/movie_id_to_index.npy",
-        allow_pickle=True).item()
-    movie_index_to_id_con = np.load(
-        "Recommender_files/user/content_based_filtering/movie_index_to_id.npy",
-        allow_pickle=True).item()
+    # MovieLens_to_TMDB = np.load(
+    #     "Recommender_files/user/MovieLens_to_TMDB.npy",
+    #     allow_pickle=True).item()
+    # TMDB_to_MovieLens = np.load(
+    #     "Recommender_files/user/TMDB_to_MovieLens.npy",
+    #     allow_pickle=True).item()
+    # movie_id_to_index_con = np.load(
+    #     "Recommender_files/user/content_based_filtering/movie_id_to_index.npy",
+    #     allow_pickle=True).item()
+    # movie_index_to_id_con = np.load(
+    #     "Recommender_files/user/content_based_filtering/movie_index_to_id.npy",
+    #     allow_pickle=True).item()
     movie_id_to_index_coll = np.load(
         "Recommender_files/user/collaborative_filtering/movie_mapper.npy",
         allow_pickle=True).item()
@@ -86,12 +86,12 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     matrix = scipy.sparse.load_npz(
         "Recommender_files/user/collaborative_filtering/sparse_matrix.npz")
 
-    num_movies_in_cosine_sim = 1841
-    cosine_sim = np.memmap(
-       "Recommender_files/user/content_based_filtering/cosine_sim_memmap.npy",
-       dtype="float64",
-       mode='r',
-       shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))
+    # num_movies_in_cosine_sim = 1841
+    # cosine_sim = np.memmap(
+    #    "Recommender_files/user/content_based_filtering/cosine_sim_memmap.npy",
+    #    dtype="float64",
+    #    mode='r',
+    #    shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))
 
     favourites = restrict_favourites(favourites)
 
@@ -120,7 +120,7 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     #     if len(content_based) >= 1:
     #         recommendations.extend(content_based)
 
-    del cosine_sim
+    # del cosine_sim
 
     recommendations.extend(get_recommendations_for_all_ratings(ratings,
                                                            favourites,

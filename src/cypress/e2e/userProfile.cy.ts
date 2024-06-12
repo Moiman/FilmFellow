@@ -3,14 +3,23 @@ describe("User profile tests", () => {
   const password = "testingPassword123!";
   let userId = 0;
 
+  const friendEmail = "profileUpdateTest2@test.test";
+  const friendPassword = "testingPassword123!";
+  let friendId = 0;
+
   before(() => {
     cy.register(email, password);
     cy.login(email, password);
     cy.request({ url: "/api/auth/session" }).then(res => (userId = res.body.user.id));
+
+    cy.register(friendEmail, friendPassword);
+    cy.login(friendEmail, friendPassword);
+    cy.request({ url: "/api/auth/session" }).then(res => (friendId = res.body.user.id));
   });
 
   after(() => {
     cy.deleteUser(email, password);
+    cy.deleteUser(friendEmail, friendPassword);
   });
 
   it("Visit profile page", () => {
@@ -110,7 +119,7 @@ describe("User profile tests", () => {
   });
 
   it("Add friend", () => {
-    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.login(friendEmail, friendPassword);
     cy.visit("/users/" + userId);
 
     cy.get(".profile-info").contains("button", "Add to friends").click();
@@ -118,11 +127,8 @@ describe("User profile tests", () => {
   });
 
   it("Added friend should be seen on own profile", () => {
-    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
-    cy.visit("/admin/users");
-
-    cy.get("*[aria-label='Profile']").click({ force: true });
-    cy.location("pathname").should("eq", `/users/1`);
+    cy.login(friendEmail, friendPassword);
+    cy.visit("/users/" + friendId);
     cy.get(".profile-friend-list")
       .find(".friends-wrapper")
       .should("be.visible")
@@ -132,7 +138,7 @@ describe("User profile tests", () => {
 
   it("Mutual friendship should show different classname on friend", () => {
     cy.login(email, password);
-    cy.visit("/users/1");
+    cy.visit("/users/" + friendId);
 
     cy.get(".profile-info").contains("button", "Add to friends").click();
     cy.get(".profile-info").should("contain", "Remove friend");
@@ -144,7 +150,7 @@ describe("User profile tests", () => {
   });
 
   it("Remove friend", () => {
-    cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
+    cy.login(friendEmail, friendPassword);
     cy.visit("/users/" + userId);
 
     cy.get(".profile-info").contains("button", "Remove friend").click();
@@ -159,7 +165,7 @@ describe("User profile tests", () => {
     cy.get(".friends-title").find("a").contains("See all").click();
     cy.location("pathname").should("eq", `/users/${userId}/friends`);
     cy.get(".section-header").find("h2").should("exist").find("a").should("have.attr", "href", `/users/${userId}`);
-    cy.get(".person-list").children().find("p").contains("admin");
+    cy.get(".person-list").children().find("p").contains(friendEmail);
   });
 
   it("Click on friend should navigate to friend profile", () => {
@@ -170,6 +176,6 @@ describe("User profile tests", () => {
     cy.location("pathname").should("eq", `/users/${userId}/friends`);
     cy.get(".section-header").find("h2").should("exist").find("a").should("have.attr", "href", `/users/${userId}`);
     cy.get(".person-list").children().first().click();
-    cy.location("pathname").should("eq", `/users/1`);
+    cy.location("pathname").should("eq", `/users/${friendId}`);
   });
 });

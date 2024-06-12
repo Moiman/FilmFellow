@@ -7,16 +7,19 @@ export const getUserRecommendations = async (selectedGenre: string | undefined, 
   for (const rating of ratingsFavourites.ratings) {
     ratingsObject[rating.movieId] = rating.rating;
   }
-  const response = await fetch("http://recommender:5000/recommender/user", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `${process.env.RECOMMENDATOR_URL}:${process.env.RECOMMENDER_PORT}/recommender/movie/existing`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ratings: ratingsObject,
+        favourites: ratingsFavourites.favorites,
+      }),
     },
-    body: JSON.stringify({
-      ratings: ratingsObject,
-      favourites: ratingsFavourites.favorites,
-    }),
-  });
+  );
   const data = await response.json();
   const recommArr = await getMovieByLimitTypeGenre(numRecos, "", selectedGenre, data);
   return recommArr;

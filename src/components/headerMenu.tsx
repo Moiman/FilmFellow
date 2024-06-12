@@ -112,43 +112,41 @@ export const HeaderMenu = ({ session }: { session: Session | null }) => {
 
       {/* For w > 1024 sub-nav */}
       <nav className="sub-nav-wide highlight-nav">
-        <>
-          {session && (
-            <>
+        {session && (
+          <>
+            <Link
+              href={`/search/`}
+              className={currentPath.includes("/search") ? "active-icon" : ""}
+            >
+              <Search style={{ strokeWidth: 1.5 }} />
+            </Link>
+
+            <Link
+              href={`/users/${session?.user.id}`}
+              className={currentPath.includes(`/users/${session?.user.id}`) ? "active-icon" : ""}
+            >
+              <User style={{ strokeWidth: 1.5 }} />
+            </Link>
+
+            {session.user.role === "admin" && (
               <Link
-                href={`/search/`}
-                className={currentPath.includes("/search") ? "active-icon" : ""}
+                href="/admin/users"
+                className={currentPath.includes("/admin") ? "active-icon" : ""}
               >
-                <Search style={{ strokeWidth: 1.5 }} />
+                <Tool style={{ strokeWidth: 1.5 }} />
               </Link>
+            )}
 
-              <Link
-                href={`/users/${session?.user.id}`}
-                className={currentPath.includes(`/users/${session?.user.id}`) ? "active-icon" : ""}
-              >
-                <User style={{ strokeWidth: 1.5 }} />
-              </Link>
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="button-transparent"
+            >
+              <LogOut style={{ strokeWidth: 1.5 }} />
+            </button>
+          </>
+        )}
 
-              {session.user.role === "admin" && (
-                <Link
-                  href="/admin/users"
-                  className={currentPath.includes("/admin") ? "active-icon" : ""}
-                >
-                  <Tool style={{ strokeWidth: 1.5 }} />
-                </Link>
-              )}
-
-              <button
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="button-transparent"
-              >
-                <LogOut style={{ strokeWidth: 1.5 }} />
-              </button>
-            </>
-          )}
-
-          {!session && noSessionLinks}
-        </>
+        {!session && noSessionLinks}
       </nav>
     </>
   );

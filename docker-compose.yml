@@ -6,6 +6,10 @@ services:
     ports:
       - $PG_PORT:$PG_PORT
     env_file: .env
+    environment:
+      POSTGRES_USER: $PG_USERNAME
+      POSTGRES_PASSWORD: $PG_PASSWORD
+      POSTGRES_DB: $PG_DATABASE
     volumes:
       - postgresData:/var/lib/postgresql/data
     healthcheck:

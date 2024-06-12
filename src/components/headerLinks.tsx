@@ -10,11 +10,7 @@ export const links = [
   { text: "Best Rated", href: "/bestrated" },
 ];
 
-interface Props {
-  session: Session | null;
-}
-
-export const HeaderLinks = ({ session }: Props) => {
+export const HeaderLinks = ({ session }: { session: Session | null }) => {
   const currentPath = usePathname();
 
   return (

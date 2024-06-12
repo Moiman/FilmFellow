@@ -5,7 +5,6 @@ import { MovieList } from "@/components/movieList";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import GenreSelector from "@/components/genreSelector";
-import { getUserRecommendations } from "@/recommender/getUserRecommendations";
 import { isRecommendations } from "@/recommender/isRecommendations";
 import RecommendationsList from "@/components/recommendationsList";
 

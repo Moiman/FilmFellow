@@ -9,11 +9,7 @@ import { LogOut, Menu, Search, Tool, User } from "react-feather";
 import { Dropdown } from "./dropdown";
 import { links } from "./headerLinks";
 
-interface Props {
-  session: Session | null;
-}
-
-export const HeaderMenu = ({ session }: Props) => {
+export const HeaderMenu = ({ session }: { session: Session | null }) => {
   const currentPath = usePathname();
 
   const subNavLinks = [

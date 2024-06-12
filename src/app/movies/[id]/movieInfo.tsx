@@ -94,7 +94,12 @@ export const MovieInfo = ({ movie }: { movie: Movie }) => {
 
         <div className="movie-info">
           <div className="movie-rating">
-            <div className="current-rating">{movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}</div>
+            <div
+              className="current-rating"
+              title="Average rating"
+            >
+              {movie.voteAverage ? Math.round(movie.voteAverage * 10) / 10 : null}
+            </div>
             {session && (
               <StarRating
                 rating={rating}

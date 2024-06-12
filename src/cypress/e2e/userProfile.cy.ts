@@ -119,15 +119,14 @@ describe("User profile tests", () => {
 
   it("Added friend should be seen on own profile", () => {
     cy.login(Cypress.env("adminEmail"), Cypress.env("adminPassword"));
-    cy.visit("/");
+    cy.visit("/admin/users");
+
     cy.get("*[aria-label='Profile']").click({ force: true });
     cy.location("pathname").should("eq", `/users/1`);
     cy.get(".profile-friend-list")
       .find(".friends-wrapper")
       .should("be.visible")
-      .children()
-      .find("a")
-      .last()
+      .children(`a[href="/users/${userId}"]`)
       .should("have.attr", "href", `/users/${userId}`);
   });
 

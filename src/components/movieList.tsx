@@ -32,7 +32,7 @@ export const MovieList = ({
                 priority
               />
             ) : (
-             <div className="poster-path-placeholder">{movie.title}</div>
+              <div className="poster-path-placeholder">{movie.title}</div>
             )}
           </Link>
         ))

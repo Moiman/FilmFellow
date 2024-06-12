@@ -16,7 +16,7 @@ interface Props {
 export const HeaderMenu = ({ session }: Props) => {
   const currentPath = usePathname();
 
-  const SubNavLinks = [
+  const subNavLinks = [
     {
       icon: <Search style={{ strokeWidth: 1.5 }} />,
       text: "Search",
@@ -35,32 +35,53 @@ export const HeaderMenu = ({ session }: Props) => {
     },
   ];
 
+  const menuButton = (
+    <button
+      className="button-transparent"
+      aria-label="Menu"
+    >
+      <Menu
+        data-cy="menu-icon"
+        style={{ strokeWidth: 1.5 }}
+      />
+    </button>
+  );
+
+  const noSessionLinks = (
+    <>
+      <Link
+        key="login"
+        href="/login"
+        className="dropdown-item"
+      >
+        Login
+      </Link>
+      <Link
+        href="/register"
+        className="dropdown-item"
+      >
+        Register
+      </Link>
+    </>
+  );
+
   return (
     <>
+      {/* For w < 1024 sub-nav */}
       <nav className="sub-nav-narrow">
         <Dropdown
           maxHeight={0}
           width={150}
           zIndex={20}
-          button={
-            <button
-              className="button-transparent"
-              aria-label="Menu"
-            >
-              <Menu
-                data-cy="menu-icon"
-                style={{ strokeWidth: 1.5 }}
-              />
-            </button>
-          }
+          button={menuButton}
           buttonAlign="right"
         >
           {session && (
             <Link
-              href={"/recommendations"}
+              href="/recommendations"
               className="dropdown-item"
             >
-              {"Recommendations"}
+              Recommendations
             </Link>
           )}
           {links.map(link => (
@@ -72,101 +93,43 @@ export const HeaderMenu = ({ session }: Props) => {
               {link.text}
             </Link>
           ))}
-          {session ? (
-            session.user.role === "admin" ? (
-              SubNavLinks.map(link => (
-                <Link
-                  onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
-                  key={link.href}
-                  href={link.href}
-                  className="dropdown-item"
-                >
-                  {link.text}
-                </Link>
-              ))
-            ) : (
-              SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
-                <Link
-                  onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
-                  key={link.href}
-                  href={link.href}
-                  className="dropdown-item"
-                >
-                  {link.text}
-                </Link>
-              ))
-            )
-          ) : (
-            <nav>
+          {session &&
+            subNavLinks.map(link => (
               <Link
-                key="login"
-                href="/login"
+                onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
+                key={link.href}
+                href={link.href}
                 className="dropdown-item"
               >
-                Login
+                {link.text}
               </Link>
-              <Link
-                href="/register"
-                className="dropdown-item"
-              >
-                Register
-              </Link>
-            </nav>
-          )}
+            ))}
+          {!session && <nav>{noSessionLinks}</nav>}
         </Dropdown>
       </nav>
 
       {/* For w > 1024 sub-nav */}
       <nav className="sub-nav-wide highlight-nav">
         <>
-          {session ? (
-            session.user.role === "admin" ? (
-              <>
-                {SubNavLinks.map(link => (
-                  <Link
-                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
-                    key={link.href}
-                    href={link.href}
-                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
-                    aria-label={link.text}
-                  >
-                    {link.icon}
-                  </Link>
-                ))}
-              </>
-            ) : (
-              <>
-                {SubNavLinks.filter(navlinks => navlinks.href !== "/admin/users").map(link => (
-                  <Link
-                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
-                    key={link.href}
-                    href={link.href}
-                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
-                    aria-label={link.text}
-                  >
-                    {link.icon}
-                  </Link>
-                ))}
-              </>
-            )
-          ) : (
+          {session && (
             <>
-              <Link
-                href="/login"
-                className={currentPath === "/login" ? "active-link" : ""}
-                style={{ lineHeight: "1.4" }}
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className={currentPath === "/register" ? "active-link" : ""}
-                style={{ lineHeight: "1.4" }}
-              >
-                Register
-              </Link>
+              {subNavLinks.map(link =>
+                session.user.role !== "admin" && link.text === "Admin" ? null : (
+                  <Link
+                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
+                    key={link.href}
+                    href={link.href}
+                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
+                    aria-label={link.text}
+                  >
+                    {link.icon}
+                  </Link>
+                ),
+              )}
             </>
           )}
+
+          {!session && noSessionLinks}
         </>
       </nav>
     </>

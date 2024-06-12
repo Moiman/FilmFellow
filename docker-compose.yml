@@ -18,9 +18,14 @@ services:
       retries: 10
 
   filmfellow:
-    env_file: .env
     build: ./src
     restart: always
+    environment:
+      NEXTAUTH_URL: $NEXTAUTH_URL
+      NEXTAUTH_SECRET: $NEXTAUTH_SECRET
+      RECOMMENDER_PORT: $RECOMMENDER_PORT
+      RECOMMENDER_URL: $RECOMMENDER_URL_DOCKER
+      DATABASE_URL: $DATABASE_URL_DOCKER
     ports:
       - $FRONTEND_PORT:$FRONTEND_PORT
 

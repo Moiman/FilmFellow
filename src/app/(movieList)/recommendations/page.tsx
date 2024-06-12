@@ -1,10 +1,10 @@
-import { MovieList } from "@/components/movieList";
-import { Section } from "@/components/section";
-import GenreSelector from "@/components/genreSelector";
+import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
-import { notFound } from "next/navigation";
-import { getUserRecommendations } from "@/recommender/getUserRecommendations";
+
+import { Section } from "@/components/section";
+import GenreSelector from "@/components/genreSelector";
+import RecommendationsList from "@/components/recommendationsList";
 
 export default async function New({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
@@ -14,16 +14,14 @@ export default async function New({ searchParams }: { searchParams?: { genre: st
     notFound();
   }
 
-  const recommendations = await getUserRecommendations(selectedGenre, 36);
-
   return (
     <main>
       <GenreSelector selectedGenre={selectedGenre} />
       <div className="section-wrapper">
         <Section header={"Recommendations"}>
-          <MovieList
-            movies={recommendations}
-            emptyText="No recommendations yet"
+          <RecommendationsList
+            limit={36}
+            selectedGenre={selectedGenre}
           />
         </Section>
       </div>

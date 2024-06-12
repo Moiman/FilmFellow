@@ -7,6 +7,7 @@ import { authOptions } from "@/authOptions";
 import GenreSelector from "@/components/genreSelector";
 import { getUserRecommendations } from "@/recommender/getUserRecommendations";
 import { isRecommendations } from "@/recommender/isRecommendations";
+import RecommendationsList from "@/components/recommendationsList";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
@@ -30,10 +31,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
               </div>
             }
           >
-            <MovieList
-              movies={await getUserRecommendations(selectedGenre, 6)}
-              emptyText="No recommendations yet"
-            />
+            <RecommendationsList />
           </Section>
         )}
         <Section

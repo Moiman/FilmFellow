@@ -8,7 +8,7 @@ import { PersonList } from "./personList";
 import { getMovie } from "./getMovie";
 import { ReviewList } from "./reviewList";
 import { MovieList } from "@/components/movieList";
-import { getMovieRecommendations } from "@/recommender/getMovieRecommendations";
+import { getMovieRecommendations } from "@/services/getMovieRecommendations";
 import RecommendationsList from "@/components/recommendationsList";
 
 export default async function Movie({ params }: { params: { id: string } }) {

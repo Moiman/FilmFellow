@@ -18,19 +18,17 @@ services:
       retries: 10
 
   filmfellow:
+    env_file: .env
     build: ./src
     restart: always
-    environment:
-      NEXTAUTH_SECRET: generatesecretkey
-      DATABASE_URL: $DATABASE_URL
     ports:
       - $FRONTEND_PORT:$FRONTEND_PORT
 
   recommender:
-    build: ./src/recommender
+    build: ./recommender
     restart: always
     ports:
-      - 5000:5000
+      - $RECOMMENDER_PORT:$RECOMMENDER_PORT
 
 volumes:
   postgresData:

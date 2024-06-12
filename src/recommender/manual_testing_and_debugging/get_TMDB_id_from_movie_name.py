@@ -31,3 +31,5 @@ def get_TMDB_id_from_movie_name(
     movie_match = movie_finder(movie_name, movie_titles)
     
     return movie_match, movie_title_to_TMDB_id[movie_match]
+
+print(get_TMDB_id_from_movie_name("land before time"))

@@ -3,7 +3,10 @@ fetch("http://localhost:5000/recommender/user", {
   headers: {
     "Content-Type": "application/json",
   },
-  body: JSON.stringify({ ratings: { 118: 4.0, 564: 2.5, 49521: 5.0, 12159: 3.0 }, favourites: [121, 122, 564] }),
+  body: JSON.stringify({
+    ratings: {},
+    favourites: [3597],
+  }),
 })
   .then(response => response.json())
   .then(result => {

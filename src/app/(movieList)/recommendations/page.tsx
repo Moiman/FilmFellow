@@ -14,7 +14,7 @@ export default async function New({ searchParams }: { searchParams?: { genre: st
     notFound();
   }
 
-  const recommendations = await getUserRecommendations(selectedGenre, 32);
+  const recommendations = await getUserRecommendations(selectedGenre, 36);
 
   return (
     <main>

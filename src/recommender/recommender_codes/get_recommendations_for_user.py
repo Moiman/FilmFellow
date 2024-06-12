@@ -99,26 +99,26 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
 
     recommendations = []
 
-    for movie in top_rated_movies:
-        collaborative = collaborative_filtering_user(movie,
-                                                10,
-                                                MovieLens_to_TMDB,
-                                                TMDB_to_MovieLens,
-                                                movie_id_to_index_coll,
-                                                movie_index_to_id_coll,
-                                                matrix)
-        content_based = content_based_filtering_user(movie,
-                                                10,
-                                                MovieLens_to_TMDB,
-                                                TMDB_to_MovieLens,
-                                                movie_id_to_index_con,
-                                                movie_index_to_id_con,
-                                                cosine_sim)
-        if len(collaborative) >= 1:
-            recommendations.extend(collaborative)
+    # for movie in top_rated_movies:
+    #     collaborative = collaborative_filtering_user(movie,
+    #                                             3,
+    #                                             MovieLens_to_TMDB,
+    #                                             TMDB_to_MovieLens,
+    #                                             movie_id_to_index_coll,
+    #                                             movie_index_to_id_coll,
+    #                                             matrix)
+    #     content_based = content_based_filtering_user(movie,
+    #                                             3,
+    #                                             MovieLens_to_TMDB,
+    #                                             TMDB_to_MovieLens,
+    #                                             movie_id_to_index_con,
+    #                                             movie_index_to_id_con,
+    #                                             cosine_sim)
+    #     if len(collaborative) >= 1:
+    #         recommendations.extend(collaborative)
 
-        if len(content_based) >= 1:
-            recommendations.extend(content_based)
+    #     if len(content_based) >= 1:
+    #         recommendations.extend(content_based)
 
     del cosine_sim
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 
 export const links = [
   { text: "New", href: "/new" },

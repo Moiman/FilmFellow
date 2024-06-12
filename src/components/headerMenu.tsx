@@ -12,25 +12,6 @@ import { links } from "./headerLinks";
 export const HeaderMenu = ({ session }: { session: Session | null }) => {
   const currentPath = usePathname();
 
-  const subNavLinks = [
-    {
-      icon: <Search style={{ strokeWidth: 1.5 }} />,
-      text: "Search",
-      href: "/search",
-    },
-    { icon: <User style={{ strokeWidth: 1.5 }} />, text: "Profile", href: `/users/${session?.user.id}` },
-    {
-      icon: <Tool style={{ strokeWidth: 1.5 }} />,
-      text: "Admin",
-      href: "/admin/users",
-    },
-    {
-      icon: <LogOut style={{ strokeWidth: 1.5 }} />,
-      text: "Logout",
-      href: "/",
-    },
-  ];
-
   const menuButton = (
     <button
       className="button-transparent"
@@ -80,6 +61,7 @@ export const HeaderMenu = ({ session }: { session: Session | null }) => {
               Recommendations
             </Link>
           )}
+
           {links.map(link => (
             <Link
               key={link.href}
@@ -89,17 +71,41 @@ export const HeaderMenu = ({ session }: { session: Session | null }) => {
               {link.text}
             </Link>
           ))}
-          {session &&
-            subNavLinks.map(link => (
+
+          <Link
+            href="/search"
+            className="dropdown-item"
+          >
+            Search
+          </Link>
+
+          {session && (
+            <>
               <Link
-                onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
-                key={link.href}
-                href={link.href}
+                href={`/users/${session?.user.id}`}
                 className="dropdown-item"
               >
-                {link.text}
+                Profile
               </Link>
-            ))}
+
+              {session.user.role === "admin" && (
+                <Link
+                  href="/admin"
+                  className="dropdown-item"
+                >
+                  Admin
+                </Link>
+              )}
+
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="dropdown-item"
+              >
+                Logout
+              </button>
+            </>
+          )}
+
           {!session && <nav>{noSessionLinks}</nav>}
         </Dropdown>
       </nav>
@@ -109,19 +115,35 @@ export const HeaderMenu = ({ session }: { session: Session | null }) => {
         <>
           {session && (
             <>
-              {subNavLinks.map(link =>
-                session.user.role !== "admin" && link.text === "Admin" ? null : (
-                  <Link
-                    onClick={link.text === "Logout" ? () => signOut({ callbackUrl: "/" }) : undefined}
-                    key={link.href}
-                    href={link.href}
-                    className={currentPath === link.href && link.href !== "/" ? "active-icon" : ""}
-                    aria-label={link.text}
-                  >
-                    {link.icon}
-                  </Link>
-                ),
+              <Link
+                href={`/search/`}
+                className={currentPath.includes("/search") ? "active-icon" : ""}
+              >
+                <Search style={{ strokeWidth: 1.5 }} />
+              </Link>
+
+              <Link
+                href={`/users/${session?.user.id}`}
+                className={currentPath.includes(`/users/${session?.user.id}`) ? "active-icon" : ""}
+              >
+                <User style={{ strokeWidth: 1.5 }} />
+              </Link>
+
+              {session.user.role === "admin" && (
+                <Link
+                  href="/admin/users"
+                  className={currentPath.includes("/admin") ? "active-icon" : ""}
+                >
+                  <Tool style={{ strokeWidth: 1.5 }} />
+                </Link>
               )}
+
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="button-transparent"
+              >
+                <LogOut style={{ strokeWidth: 1.5 }} />
+              </button>
             </>
           )}
 

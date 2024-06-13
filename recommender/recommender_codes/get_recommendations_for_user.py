@@ -1,11 +1,7 @@
 import numpy as np
 from typing import List, Dict
 from recommender_codes.user.restrict_favourites import restrict_favourites
-from recommender_codes.user.top_rated import top_rated
-from recommender_codes.user.collaborative_filtering_user \
-import collaborative_filtering_user
-from recommender_codes.user.content_based_filtering_user \
-import content_based_filtering_user
+from recommender_codes.user.restrict_ratings import restrict_ratings
 from recommender_codes.user.get_recommendations_for_all_ratings import \
     get_recommendations_for_all_ratings
 import scipy.sparse
@@ -27,12 +23,23 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
         Returns an empty list.
     """
     try:
-        ratings = dict(map(lambda item: (int(item[0]), item[1]), ratings.items()))
+        ratings = dict(map(lambda item: (int(item[0]), item[1]), 
+        ratings.items()))
     except ValueError:
         print("All the ids are not convertable to integers!")
         ratings = {}
 
     TMDB_ids = np.load("Recommender_files/user/TMDB_ids.npy")
+    TMDB_to_MovieLens = np.load("Recommender_files/user/TMDB_to_MovieLens.npy",
+        allow_pickle=True).item()
+    movie_id_to_index = np.load(
+        "Recommender_files/user/collaborative_filtering/movie_mapper.npy",
+        allow_pickle=True).item()
+    movie_index_to_id = np.load(
+    "Recommender_files/user/collaborative_filtering/movie_inverse_mapper.npy",
+        allow_pickle=True).item()
+    matrix = scipy.sparse.load_npz(
+        "Recommender_files/user/collaborative_filtering/sparse_matrix.npz")
 
     if len(ratings) + len(favourites) < 1:
         print("Give at least one movie as rating or a favourite!")
@@ -55,10 +62,14 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     for movie in rated_movies:
         if movie not in TMDB_ids:
             ratings.pop(movie)
+        elif TMDB_to_MovieLens[movie] not in movie_id_to_index.keys():
+            ratings.pop(movie)
 
     favourited_movies = list(favourites)
     for movie in favourited_movies:
         if movie not in TMDB_ids:
+            favourites.remove(movie)
+        elif TMDB_to_MovieLens[movie] not in movie_id_to_index.keys():
             favourites.remove(movie)
 
     if len(ratings) + len(favourites) < 1:
@@ -77,14 +88,6 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     # movie_index_to_id_con = np.load(
     #     "Recommender_files/user/content_based_filtering/movie_index_to_id.npy",
     #     allow_pickle=True).item()
-    movie_id_to_index_coll = np.load(
-        "Recommender_files/user/collaborative_filtering/movie_mapper.npy",
-        allow_pickle=True).item()
-    movie_index_to_id_coll = np.load(
-    "Recommender_files/user/collaborative_filtering/movie_inverse_mapper.npy",
-        allow_pickle=True).item()
-    matrix = scipy.sparse.load_npz(
-        "Recommender_files/user/collaborative_filtering/sparse_matrix.npz")
 
     # num_movies_in_cosine_sim = 1841
     # cosine_sim = np.memmap(
@@ -93,9 +96,10 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     #    mode='r',
     #    shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))
 
+    ratings = restrict_ratings(ratings)
     favourites = restrict_favourites(favourites)
 
-    top_rated_movies = top_rated(ratings, favourites)
+    # top_rated_movies = top_rated(ratings, favourites)
 
     recommendations = []
 
@@ -124,8 +128,8 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
 
     recommendations.extend(get_recommendations_for_all_ratings(ratings,
                                                            favourites,
-                                                    movie_id_to_index_coll,
-                                                    movie_index_to_id_coll,
+                                                    movie_id_to_index,
+                                                    movie_index_to_id,
                                                     matrix))
 
     recommendations = list(set(recommendations))

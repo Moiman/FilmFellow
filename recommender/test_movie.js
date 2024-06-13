@@ -3,12 +3,12 @@ fetch("http://localhost:5000/recommender/movie/existing", {
   headers: {
     "Content-Type": "application/json",
   },
-  body: JSON.stringify({ TMDB_id: 121 }),
+  body: JSON.stringify({ TMDB_id: 724089 }),
 })
-  .then(response => response.json())
-  .then(result => {
+  .then((response) => response.json())
+  .then((result) => {
     console.log("Result from Python:", result);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("Error:", error);
   });

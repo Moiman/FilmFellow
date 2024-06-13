@@ -50,7 +50,7 @@ jobs:
         if: failure()
         with:
           name: cypress-screenshots
-          path: cypress/screenshots
+          path: src/cypress/screenshots
   component-test-cypress:
     runs-on: ubuntu-latest
     steps:

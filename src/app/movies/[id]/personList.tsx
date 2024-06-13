@@ -15,7 +15,7 @@ interface personListProps {
 }
 
 export const PersonList = ({ persons }: personListProps) => {
-  if (persons.length > 0) {
+  if (persons.length === 0) {
     return <p>No cast/crew to show.</p>;
   }
 

@@ -15,6 +15,10 @@ interface personListProps {
 }
 
 export const PersonList = ({ persons }: personListProps) => {
+  if (persons.length > 0) {
+    return <p>No cast/crew to show.</p>;
+  }
+
   return (
     <div className="person-list">
       {persons.map(person => (

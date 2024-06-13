@@ -42,37 +42,42 @@ export default async function Movie({ params }: { params: { id: string } }) {
       <MovieInfo movie={movie} />
 
       <div className="section-padding">
-        <Section
-          header={
-            <div className="header-default-style">
-              <h3>Cast</h3>
-              <Link
-                href={`${params.id}/cast`}
-                aria-label="See all cast members"
-              >
-                See all
-              </Link>
-            </div>
-          }
-        >
-          <PersonList persons={movie.cast.slice(0, 6)} />
-        </Section>
+        {movie.cast.length > 0 && (
+          <Section
+            header={
+              <div className="header-default-style">
+                <h3>Cast</h3>
+                <Link
+                  href={`${params.id}/cast`}
+                  aria-label="See all cast members"
+                >
+                  See all
+                </Link>
+              </div>
+            }
+          >
+            <PersonList persons={movie.cast.slice(0, 6)} />
+          </Section>
+        )}
 
-        <Section
-          header={
-            <div className="header-default-style">
-              <h3>Crew</h3>
-              <Link
-                href={`${params.id}/crew`}
-                aria-label="See all crew members"
-              >
-                See all
-              </Link>
-            </div>
-          }
-        >
-          <PersonList persons={movie.crew.slice(0, 6)} />
-        </Section>
+        {movie.crew.length > 0 && (
+          <Section
+            header={
+              <div className="header-default-style">
+                <h3>Crew</h3>
+                <Link
+                  href={`${params.id}/crew`}
+                  aria-label="See all crew members"
+                >
+                  See all
+                </Link>
+              </div>
+            }
+          >
+            <PersonList persons={movie.crew.slice(0, 6)} />
+          </Section>
+        )}
+
         <Section header={reviewsHeader}>
           <ReviewList
             movieId={params.id}

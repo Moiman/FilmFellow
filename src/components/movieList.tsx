@@ -9,14 +9,16 @@ type MovieListItem = {
 
 export const MovieList = ({
   movies,
-  emptyText = "No movies available",
+  emptyText = "No movies available.",
 }: {
   movies: MovieListItem[];
   emptyText?: string;
 }) => {
+  if (movies.length === 0) return <p>{emptyText}</p>;
+
   return (
     <div className="movie-list">
-      {movies.length > 0 ? (
+      {movies.length > 0 &&
         movies.map(movie => (
           <Link
             key={movie.id}
@@ -35,10 +37,7 @@ export const MovieList = ({
               <div className="poster-path-placeholder">{movie.title}</div>
             )}
           </Link>
-        ))
-      ) : (
-        <p>{emptyText}</p>
-      )}
+        ))}
     </div>
   );
 };

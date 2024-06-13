@@ -80,11 +80,10 @@ export default async function userProfile({ params }: { params: { id: string } }
       <div className="profile-section-wrapper">
         {/* Random assortment of user's favorite movies and link to all favorites */}
         <Section header={userFavoriteHeader}>
-          {favorites.length > 0 ? (
-            <MovieList movies={favorites.length > 0 ? shuffleArray(favorites).slice(0, 6) : favorites} />
-          ) : (
-            <p>No favorite movies yet.</p>
-          )}
+          <MovieList
+            emptyText="No favorite movies yet."
+            movies={favorites.length > 0 ? shuffleArray(favorites).slice(0, 6) : favorites}
+          />
         </Section>
 
         {/* Thumbnails of user's latest reviews and link to all reviews */}

@@ -26,7 +26,10 @@ export default async function userFavorites({ params }: { params: { id: string }
           </h2>
         }
       >
-        {favorites.length > 0 ? <MovieList movies={shuffleArray(favorites)} /> : <p>No favorite movies yet.</p>}
+        <MovieList
+          emptyText="No favorite movies yet."
+          movies={shuffleArray(favorites)}
+        />
       </Section>
     </main>
   );

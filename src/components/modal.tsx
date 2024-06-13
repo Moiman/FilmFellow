@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { X } from "react-feather";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   closeModal: () => void;
 }
 
-const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
+const Modal = ({ content, footer, closeModal, isOpen }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -87,14 +87,6 @@ const ModalComponent = ({ content, footer, closeModal, isOpen }: Props) => {
         </div>
       </dialog>
     )
-  );
-};
-
-const Modal = (props: Props) => {
-  return (
-    <Suspense>
-      <ModalComponent {...props} />
-    </Suspense>
   );
 };
 

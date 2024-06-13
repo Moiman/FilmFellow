@@ -1,7 +1,6 @@
 import numpy as np
 from typing import List, Dict
 from recommender_codes.user.restrict_favourites import restrict_favourites
-from recommender_codes.user.restrict_ratings import restrict_ratings
 from recommender_codes.user.get_recommendations_for_all_ratings import \
     get_recommendations_for_all_ratings
 import scipy.sparse
@@ -96,7 +95,6 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     #    mode='r',
     #    shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))
 
-    ratings = restrict_ratings(ratings)
     favourites = restrict_favourites(favourites)
 
     # top_rated_movies = top_rated(ratings, favourites)

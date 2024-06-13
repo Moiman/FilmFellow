@@ -24,7 +24,7 @@ describe("Registration tests", () => {
       cy.get('input[name="confirmPassword"]').type("Password1!");
       cy.get('button[type="submit"]').click();
       cy.get('[data-cy="menu-icon"]').click();
-      cy.get('.dropdown a[href="/"]').contains("Logout").click();
+      cy.get(".dropdown button").contains("Logout").click();
     },
   );
 
@@ -80,7 +80,7 @@ describe("Login tests", () => {
       cy.get('input[name="password"]').type("Password1!");
       cy.get('button[type="submit"]').click();
       cy.get('[data-cy="menu-icon"]').click();
-      cy.get('.dropdown a[href="/"]').contains("Logout").click();
+      cy.get(".dropdown button").contains("Logout").click();
     },
   );
 });
@@ -154,7 +154,7 @@ describe("Protected route tests", () => {
       cy.get('input[name="password"]').type("Password1!");
       cy.get('button[type="submit"]').click();
       cy.get('[data-cy="menu-icon"]').click();
-      cy.get('.dropdown a[href="/"]').contains("Logout");
+      cy.get(".dropdown button").contains("Logout").click();
       cy.visit("/register");
       cy.location("pathname").should("eq", "/");
     },
@@ -172,7 +172,7 @@ describe("Protected route tests", () => {
       cy.get('input[name="password"]').type("Password1!");
       cy.get('button[type="submit"]').click();
       cy.get('[data-cy="menu-icon"]').click();
-      cy.get('.dropdown a[href="/"]').contains("Logout");
+      cy.get(".dropdown button").contains("Logout").click();
       cy.visit("/login");
       cy.location("pathname").should("eq", "/");
     },

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { findUserById } from "@/services/userService";
 
 import { Section } from "@/components/section";
-import { FriendsList } from "@/components/friendsList";
+import { FriendsList } from "./friendsList";
 
 export default async function userFriends({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));

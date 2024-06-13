@@ -5,7 +5,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import { getDescriptionAndSocialMedia } from "@/services/userService";
 import { ProfileButtons } from "./profileButtons";
-import { Friend, FriendListButton } from "@/components/friendListButton";
+import { type Friend, FriendListButton } from "./friendListButton";
+import { shuffleArray } from "./page";
 
 export const ProfileInfo = async ({ userId, friends }: { userId: number; friends: Friend[] }) => {
   const session = await getServerSession(authOptions);
@@ -86,12 +87,14 @@ export const ProfileInfo = async ({ userId, friends }: { userId: number; friends
             </div>
 
             <div className="friends-wrapper">
-              {friends.slice(0, 4).map(friend => (
-                <FriendListButton
-                  key={friend.id}
-                  friend={friend}
-                />
-              ))}
+              {shuffleArray(friends)
+                .slice(0, 4)
+                .map(friend => (
+                  <FriendListButton
+                    key={friend.id}
+                    friend={friend}
+                  />
+                ))}
             </div>
           </div>
         </div>

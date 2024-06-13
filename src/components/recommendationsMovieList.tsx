@@ -16,7 +16,11 @@ export default async function RecommendationsMovieList({ limit, selectedGenre, m
   return (
     <MovieList
       movies={recommendationMovies}
-      emptyText="No recommendations yet"
+      emptyText={
+        movieId
+          ? "No matches for similar movies. Browse our collection to find more films you'll like."
+          : "Add your favorite movies or leave reviews to get personalized suggestions!"
+      }
     />
   );
 }

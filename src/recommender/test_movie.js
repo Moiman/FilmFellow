@@ -1,9 +1,9 @@
-fetch("http://0.0.0.0:5000/recommender/movie/existing", {
+fetch("http://localhost:5000/recommender/movie/existing", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
   },
-  body: JSON.stringify({ TMDB_id: 671 }),
+  body: JSON.stringify({ TMDB_id: 121 }),
 })
   .then(response => response.json())
   .then(result => {

@@ -25,8 +25,8 @@ def get_TMDB_id_from_movie_name(
         "Recommender_files/manual_testing_and_debugging" +
         "/movie_title_to_TMDB_id.npy", 
         allow_pickle=True).item()
-    movie_titles = np.load("Recommender_files/manual_testing_and_debugging" +
-    "/movie_titles_list.npy", allow_pickle=True)
+    movie_titles = np.load("Recommender_files/movie_titles_list.npy", 
+    allow_pickle=True)
     
     movie_match = movie_finder(movie_name, movie_titles)
     

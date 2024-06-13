@@ -4,8 +4,8 @@ fetch("http://localhost:5000/recommender/user", {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    ratings: {},
-    favourites: [3597],
+    ratings: { 121: 5.0, 122: 1.0 },
+    favourites: [123],
   }),
 })
   .then(response => response.json())

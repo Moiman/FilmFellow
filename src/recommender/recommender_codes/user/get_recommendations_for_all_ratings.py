@@ -36,7 +36,7 @@ def get_recommendations_for_all_ratings(ratings: Dict[int, float],
     TMDB_to_MovieLens = np.load(
         "Recommender_files/user/TMDB_to_MovieLens.npy",
         allow_pickle=True).item()
-    movie_titles = np.load("Recommender_files/user/movie_titles_list.npy",
+    movie_titles = np.load("Recommender_files/movie_titles_list.npy",
     allow_pickle=True)
 
     avg_movie_vector = average_of_movies(ratings,

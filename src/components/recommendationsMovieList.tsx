@@ -18,7 +18,7 @@ export default async function RecommendationsMovieList({ limit, selectedGenre, m
       movies={recommendationMovies}
       emptyText={
         movieId
-          ? "No matches for similar movies. Browse our collection to find more films you'll love."
+          ? "No matches for similar movies. Browse our collection to find more films you'll like."
           : "Add your favorite movies or leave reviews to get personalized suggestions!"
       }
     />

@@ -1,8 +1,8 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { Session } from "next-auth";
 
 export const links = [
   { text: "New", href: "/new" },
@@ -10,21 +10,19 @@ export const links = [
   { text: "Best Rated", href: "/bestrated" },
 ];
 
-export const HeaderLinks = () => {
-  const { data: session } = useSession();
+export const HeaderLinks = ({ session }: { session: Session | null }) => {
   const currentPath = usePathname();
 
   return (
     <nav className="main-nav highlight-nav">
       {session && (
         <Link
-          href={"/recommendations"}
+          href="/recommendations"
           className={currentPath === "/recommendations" ? "active-link" : ""}
         >
-          {"Recommendations"}
+          Recommendations
         </Link>
       )}
-
       {links.map(link => (
         <Link
           key={link.href}

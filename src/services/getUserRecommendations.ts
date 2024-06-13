@@ -7,7 +7,7 @@ export const getUserRecommendations = async (selectedGenre: string | undefined, 
   for (const rating of ratingsFavourites.ratings) {
     ratingsObject[rating.movieId] = rating.rating;
   }
-  const response = await fetch("http://localhost:5000/recommender/user", {
+  const response = await fetch(`${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -11,6 +11,7 @@ type Props = {
 export default function RecommendationsList({ limit = 6, selectedGenre = undefined, movieId }: Props) {
   return (
     <Suspense
+      key={selectedGenre}
       fallback={
         <div className="rotating-star-div">
           <Star />

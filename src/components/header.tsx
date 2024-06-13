@@ -19,7 +19,7 @@ export const Header = async () => {
         </h1>
       </Link>
 
-      <HeaderLinks />
+      <HeaderLinks session={session} />
       <HeaderSearch />
       <HeaderMenu session={session} />
     </header>

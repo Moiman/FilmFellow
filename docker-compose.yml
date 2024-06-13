@@ -21,16 +21,19 @@ services:
     build: ./src
     restart: always
     environment:
-      NEXTAUTH_SECRET: generatesecretkey
-      DATABASE_URL: $DATABASE_URL
+      NEXTAUTH_URL: $NEXTAUTH_URL
+      NEXTAUTH_SECRET: $NEXTAUTH_SECRET
+      RECOMMENDER_PORT: $RECOMMENDER_PORT
+      RECOMMENDER_URL: $RECOMMENDER_URL_DOCKER
+      DATABASE_URL: $DATABASE_URL_DOCKER
     ports:
       - $FRONTEND_PORT:$FRONTEND_PORT
 
   recommender:
-    build: ./src/recommender
+    build: ./recommender
     restart: always
     ports:
-      - 5000:5000
+      - $RECOMMENDER_PORT:$RECOMMENDER_PORT
 
 volumes:
   postgresData:

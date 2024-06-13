@@ -95,9 +95,10 @@ $total-colors: length(abstracts.$highlight-colors);
   .active-icon:nth-child(#{$total-colors}n + #{$i}) {
     outline: 0;
     color: $default-color;
+    fill: $default-color;
   }
 
-  .highlight-nav > a:nth-child(#{$total-colors}n + #{$i}) {
+  .highlight-nav > *:nth-child(#{$total-colors}n + #{$i}) {
     &:hover {
       color: $default-color;
       border: 0;

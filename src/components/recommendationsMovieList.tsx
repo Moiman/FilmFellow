@@ -1,6 +1,6 @@
 import { MovieList } from "@/components/movieList";
-import { getMovieRecommendations } from "@/recommender/getMovieRecommendations";
-import { getUserRecommendations } from "@/recommender/getUserRecommendations";
+import { getMovieRecommendations } from "@/services/getMovieRecommendations";
+import { getUserRecommendations } from "@/services/getUserRecommendations";
 
 type Props = {
   limit: number;

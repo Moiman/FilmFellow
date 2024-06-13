@@ -45,7 +45,7 @@
 
   .profile-social-media {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 4px;
     width: 100%;
     margin-top: 5px;
@@ -77,14 +77,23 @@
 
     .friends-wrapper {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      grid-template-columns: repeat(5, 1fr);
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
       .button-friend {
         background-color: grey;
-        padding: 0;
-        margin: 2px;
-        aspect-ratio: 1;
-        border-radius: 50px;
       }
 
       .button-friend:hover {
@@ -93,15 +102,12 @@
       }
 
       .button-friend-mutual {
-        background-color: map-get(map-get(abstracts.$highlight-colors, "pink"), "default");
-        padding: 0;
-        margin: 2px;
-        aspect-ratio: 1;
-        border-radius: 50px;
+        background-color: map-get(map-get(abstracts.$highlight-colors, "cyan"), "default");
+        color: abstracts.$primary-darkgrey;
       }
 
       .button-friend-mutual:hover {
-        background-color: map-get(map-get(abstracts.$highlight-colors, "pink"), "hover");
+        background-color: map-get(map-get(abstracts.$highlight-colors, "cyan"), "hover");
         transform: scale(105%);
       }
     }
@@ -112,10 +118,6 @@
   .profile-info {
     width: 100%;
     gap: 10px;
-
-    .profile-social-media {
-      grid-template-columns: repeat(3, 1fr);
-    }
 
     .profile-friend-list {
       .friends-wrapper {

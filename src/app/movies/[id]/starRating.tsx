@@ -8,7 +8,10 @@ interface Props {
 
 export const StarRating = ({ rating, setRating, size = 30 }: Props) => {
   return (
-    <div className="star-rating">
+    <div
+      className="star-rating"
+      title="Your personal rating"
+    >
       {[1, 2, 3, 4, 5].map(starRating => (
         <button
           key={starRating}

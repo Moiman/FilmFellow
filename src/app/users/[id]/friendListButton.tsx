@@ -14,8 +14,12 @@ export const FriendListButton = async ({ friend }: Props) => {
   const isMutualFriend = friend._count.friends > 0;
 
   return (
-    <button className={isMutualFriend ? "button-friend-mutual" : "button-friend"}>
-      <Link href={`/users/${friend.id}`}>{friend.username}</Link>
-    </button>
+    <Link
+      href={`/users/${friend.id}`}
+      title={friend.username}
+      className={isMutualFriend ? "button-friend-mutual" : "button-friend"}
+    >
+      <p>{friend.username.slice(0, 2).toUpperCase()}</p>
+    </Link>
   );
 };

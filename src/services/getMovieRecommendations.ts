@@ -6,8 +6,10 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
   if (!movieData) {
     return [];
   }
-  try {
-    const response = await fetch("http://localhost:5000/recommender/movie/existing", {
+
+  const response = await fetch(
+    `${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/movie/existing`,
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -15,13 +17,13 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
       body: JSON.stringify({
         TMDB_id: id,
       }),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    data = await response.json();
-    if (data.length === 0) {
-      const response = await fetch("http://localhost:5000/recommender/movie/features", {
+    },
+  );
+  data = await response.json();
+  if (!data) {
+    const response = await fetch(
+      `${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/movie/features`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,16 +37,10 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
             movieData.rating,
           ],
         }),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      data = await response.json();
-    }
-    const recommArr = await getMovieByLimitTypeGenre(numRecos, "", undefined, data);
-    return recommArr;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
+      },
+    );
+    data = await response.json();
   }
+  const recommArr = await getMovieByLimitTypeGenre(numRecos, "", undefined, data);
+  return recommArr;
 };

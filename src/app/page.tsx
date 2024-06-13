@@ -5,8 +5,7 @@ import { MovieList } from "@/components/movieList";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import GenreSelector from "@/components/genreSelector";
-import { getUserRecommendations } from "@/recommender/getUserRecommendations";
-import { isRecommendations } from "@/recommender/isRecommendations";
+import { isRecommendations } from "@/services/isRecommendations";
 import RecommendationsList from "@/components/recommendationsList";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {

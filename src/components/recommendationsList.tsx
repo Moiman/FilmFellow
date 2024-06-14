@@ -23,6 +23,7 @@ export default function RecommendationsList({ limit = 6, selectedGenre = undefin
         limit={limit}
         selectedGenre={selectedGenre}
         movieId={movieId}
+        randomize={true}
       />
     </Suspense>
   );

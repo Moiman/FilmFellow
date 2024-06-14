@@ -5,15 +5,16 @@ import { MovieList } from "@/components/movieList";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/authOptions";
 import GenreSelector from "@/components/genreSelector";
-import { isRecommendations } from "@/services/isRecommendations";
 import RecommendationsList from "@/components/recommendationsList";
 
 export default async function Home({ searchParams }: { searchParams?: { genre: string } }) {
   const selectedGenre = searchParams?.genre;
+
   const getPosters = async (type: string, genre: string | undefined) => {
     const moviesArr = await getMovieByLimitTypeGenre(6, type, genre);
     return moviesArr;
   };
+
   const session = await getServerSession(authOptions);
 
   return (
@@ -21,7 +22,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
       <GenreSelector selectedGenre={selectedGenre} />
 
       <div className="section-wrapper">
-        {session && (await isRecommendations()) && (
+        {session && (
           <Section
             header={
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -33,6 +34,7 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
             <RecommendationsList selectedGenre={selectedGenre} />
           </Section>
         )}
+
         <Section
           header={
             <div className="header-default-style">

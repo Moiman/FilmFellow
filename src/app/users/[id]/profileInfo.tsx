@@ -6,7 +6,7 @@ import { authOptions } from "@/authOptions";
 import { getDescriptionAndSocialMedia } from "@/services/userService";
 import { ProfileButtons } from "./profileButtons";
 import { type Friend, FriendListButton } from "./friendListButton";
-import { shuffleArray } from "./page";
+import { shuffleArray } from "@/utils/shuffleArray";
 
 export const ProfileInfo = async ({ userId, friends }: { userId: number; friends: Friend[] }) => {
   const session = await getServerSession(authOptions);

@@ -106,11 +106,11 @@ const getMovieByLimitTypeGenre = async (
   genre: string | undefined,
   movieIds?: number[],
 ) => {
-  const orderBy = {} as Record<string, string>;
+  const orderBy = {} as Record<string, string | Record<string, string>>;
   let voteCountLimit = 0;
   if (type === "new") {
     voteCountLimit = 10;
-    orderBy.release_date = "desc";
+    orderBy.release_date = { sort: "desc", nulls: "last" };
   } else if (type === "popular") {
     orderBy.popularity = "desc";
   } else if (type === "bestrated") {

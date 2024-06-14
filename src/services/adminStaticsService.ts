@@ -27,3 +27,16 @@ export const statistics = async () => {
 
   return { users, movies, persons, reviews, importedReviews, reports, favorites, watchedRatings, ratings, lists };
 };
+
+export const topFavorites = async () => {
+  const movies = await prisma.movies.findMany({
+    orderBy: { favorites: { _count: "desc" } },
+    take: 6,
+    select: {
+      id: true,
+      title: true,
+      poster_path: true,
+    },
+  });
+  return movies;
+};

@@ -21,6 +21,9 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
         if input is not given in a correct form:
         Returns an empty list.
     """
+    original_ratings = dict(ratings)
+    original_favourites = list(favourites)
+
     try:
         ratings = dict(map(lambda item: (int(item[0]), item[1]), 
         ratings.items()))
@@ -75,54 +78,9 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
         print("None of the movies are in the MovieLens data!")
         return []
 
-    # MovieLens_to_TMDB = np.load(
-    #     "Recommender_files/user/MovieLens_to_TMDB.npy",
-    #     allow_pickle=True).item()
-    # TMDB_to_MovieLens = np.load(
-    #     "Recommender_files/user/TMDB_to_MovieLens.npy",
-    #     allow_pickle=True).item()
-    # movie_id_to_index_con = np.load(
-    #     "Recommender_files/user/content_based_filtering/movie_id_to_index.npy",
-    #     allow_pickle=True).item()
-    # movie_index_to_id_con = np.load(
-    #     "Recommender_files/user/content_based_filtering/movie_index_to_id.npy",
-    #     allow_pickle=True).item()
-
-    # num_movies_in_cosine_sim = 1841
-    # cosine_sim = np.memmap(
-    #    "Recommender_files/user/content_based_filtering/cosine_sim_memmap.npy",
-    #    dtype="float64",
-    #    mode='r',
-    #    shape=(num_movies_in_cosine_sim, num_movies_in_cosine_sim))
-
     favourites = restrict_favourites(favourites)
 
-    # top_rated_movies = top_rated(ratings, favourites)
-
     recommendations = []
-
-    # for movie in top_rated_movies:
-    #     collaborative = collaborative_filtering_user(movie,
-    #                                             3,
-    #                                             MovieLens_to_TMDB,
-    #                                             TMDB_to_MovieLens,
-    #                                             movie_id_to_index_coll,
-    #                                             movie_index_to_id_coll,
-    #                                             matrix)
-    #     content_based = content_based_filtering_user(movie,
-    #                                             3,
-    #                                             MovieLens_to_TMDB,
-    #                                             TMDB_to_MovieLens,
-    #                                             movie_id_to_index_con,
-    #                                             movie_index_to_id_con,
-    #                                             cosine_sim)
-    #     if len(collaborative) >= 1:
-    #         recommendations.extend(collaborative)
-
-    #     if len(content_based) >= 1:
-    #         recommendations.extend(content_based)
-
-    # del cosine_sim
 
     recommendations.extend(get_recommendations_for_all_ratings(ratings,
                                                            favourites,
@@ -133,8 +91,9 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     recommendations = list(set(recommendations))
     random.shuffle(recommendations)
 
-    for movie in recommendations:
-        if movie in ratings.keys() or movie in favourites:
+    recommended_movies = list(recommendations)
+    for movie in recommended_movies:
+        if movie in original_ratings.keys() or movie in original_favourites:
             recommendations.remove(movie)
 
     return recommendations

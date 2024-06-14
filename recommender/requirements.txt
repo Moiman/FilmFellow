@@ -1,8 +1,8 @@
-Flask==2.2.5
-gunicorn==20.1.0
-requests==2.31.0
+Flask==3.0.3
+gunicorn==22.0.0
+requests==2.32.3
 numpy==1.26.4
 pandas==2.2.2
-rapidfuzz==3.8.1
-scikit_learn==1.2.2
-scipy==1.11.4
+rapidfuzz==3.9.3
+scikit_learn==1.5.0
+scipy==1.13.1

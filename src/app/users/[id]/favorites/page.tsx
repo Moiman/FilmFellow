@@ -6,7 +6,8 @@ import { notFound } from "next/navigation";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
-import { shuffleArray } from "@/app/users/[id]/page";
+
+import { shuffleArray } from "@/utils/shuffleArray";
 
 export default async function userFavorites({ params }: { params: { id: string } }) {
   const user = await findUserById(Number(params.id));

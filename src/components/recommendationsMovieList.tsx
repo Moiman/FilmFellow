@@ -19,7 +19,7 @@ export default async function RecommendationsMovieList({ limit, selectedGenre, m
   if (!movieId && recommendationMovies.length === 0) {
     return (
       <>
-        <div style={{ textAlign: "center", margin: "40px 0" }}>
+        <div style={{ textAlign: "center", margin: "20px 0 40px 0" }}>
           <h3 className="h5">
             Add movies to favorites or leave reviews to get <span className="yellow">personalized suggestions</span>!
           </h3>
@@ -27,7 +27,9 @@ export default async function RecommendationsMovieList({ limit, selectedGenre, m
         </div>
 
         {randomize ? (
-          <MovieList movies={shuffleArray(await getMovieByLimitTypeGenre(36, "popular", selectedGenre)).slice(0, 6)} />
+          <MovieList
+            movies={shuffleArray(await getMovieByLimitTypeGenre(36, "popular", selectedGenre)).slice(0, limit)}
+          />
         ) : (
           <MovieList movies={await getMovieByLimitTypeGenre(limit, "popular", selectedGenre)} />
         )}

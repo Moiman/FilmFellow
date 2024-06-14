@@ -6,9 +6,15 @@ type Props = {
   limit?: number;
   selectedGenre?: string | undefined;
   movieId?: number;
+  randomize?: boolean;
 };
 
-export default function RecommendationsList({ limit = 6, selectedGenre = undefined, movieId }: Props) {
+export default function RecommendationsList({
+  limit = 6,
+  selectedGenre = undefined,
+  movieId,
+  randomize = false,
+}: Props) {
   return (
     <Suspense
       key={selectedGenre}
@@ -23,7 +29,7 @@ export default function RecommendationsList({ limit = 6, selectedGenre = undefin
         limit={limit}
         selectedGenre={selectedGenre}
         movieId={movieId}
-        randomize={true}
+        randomize={randomize}
       />
     </Suspense>
   );

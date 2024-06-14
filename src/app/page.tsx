@@ -31,7 +31,10 @@ export default async function Home({ searchParams }: { searchParams?: { genre: s
               </div>
             }
           >
-            <RecommendationsList selectedGenre={selectedGenre} />
+            <RecommendationsList
+              selectedGenre={selectedGenre}
+              randomize={true}
+            />
           </Section>
         )}
 

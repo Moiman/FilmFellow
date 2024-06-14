@@ -157,7 +157,7 @@ const getMovieByLimitTypeGenre = async (
   return movies;
 };
 
-export const getBestRatedPersonMovies = async (personId: number, take?: number) => {
+export const getPopularPersonMovies = async (personId: number, take?: number) => {
   const movies = await prisma.movies.findMany({
     take: take,
     select: {
@@ -180,7 +180,7 @@ export const getBestRatedPersonMovies = async (personId: number, take?: number) 
       ],
     },
     orderBy: {
-      vote_average: "desc",
+      popularity: "desc",
     },
   });
   return movies;

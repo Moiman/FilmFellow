@@ -90,7 +90,7 @@ export const HeaderMenu = ({ session }: { session: Session | null }) => {
 
               {session.user.role === "admin" && (
                 <Link
-                  href="/admin"
+                  href="/admin/users"
                   className="dropdown-item"
                 >
                   Admin

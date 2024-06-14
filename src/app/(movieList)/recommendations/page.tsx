@@ -22,6 +22,7 @@ export default async function New({ searchParams }: { searchParams?: { genre: st
           <RecommendationsList
             limit={36}
             selectedGenre={selectedGenre}
+            randomize={true}
           />
         </Section>
       </div>

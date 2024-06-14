@@ -15,9 +15,12 @@ def user_recommendations():
     """
     Get recommendations for a user with given ratings and favourites.
     """
-    data = request.get_json()
-    return jsonify(get_recommendations_for_user(data.get("ratings"),
-    data.get("favourites")))
+    try:
+        data = request.get_json()
+        return jsonify(get_recommendations_for_user(data.get("ratings"),
+        data.get("favourites")))
+    except:
+        return []
 
 @recommender.route('/recommender/movie/existing', methods=['POST'])
 def existing_movie_recommendations():

@@ -298,7 +298,7 @@ const getMoviesByTitle = async (titlePart: string) => {
     },
     take: 4,
     orderBy: {
-      vote_average: "desc",
+      popularity: "desc",
     },
   });
 

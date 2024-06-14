@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { User } from "react-feather";
 
 import { getPersonById } from "@/services/personsService";
-import { getBestRatedPersonMovies } from "@/services/movieService";
+import { getPopularPersonMovies } from "@/services/movieService";
 
 import { Section } from "@/components/section";
 import { MovieList } from "@/components/movieList";
@@ -16,7 +16,7 @@ export default async function Person({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  const movies = await getBestRatedPersonMovies(person.id, 6);
+  const movies = await getPopularPersonMovies(person.id, 6);
 
   function formatDate(dateString: Date) {
     const date = new Date(dateString);

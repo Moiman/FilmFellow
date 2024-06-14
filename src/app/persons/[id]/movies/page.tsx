@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getPersonById } from "@/services/personsService";
-import { getMovieById, getBestRatedPersonMovies } from "@/services/movieService";
+import { getMovieById, getPopularPersonMovies } from "@/services/movieService";
 
 import { Section } from "@/components/section";
 import { MovieList } from "@/components/movieList";
@@ -14,7 +14,7 @@ export default async function PersonMovies({ params }: { params: { id: string } 
     notFound();
   }
 
-  const movies = await getBestRatedPersonMovies(person.id);
+  const movies = await getPopularPersonMovies(person.id);
 
   return (
     <main>

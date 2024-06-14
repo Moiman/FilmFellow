@@ -28,7 +28,7 @@ export default async function GenreSelector({ selectedGenre }: { selectedGenre: 
       <Link
         key={-1}
         className="dropdown-item"
-        href={"/"}
+        href="?"
       >
         All
         {!selectedGenre && (

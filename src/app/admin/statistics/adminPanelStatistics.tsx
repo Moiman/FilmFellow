@@ -11,7 +11,7 @@ export const AdminPanelStatistics = async () => {
         <Section header={<h2 className="h3">Statistics</h2>}>
           <div className="admin-statistic">
             <div>
-              <h3 className="h5">User Content</h3>
+              <h3 className="h5">Users</h3>
               <p>Users: {stats.users}</p>
               <p>Lists: {stats.lists}</p>
               <p>Reviews: {stats.reviews}</p>

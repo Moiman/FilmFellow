@@ -40,7 +40,7 @@ def recommendations_based_on_features():
     """
     try:
         data = request.get_json()
-        return jsonify(get_recommendations_for_features(data.get("features")))
+        return jsonify(get_recommendations_for_features(data.get("TMDB_id"), data.get("features")))
     except:
         return jsonify([])
 

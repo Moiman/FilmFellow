@@ -63,9 +63,9 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     rated_movies = list(ratings.keys())
     for movie in rated_movies:
         if movie not in TMDB_ids:
-            ratings.pop(movie)
+            ratings.pop(movie, None)
         elif TMDB_to_MovieLens[movie] not in movie_id_to_index.keys():
-            ratings.pop(movie)
+            ratings.pop(movie, None)
 
     favourited_movies = list(favourites)
     for movie in favourited_movies:
@@ -89,11 +89,17 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
                                                     matrix))
 
     recommendations = list(set(recommendations))
-    random.shuffle(recommendations)
+
+    print("ORIGINAL DATAS:")
+    print(original_ratings)
+    print(original_favourites)
 
     recommended_movies = list(recommendations)
     for movie in recommended_movies:
-        if movie in original_ratings.keys() or movie in original_favourites:
-            recommendations.remove(movie)
+        if str(movie) in list(original_ratings.keys()) or movie in original_favourites:
+            print(str(movie) + ", MOVIE FOUND!")
+            recommendations.remove(movie) 
+
+    random.shuffle(recommendations)
 
     return recommendations

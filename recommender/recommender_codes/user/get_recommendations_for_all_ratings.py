@@ -36,24 +36,20 @@ def get_recommendations_for_all_ratings(ratings: Dict[int, float],
     TMDB_to_MovieLens = np.load(
         "Recommender_files/user/TMDB_to_MovieLens.npy",
         allow_pickle=True).item()
-    movie_titles = np.load("Recommender_files/movie_titles_list.npy",
-    allow_pickle=True)
 
     avg_movie_vector = average_of_movies(ratings,
                                      favourites,
                                      matrix,
                                      movie_id_to_index,
-                                     movie_titles,
                                      TMDB_to_MovieLens)
 
     if len(avg_movie_vector) != 0:
         recommendations = find_similar_movies_to_avg(
                                                  np.asarray(avg_movie_vector),
                                                  matrix,
-                                                 movie_id_to_index,
                                                  movie_index_to_id,
                                                  MovieLens_to_TMDB,
-                                                 50)
+                                                 100)
     else:
         recommendations = []
 

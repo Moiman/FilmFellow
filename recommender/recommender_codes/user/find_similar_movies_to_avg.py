@@ -6,7 +6,6 @@ from typing import List, Dict
 def find_similar_movies_to_avg(
         avg: np.float64,
         matrix: csr_matrix,
-        movie_id_to_index: Dict[int, int],
         movie_index_to_id: Dict[int, int],
         MovieLens_to_TMDB: Dict[int, int],
         k: int,
@@ -18,7 +17,6 @@ def find_similar_movies_to_avg(
     Args:
         avg (numpy array (float64)): Average rating vector.
         matrix (numpy sparse matrix (float64)): Matrix with ratings.
-        movie_id_to_index (dict (int:int)): Movie id mapped to matrix index.
         movie_index_to_id (dict (int:int)): Matrix index mapped to movie id.
         MovieLens_to_TMDB (dict (int:int)): MovieLens id mapped to TMDB id.
         k (int): Number of nearest neighbours returned.

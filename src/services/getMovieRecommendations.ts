@@ -21,7 +21,7 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
       },
     );
     data = await response.json();
-    if (!data) {
+    if (data.length == 0) {
       const response = await fetch(
         `${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/movie/features`,
         {
@@ -30,6 +30,7 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            TMDB_id: movieData.id,
             features: [
               ...movieData.genres,
               ...movieData.directors.map(elem => elem.name),

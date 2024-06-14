@@ -5,7 +5,11 @@ export const getUserRecommendations = async (selectedGenre: string | undefined, 
   const ratingsFavourites = await getUserOwnFavoritesAndRatings();
   const ratingsObject = {} as Record<number, number | null>;
   for (const rating of ratingsFavourites.ratings) {
-    ratingsObject[rating.movieId] = rating.rating;
+    if (rating.rating === null) {
+      ratingsObject[rating.movieId] = 0.0;
+    } else {
+      ratingsObject[rating.movieId] = rating.rating;
+    }
   }
   try {
     const response = await fetch(`${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/user`, {

@@ -7,7 +7,6 @@ def average_of_movies(
         favourites: List[int],
         matrix: csr_matrix,
         movie_id_to_index: Dict[int, int],
-        movie_titles_list: List[str],
         TMDB_to_MovieLens: Dict[int, int]
         ) -> List[int]:
     """
@@ -19,7 +18,6 @@ def average_of_movies(
         favourites (list: int): Favourite movies as TMDB ids.
         matrix (numpy sparse matrix (float64)): Matrix with ratings.
         movie_id_to_index (dict (int:int)): Movie id mapped to matrix index.
-        movie_titles_list (list (str)): List of all the movies. Same indexes
         as the matrix has for each movie.
         TMDB_to_MovieLens (dict (int:int)): TMDB id mapped to MovieLens id.
 
@@ -39,6 +37,7 @@ def average_of_movies(
     if len(ratings) != 0:
         mean_rating = ratings_array.mean()
         max_rating = ratings_array.max()
+        print("MEAN RATING: " + str(mean_rating))
         if mean_rating == max_rating and len(favourites) == 0:
             return []
 

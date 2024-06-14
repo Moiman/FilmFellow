@@ -4,7 +4,7 @@ from download_files.download_zip_file import download_zip_file
 
 FILE_PATH = os.path.join(os.path.dirname(__file__), "Recommender_files")
 ZIP_FILE_URL = 'https://dl.dropbox.com/scl/fi/6j8p29jyrbjsa809yv6dz/' + \
-'Recommender_files.zip?rlkey=fhmlbejmtqlsch8g2mkyqxxk0&st=1qrqeyzx&dl=1'
+'Recommender_files.zip?rlkey=fhmlbejmtqlsch8g2mkyqxxk0&st=66kv7fx0&dl=1'
 ZIP_FILE_PATH = os.path.join(os.path.dirname(__file__),
 "Recommender_files.zip")
 FILE_DESTINATION = os.path.dirname(__file__)

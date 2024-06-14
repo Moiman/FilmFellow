@@ -8,7 +8,7 @@ import SortSelector from "./sortSelector";
 
 export default function SearchMovies({ filterParams }: { filterParams: FilterParams }) {
   const [movies, setMovies] = useState<Awaited<ReturnType<typeof searchMovies>>>([]);
-  const [selectedSortOption, setSelectedSortOption] = useState("New");
+  const [selectedSortOption, setSelectedSortOption] = useState("Popular");
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {

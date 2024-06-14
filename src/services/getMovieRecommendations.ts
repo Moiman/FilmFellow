@@ -49,5 +49,6 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
     return recommArr;
   } catch (error) {
     console.error("Error fetching data:", error);
+    return [];
   }
 };

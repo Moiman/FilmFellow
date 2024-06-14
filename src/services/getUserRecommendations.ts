@@ -26,5 +26,6 @@ export const getUserRecommendations = async (selectedGenre: string | undefined, 
     return recommArr;
   } catch (error) {
     console.error("Error fetching data:", error);
+    return [];
   }
 };

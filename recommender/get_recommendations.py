@@ -20,22 +20,28 @@ def user_recommendations():
         return jsonify(get_recommendations_for_user(data.get("ratings"),
         data.get("favourites")))
     except:
-        return []
+        return jsonify([])
 
 @recommender.route('/recommender/movie/existing', methods=['POST'])
 def existing_movie_recommendations():
     """
     Get recommendations for a movie with given TMDB id.
     """
-    data = request.get_json()
-    return jsonify(get_recommendations_for_movie(data.get("TMDB_id")))
+    try:
+        data = request.get_json()
+        return jsonify(get_recommendations_for_movie(data.get("TMDB_id")))
+    except:
+        return jsonify([])
 
 @recommender.route('/recommender/movie/features', methods=['POST'])
 def recommendations_based_on_features():
     """
     Get recommendations for a movie based on it's features.
     """
-    data = request.get_json()
-    return jsonify(get_recommendations_for_features(data.get("features")))
+    try:
+        data = request.get_json()
+        return jsonify(get_recommendations_for_features(data.get("features")))
+    except:
+        return jsonify([])
 
 check_and_download_files()

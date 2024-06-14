@@ -7,17 +7,24 @@ export const getUserRecommendations = async (selectedGenre: string | undefined, 
   for (const rating of ratingsFavourites.ratings) {
     ratingsObject[rating.movieId] = rating.rating;
   }
-  const response = await fetch(`${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/user`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ratings: ratingsObject,
-      favourites: ratingsFavourites.favorites,
-    }),
-  });
-  const data = await response.json();
-  const recommArr = await getMovieByLimitTypeGenre(numRecos, "", selectedGenre, data);
-  return recommArr;
+  try {
+    const response = await fetch(`${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ratings: ratingsObject,
+        favourites: ratingsFavourites.favorites,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    const recommArr = await getMovieByLimitTypeGenre(numRecos, "", selectedGenre, data);
+    return recommArr;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 };

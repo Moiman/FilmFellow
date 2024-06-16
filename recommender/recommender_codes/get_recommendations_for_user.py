@@ -1,8 +1,14 @@
 import numpy as np
 from typing import List, Dict
+from recommender_codes.user.clean_recommendations import \
+      clean_recommendations
 from recommender_codes.user.restrict_favourites import restrict_favourites
 from recommender_codes.user.get_recommendations_for_all_ratings import \
     get_recommendations_for_all_ratings
+from recommender_codes.user.collaborative_filtering_user import \
+    collaborative_filtering_user
+from recommender_codes.user.top_rated import top_rated
+from recommender_codes.user.random_favourites import random_favourites
 import scipy.sparse
 import random
 
@@ -21,9 +27,6 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
         if input is not given in a correct form:
         Returns an empty list.
     """
-    original_ratings = dict(ratings)
-    original_favourites = list(favourites)
-
     original_ratings = dict(ratings)
     original_favourites = list(favourites)
 
@@ -91,12 +94,27 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
                                                     movie_index_to_id,
                                                     matrix))
 
-    recommendations = list(set(recommendations))
+    recommendations = clean_recommendations(recommendations, original_ratings, 
+                                            original_favourites)
+    
+    if len(recommendations) < 10:
+        MovieLens_to_TMDB = np.load(
+        "user/MovieLens_to_TMDB.npy", 
+        allow_pickle=True).item()
 
-    recommended_movies = list(recommendations)
-    for movie in recommended_movies:
-        if str(movie) in list(original_ratings.keys()) or movie in original_favourites:
-            recommendations.remove(movie) 
+        top_movies = top_rated(ratings)
+        top_movies.extend(random_favourites(favourites))
+        for movie in top_movies:
+            recommendations.extend(collaborative_filtering_user(movie,
+                                         10,
+                                         MovieLens_to_TMDB,
+                                         TMDB_to_MovieLens,
+                                         movie_id_to_index,
+                                         movie_index_to_id,
+                                         matrix))
+        recommendations = clean_recommendations(recommendations, 
+                                                original_ratings, 
+                                            original_favourites)
 
     random.shuffle(recommendations)
 

@@ -24,6 +24,9 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
     original_ratings = dict(ratings)
     original_favourites = list(favourites)
 
+    original_ratings = dict(ratings)
+    original_favourites = list(favourites)
+
     try:
         ratings = dict(map(lambda item: (int(item[0]), item[1]), 
         ratings.items()))
@@ -90,14 +93,9 @@ def get_recommendations_for_user(ratings: Dict[str, float], favourites:
 
     recommendations = list(set(recommendations))
 
-    print("ORIGINAL DATAS:")
-    print(original_ratings)
-    print(original_favourites)
-
     recommended_movies = list(recommendations)
     for movie in recommended_movies:
         if str(movie) in list(original_ratings.keys()) or movie in original_favourites:
-            print(str(movie) + ", MOVIE FOUND!")
             recommendations.remove(movie) 
 
     random.shuffle(recommendations)

@@ -50,6 +50,7 @@ After database and recommender are running
 ```
 navigate to ./src
 npm run prisma:migration
+npm run prisma:seed
 ```
 
 (Optional add admin to database)

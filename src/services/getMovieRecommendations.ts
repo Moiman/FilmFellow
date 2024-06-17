@@ -21,7 +21,7 @@ export const getMovieRecommendations = async (id: number, numRecos: number) => {
       },
     );
     data = await response.json();
-    if (data.length == 0) {
+    if (data.length === 0) {
       const response = await fetch(
         `${process.env.RECOMMENDER_URL}:${process.env.RECOMMENDER_PORT}/recommender/movie/features`,
         {

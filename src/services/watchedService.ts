@@ -121,7 +121,6 @@ export const getUserOwnFavoritesAndRatings = async () => {
   const ratings = await prisma.watchedRatings.findMany({
     where: {
       userId: Number(session.user.id),
-      rating: {},
     },
     select: {
       movieId: true,

@@ -49,7 +49,7 @@ def get_recommendations_for_all_ratings(ratings: Dict[int, float],
                                                  matrix,
                                                  movie_index_to_id,
                                                  MovieLens_to_TMDB,
-                                                 100)
+                                                 50)
     else:
         recommendations = []
 

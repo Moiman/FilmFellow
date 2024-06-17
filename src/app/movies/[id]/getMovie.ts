@@ -60,7 +60,7 @@ export const getMovie = async (movieId: string) => {
       releaseYear: release_date ? new Date(release_date).getFullYear() : null,
       voteAverage: vote_average,
       directors,
-      ageRestrictions: rating ? rating : "?",
+      ageRestrictions: rating,
       crew: movieCrew,
       cast: movieCast,
       isFavorite,

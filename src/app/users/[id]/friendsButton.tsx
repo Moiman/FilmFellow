@@ -1,6 +1,7 @@
 "use client";
 
 import { addFriend, removeFriend } from "@/services/friendService";
+import { UserMinus, UserPlus } from "react-feather";
 
 interface Props {
   userId: number;
@@ -19,15 +20,17 @@ export const FriendsButton = ({ userId, isFriend }: Props) => {
     <button
       className="button-pink"
       onClick={removeFriendHandler}
+      style={{ display: "flex", alignItems: "center", gap: "5px" }}
     >
-      Remove friend
+      <UserMinus size={16} /> Remove friend
     </button>
   ) : (
     <button
       className="button-cyan"
       onClick={addFriendHandler}
+      style={{ display: "flex", alignItems: "center", gap: "5px" }}
     >
-      Add to friends
+      <UserPlus size={16} /> Add to friends
     </button>
   );
 };

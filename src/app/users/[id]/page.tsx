@@ -2,23 +2,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/authOptions";
+import { AlertCircle } from "react-feather";
 
 import { MovieList } from "@/components/movieList";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/sidebar";
+import { ProfileInfo } from "./profileInfo";
+import { ListButton } from "./listButton";
+import { NewListModal } from "./newListModal";
 import { ReviewThumbnail } from "@/components/reviewThumbnail";
+
 import { findUserById } from "@/services/userService";
 import { findUserFavoritesById } from "@/services/favoriteService";
 import { getUserLists } from "@/services/listService";
-import { ProfileInfo } from "./profileInfo";
-import { ListButton } from "./listButton";
 import { findReviewsByUserId } from "@/services/reviewService";
-import { NewListModal } from "./newListModal";
-import { AlertCircle } from "react-feather";
 
-export function shuffleArray(array: any[]) {
-  return array.slice().sort(() => Math.random() - 0.5);
-}
+import { shuffleArray } from "@/utils/shuffleArray";
 
 export default async function userProfile({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);

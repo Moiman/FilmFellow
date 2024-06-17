@@ -345,3 +345,34 @@
     }
   }
 }
+
+.admin-statistic {
+  display: flex;
+  gap: 40px;
+  margin: 20px;
+
+  & > div {
+    background-color: abstracts.$primary-darkgrey;
+    border-radius: abstracts.$default-border-radius;
+    flex: 1;
+    overflow: hidden;
+    border: 1px solid abstracts.$primary-dark;
+    box-shadow: abstracts.$default-shadow;
+  }
+
+  h3 {
+    background-color: abstracts.$primary-dark;
+    padding: 10px;
+  }
+
+  p {
+    padding: 10px 10px;
+  }
+}
+
+@media only screen and (max-width: abstracts.$medium-width) {
+  .admin-statistic {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

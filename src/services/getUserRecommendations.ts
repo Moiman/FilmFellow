@@ -10,7 +10,11 @@ export const getUserRecommendations = async (selectedGenre: string | undefined, 
   }
 
   for (const rating of ratingsFavourites.ratings) {
-    ratingsObject[rating.movieId] = rating.rating;
+    if (rating.rating === null) {
+      ratingsObject[rating.movieId] = 0.0;
+    } else {
+      ratingsObject[rating.movieId] = rating.rating;
+    }
   }
 
   try {

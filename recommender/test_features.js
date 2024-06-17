@@ -4,6 +4,7 @@ fetch("http://localhost:5000/recommender/movie/features", {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
+    TMDB_id: 65758,
     features: [
       "Adventure",
       "Fantasy",
@@ -34,10 +35,10 @@ fetch("http://localhost:5000/recommender/movie/features", {
     ],
   }),
 })
-  .then(response => response.json())
-  .then(result => {
+  .then((response) => response.json())
+  .then((result) => {
     console.log("Result from Python:", JSON.stringify(result));
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("Error:", error);
   });

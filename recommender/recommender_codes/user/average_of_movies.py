@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from typing import List, Dict
 from scipy.sparse import csr_matrix
 
@@ -7,7 +8,6 @@ def average_of_movies(
         favourites: List[int],
         matrix: csr_matrix,
         movie_id_to_index: Dict[int, int],
-        movie_titles_list: List[str],
         TMDB_to_MovieLens: Dict[int, int]
         ) -> List[int]:
     """
@@ -19,15 +19,15 @@ def average_of_movies(
         favourites (list: int): Favourite movies as TMDB ids.
         matrix (numpy sparse matrix (float64)): Matrix with ratings.
         movie_id_to_index (dict (int:int)): Movie id mapped to matrix index.
-        movie_titles_list (list (str)): List of all the movies. Same indexes
         as the matrix has for each movie.
         TMDB_to_MovieLens (dict (int:int)): TMDB id mapped to MovieLens id.
 
     Returns:
         If there is better than average ratings and/or favourites:
         Numpy array of float64s: The average movie vector calculated from the
-        most liked films in the ratings (better than average) and all the
-        favourites.
+        most liked films (10 random chosen from the better movies, if more 
+        than 10 better than average movies) in the ratings (better than 
+        average) and all the favourites.
         If there is no better than average ratings nor favourites:
         Returns an empty list.
 
@@ -42,15 +42,22 @@ def average_of_movies(
         if mean_rating == max_rating and len(favourites) == 0:
             return []
 
+    rated_movies = list(ratings.keys())
+    random.shuffle(rated_movies)
     movie_weights = 0
+    count_better_than_avg_movies = 0
 
-    for movie in ratings.keys():
+    for movie in rated_movies:
+        if count_better_than_avg_movies > 10:
+            break
         movie_id = TMDB_to_MovieLens[movie]
         index = movie_id_to_index[movie_id]
         the_movie = matrix[:, index]
         if mean_rating != max_rating:
             movie_weight = max(0, (ratings[movie] - mean_rating)
                            / (max_rating - mean_rating))
+            if movie_weight > 0:
+                count_better_than_avg_movies += 1
         else:
             movie_weight = 0
         movie_weights += movie_weight

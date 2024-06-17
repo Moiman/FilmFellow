@@ -6,7 +6,8 @@ from recommender_codes.movie.vectorize_movie import vectorize_movie
 from recommender_codes.movie.get_content_based_recommendations_cosine_idx \
 import get_content_based_recommendations_cosine_idx
 
-def content_based_features(movie_features: List[str],
+def content_based_features(TMDB_id: int,
+                            movie_features: List[str],
                             n_recommendations: int,
                             MovieLens_to_TMDB: Dict[int, int],
                             TMDB_to_MovieLens: Dict[int, int]) -> List[int]:
@@ -15,6 +16,7 @@ def content_based_features(movie_features: List[str],
     features.
 
     Args:
+        TMDB_id: int: TMDB id of the movie.
         movie_features (list: str): Features present in the movie: genres
         and tags.
         n_recommendations (int): The number of recommendations given.
@@ -25,9 +27,12 @@ def content_based_features(movie_features: List[str],
         List of integers: List of recommended movies given as TMDB id.
     """
 
-
+    TMDB_ids = np.load("Recommender_files/user/TMDB_ids.npy")
     movie_index_to_id = np.load(
     "Recommender_files/movie/content_based_filtering/movie_index_to_id.npy",
+        allow_pickle=True).item()
+    movie_id_to_index = np.load(
+    "Recommender_files/movie/content_based_filtering/movie_id_to_index.npy",
         allow_pickle=True).item()
 
     num_movies_in_cosine_sim = 1841
@@ -47,12 +52,19 @@ def content_based_features(movie_features: List[str],
 
     cosine_sim_new = cosine_similarity(updated_matrix,
                                                      updated_matrix)
+    
+    if TMDB_id not in TMDB_ids:
+        TMDB_id = -1
+    elif TMDB_to_MovieLens[TMDB_id] not in movie_id_to_index.keys():
+        TMDB_id = -1
 
     recommendations = get_content_based_recommendations_cosine_idx(
+                            TMDB_id,
                             cosine_sim_new.shape[0]-1,
                             cosine_sim_new,
                             movie_index_to_id,
                             MovieLens_to_TMDB,
+                            TMDB_to_MovieLens,
                             n_recommendations)
     del cosine_sim_new
 

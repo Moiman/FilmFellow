@@ -17,7 +17,7 @@ def top_rated(ratings: Dict[int, int]) -> List[int]:
     ratings = dict(sorted(ratings.items(), key=lambda item: item[1],
                               reverse=True))
     
-    if len(ratings) >= 2:
+    if len(ratings) > 2:
         return list(ratings.keys())[0:2]
     
     return list(ratings.keys())
